@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime,date
-from django.contrib.auth.models import User
+from dashboard.userdata.models import User
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class Newbooking(models.Model):
@@ -17,9 +17,9 @@ class Family(models.Model):
 	familymemname=models.CharField(max_length=100)
 	familymemage=models.CharField(max_length=10)
 	familymemrelation=models.CharField(max_length=100)
-class Role(models.Model):
-	username = models.ForeignKey(User, on_delete=models.CASCADE)
-	role = models.CharField(max_length=15)
+# class Role(models.Model):
+# 	username = models.ForeignKey(User, on_delete=models.CASCADE, related_name ="username")
+# 	role = models.CharField(related_name ="roles" ,max_length=15)
 #Project create
 class Project(models.Model):
 	projectname=models.CharField(max_length=100)

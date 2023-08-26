@@ -38,9 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',
-    'page',
     'widget_tweaks',
+    'dashboard.userdata',
 ]
 
 MIDDLEWARE = [
@@ -131,19 +130,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static/')
 ]
+
+PROFILE_UPLOAD_PATH = 'profile/'
+AADHAR_UPLOAD_PATH = 'aadhar/'
+PAN_UPLOAD_PATH = 'pan/'
+
 IMAGE_URL ='Images/'
-IMAGE=[
-    os.path.join(BASE_DIR,'images/')
-]
+IMAGE=[os.path.join(BASE_DIR,'images/')]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-)
+
+AUTH_USER_MODEL = 'userdata.User'
 LOGIN_URL = 'signin'
+
+
+
