@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'widget_tweaks',
-    'dashboard.userdata',
+    'dashboard.members',
+    'dashboard.documents',
+    'dashboard.projects',
+    'dashboard.reports',
 ]
 
 MIDDLEWARE = [
@@ -152,7 +155,7 @@ IMAGE=[os.path.join(BASE_DIR,'images/')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'userdata.User'
+AUTH_USER_MODEL = 'members.User'
 LOGIN_URL = 'signin'
 
 
