@@ -30,8 +30,7 @@ def signin(request):
                     return redirect('home1')
                 elif role.role == 'customer':
                     return redirect('customer/home')
-                # Add more role checks here
-                
+
             except Role.DoesNotExist:
                 error_message = "Role not defined for this user"
         else:
