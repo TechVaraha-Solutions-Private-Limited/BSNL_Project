@@ -1,0 +1,78 @@
+{% extends 'site2/index.html' %}
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+<form class="space-y-5 " method="POST" action="{% url 'reg' %}">
+    {% csrf_token %}
+    <label class="text-lg font-semibold dark:text-white-light p-2" style="background-color: blueviolet; border-radius: 9px;"><b>ADD CREDENTIALS - New Booking</b></label>
+    <h2 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Member Particulars</b></h2>
+    <div class="panel">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+                <label class="p-1">Member Name</label>
+                {% render_field form.username placeholder="Member Name" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Father/Husband Name</label>
+                {% render_field form.fathername placeholder="Father/Husband Name" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Date of Brith</label>
+                {% render_field form.dob type="date" placeholder="DOB" class="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Age</label>
+                {% render_field form.age type="number" placeholder="Age" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Poision</label>
+                {% render_field form.poision type="text" placeholder="Poision" class+="form-input" %}
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+                <label class="p-1">Moblie Number</label>
+                {% render_field form.moblieno type="number" placeholder="Moblie Number" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Alternate Number</label>
+                {% render_field form.alternateno type="number" placeholder="Alternate Number" class+="form-input" %}
+            </div class="p-1">
+            <div>
+                <label class="p-1">Email ID</label>
+                {% render_field form.emailid type="email" placeholder="Emial-id" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Password</label>
+                {% render_field form.password type="text" placeholder="Password" class+="form-input"%}
+                
+            </div>
+            <div class="p-1">
+                <label class="p-1">Residential Address</label>
+                {% render_field form.address type="text" placeholder="Residential Address" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Pan Number</label>
+                {% render_field form.panno type="number" placeholder="Pan No" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Aadhaar Number</label>
+                {% render_field form.aadhhaarno type="number" placeholder="Aadhaar Number" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Role</label>
+                {% render_field form.role type="choice" placeholder=" Number" class+="form-input"%}
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
+        <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light">Submit Application</button></center>
+    </div>
+</form>
+<div>
+    {% for message in messages %}
+    <h3>{{message}}</h3>
+    {% endfor %}
+</div>
+
+{% endblock %}

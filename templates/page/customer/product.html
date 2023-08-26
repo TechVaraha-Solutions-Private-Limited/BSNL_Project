@@ -1,0 +1,39 @@
+{% extends 'page/customer/index.html' %}
+{% block content %}
+{% load static %}
+<div class="panel mt-6">
+  <table>
+      <thead>
+          <tr>
+              <th>S.NO</th>
+              <th>Customer Name</th>
+              <th>Date of Receipt</th>
+              <th>Receipt No</th>
+              <th>Cheque No</th>
+              <th>Amount</th>
+              <th>Pay Status</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>{{user.id}}</td>
+            <td>{{user.username}}</td>
+            {% if rec %}
+                <h2>Your Receipts:</h2>
+                <ul>
+                {% for receipt in rec %}
+                    <li>{{ receipt.date }} - Total: {{ receipt.total_amount }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No receipts found.</p>
+            {% endif %}            
+          </tr>
+      </tbody>
+  </table>
+  
+</div>
+
+
+{% endblock %}

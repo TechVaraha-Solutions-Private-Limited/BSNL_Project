@@ -1,0 +1,15 @@
+{% extends 'site2/index.html' %}
+{% load static %}
+{% block content %}
+
+   
+       <h1>Update Datas.....</h1>
+       <br>
+       <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <input type="submit" value="Update" class="button" class="btn btn-outline-success btn-sm">
+{% endblock %}
+
+

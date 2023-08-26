@@ -1,0 +1,67 @@
+{% extends 'site2/index.html' %}
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+
+<div class="p-2">
+    <ul class="flex space-x-2 rtl:space-x-reverse">
+        <li>
+            <a href="home1" class="text-primary hover:underline" style="font-size: larger;">Dashboard</a>
+        </li>
+        <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1" style="font-size: larger;">
+            <span>Project</span>
+        </li>
+    </ul>
+</div>
+<form class="space-y-5" method="POST" action="{% url 'project' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label class="text-xl font-semibold dark:text-white-light p-2" style="background-color: blueviolet;"><b>New Project</b></label>
+    <div class="panel">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5"> 
+            <div>
+                <label>Project Name</label>
+                {% render_field form.projectname type="text" placeholder="Project Name" class+="form-input"%}
+            </div>
+            <div>
+                <label>Short Code</label>
+                {% render_field form.shotcode type="text" placeholder="Short Code" class+="form-input"%}
+            </div>
+            <div>
+                <label>Dp Price</label>
+                {% render_field form.dp_price type="number" placeholder="Dp Price" class+="form-input"%}
+            </div>
+            <div>
+                <label>First Install</label>
+                {% render_field form.first_install type="number" placeholder="First Install" class+="form-input"%}
+            </div>
+            <div>
+                <label>Second Install</label>
+                {% render_field form.second_install type="number" placeholder="Second Install" class+="form-input"%}
+            </div>
+            <div>
+                <label>Third Install</label>
+                {% render_field form.third_install type="number" placeholder="Third Install" class+="form-input"%}
+            </div>
+            <div>
+                <label>Status</label>
+                {% render_field form.status type="text" placeholder="Status" class+="form-input"%}
+            </div>
+            <div>
+                <label>Images</label>
+                {% render_field form.images type="file" placeholder="Images" class+="form-input"%}
+            </div>
+            <div>
+                <label>Address</label>
+                {% render_field form.address type="textarea" placeholder="Address" class+="form-input"%}
+            </div>
+            <div>
+                <label></label>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
+                <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light">Submit Application</button></center>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

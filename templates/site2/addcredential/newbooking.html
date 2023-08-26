@@ -1,0 +1,227 @@
+{% extends 'site2/index.html' %}
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+<div class="p-2">
+    <ul class="flex space-x-2 rtl:space-x-reverse">
+        <li>
+            <a href="home1" class="text-primary hover:underline" style="font-size: larger;">Dashboard</a>
+        </li>
+        <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1" style="font-size: larger;">
+            <span>New Booking</span>
+        </li>
+    </ul>
+</div>
+<form class="space-y-5 " method="POST" action="{% url 'newbooking' %}">
+    {% csrf_token %}
+    <label class="text-lg font-semibold dark:text-white-light p-2" style="background-color: blueviolet; border-radius: 9px;"><b>ADD CREDENTIALS - New Booking</b></label>
+    <h2 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Member Particulars</b></h2>
+    <div class="panel">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+                <label class="p-1">Member Name</label>
+                {% render_field form.username placeholder="Member Name" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Father/Husband Name</label>
+                {% render_field form.fathername placeholder="Father/Husband Name" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Date of Brith</label>
+                {% render_field form.dob type="date" placeholder="DOB" class="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Age</label>
+                {% render_field form.age type="number" placeholder="Age" class+="form-input" %}
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+                <label class="p-1">Moblie Number</label>
+                {% render_field form.moblieno type="number" placeholder="Moblie Number" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Alternate Number</label>
+                {% render_field form.alternateno type="number" placeholder="Alternate Number" class+="form-input" %}
+            </div class="p-1">
+            <div>
+                <label class="p-1">Email ID</label>
+                {% render_field form.emailid type="email" placeholder="Emial-id" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label> </label>
+                
+                <input type="file" class="form-input " placeholder="Add Document" name="">
+            </div>
+            <div class="p-1">
+                <label class="p-1">Residential Address</label>
+                {% render_field form.address type="text" placeholder="Residential Address" class+="form-input" %}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Pan Number</label>
+                {% render_field form.panno type="number" placeholder="Pan No" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Aadhaar Number</label>
+                {% render_field form.aadhhaarno type="number" placeholder="Aadhaar Number" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Role</label>
+                {% render_field form.role type="choice" placeholder=" Number" class+="form-input"%}
+            </div>
+        </div>
+    </div>
+    <div class="panel p">
+        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Nominee Particulars</b></h1>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1"> 
+                <label class="p-1">Nominee Name</label>
+                {% render_field form.nomieename type="text" placeholder="Nominee Name" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Nominee Age</label>
+                {% render_field form.nomieeage type="text" placeholder="Nominee Age" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Nominee Relationship</label>
+                {% render_field form.nomieerelationship type="text" placeholder="Nominee Relationship" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Nominee Address</label>
+                {% render_field form.nomieeaddress type="text" placeholder="Nominee Address" class+="form-input"%}
+            </div>
+        </div>
+    </div>
+    <div class="panel p" id="container">
+        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Family Details</b></h1>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
+            <div class="p-1"> 
+                <label class="p-1">Family-Member Name</label>
+                {% render_field form.familymemname type="text" placeholder="Enter Family-Member Name" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Family-Member Age</label>
+                {% render_field form.familymemage type="text" placeholder="Enter Family-Member Age" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Family-Member Relationship</label>
+                {% render_field form.familymemrelation type="text" placeholder="Enter Family-Member Relationship" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1"></label>
+                <button class="btn btn-success text-lg font-semibold dark:text-white-light"type="button" onclick="add_more_field()">Add More</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Site Details</b></h1>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+                <label class="p-1">Project</label>
+                {% render_field form.project type="text" placeholder="Project Name" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Dimension</label>
+                {% render_field form.dimension type="text" placeholder="Dimension" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Total Site Value</label>
+                {% render_field form.total type="number" placeholder="Project Name" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Down Payment value</label>
+                {% render_field form.downpayment type="number" placeholder="Down payment value" class+="form-input"%}
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
+            <div class="p-1">
+                <label class="p-1" >Site Reference</label>
+                {% render_field form.siterefer type="text" placeholder="Site Reference" class+="form-input"%}
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <h2 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Payment Details</b></h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="p-1">
+                <label class="p-1">Mode of pay</label>
+                {% render_field form.modeofpay type="text" placeholder="Mode of pay" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Bank</label>
+                {% render_field form.bank type="text" placeholder="Bank Name" class+="form-input"%}
+                
+            </div>
+            <div class="p-1">
+                <label class="p-1">Branch</label>
+                {% render_field form.branch type="text" placeholder="Branch" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Cheque No</label>
+                {% render_field form.chequeno type="text" placeholder="Cheque No" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Pay Date</label>
+                {% render_field form.paydate type="date" placeholder="Pay Date" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label>Amount</label>
+                {% render_field form.amount type="number" placeholder="Amount" class+="form-input"%}
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 p-1">
+            <div class="p-1">
+                <label class="p-1">Seniority No</label>
+                {% render_field form.seniorityno type="number" placeholder="Seniority No" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">AM No</label>
+                {% render_field form.amno type="number" placeholder="Am no" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Receipt No</label>
+                {% render_field form.receiptno type="number" placeholder="Receipt No" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                <label class="p-1">Password</label>
+                {% render_field form.password type="text" placeholder="Password" class+="form-input"%}
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
+        <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light">Submit Application</button></center>
+    </div>
+</form>
+<div>
+    {% for message in messages %}
+    <h3>{{message}}</h3>
+    {% endfor %}
+</div>
+<script>
+    function add_more_field() {
+        var container = document.getElementById("container");
+        
+        var newRow = document.createElement("div");
+        newRow.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5 p-1">
+            <div class="p-1"> 
+                {% render_field form.familymemname type="text" placeholder="Enter Family-Member Name" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                {% render_field form.familymemage type="text" placeholder="Enter Family-Member Age" class+="form-input"%}
+            </div>
+            <div class="p-1">
+                {% render_field form.familymemrelation type="text" placeholder="Enter Family-Member Relationship" class+="form-input"%}
+            </div>
+            <button class="btn btn-danger text-lg font-semibold dark:text-white-light"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Close</button>
+        </div>
+        `;
+        
+        container.appendChild(newRow);
+    }
+    function remove_field(button) {
+        var row = button.parentNode;
+        row.parentNode.removeChild(row);
+    }
+</script>
+{% endblock %}

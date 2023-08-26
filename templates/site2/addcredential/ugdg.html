@@ -1,0 +1,100 @@
+{% extends 'site2/index.html'%}
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+    <div class="p-2">
+        <ul class="flex space-x-2 rtl:space-x-reverse">
+            <li>
+                <a href="home1" class="text-primary hover:underline" style="font-size: larger;">Dashboard</a>
+            </li>
+            <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1" style="font-size: larger;">
+                <span>UGDG</span>
+            </li>
+        </ul>
+    </div>
+    <div class="panel p" id="container" >
+        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Add UGDG</b></h1>
+        <div class="p-1">
+            <label class="p-1"></label>
+            <button class="btn btn-success text-lg font-semibold dark:text-white-light"type="button" onclick="add_more_field()">Add More</button>
+        </div>
+    </div>
+    <script>
+        function add_more_field() {
+            var container = document.getElementById("container");
+            
+            var newRow = document.createElement("div");
+            newRow.innerHTML = `
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
+            <div class="p-1">
+                <label class="p-1">Seniority No</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">Cust Name</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">Date Of Change</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">Type of Dim Change</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">SFT - From</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">SFT - To</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">Diff</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">Exective</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">Team Lead</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">SR Team Lead</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">Project Head</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">Type of BKG</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">INDVL Paid</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">TL Paid</label>
+                <input>
+            </div>
+            <div class="p-1">
+                <label class="p-1">STL Paid</label>
+                <input>
+            </div>
+            <button class="btn btn-danger text-lg font-semibold dark:text-white-light p-1"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Close</button>
+        </div>
+            `;
+            
+            container.appendChild(newRow);
+        }
+        function remove_field(button) {
+            var row = button.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'page/customer/index.html' %}
+{% block content %}
+{% load static %}
+<div class="panel mt-6">
+  <table>
+      <thead>
+          <tr>
+              <th>S.NO</th>
+              <th>Customer Name</th>
+              <th>Date of Receipt</th>
+              <th>Receipt No</th>
+              <th>Cheque No</th>
+              <th>Amount</th>
+              <th>Pay Status</th>
+              <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td></td>
+              <td>Muthu</td>
+            
+              <td>12-june-2023</td>
+              <td>4</td>
+              <td>125000</td>
+              <td></td>
+              <td><a href="pdf">Download PDF</a></td>
+          </tr>
+      </tbody>
+  </table>
+  
+</div>
+
+
+{% endblock %}
