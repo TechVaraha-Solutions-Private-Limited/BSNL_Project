@@ -1,5 +1,5 @@
 from django.urls import path
-from ..userdata.views import add_new_bookings
+from .views import add_new_bookings
 
 
 urlpatterns = [

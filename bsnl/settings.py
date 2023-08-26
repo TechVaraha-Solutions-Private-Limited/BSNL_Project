@@ -147,6 +147,7 @@ STATICFILES_DIRS = [
 PROFILE_UPLOAD_PATH = 'profile/'
 AADHAR_UPLOAD_PATH = 'aadhar/'
 PAN_UPLOAD_PATH = 'pan/'
+PROJECT_UPLOAD_PATH = 'project'
 
 IMAGE_URL ='Images/'
 IMAGE=[os.path.join(BASE_DIR,'images/')]

@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime,date
-from dashboard.userdata.models import User
+from dashboard.members.models import User
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class Newbooking(models.Model):
