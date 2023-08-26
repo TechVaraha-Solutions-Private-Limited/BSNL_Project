@@ -1,0 +1,224 @@
+{% extends 'site2/index.html' %}
+{% block content %}
+{% load static %}
+<div class="p-2">
+    <ul class="flex space-x-2 rtl:space-x-reverse">
+        <li>
+            <a href="home1" class="text-primary hover:underline" style="font-size: larger;">Dashboard</a>
+        </li>
+        <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1" style="font-size: larger;">
+            <span>New Booking</span>
+        </li>
+    </ul>
+</div>
+<form class="space-y-5 " method="POST" action="">
+    {% csrf_token %}
+    <label class="text-lg font-semibold dark:text-white-light p-2" style="background-color: blueviolet; border-radius: 9px;"><b>ADD CREDENTIALS - New Booking</b></label>
+    <h2 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Member Particulars</b></h2>
+    <div class="panel">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+                <label class="p-1">Member Name</label>
+                <input type="text" name="first_name"  class="form-input" placeholder="Member Name" required>
+            </div>
+            <div class="p-1">
+                <label class="p-1">Father/Husband Name</label>
+                <input type="text" name="last_name"  class="form-input" placeholder="Surname Name" required>
+            </div>
+            <div class="p-1">
+                <label class="p-1">Date of Brith</label>
+                <input type="text" name="dob"  class="form-input" placeholder="DOB" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Age</label>
+                <input type="number" name="age"  class="form-input" placeholder="Age" >
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+                <label class="p-1">Moblie Number</label>
+                <input type="text" name="mobile_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Alternate Number</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div class="p-1">
+            <div>
+                <label class="p-1">Email ID</label>
+                <input type="email" name="email_id"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label> </label>
+                <input type="file" class="form-input" placeholder="Add Document" name="">
+            </div>
+            <div class="p-1">
+                <label class="p-1">Residential Address</label>
+                <textarea class="form-textarea" name="address" rows="3"></textarea>
+
+            </div>
+            <div class="p-1">
+                <label class="p-1">Pan Number</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Aadhaar Number</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            
+        </div>
+        </div>
+    </div>
+    <div class="panel p">
+        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Nominee Particulars</b></h1>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1"> 
+                <label class="p-1">Nominee Name</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Nominee Age</label>
+                <input type="number" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Nominee Relationship</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Nominee Address</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+        </div>
+    </div>
+    <div class="panel p" id="container">
+        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Family Details</b></h1>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
+            <div class="p-1"> 
+                <label class="p-1">Family-Member Name</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Family-Member Age</label>
+                <input type="age" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Family-Member Relationship</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1"></label>
+                <button class="btn btn-success text-lg font-semibold dark:text-white-light"type="button" onclick="add_more_field()">Add More</button>
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Site Details</b></h1>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+                <label class="p-1">Project</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Dimension</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Total Site Value</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Down Payment value</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
+            <div class="p-1">
+                <label class="p-1" >Site Reference</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+        </div>
+    </div>
+    <div class="panel">
+        <h2 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Payment Details</b></h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="p-1">
+                <label class="p-1">Mode of pay</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Bank</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+                
+            </div>
+            <div class="p-1">
+                <label class="p-1">Branch</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Cheque No</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Pay Date</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label>Amount</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 p-1">
+            <div class="p-1">
+                <label class="p-1">Seniority No</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">AM No</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Receipt No</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <label class="p-1">Password</label>
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
+        <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light">Submit Application</button></center>
+    </div>
+</form>
+<div>
+    {% for message in messages %}
+    <h3>{{message}}</h3>
+    {% endfor %}
+</div>
+<script>
+    function add_more_field() {
+        var container = document.getElementById("container");
+        
+        var newRow = document.createElement("div");
+        newRow.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5 p-1">
+            <div class="p-1"> 
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <div class="p-1">
+                <input type="text" name="alternate_no"  class="form-input" >
+            </div>
+            <button class="btn btn-danger text-lg font-semibold dark:text-white-light"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Close</button>
+        </div>
+        `;
+        
+        container.appendChild(newRow);
+    }
+    function remove_field(button) {
+        var row = button.parentNode;
+        row.parentNode.removeChild(row);
+    }
+</script>
+{% endblock %}
