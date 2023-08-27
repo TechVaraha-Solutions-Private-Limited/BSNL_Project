@@ -1,0 +1,27 @@
+{% extends 'site2/index.html' %}
+{% block content %}
+{% load static %}
+
+
+<form class="space-y-5" method="POST" action="">
+    {% csrf_token %}
+    <label class="text-xl font-semibold dark:text-white-light p-2" style="background-color: blueviolet;"><b>Add User Role</b></label>
+    <div class="panel">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5"> 
+           
+            <div>
+                <label>Name</label>
+                <input type="text" name="name"  class="form-input" >
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
+                <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light">Submit</button></center>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+{% endblock %}

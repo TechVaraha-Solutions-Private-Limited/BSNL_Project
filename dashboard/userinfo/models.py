@@ -32,9 +32,24 @@ class MyUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
+class Role(models.Model):
+    name = models.CharField(max_length=300)
+    created_on = models.DateTimeField(auto_now_add=True, null=True)
+    updated_on = models.DateTimeField(auto_now=True, null=True)
+
+class RoleGroup(models.Model):
+    name = models.ForeignKey(Role, on_delete=models.CASCADE)
+    module_name = models.CharField(max_length=100,null=True)
+    add =  models.SmallIntegerField(default=0)
+    view =  models.SmallIntegerField(default=0)
+    update =  models.SmallIntegerField(default=0)
+    remove =  models.SmallIntegerField(default=0)
+    created_on = models.DateTimeField(auto_now_add=True, null=True)
+    updated_on = models.DateTimeField(auto_now=True, null=True)
+
 
 class User(AbstractBaseUser):
-    role = models.CharField(max_length=10, null=True) 
+    role = models.ForeignKey(Role,on_delete=models.DO_NOTHING, null=True) 
     email = models.EmailField(verbose_name='email', max_length=100, unique=True, null=True) 
     first_name = models.CharField(max_length=50, null=True) 
     last_name = models.CharField(max_length=50, null=True) 
@@ -88,4 +103,7 @@ class UserFamilyDetails(models.Model):
     member_relation = models.CharField(max_length=300,null=True)
     created_on = models.DateTimeField(auto_now_add=True, null=True)
     updated_on = models.DateTimeField(auto_now=True, null=True)
+
+
+
 
