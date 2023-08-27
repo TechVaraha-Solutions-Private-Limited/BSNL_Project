@@ -79,3 +79,13 @@ class UserNominee(models.Model):
     nominee_relationship=models.CharField(max_length=20,null=True)
     created_on = models.DateTimeField(auto_now_add=True, null=True)
     updated_on = models.DateTimeField(auto_now=True, null=True)
+
+
+class UserFamilyDetails(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=False)
+    member_name=models.CharField(max_length=100,null=True)
+    member_age=models.CharField(max_length=10,null=True)
+    member_relation = models.CharField(max_length=300,null=True)
+    created_on = models.DateTimeField(auto_now_add=True, null=True)
+    updated_on = models.DateTimeField(auto_now=True, null=True)
+
