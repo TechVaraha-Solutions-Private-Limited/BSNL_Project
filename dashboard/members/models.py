@@ -3,9 +3,6 @@ from bsnl import settings
 from dashboard.projects.models import LandDetails
 from dashboard.userinfo.models import User
 
-
-
-
 class Bookings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(LandDetails, on_delete=models.CASCADE)
@@ -15,8 +12,6 @@ class Bookings(models.Model):
     # updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
-
-
 
 class PaymentDetails(models.Model):
     booking = models.ForeignKey(Bookings, on_delete=models.CASCADE)
@@ -28,8 +23,3 @@ class PaymentDetails(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
-
-
-
-
-     

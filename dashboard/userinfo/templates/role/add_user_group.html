@@ -7,27 +7,29 @@
     {% csrf_token %}
     <label class="text-xl font-semibold dark:text-white-light p-2" style="background-color: blueviolet;"><b>Add User Role</b></label>
     <div class="panel">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5"> 
-           
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5"> 
             <div>
                 <label>Name</label>
                 <input type="text" name="name"  class="form-input" >
             </div>
-            <div>
-                <label>Read</label>
-                <input type="checkbox" class="form-checkbox" checked />
-            </div>
-            <div>
-                <label>Write</label>
-                <input type="checkbox" class="form-checkbox" checked />
-            </div>
-            <div>
-                <label>Update</label>
-                <input type="checkbox" class="form-checkbox" checked />
-            </div>
-            <div>
-                <label>Delete</label>
-                <input type="checkbox" class="form-checkbox" checked />
+            <div>   
+                </div>
+                <div>
+                    <label>Read</label>
+                    <input type="checkbox" class="form-checkbox" checked />
+                </div>
+                <div>
+                    <label>Write</label>
+                    <input type="checkbox" class="form-checkbox" checked />
+                </div>
+                <div>
+                    <label>Update</label>
+                    <input type="checkbox" class="form-checkbox" checked />
+                </div>
+                <div>
+                    <label>Delete</label>
+                    <input type="checkbox" class="form-checkbox" checked />
+                </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
