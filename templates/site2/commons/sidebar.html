@@ -381,7 +381,7 @@
                                 <circle cx="9.00098" cy="6" r="4" fill="currentColor" />
                                 <ellipse cx="9.00098" cy="17.001" rx="7" ry="4" fill="currentColor" />
                             </svg>
-                            <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Add Project</span>
+                            <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Project Info</span>
                         </div>
                         <div class="rtl:rotate-180" :class="{'!rotate-90' : activeDropdown === 'addproject'}">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -396,7 +396,7 @@
                     <ul x-cloak x-show="activeDropdown === 'addproject'" x-collapse class="sub-menu text-gray-500">
                         <li x-data="{subActive:null}">
                             <button type="button" class="before:h-[5px] bord before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900" @click="subActive === 'error' ? subActive = null : subActive = 'error'">
-                                Add Project
+                                Project
                                 <div class="ltr:ml-auto rtl:mr-auto rtl:rotate-180" :class="{'!rotate-90' : subActive === 'error'}">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 5L15 12L9 19"
@@ -409,6 +409,9 @@
                             </button>
                             <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'error'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
                                 <li>
+                                    <a href="project">Add Project</a>
+                                </li>
+                                <li>
                                     <a href="project">List Project</a>
                                 </li>
                             </ul>
@@ -417,7 +420,7 @@
                         
                         <li x-data="{subActive:null}">
                             <button type="button" class="before:h-[5px] bord before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900" @click="subActive === 'site' ? subActive = null : subActive = 'site'">
-                                Add Plots Size
+                                Plots Size
                                 <div class="ltr:ml-auto rtl:mr-auto rtl:rotate-180" :class="{'!rotate-90' : subActive === 'site'}">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 5L15 12L9 19"
@@ -430,6 +433,9 @@
                             </button>
                             <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'site'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
                                 <li>
+                                    <a href="project">Add Plots Size</a>
+                                </li>
+                                <li>
                                     <a href="project">List Plots Size</a>
                                 </li>
                             </ul>
@@ -437,7 +443,7 @@
                        
                         <li x-data="{subActive:null}">
                             <button type="button" class="before:h-[5px] bord before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900" @click="subActive === 'Info' ? subActive = null : subActive = 'Info'">
-                                Add Land Info
+                                 Land Info
                                 <div class="ltr:ml-auto rtl:mr-auto rtl:rotate-180" :class="{'!rotate-90' : subActive === 'Info'}">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 5L15 12L9 19"
@@ -449,6 +455,9 @@
                                 </div>
                             </button>
                             <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'Info'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
+                                <li>
+                                    <a href="project">Add Land Info</a>
+                                </li>
                                 <li>
                                     <a href="project">List Land Info</a>
                                 </li>
