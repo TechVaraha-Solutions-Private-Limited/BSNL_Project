@@ -5,15 +5,14 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from .models import User
 
-
 def admin_login(request):
     if request.method == 'POST':
         email = request.POST.get('email', '')
         password = request.POST.get('password', '')
         user = authenticate(request,email=email, password=password)
         if user and user.is_active:
-            login(request, user) 
-            return redirect('')
+            login(request, user)
+            return redirect('/members/home')
     return render(request, 'login.html')
 
 # @admin_only

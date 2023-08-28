@@ -3,6 +3,8 @@ from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNomi
 from .models import Bookings,PaymentDetails
 
 # Create your views here.
+def home(request):
+    return render(request,'common/index.html')
 
 def add_new_bookings(request):
     if request.method=='POST':
@@ -11,7 +13,8 @@ def add_new_bookings(request):
         user.last_name=request.POST.get('last_name')
         user.mobile_no = request.POST.get('mobile_no')
         user.email = request.POST.get('email')
-        user.is_password_set = request.POST.get('password')
+        user.password = request.POST.get('password')
+        user.is_password_set = request.POST.get('')
         user.save()
 
         details = UserDetail()
@@ -67,3 +70,23 @@ def booksum(request):
 
 def bss(request):
     return render(request,'home/bss.html')
+
+def generate(request):
+    return render(request,'new_bookings/generate.html')
+def ugdg(request):
+    return render(request,'new_bookings/ugdg.html')
+
+def transfer(request):
+    return render(request,'new_bookings/transfer.html')
+
+def site_visit(request):
+    return render(request,'new_bookings/site_visit.html')
+
+def lead_owner(request):
+    return render(request,'new_bookings/lead_owner.html')
+
+def cancel(request):
+    return render(request,'new_bookings/cancel.html')
+
+def receipts(request):
+    return render(request,'view/receipts.html')

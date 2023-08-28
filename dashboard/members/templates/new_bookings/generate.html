@@ -1,0 +1,90 @@
+{% extends 'site2/index.html'%}
+{% block content %}
+{% load static %}
+
+<form method="POST" class="space-y-5">
+    {% csrf_token %}
+    <div class="panel" >
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <label for="search_membername">Search your Customer:</label>
+            <input type="text" class="form-input" name="search_membername" id="search_membername" required>
+            <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
+        </div>
+    </div>
+</form>
+
+{% if matching_customers %}
+<form method="POST" action="" class="space-y-5">
+    {% csrf_token %}
+    <ul>
+        {% for customer in matching_customers %}
+            <li>
+                <div class="panel">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div>
+                            <label for="customer">Customers:</label>
+                            <input class="form-input" type="text" name="username"  value="{{ customer.username }}">
+                        </div>
+                        <div>
+                            <label for="seniorityno">Seniority No:</label>
+                            <input class="form-input" type="text" name="seniorityno"value="{{ customer.seniorityno }}">
+                        </div>
+                        <div >
+                            <label for="amount">Amount:</label>
+                            <input class="form-input" type="text" name="amount" value="{{ customer.amount }}">
+                        </div>
+                        <div class="p-1">
+                            <label for="dimension">Dimension</label>
+                            <input class="form-input" type="text" name="dimension"  value="{{ customer.dimension }}">
+                        </div>
+                        <div class="p-1">
+                            <label for="modeofpay">Modeofpay</label>
+                            <input class="form-input" type="text" name="modeofpay" value="123">
+                        </div>
+                        <div class="p-1">
+                            <label for="bank">bank</label>
+                            <input class="form-input" type="text" name="bank">
+                        </div>
+                        <div class="p-1">
+                            <label for="chequeno">chequeno</label>
+                            <input class="form-input" type="text" name="chequeno">
+                        </div>
+                        <div class="p-1">
+                            <label for="branch">branch</label>
+                            <input class="form-input" type="text" name="branch">
+                        </div>
+                        <div class="p-1">
+                            <label for="paydate">paydate</label>
+                            <input class="form-input" type="date" name="paydate">
+                        </div>
+                        <div class="p-1">
+                            <label for="paystatus">paystatus</label>
+                            <input class="form-input" type="text" name="paystatus">
+                        </div>
+                        <div class="p-1">
+                            <label for="dateofreceipt">dateofreceipt</label>
+                            <input  class="form-input" type="date" name="dateofreceipt">
+                        </div>
+                        
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div>
+                            <label></label>
+                        </div>
+                        <div class="p-1">
+                            <center><button type="submit" class="btn btn-success text-lg font-semibold dark:text-white-light" name="action" value="create_order">Create Order</button></center>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</form>
+    
+{%endif%}
+{% if order_created %}
+    <div>
+        Order for {{ selected_customer.membername }} created successfully!
+    </div>
+{% endif %}
+{% endblock %}
