@@ -3,6 +3,7 @@ from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNomi
 from .models import Bookings,PaymentDetails
 
 # Create your views here.
+
 def add_new_bookings(request):
     if request.method=='POST':
         user=User()
@@ -60,3 +61,9 @@ def add_new_bookings(request):
         # payments.amount = request.POST.get('amount')
         # payments.save()
     return render(request, 'new_bookings/add_new_bookings.html')
+
+def booksum(request):
+    return render(request,'home/booksum.html')
+
+def bss(request):
+    return render(request,'home/bss.html')

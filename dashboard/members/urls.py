@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import add_new_bookings
+from .views import add_new_bookings,booksum,bss
 
 
 urlpatterns = [
-    path('', add_new_bookings, name='add_new_bookings'),
+    path('newbooking', add_new_bookings, name='newbooking'),
+    path('booksum',booksum,name='booksum'),
+    path('bss',bss,name='bss'),
 ]

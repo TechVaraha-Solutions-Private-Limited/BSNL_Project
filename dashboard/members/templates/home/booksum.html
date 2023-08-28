@@ -1,0 +1,445 @@
+{% extends 'site2/index.html' %}
+
+{% block content %}
+<style>
+    h1 {
+        font: 20px
+    }
+</style>
+<div class="p-2">
+    <ul class="flex space-x-2 rtl:space-x-reverse">
+        <li>
+            <a href="home1" class="text-primary hover:underline" style="font-size: larger;">Dashboard</a>
+        </li>
+        <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1" style="font-size: larger;">
+            <span>BookSummary</span>
+        </li>
+    </ul>
+</div>
+<div  class="panel">
+    <label for="browser">Choose your browser from the list:</label>
+    <select id="inputfield">
+        <option>--Select Option--</option>
+        <option value="Project Wise" :class="{'active' : activeDropdown === 'Project Wise'}">Project WIse</option>
+        <option value="Year Wise">Year Wise</option>
+        <option value="Team Wise">Team Wise</option>
+    </select>
+</div>
+
+    <div class="table-responsive" id="mytable" style="display: none;margin-left:auto;margin-right:auto;">
+        <table class="table-hover">
+            <thead>
+                <tr>
+                    <th><b>Project Wise</b></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>1200</th>
+                    <th>1500</th>
+                    <th>2400</th>
+                    <th>4000</th>
+                    <th>2200</th>
+                    <th>Total</th>
+                </tr>
+                <tr>
+                    <th><b>Highway Green</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <!--Highway Green II-->
+            <thead>
+                <tr>
+                    <th><b>Highway Green II</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+
+            <!--bg-->
+
+            <thead>
+                <tr>
+                    <th><b>Bhishma Greens</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+
+            <!--bg2-->
+
+            <thead>
+                <tr>
+                    <th><b>Bhishma Greens II</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <!--ks-->
+            <thead>
+                <tr>
+                    <th><b>Kaveri Sagara</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <!--ku-->
+            <thead>
+                <tr>
+                    <th><b>Kubera and Urban Greens</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <!--tot-->
+            <thead>
+                <tr>
+                    <th><b>Total</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--year Wise-->
+    <div class="table-responsive" id="project" style="display: none;margin-left:auto;margin-right:auto;">
+        <table class="table-hover">
+            <thead>
+                <tr>
+                    <th><b>Year Wise</b></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>2016</th>
+                    <th>2017</th>
+                    <th>2018</th>
+                    <th>2019</th>
+                    <th>2020</th>
+                    <th>2021</th>
+                    <th>Total</th>
+                </tr>
+                <tr>
+                    <th><b>Highway Green</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <!--hg11-->
+            <thead>
+                <tr>
+                    <th><b>Highway Green II</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <!--bg-->
+            <thead>
+                <tr>
+                    <th><b>Bhishma Greens</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <!--bgII-->
+            <thead>
+                <tr>
+                    <th><b>Bhishma GreensII</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <!--kv-->
+            <thead>
+                <tr>
+                    <th><b>Kaveri Sagara</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <!--ks-->
+            <thead>
+                <tr>
+                    <th><b>Kubera and Urban Greens</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <!--tot-->
+            <thead>
+                <tr>
+                    <th><b>Total</b></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--Team Wise-->
+    <div class="table-responsive" id="team" style="display: none;margin-left:auto;margin-right:auto;">
+        <table class="table-hover">
+            <thead>
+                <tr>
+                    <th>Team Wise</th>
+                </tr>
+                <tr>
+                    <th>Highway Green</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>1200</th>
+                    <th>1500</th>
+                    <th>2400</th>
+                    <th>4000</th>
+                    <th>2200</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th>Highway Green II</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>1200</th>
+                    <th>1500</th>
+                    <th>2400</th>
+                    <th>4000</th>
+                    <th>2200</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>No.of.Booking</td>
+                    <td>10</td>
+                    <td>15</td>
+                    <td>9</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>34</td>
+                </tr>
+                <tr>
+                    <td>Sq.Ft</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+<script>
+    const inputField = document.getElementById('inputfield');
+    const myTable = document.getElementById('mytable');
+    const Project = document.getElementById('project');
+    const Team = document.getElementById('team');
+
+    inputField.addEventListener('input', function () {
+        if (inputField.value === 'Project Wise') {
+            myTable.style.display = 'table';// Show the table
+            Project.style.display = 'none';
+            Team.style.display = 'none';
+        } else if (inputField.value === 'Year Wise') {
+            myTable.style.display = 'none';// Show the table
+            Project.style.display = 'table';
+            Team.style.display = 'none';
+        } else if (inputField.value === 'Team Wise') {
+            myTable.style.display = 'none';// Show the table
+            Project.style.display = 'none';
+            Team.style.display = 'table';
+        }
+        else {
+            myTable.style.display = 'none';
+            Project.style.display = 'none';
+            Team.style.display = 'none'; // Hide the table
+        }
+    });
+</script>
+{% endblock %}

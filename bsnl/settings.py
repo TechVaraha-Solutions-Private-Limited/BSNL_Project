@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'dashboard.members',
     'dashboard.documents',
     'dashboard.reports',
+    
 ]
 
 MIDDLEWARE = [

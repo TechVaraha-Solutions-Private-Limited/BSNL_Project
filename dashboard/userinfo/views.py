@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 
 
 
-
 def admin_login(request):
     if request.method == 'POST':
         email = request.POST.get('email', '')
