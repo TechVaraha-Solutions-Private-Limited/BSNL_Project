@@ -7,13 +7,13 @@ from bsnl import settings
 
 #Project
 class Project(models.Model):
-	projectname=models.CharField(max_length=100, null=True)
-	shotcode = models.CharField(max_length=100)
-	dp_price = models.CharField(max_length=100)
-	first_install = models.CharField(max_length=100)
-	second_install = models.CharField(max_length=100)
-	third_install = models.CharField(max_length=100)
-	status = models.CharField(max_length=100)
+	projectname=models.CharField(max_length=100)
+	shortcode = models.CharField(max_length=100)
+	dp_price = models.IntegerField()
+	first_install = models.IntegerField()
+	second_install = models.IntegerField()
+	third_install = models.IntegerField()
+	status = models.SmallIntegerField(default=1, null=True)
 	images = models.ImageField(upload_to= settings.PROJECT_UPLOAD_PATH, null=True)  
 	address = models.CharField(max_length=100)
 	updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -42,6 +42,3 @@ class LandDetails(models.Model):
 	updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	created_on = models.DateTimeField(auto_now_add=True)
 	updated_on =  models.DateTimeField(auto_now=True)
-
-
-

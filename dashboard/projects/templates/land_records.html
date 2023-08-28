@@ -1,0 +1,87 @@
+
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+{% include 'bootstrap.html' %}
+
+<style>
+    h6,input{
+        margin-top: 15px;
+        display: block;
+    }
+
+    .divbox{
+        box-shadow: 0px 0px 5px #007bff;
+        border-radius: 1%;
+    }
+
+    .addproject{
+        text-align: center;
+        padding:15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+        font-size: 19px;
+    }
+
+    .fa-trash-o{
+        margin-left: 10px;
+    }
+
+</style>
+
+<div class="divbox p-3 mt-2 table-responsive">
+<h3 class="font-weight-bold mt-4 addproject">PROJECT LIST</h3>
+<table class="table table-bordered bg-white">
+    {% if landdetails %}
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Project Name</th>
+            <th>Plot Size</th>
+            <th>Per Square Feet Amount</th>
+            <th>Total Amount</th>
+            <th>Down Payment</th>
+            <th>First Installment</th>
+            <th>Second Installment</th>
+            <th>Third Installment</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for landdetail in landdetails %}
+        <tr>
+            <td>{{landdetail.id}}</td>
+            <td>{{landdetail.project_id}}</td>
+            <td>{{landdetail.plotsize_id}}</td>
+            <td>{{landdetail.per_square_feet_amount}}</td>
+            <td>{{landdetail.total_amount}}</td>
+            <td>{{landdetail.down_payment}}</td>
+            <td>{{landdetail.installment_1}}</td>
+            <td>{{landdetail.installment_2}}</td>
+            <td>{{landdetail.installment_3}}</td>
+            <td>
+                {% if landdetail.status == 1 %}
+                Active
+                {% else %}
+                Inactive
+                {% endif %}
+            </td>
+            <td>
+                <div class="text-center">
+                    <a href="{% url 'updatelandrecords' landdetail.id %}"><i class="fa fa-pencil"></i></a>
+                    <a href="{% url 'deletelandrecords' landdetail.id %}"><i class="fa fa-trash-o"></i></a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h5 class="text-center">No Projects Added</h5>
+{% endif %}
+</div>
+{% endblock %}

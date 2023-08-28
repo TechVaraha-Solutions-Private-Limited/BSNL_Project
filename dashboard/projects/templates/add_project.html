@@ -1,39 +1,86 @@
-{% extends 'site2/index.html' %}
+{% extends 'index.html' %}
 {% block content %}
 {% load static %}
 {% load widget_tweaks %}
+{% include 'bootstrap.html' %}
 
-<div class="p-2">
-    <ul class="flex space-x-2 rtl:space-x-reverse">
-        <li>
-            <a href="home1" class="text-primary hover:underline" style="font-size: larger;">Dashboard</a>
-        </li>
-        <li class="before:content-['/'] ltr:before:mr-1 rtl:before:ml-1" style="font-size: larger;">
-            <span>Project</span>
-        </li>
-    </ul>
-</div>
-<form class="space-y-5" method="POST" action="" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label class="text-xl font-semibold dark:text-white-light p-2" style="background-color: blueviolet;"><b>New Project</b></label>
-    <div class="panel">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5"> 
-            
-            <div>
-                <label>Short Code</label>
-                <input type="text" name="alternate_no"  class="form-input" >
-            </div>
-            <div>
-                <label>Dp Price</label>
-                <input type="text" name="alternate_no"  class="form-input" >
-            </div>
-       
-            
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
-                <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light">Submit Application</button></center>
-            </div>
-        </div>
+<style>
+    h6,input{
+        margin-top: 15px;
+        display: block;
+    }
+
+    .divbox{
+        box-shadow: 0px 0px 5px #007bff;
+        border-radius: 1%;
+    }
+
+    .addproject{
+        text-align: center;
+        padding:15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+        font-size: 19px;
+    }
+
+</style>
+
+<div class="divbox p-3 mt-2">
+<h3 class="font-weight-bold mt-4 addproject">ADD YOUR PROJECT</h3>
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
+    <div>
+        <label>Project Name</label>
+        <input type="text" name="projectname" class="form-input" placeholder="Enter Project Name" required>
     </div>
-</form>
+    <div>
+        <label>Short Code</label>
+        <input type="text" name="shortcode" class="form-input" placeholder="Enter Short Code" required>
+    </div>
 
+    <div>
+        <label>DP Price</label>
+        <input type="number" name="dpprice" class="form-input" placeholder="Enter DP Price" required>
+    </div>
+</div>
+
+
+<div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
+    <div>
+        <label>First Installment</label>
+        <input type="number" name="firstinstallment" class="form-input" placeholder="Enter First Installment" required>
+    </div>
+
+    <div>
+        <label>Second Installment</label>
+        <input type="number" name="secondinstallment" class="form-input" placeholder="Enter Second Installment" required>
+    </div>
+
+    <div>
+        <label>Third Installment</label>
+        <input type="number" name="thirdinstallment" class="form-input" placeholder="Enter Third Installment" required>
+    </div>
+</div>
+
+<div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
+    <div>
+        <label>Address</label>
+        <input type="text" name="address" class="form-input" placeholder="Enter Property Address" required>
+    </div>
+    <div>
+        <label>Upload Image</label>
+        <input name="imageupload" type="file" accept="image/*" required>
+    </div>
+</div>
+
+<div class="text-center">
+    <input type="submit" value="Add Project" class="btn btn-primary mt-5">
+        <input type="reset" value="Clear" class="btn btn-danger mt-5">
+    
+</div>
+</form>
+</div>
 {% endblock %}

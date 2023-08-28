@@ -1,0 +1,82 @@
+
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+{% load widget_tweaks %}
+{% include 'bootstrap.html' %}
+
+<style>
+    h6,input{
+        margin-top: 15px;
+        display: block;
+    }
+
+    .divbox{
+        box-shadow: 0px 0px 5px #007bff;
+        border-radius: 1%;
+    }
+
+    .addproject{
+        text-align: center;
+        padding:15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+        font-size: 19px;
+    }
+
+    .fa-trash-o{
+        margin-left: 15px;
+    }
+</style>
+
+<div class="divbox p-3 mt-2 table-responsive">
+<h3 class="font-weight-bold mt-4 addproject">PROJECT LIST</h3>
+<table class="table table-bordered bg-white text-center">
+    {% if projectslists %}
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Project Name</th>
+            <th>Short Code</th>
+            <th>DP Price</th>
+            <th>First Installment</th>
+            <th>Second Installment</th>
+            <th>Third Installment</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for projectslist in projectslists %}
+        <tr>
+            <td>{{projectslist.id}}</td>
+            <td>{{projectslist.projectname}}</td>
+            <td>{{projectslist.shortcode}}</td>
+            <td>{{projectslist.dp_price}}</td>
+            <td>{{projectslist.first_install}}</td>
+            <td>{{projectslist.second_install}}</td>
+            <td>{{projectslist.third_install}}</td>
+            <td>
+                {% if projectslist.status == 1 %}
+                Active
+                {% else %}
+                Inactive
+                {% endif %}
+            </td>
+            <td>
+                <div class="text-center">
+                    <a href="{% url 'updateprojectlist' projectslist.id %}"><i class="fa fa-pencil"></i></a>
+                    <a href="{% url 'deleteprojectlist' projectslist.id %}"><i class="fa fa-trash-o"></i></a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<h5 class="text-center">No Projects Added</h5>
+{% endif %}
+</div>
+{% endblock %}

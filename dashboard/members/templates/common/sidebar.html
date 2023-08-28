@@ -52,10 +52,10 @@
                     </button>
                     <ul x-cloak x-show="activeDropdown === 'dashboard'" x-collapse class="sub-menu text-gray-500">
                         <li>
-                            <a href="/members/booksum">Booking Summary</a>
+                            <a href="booksum">Booking Summary</a>
                         </li>
                         <li>
-                            <a href="/members/bss">Bank Statement Summmary</a>
+                            <a href="bss">Bank Statement Summmary</a>
                         </li>
                     </ul>
                 </li>
@@ -90,25 +90,25 @@
                     </button>
                     <ul x-cloak x-show="activeDropdown === 'addcredentials'" x-collapse class="sub-menu text-gray-500">
                         <li>
-                            <a href="/members/newbooking">New Booking</a>
+                            <a href="newbooking">New Booking</a>
                         </li>
                         <li>
-                            <a href="/members/generate">Generate Receipt</a>
+                            <a href="generate">Generate Receipt</a>
                         </li>
                         <li>
-                            <a href="/members/ugdg">UGDG</a>
+                            <a href="ugdg">UGDG</a>
                         </li>
                         <li>
-                            <a href="/members/transfer">Transfer</a>
+                            <a href="transfer">Transfer</a>
                         </li>
                         <li>
-                            <a href="/members/cancel">Cancellation</a>
+                            <a href="cancel">Cancellation</a>
                         </li>
                         <li>
-                            <a href="/members/lead_owner">Lead Owner</a>
+                            <a href="leadowner">Lead Owner</a>
                         </li>
                         <li>
-                            <a href="/members/site_visit">Site Visit</a>
+                            <a href="site_visit">Site Visit</a>
                         </li>
                         <li>
                             <a href="apps-invoice-edit.html">Bank STMT Tally</a>
@@ -160,7 +160,7 @@
                             <a href="apps-invoice-preview.html">Inactive Member</a>
                         </li>
                         <li>
-                            <a href="/members/receipt">Receipts</a>
+                            <a href="receipt">Receipts</a>
                         </li>
                         <li>
                             <a href="confirmletter">Confirmation Letter</a>
@@ -409,10 +409,10 @@
                             </button>
                             <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'error'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
                                 <li>
-                                    <a href="project">Add Project</a>
+                                    <a href=" /projects/addproject">Add Project</a>
                                 </li>
                                 <li>
-                                    <a href="project">List Project</a>
+                                    <a href="/projects/projectlist">Project List</a>
                                 </li>
                             </ul>
                         </li>
@@ -433,10 +433,7 @@
                             </button>
                             <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'site'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
                                 <li>
-                                    <a href="project">Add Plots Size</a>
-                                </li>
-                                <li>
-                                    <a href="project">List Plots Size</a>
+                                    <a href="{% url 'addplotsize' %}">Add Plots Size</a>
                                 </li>
                             </ul>
                         </li>
@@ -456,10 +453,10 @@
                             </button>
                             <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'Info'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
                                 <li>
-                                    <a href="project">Add Land Info</a>
+                                    <a href="{% url 'addlandinfo' %}">Add Land Info</a>
                                 </li>
                                 <li>
-                                    <a href="project">List Land Info</a>
+                                    <a href="{% url 'landrecords' %}">Land Records</a>
                                 </li>
                             </ul>
                         </li>
