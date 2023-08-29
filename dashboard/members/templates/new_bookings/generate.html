@@ -1,6 +1,12 @@
 {% extends 'site2/index.html'%}
 {% block content %}
 {% load static %}
+{% include 'common/bootstrap.html'%}
+<style>
+    a{
+        color: black;
+    }
+</style>
 
 <form method="POST" class="space-y-5">
     {% csrf_token %}

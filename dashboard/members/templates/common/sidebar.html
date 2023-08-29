@@ -1,3 +1,4 @@
+
 <div :class="{'dark text-white-dark' : $store.app.semidark}">
     <nav x-data="sidebar "
          class="sidebar fixed  top-0 bottom-0 z-50 h-full min-h-screen w-[260px] shadow-[5px_0_25px_0_rgba(94,92,154,0.1)] transition-all duration-300">
@@ -52,10 +53,10 @@
                     </button>
                     <ul x-cloak x-show="activeDropdown === 'dashboard'" x-collapse class="sub-menu text-gray-500">
                         <li>
-                            <a href="booksum">Booking Summary</a>
+                            <a href="/members/booksum">Booking Summary</a>
                         </li>
                         <li>
-                            <a href="bss">Bank Statement Summmary</a>
+                            <a href="/members/bss">Bank Statement Summmary</a>
                         </li>
                     </ul>
                 </li>
@@ -90,16 +91,16 @@
                     </button>
                     <ul x-cloak x-show="activeDropdown === 'addcredentials'" x-collapse class="sub-menu text-gray-500">
                         <li>
-                            <a href="newbooking">New Booking</a>
+                            <a href="/members/newbooking">New Booking</a>
                         </li>
                         <li>
-                            <a href="generate">Generate Receipt</a>
+                            <a href="/members/generate">Generate Receipt</a>
                         </li>
                         <li>
-                            <a href="ugdg">UGDG</a>
+                            <a href="/members/ugdg">UGDG</a>
                         </li>
                         <li>
-                            <a href="transfer">Transfer</a>
+                            <a href="/members/transfer">Transfer</a>
                         </li>
                         <li>
                             <a href="cancel">Cancellation</a>
@@ -108,7 +109,7 @@
                             <a href="leadowner">Lead Owner</a>
                         </li>
                         <li>
-                            <a href="site_visit">Site Visit</a>
+                            <a href="/member/site_visit">Site Visit</a>
                         </li>
                         <li>
                             <a href="apps-invoice-edit.html">Bank STMT Tally</a>
@@ -160,7 +161,7 @@
                             <a href="apps-invoice-preview.html">Inactive Member</a>
                         </li>
                         <li>
-                            <a href="receipt">Receipts</a>
+                            <a href="/member/receipt">Receipts</a>
                         </li>
                         <li>
                             <a href="confirmletter">Confirmation Letter</a>
@@ -433,7 +434,7 @@
                             </button>
                             <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'site'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
                                 <li>
-                                    <a href="{% url 'addplotsize' %}">Add Plots Size</a>
+                                    <a href="/projects/addplotsize">Add Plots Size</a>
                                 </li>
                             </ul>
                         </li>

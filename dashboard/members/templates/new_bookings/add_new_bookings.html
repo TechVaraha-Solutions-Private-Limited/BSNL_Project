@@ -1,6 +1,15 @@
 {% extends 'index.html' %}
 {% block content %}
 {% load static %}
+{% include 'common/bootstrap.html'%}
+<style>
+    a{
+        color: black;
+    }
+    a.hover{
+        text-decoration: none;
+    }
+</style>
 <form class="space-y-5 " method="POST" action="">
     {% csrf_token %}
     <div class="p-2" style="border:solid; border-color: rgb(123, 123, 233); border-radius: 10px;">
