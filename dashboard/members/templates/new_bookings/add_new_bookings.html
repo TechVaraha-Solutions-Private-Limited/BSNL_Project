@@ -5,8 +5,6 @@
 <style>
     a{
         color: black;
-    }
-    a.hover{
         text-decoration: none;
     }
 </style>
@@ -67,7 +65,7 @@
                 </div>
                 <div>
                     <label class="p-1">Password</label>
-                    <input type="password" placeholder="password" class="form-input" >
+                    <input type="text" placeholder="password" class="form-input" >
                 </div>
             </div> 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
@@ -141,34 +139,44 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="panel p-1">
+        <div class="panel p-1">
             <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Site Details</b></h1>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
-                    <label class="p-1">Project</label>
-                    <input type="text" name="project" placeholder="Project" class="form-input" >
+                    <label>Select Project</label><br>
+                    <select name="project_id" class=" form-control" required>
+                        {% for project in landdetail %}
+                            <option disabled selected hidden>Click to Select Project</option>
+                            <option value="{{project.project_id}}">{{project.project.projectname}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="p-1">
-                    <label class="p-1">Dimension</label>
-                    <input type="text" name="alternate_no" placeholder="Dimension" class="form-input" >
+                    <label>Dimension</label><br>
+                    <select name="dimension" class="form-control mt-1" required>
+                        {% for pltsize in data %}
+                            <option disabled selected hidden>Click to Select Plot Size</option>
+                            <option value="{{pltsize.plotsize_id}}">{{pltsize.plotsize.plotsize}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Total Site Value</label>
-                    <input type="text" name="alternate_no" placeholder="Total Site Value" class="form-input" >
+                    <input type="text" name="total_site_value" placeholder="Total Site Value" class="form-input" >
                 </div>
                 <div class="p-1">
                     <label class="p-1">Down Payment value</label>
-                    <input type="text" name="alternate_no" placeholder="Down Payment value" class="form-input" >
+                    <input type="text" name="downpayment" placeholder="Down Payment value" class="form-input" >
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
                 <div class="p-1">
                     <label class="p-1" >Site Reference</label>
-                    <input type="text" name="alternate_no" placeholder="Site Reference" class="form-input" >
+                    <input type="text" name="site_refer" placeholder="Site Reference" class="form-input" >
                 </div>
             </div>
-        </div> -->
-        <!-- <div class="panel p-1">
+        </div>
+        <div class="panel p-1">
             <h2 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Payment Details</b></h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div class="p-1">
@@ -178,7 +186,6 @@
                 <div class="p-1">
                     <label class="p-1">Bank</label>
                     <input type="text" name="bank" placeholder="Bank" class="form-input" >
-                    
                 </div>
                 <div class="p-1">
                     <label class="p-1">Branch</label>
@@ -190,7 +197,7 @@
                 </div>
                 <div class="p-1">
                     <label class="p-1">Pay Date</label>
-                    <input type="text" name="payment_data" placeholder="Pay Date" class="form-input" >
+                    <input type="date" name="payment_data" placeholder="Pay Date" class="form-input" >
                 </div>
                 <div class="p-1">
                     <label>Amount</label>
@@ -208,16 +215,13 @@
                 </div>
                 <div class="p-1">
                     <label class="p-1">Receipt No</label>
-                    <input type="text" name="alternate_no" placeholder="Receipt No" class="form-input" >
-                </div>
-                <div class="p-1">
-                    <label class="p-1">Password</label>
-                    <input type="text" name="password" placeholder="Password" class="form-input" >
+                    <input type="text" name="receipt_no" placeholder="Receipt No" class="form-input" >
                 </div>
             </div>
-        </div> -->
+        </div>
         <div class="grid grid-cols-1 md:grid-cols-1 pt-5 gap-5">
             <center><button type="submit" class="btn  btn-primary text-lg font-semibold dark:text-white-light">Submit Application</button></center>
+            <center><button type="reset" value="Clear"  class="btn  btn-danger text-lg font-semibold dark:text-white-light">Clear</button></center>
         </div>
     </div>
 </form>

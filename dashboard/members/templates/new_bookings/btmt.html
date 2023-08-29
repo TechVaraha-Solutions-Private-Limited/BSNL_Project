@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+{% include 'bootstrap.html' %}
+<style>
+    .addcredentialtitle{
+        text-align: center;
+        padding:15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+    }
+    .projectname{
+        width: 100%;
+        font-size: 15px;
+        padding: 7px 0px;
+        border: 1px solid lightgray;
+        border-radius: 3%;
+    }
+
+    .divbox{
+        box-shadow: 0px 0px 5px #007bff;
+        border-radius: 1%;
+    }
+</style>
+<div class="divbox p-3 mt-2">
+    <h3 class="font-weight-bold mt-4 addcredentialtitle">ADD CREDENTIALS</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
+            <div>
+                <label>Select One Project</label><br>
+                <select name="projectname" class="projectname mt-3" required>
+                    <option disabled selected hidden>Click to Select Project</option>
+                    <option value="dfdf">project name</option>
+            </select>
+            </div>
+            <div>
+                <button></button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

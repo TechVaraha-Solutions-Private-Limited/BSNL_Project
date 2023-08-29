@@ -3,9 +3,9 @@
     <div class="shadow-sm">
         <div class="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-[#0e1726]">
             <div class="horizontal-logo flex items-center justify-between ltr:mr-2 rtl:ml-2 lg:hidden">
-                <a href="" class="main-logo flex shrink-0 items-center">
+                <a href="" style="text-decoration: none" class="main-logo flex shrink-0 items-center">
                     <img class="inline w-8 ltr:-ml-1 rtl:-mr-1" src="/static/images/bsnllogo.png" alt="bsnl" />
-                    <a href="javascript:;"
+                    <a href="javascript:;" 
                         class="collapse-icon flex flex-none rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary ltr:ml-2 rtl:mr-2 dark:bg-dark/40 dark:text-[#d0d2d6] dark:hover:bg-dark/60 dark:hover:text-primary lg:hidden"
                             @click="$store.app.toggleSidebar()">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,13 +14,13 @@
                                 <path d="M20 17L4 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             </svg>
                        </a>
-                    <span class="hidden align-middle text-2xl font-semibold transition-all duration-300 ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light md:inline">BSNL</span>
+                    <span style="text-decoration: none" class="hidden align-middle text-2xl font-semibold transition-all duration-300 ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light md:inline">BSNL</span>
                 </a>
             </div>
             <div x-data="header"
                  class="flex items-center space-x-1.5 ltr:ml-auto rtl:mr-auto rtl:space-x-reverse dark:text-[#d0d2d6] sm:flex-1 ltr:sm:ml-0 sm:rtl:mr-0 lg:space-x-2">
                 <div class="sm:ltr:mr-auto sm:rtl:ml-auto">
-                    <a href="/members/home" class="group relative" @click="toggle()">
+                    <a href="/members/home"  class="group relative" @click="toggle()">
                         <span>
                             <img class="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100"
                                  src="/static/images/home.png"
@@ -50,7 +50,7 @@
                                     <h2><a class="text-black/60 hover:text-primary dark:text-dark-light/60 dark:hover:text-white"
                                         href="javascript:;">                                    
                                         {% if user.is_authenticated %}
-                                            <p>Welcome, {{ user.username }}!</p>
+                                            <p>Welcome, {{ user.email }}!</p>
                                         {% endif %}</a>
                                 </div>
                             </div>

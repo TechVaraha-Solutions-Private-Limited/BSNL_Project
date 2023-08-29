@@ -1,13 +1,13 @@
-{% extends 'site2/index.html'%}
+{% extends 'index.html'%}
 {% block content %}
 {% load static %}
 {% include 'common/bootstrap.html'%}
 <style>
     a{
         color: black;
+        text-decoration: none;
     }
 </style>
-
 <form method="POST" class="space-y-5">
     {% csrf_token %}
     <div class="panel" >
@@ -29,15 +29,15 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div>
                             <label for="customer">Customers:</label>
-                            <input class="form-input" type="text" name="username"  value="{{ customer.username }}">
+                            <input class="form-input" type="text" name="username"  value="{{ customer.user_id }}">
                         </div>
                         <div>
                             <label for="seniorityno">Seniority No:</label>
-                            <input class="form-input" type="text" name="seniorityno"value="{{ customer.seniorityno }}">
+                            <input class="form-input" type="text" name="seniority_id"value="{{ customer.seniority_id }}">
                         </div>
                         <div >
                             <label for="amount">Amount:</label>
-                            <input class="form-input" type="text" name="amount" value="{{ customer.amount }}">
+                            <input class="form-input" type="text" name="amount" value="{{ customer.downpayment }}">
                         </div>
                         <div class="p-1">
                             <label for="dimension">Dimension</label>

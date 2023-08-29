@@ -57,8 +57,8 @@
         {% for landdetail in landdetails %}
         <tr>
             <td>{{landdetail.id}}</td>
-            <td>{{landdetail.project_id}}</td>
-            <td>{{landdetail.plotsize_id}}</td>
+            <td>{{landdetail.project.projectname}}</td>
+            <td>{{landdetail.plotsize.plotsize}}</td>
             <td>{{landdetail.per_square_feet_amount}}</td>
             <td>{{landdetail.total_amount}}</td>
             <td>{{landdetail.down_payment}}</td>

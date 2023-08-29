@@ -21,7 +21,18 @@ def addplotsize(request):
 		PlotSize(
 			plotsize = request.POST['plotsize']
 			).save()
-	return render(request,'add_plot_size.html')
+	else:
+		None
+	data = PlotSize.objects.all()
+	return render(request,'add_plot_size.html',{'data':data})
+def updateplotsize(request,id):
+	updateproject=PlotSize.objects.get(id=id)
+	return render(request,'update_project_list.html',{'updateproject':updateproject})
+
+def deleteplotsize(request,id):
+	deletingprojectlist=PlotSize.objects.get(id=id)
+	deletingprojectlist.delete()
+	return redirect(addplotsize)
 
 def addlandinfo(request):
     projects = Project.objects.all()

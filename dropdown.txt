@@ -1,0 +1,65 @@
+from django.db import models
+
+class Country(models.Model):
+    name = models.CharField(max_length=100)
+
+class City(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+# views.py
+from django.http import JsonResponse
+from .models import City
+
+def get_cities(request):
+    country_id = request.GET.get('country_id')
+    cities = City.objects.filter(country_id=country_id)
+    city_list = [{"id": city.id, "name": city.name} for city in cities]
+    return JsonResponse(city_list, safe=False)
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    # ... other URL patterns ...
+    path('get_cities/', views.get_cities, name='get_cities'),
+]
+
+<!-- template.html -->
+<select id="countryDropdown">
+    <option value="">Select a country</option>
+    {% for country in countries %}
+        <option value="{{ country.id }}">{{ country.name }}</option>
+    {% endfor %}
+</select>
+
+<select id="cityDropdown">
+    <option value="">Select a city</option>
+</select>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const countryDropdown = document.getElementById("countryDropdown");
+    const cityDropdown = document.getElementById("cityDropdown");
+
+    countryDropdown.addEventListener("change", function() {
+        const countryId = countryDropdown.value;
+
+        // Clear previous options
+        cityDropdown.innerHTML = '<option value="">Select a city</option>';
+
+        if (countryId !== "") {
+            fetch(`/get_cities/?country_id=${countryId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(city => {
+                        const option = document.createElement("option");
+                        option.value = city.id;
+                        option.text = city.name;
+                        cityDropdown.appendChild(option);
+                    });
+                });
+        }
+    });
+});
+</script>

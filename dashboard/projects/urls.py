@@ -11,5 +11,6 @@ urlpatterns = [
     path('deletelandrecords/<id>',views.deletelandrecords,name='deletelandrecords'),
     path('updateprojectlist/<id>',views.updateprojectlist,name='updateprojectlist'),
     path('updatingprojectlist/<id>',views.updatingprojectlist,name='updatingprojectlist'),
-    path('deleteprojectlist/<id>',views.deleteprojectlist,name='deleteprojectlist')
+    path('deleteprojectlist/<id>',views.deleteprojectlist,name='deleteprojectlist'),
+    path('deleteplotsize/<id>',views.deleteplotsize,name='deleteplotsize'),
 ]
