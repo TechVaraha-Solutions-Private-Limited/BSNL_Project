@@ -11,9 +11,67 @@
     <div class="panel p" id="container" >
         <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Add UGDG</b></h1>
         <div class="p-1">
-            <label class="p-1"></label>
-            <button class="btn btn-success text-lg font-semibold dark:text-white-light"type="button" onclick="add_more_field()">Add More</button>
-        </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
+                <div class="p-1">
+                    <label class="p-1">Seniority No</label>
+                    <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Cust Name</label>
+                    <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Date Of Change</label>
+                    <input type="text" name="date_of_change" placeholder="date_of_change" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Type of Dim Change</label>
+                    <input type="text" name="type_of_change" placeholder="type_of_change" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">SFT - From</label>
+                    <input type="text" name="sft_form" placeholder="sft_form" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">SFT - To</label>
+                    <input type="text" name="sft_to" placeholder="sft_to" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Diff</label>
+                    <input type="text" name="diff" placeholder="diff" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Exective</label>
+                    <input type="text" name="executive" placeholder="executive" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Team Lead</label>
+                    <input type="text" name="team_lead" placeholder="team_lead" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">SR Team Lead</label>
+                    <input type="text" name="sr_team_lead" placeholder="sr_team_lead" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Project Head</label>
+                    <input type="text" name="project_lead" placeholder="project_lead" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Type of BKG</label>
+                    <input type="text" name="type_bkg" placeholder="type_bkg" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">INDVL Paid</label>
+                    <input type="text" name="indvl_paid" placeholder="indvl_paid" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">TL Paid</label>
+                    <input type="text" name="tl_paid" placeholder="tl_paid" class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">STL Paid</label>
+                    <input type="text" name="stl_paid" placeholder="stl_paid" class="form-input" >
+                </div>
     </div>
     <script>
         function add_more_field() {
@@ -21,71 +79,7 @@
             
             var newRow = document.createElement("div");
             newRow.innerHTML = `
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
-            <div class="p-1">
-                <label class="p-1">Seniority No</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">Cust Name</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">Date Of Change</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">Type of Dim Change</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">SFT - From</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">SFT - To</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">Diff</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">Exective</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">Team Lead</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">SR Team Lead</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">Project Head</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">Type of BKG</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">INDVL Paid</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">TL Paid</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            <div class="p-1">
-                <label class="p-1">STL Paid</label>
-                <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-            </div>
-            
-        </div>
-        <button class="btn btn-danger text-lg font-semibold dark:text-white-light p-5"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Close</button>
-            `;
+                        `;
             
             container.appendChild(newRow);
         }

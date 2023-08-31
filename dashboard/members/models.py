@@ -29,7 +29,7 @@ class PaymentDetails(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
 
-class Receipt(models.Model):
+class Receipts(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	seniorityno=models.ForeignKey(Bookings, on_delete=models.CASCADE)
 	dimension=models.CharField(max_length=120)
@@ -42,3 +42,19 @@ class Receipt(models.Model):
 	paystatus=models.CharField(max_length=120)
 	dateofreceipt=models.DateField(max_length=120)
 
+class Ugdg(models.Model):
+     seniority_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)
+     cut_name = models.CharField(max_length=50)
+     date_of_change = models.DateField()
+     type_of_change = models.CharField(max_length=120)
+     sft_form = models.CharField(max_length=20)
+     sft_to = models.CharField(max_length=20)
+     diff = models.CharField(max_length=20)
+     exective = models.CharField(max_length=20)
+     team_lead = models.CharField(max_length=20)
+     sr_team_lead = models.CharField(max_length=20)
+     project_lead = models.CharField(max_length=20)
+     type_bkg = models.CharField(max_length=20)
+     indvl_paid = models.DecimalField(max_digits=10,decimal_places=2)
+     tl_paid = models.DecimalField(max_digits=10,decimal_places=2)
+     stl_paid = models.DecimalField(max_digits=10,decimal_places=2)

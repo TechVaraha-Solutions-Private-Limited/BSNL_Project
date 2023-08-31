@@ -65,7 +65,7 @@
                 </div>
                 <div>
                     <label class="p-1">Password</label>
-                    <input type="text" placeholder="password" class="form-input" >
+                    <input type="text" name="password" placeholder="password" class="form-input" >
                 </div>
             </div> 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
@@ -144,7 +144,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label>Select Project</label><br>
-                    <select name="project_id" class=" form-control" required>
+                    <select name="project_id" class="form-control" required>
                         {% for project in landdetail %}
                             <option disabled selected hidden>Click to Select Project</option>
                             <option value="{{project.project_id}}">{{project.project.projectname}}</option>

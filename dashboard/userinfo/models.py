@@ -1,6 +1,6 @@
 from django.db import models
 from bsnl import settings
-
+from django.contrib.auth.hashers import make_password
 
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
@@ -50,7 +50,9 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['password']
 
-  
+    def save(self, *args, **kwargs):
+        self.s_password = make_password(self.password)
+        super(User, self).save(*args, **kwargs)
    
 
 class UserDetail(models.Model):

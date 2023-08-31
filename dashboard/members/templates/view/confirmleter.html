@@ -1,30 +1,58 @@
-{% extends 'site2/index.html' %}
+{% extends 'index.html' %}
 {% block content %}
 {% load static %}
+{% include 'bootstrap.html' %}
 
-<div class="panel">
-    <div class="table">
-        <tr>
-            <td>
-                <p>This is to confirm that SYED MALLIKA Residing in 26-39-121/12/A, AT AGRAHARAM SRI RAM NAGAR, MAIN ROAD, GUNTUR, 522004, Have booked a site of measuring 30X50(1500 SQFT) in the BHISHMA GREENS-II Located at Gokare village, Devanahalli Taluk, Karnataka 562110 from BSNL Employees and Citizens House Building Co-Operative Society Ltd. on 14-08-2023. You have booked your site by paying an initial amount of Rs. 449550/- by Cheque number:151749 Drawn at ICICI BANK Bank SARJAPUR ROAD Branch. Membership Id: AM-2916. Seniority ID: BG-II/SR-0062
-                </p>
-        
-                <ol type="1">
-                    <li>1.The booking of your site is purely based on rules and regulations of the society and provisions of BSNL Employees and Citizens House Building Co-Operative Society Ltd. registration act and the rules and By-laws of the society.</li>
-                    <li>2.The allotment of site is subject to approval of membership/associate membership, clearance of land by concerned authority.ssss</li>
-                    <li>3.Sites will be allotted on first come first serve basis.</li>
-                    <li>4.Conditions mentioned behind the application will be applicable.</li>
-                    <li>5.Transfers of membership/bookings are only after the completion of the project period.</li>
-                    <li>6.Interest will not be paid for any withdrawals of site advances.</li>
-                    <li>7.All the remaining payments should be paid as per the project payment scheme. Bank loans will be arranged from leading banks after the plan approval.</li>
-                    <li>8.Price of Rs. 999 perSqft will be charged, Registration fee is additional.</li>
-                    <li>9.The decision of the board is the final during the allotment and registration of the sites.</li>
-                    <li>10.Any issues arise in the process of completion of the project should be resolved by mutual discussions.</li>
-                    <li>11.Refund will be given after One Year from the booking date.</li>
-                </ol>
-            </td>
-        </tr>  
-    </div>     
+<style>
+    a{
+        color:black;
+    }
+</style>
+<div class="container">
+    <h6></h6>
+    <div class="table-responsive pt-3" id="mytable" style="display: show;"> 
+        <h2 class="text-lg font-semibold dark:text-white-light p-1" 
+        style="background-color: rgb(188, 224, 198); border-radius: 9px; text-align: center;">
+        <b>Site Booking Confirmation</b></h2>
+        <div class=" p-2">
+            <table  class="emInfo">
+                <thead>
+                    <tr>
+                        <th>S.NO</th>
+                        <th>Customer Name</th>
+                        <th>Seniority</th>
+                        <th>Project Name/size</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>  
+                    {% for mydata in user %}
+                    <tr>
+                        <td>{{mydata.id}}</td>
+                        <td>{{mydata.first_name}}.{{mydata.last_name}}</td>
+                        <td>{{value.seniorityno_id}}</td>
+                        {% for value in project%}
+                        <td>{{value.projectname}}/{{value.plotsize}}</td>
+                        {%endfor%}
+                        <td>{{mydata.mobile_no}}</td>
+                        <td>{{mydata.email}}</td>
+                        <td>
+                            <center>
+                                <a href="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="1.25em" viewBox="0 0 384 512">
+                                        <path d="M64 464c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16H224v80c0 17.7 14.3 32 32 32h80V448c0 8.8-7.2 16-16 16H64zM64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V154.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0H64zm56 256c-13.3 0-24 10.7-24 24s10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24H264c13.3 0 24-10.7 24-24s-10.7-24-24-24H120z"/>
+                                    </svg>
+                                </a>
+                            </center>
+                          </td>
+                    </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

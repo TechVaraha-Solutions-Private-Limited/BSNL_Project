@@ -59,7 +59,6 @@
         {% endfor %}
     </select>
     </div>
-
     <div>
         <label>Select Plot Size</label><br>
         <select name="plotsize" class="plotsize mt-3" required>
@@ -87,28 +86,142 @@
         <label>Down Payment</label>
         <input type="number" name="downamount" class="form-control" placeholder="Enter Down Payment" required>
     </div>
-
     <div>
+        <label>Select to Installment</label>
+        <select class="form-control" id="inputfield">
+            <option>--select option--</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+    <div id="mytable" style="display: none;">
         <label>First Installment</label>
         <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
     </div>
-</div>
-
-<div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
-    <div>
-        <label>Second Installment</label>
-        <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5" id="project" style="display: none;">
+        <div>
+            <label>First Installment</label>
+            <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
+        </div>
+        <div>
+            <label>Second Installment</label>
+            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+        </div>
     </div>
-    <div>
-        <label>Third Installment</label>
-        <input type="text" name="thirdinstallment" class="form-control" placeholder="Enter Third Installment" required>
+    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5" id="table3" style="display: none;">
+        <div>
+            <label>First Installment</label>
+            <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
+        </div>
+        <div>
+            <label>Second Installment</label>
+            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+        </div>
+        <div>
+            <label>Thrid Installment</label>
+            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+        </div>
+    </div>
+    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5" id="table4" style="display: none;">
+        <div>
+            <label>First Installment</label>
+            <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
+        </div>
+        <div>
+            <label>Second Installment</label>
+            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+        </div>
+        <div>
+            <label>Thrid  Installment</label>
+            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+        </div>
+        <div>
+            <label>Fourth Installment</label>
+            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+        </div>
+    </div>
+    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5" id="table5" style="display: none;">
+        <div>
+            <label>First Installment</label>
+            <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
+        </div>
+        <div>
+            <label>Second Installment</label>
+            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+        </div>
+        <div>
+            <label>Thrid Installment</label>
+            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+        </div>
+        <div>
+            <label>Fourth Installment</label>
+            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+        </div>
+        <div>
+            <label>Fifth Installment</label>
+            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
+        </div>
     </div>
 </div>
-
-<div class="text-center">
-    <input type="submit" value="Add Land Information" class="btn btn-primary mt-5">
-    <input type="reset" value="Clear" class="btn btn-danger mt-5">
 </div>
+    
+    <div class="text-center">
+        <input type="submit" value="Add Land Information" class="btn btn-primary mt-5">
+        <input type="reset" value="Clear" class="btn btn-danger mt-5">
+    </div>
+
+
 </form>
-</div>
+<script>
+    const inputField = document.getElementById('inputfield');
+    const myTable = document.getElementById('mytable');
+    const Project = document.getElementById('project');
+    const Table3 = document.getElementById('table3');
+    const Table4 = document.getElementById('table4');
+    const Table5 = document.getElementById('table5');
+
+    inputField.addEventListener('input', function () {
+        if (inputField.value === '1') {
+            myTable.style.display = 'table';// Show the table
+            Project.style.display = 'none';
+            Table3.style.display = 'none';
+            Table4.style.display = 'none';
+            Table5.style.display = 'none';
+        } else if (inputField.value === '2') {
+            myTable.style.display = 'none';// Show the table
+            Project.style.display = 'table';
+            Table3.style.display = 'none';
+            Table4.style.display = 'none';
+            Table5.style.display = 'none';
+        } else if (inputField.value === '3') {
+            myTable.style.display = 'none';// Show the table
+            Project.style.display = 'none';
+            Table3.style.display = 'table';
+            Table4.style.display = 'none';
+            Table5.style.display = 'none';
+        } else if(inputField.value ==='4'){
+            myTable.style.display = 'none';// Show the table
+            Project.style.display = 'none';
+            Table3.style.display = 'none';
+            Table4.style.display = 'table';
+            Table5.style.display = 'none';
+        } else if(inputField.value ==='5'){
+            myTable.style.display = 'none';
+            Project.style.display = 'none';
+            Table3.style.display = 'none';
+            Table4.style.display = 'none';
+            Table5.style.display = 'table';
+        }
+        else {
+            myTable.style.display = 'none';
+            Project.style.display = 'none';
+            Table3.style.display = 'none';
+            Table4.style.display = 'none';
+            Table5.style.display = 'none';
+        }
+    });
+</script>
 {% endblock %}

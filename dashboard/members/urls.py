@@ -13,4 +13,8 @@ urlpatterns = [
     path('lead_owner',lead_owner,name='lead_owner'),
     path('cancel',cancel,name='cancel'),
     path('receipt',receipts,name='receipt'),
+    path('btmt',btmt,name='btmt'),
+    path('activemember',activemember,name='activemember'),
+    path('inactivemember',inactivemember,name='inactivemember'),
+    path('confirmletter',confirmletter,name='confirmletter')
 ]
