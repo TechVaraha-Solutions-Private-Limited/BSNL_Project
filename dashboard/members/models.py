@@ -1,14 +1,14 @@
 from django.db import models
 from bsnl import settings
-from dashboard.projects.models import LandDetails
+from dashboard.projects.models import LandDetails,Project
 from dashboard.userinfo.models import User
 class Bookings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    project = models.ForeignKey(LandDetails, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     seniority_id = models.CharField(max_length=20,unique=True,null=False)
     membership_id = models.CharField(max_length=20,unique=True,null=False)
     status = models.SmallIntegerField(default=1, null=True)
-    dimension = models.CharField(max_length=120)
+    dimension = models.ForeignKey(LandDetails, on_delete=models.CASCADE)
     total_site_value = models.CharField(max_length=120)
     downpayment = models.CharField(max_length=120)
     site_refer = models.CharField(max_length=120)

@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Site Booking Confirmation | </title>
+<meta name="Description" content="" /> 
+<meta name="Keywords" content="" /> 
+<meta name="robots" content="index,follow" />   
+<link href="{% static 'assets/style.css' %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'assets/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+<style>
+    .logo-cnt {
+        width:630px;
+        /*float:right;*/
+        font:16px 'HelveticaLTStdRoman_0';
+        line-height: 30px;text-align:left;
+    }
+    .re-logo {
+        width: 130px;
+    }
+    .inner-box{width: 100%;
+        border: solid;
+        height: 1054px;}
+        .footer-border ul li{    margin:0 40px;}
+        .list li{margin-bottom:10px;}
+</style>
+</head>
+
+<body style="background:#fff;">
+<header>
+<div class="re-container">
+	<div class="wrapper p2 rtop">
+		<a href="/members/confirmletter" style="float:left;color:black;font-weight:900;font-size:19px;" >Back </a>
+		<a href="#" style="color:black;float:right;font-weight:900;font-size:19px;" onclick="printDiv('printer_ticket');">Click to Print</a>
+	</div>
+</div>   
+</header>
+<section>
+<div class="re-container">
+
+<div class="wrapper p9">
+<div class="receipt-border" id="printer_ticket">
+<div style="position:absolute;width:99%;opacity: 55%;margin-top:170px;"><img src="assets/images/watermark.jpg" width="100%" alt=""/></div>
+<div class="inner-box ">
+<div ></div> 
+	<div class="receipt-border1">
+        <!-- <div class="wrapper p3 bod" style="padding-bottom:15px;marign-bottom:30px;">
+			<div class="re-logo" style="width:155px;">
+				<img src="assets/images/logo.jpg" />
+			</div>
+			<div class="logo-cnt">							
+				<center><p class="p2 1b1b1b" style="font:20px 'HelveticaLTStdBlkCond_0';margin-top:20px; color:#336699;">
+				    <b>BSNL Employees and Citizens House Building Co-Operative Society Ltd.</b></p></center>
+				<p class="logo-cnt1 p1" style="font-weight: normal;font-size: 18px;    line-height: 38px;">
+				<p class="logo-cnt1 p1">Reg.HSG-2/12/HHS/46469/2014-15</p>
+				<p class="logo-cnt1 p1">	No. 31/4,13th Main, 'E' Block, Sahakaranagara, Bangalore - 560 092</p>
+			</div>						
+		</div> -->
+		<div class="wrapper p4">
+		<p>
+			<span class="logo-cnt4" >SITE BOOKING CONFIRMATION</span> 
+		</p>
+		</div>
+		
+		<div class="wrapper p4">
+			<p class="logo-cnt1"><span style="float:left;margin-right:10px;font-weight:normal;line-height: 28px; text-align: justify;   font-size: 18px;">
+				This is to confirm that <b>PALLAVI S BHOGI</b> Residing in <b>#03 WARD NO 3 CHALGERA CHALGERA KUSHTAGI, KOPPAL, KARNATAKA - 583277</b>,
+				Have booked a site of measuring <b>40X60(2400 SQFT)</b> in the <b>BHISHMA GREENS-II</b> Located at Gokare village, Devanahalli Taluk, Karnataka 562110 from BSNL Employees and Citizens House Building Co-Operative Society Ltd. on <b>31-08-2023</b>.
+				You have booked your site by paying an initial amount of                             											
+				<b>Rs. 50000/-</b> by Ref No. :<b>324359028125</b> 
+                Drawn at <b>STATE BANK OF INDIA</b> Bank <b>BANGALORE</b> Branch.<b> Membership Id: AM-2940. Seniority ID: BG-II/SR-0051</b><br/><br/></p>
+					<p class="logo-cnt1"><span style="float:left;margin-right:10px;font-weight:normal;font-size: 18px;">
+						<b>The site is booked under the following conditions.</b><br/><br/>
+							<ol class="list" style="float:left;margin-right:10px;font-weight:normal;font-family: 'HelveticaLTStdRoman_0';    font-size: 18px;    line-height:24px;width:100%;">
+								<li >  The booking of your site is purely based on rules and regulations of the society and provisions 
+									of BSNL Employees and Citizens House Building Co-Operative Society Ltd. registration act and the rules and By-laws of the society.</li>
+								<li>  The allotment of site is subject to approval of membership/associate membership, clearance of 
+								        land by concerned authority.</li>
+								<li>  Sites will be allotted on first come first serve basis.</li>
+								<li>  Conditions mentioned behind the application will be applicable.  </li>
+								<li>  Transfers of membership/bookings are only after the completion of the project period.</li>
+								<li>  Interest will not be paid for any withdrawals of site advances.</li>
+							    <li>  All the remaining payments should be paid as per the project payment scheme. Bank loans will be arranged from leading banks after the plan approval.</li>
+								<li>
+									Price of <b>Rs. 999 </b> perSqft will be charged, Registration fee is additional.
+								</li>
+							    <li>  The decision of the board is the final during the allotment and registration of the sites.</li>
+								<li>  Corner/Commercial plots will be charged extra. <br/>
+								<li>  Any issues arise in the process of completion of the project should be resolved by mutual 
+										discussions.  </li>
+								<li> Refund will be given after One Year from the booking date.  </li>
+							</ol>
+					</p>
+		</div>
+	</div>
+
+	<div class="receipt-bg">
+	<!-- <div class="wmark"><img src="http://bsnlplots.com/admin/images/receipt-bg.png" alt=""/></div> -->
+		<div class="receipt-border2 p0">
+		<div class="wrapper">
+			
+		</div>
+		</div>
+	
+		<div class="wrapper">
+		<div class="receipt-border1" >
+			<p class="mtop1" style="margin-top:0px;">
+				<span class=" logo-cnt2" style="text-align:center;font-weight:normal;font-size:18px;"><img  style="width: 142px;" src="assets/images/sign_president.jpg" alt=""/><br/>President<br/>(S Dilip Kumar)</span> 
+				<!-- <span class="fright logo-cnt3" style="text-align:center;width:230px;font-size:18px;"><img src="images/sign_vpresident.png" alt=""/><br/>Vice -President<br/>()</span> -->
+			</p>
+		</div>
+		</div>
+	</div>
+	</div><!--end-->
+		<div class="footer-border">
+			<div style="width:215px;margin:0 auto;margin-bottom:3px;"><img src="assets/images/globe-icon.png" style="margin-right:4px;" />www.bsnlhousingsociety.in</div>
+		</div>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<footer>
+</footer>
+<!--==================footer end===================-->
+</body>
+<script language="javascript" type="text/javascript">
+	function printDiv(divID) {
+	//alert(divID);
+		//Get the HTML of div
+		var divElements = document.getElementById(divID).innerHTML;
+		//Get the HTML of whole page
+		var oldPage = document.body.innerHTML;
+
+		//Reset the page's HTML with div's HTML only
+		document.body.innerHTML = 
+		  "<html><head><title></title></head><body>" + divElements + "</body>";
+		//Print Page
+		window.print();
+		//Restore orignal HTML
+		document.body.innerHTML = oldPage;
+	}
+</script>  
+</html>

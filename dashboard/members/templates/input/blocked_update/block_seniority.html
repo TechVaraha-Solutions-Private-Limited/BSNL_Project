@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+{% include 'common/bootstrap.html' %}
+<style>
+    a{
+        color: black;
+    }
+</style>
+<form class="pt-5">
+    <div class="p-2" style="border:solid; border-color: rgb(123, 123, 233); border-radius: 10px;">
+        <div class="panel p-1">
+            <h2 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;">
+                <b>Update Blocked Seniority</b></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="p-1"> 
+                    <label class="p-1">Project</label>
+                    <input type="text" name="nominee_name" placeholder="Employee Name"  class="form-input" >
+                </div>
+                <div class="p-1">
+                    <label class="p-1">seniority No</label>
+                    <input type="text" name="nominee_age" placeholder="Employee Id" class="form-input" >
+                </div>
+            </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="p-1">
+                        <label class="p-1">Blocked Date</label>
+                        <input type="date" name="nominee_relationship" placeholder="Login Type" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Executive</label>
+                        <input type="text" name="address1" placeholder="Document Accesss" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">customer Name</label>
+                        <input type="text" name="city1" placeholder="Access Permission" class="form-input" >
+                    </div> 
+                </div>
+            </div>
+            <div class="text-center p-3">
+                <input type="submit" value="Add Project" class="btn btn-primary">
+                    <input type="reset" value="Clear" class="btn btn-danger">
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

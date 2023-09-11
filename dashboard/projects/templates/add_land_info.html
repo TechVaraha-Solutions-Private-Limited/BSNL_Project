@@ -84,7 +84,7 @@
 
     <div>
         <label>Down Payment</label>
-        <input type="number" name="downamount" class="form-control" placeholder="Enter Down Payment" required>
+        <input type="number" name="downamount" id="result" class="form-control" placeholder="Enter Down Payment" required>
     </div>
     <div>
         <label>Select to Installment</label>
@@ -101,70 +101,23 @@
         <label>First Installment</label>
         <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
     </div>
-    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5" id="project" style="display: none;">
-        <div>
-            <label>First Installment</label>
-            <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
-        </div>
-        <div>
-            <label>Second Installment</label>
-            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-        </div>
+    <div id="project" style="display:none;">
+        <label>Second Installment</label>
+        <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
     </div>
-    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5" id="table3" style="display: none;">
-        <div>
-            <label>First Installment</label>
-            <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
-        </div>
-        <div>
-            <label>Second Installment</label>
-            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-        </div>
-        <div>
-            <label>Thrid Installment</label>
-            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-        </div>
+    <div id="table3" style="display:none;" >
+        <label>Thrid Installment</label>
+        <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
     </div>
-    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5" id="table4" style="display: none;">
-        <div>
-            <label>First Installment</label>
-            <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
-        </div>
-        <div>
-            <label>Second Installment</label>
-            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-        </div>
-        <div>
-            <label>Thrid  Installment</label>
-            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-        </div>
-        <div>
-            <label>Fourth Installment</label>
-            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-        </div>
+    <div id="table4" style="display:none;">
+        <label>Fourth Installment</label>
+        <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
     </div>
-    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5" id="table5" style="display: none;">
-        <div>
-            <label>First Installment</label>
-            <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
-        </div>
-        <div>
-            <label>Second Installment</label>
-            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-        </div>
-        <div>
-            <label>Thrid Installment</label>
-            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-        </div>
-        <div>
-            <label>Fourth Installment</label>
-            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-        </div>
-        <div>
-            <label>Fifth Installment</label>
-            <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-        </div>
+    <div id="table5" style="display:none;">
+        <label >Fifth Installment</label>
+        <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
     </div>
+
 </div>
 </div>
     
@@ -191,28 +144,28 @@
             Table4.style.display = 'none';
             Table5.style.display = 'none';
         } else if (inputField.value === '2') {
-            myTable.style.display = 'none';// Show the table
+            myTable.style.display = 'table';// Show the table
             Project.style.display = 'table';
             Table3.style.display = 'none';
             Table4.style.display = 'none';
             Table5.style.display = 'none';
         } else if (inputField.value === '3') {
-            myTable.style.display = 'none';// Show the table
-            Project.style.display = 'none';
+            myTable.style.display = 'table';// Show the table
+            Project.style.display = 'table';
             Table3.style.display = 'table';
             Table4.style.display = 'none';
             Table5.style.display = 'none';
         } else if(inputField.value ==='4'){
-            myTable.style.display = 'none';// Show the table
-            Project.style.display = 'none';
-            Table3.style.display = 'none';
+            myTable.style.display = 'table';// Show the table
+            Project.style.display = 'table';
+            Table3.style.display = 'table';
             Table4.style.display = 'table';
             Table5.style.display = 'none';
         } else if(inputField.value ==='5'){
-            myTable.style.display = 'none';
-            Project.style.display = 'none';
-            Table3.style.display = 'none';
-            Table4.style.display = 'none';
+            myTable.style.display = 'table';
+            Project.style.display = 'table';
+            Table3.style.display = 'table';
+            Table4.style.display = 'table';
             Table5.style.display = 'table';
         }
         else {
@@ -222,6 +175,40 @@
             Table4.style.display = 'none';
             Table5.style.display = 'none';
         }
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the input and result elements
+        const inputValue = document.getElementById('input-value');
+        const resultElement = document.getElementById('result');
+    
+        // Add an event listener for input changes
+        inputValue.addEventListener('input', function() {
+            // Get the input value from the input field
+            const input = inputValue.value;
+    
+            // Split the input value at 'X'
+            const numbers = input.split('X');
+    
+            if (numbers.length !== 2) {
+                resultElement.textContent = "Invalid input format. Please use 'numberXnumber' format.";
+                return;
+            }
+    
+            // Convert the numbers to integers
+            const num1 = parseInt(numbers[0]);
+            const num2 = parseInt(numbers[1]);
+    
+            if (isNaN(num1) || isNaN(num2)) {
+                resultElement.textContent = "Invalid input. Please provide valid integers.";
+                return;
+            }
+    
+            // Perform the multiplication
+            const result = num1 * num2;
+    
+            // Display the result
+            resultElement.textContent = `The result of ${num1} * ${num2} is ${result}`;
+        });
     });
 </script>
 {% endblock %}

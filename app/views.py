@@ -2,8 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
-from .models import Newbooking,Family,Project,Receipt,Role,Account,Nomiee,P,Adminuser
-from .forms import NewbookingForm,ProjectForm,ReceiptForm,SearchForm,AdminuserForm
+# from .models import Newbooking,Family,Project,Receipt,Role,Account,Nomiee,P,Adminuser
+# from .forms import NewbookingForm,ProjectForm,ReceiptForm,SearchForm,AdminuserForm
 from django.contrib import messages
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required

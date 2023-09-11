@@ -22,7 +22,7 @@ class Project(models.Model):
 	
 
 class PlotSize(models.Model):
-	plotsize = models.CharField(max_length=10,unique=True)
+	plotsize = models.CharField(max_length=10,unique=False)
 	status = models.SmallIntegerField(default=1, null=True)
 	updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	created_on = models.DateTimeField(auto_now_add=True)

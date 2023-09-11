@@ -8,81 +8,87 @@
         color: black;
     }
 </style>
-    <div class="panel p" id="container" >
-        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167) ;border-radius: 9px;"><b>Add Visit</b></h1>
-        <div class="p-1">
-            <label class="p-1"></label>
-            <button class="btn btn-success text-lg font-semibold dark:text-white-light"type="button" onclick="add_more_field()">Add More</button>
+<form>
+    <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+        <div class="panel p" id="container" >
+            <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Site Visit</b></h1>
+            <input type="button" value="Add Button"onclick="mymodel();" class="btn btn-success">
+            <div id="form" class="panel p-1 mt-3" style="display : none">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
+                    <div class="p-1">
+                        <label class="p-1">Date of Sv</label>
+                        <input type="text" name="seniority" placeholder="Date of Sv" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Cust Name</label>
+                        <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Phone No</label>
+                        <input type="text" name="date_of_change" placeholder="Phone No" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Executive</label>
+                        <input type="text" name="type_of_change" placeholder="Executive" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Team Lead</label>
+                        <input type="text" name="sft_form" placeholder="Team Lead" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Proj Head</label>
+                        <input type="text" name="sft_to" placeholder="Proj Head" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">So Done by</label>
+                        <input type="text" name="diff" placeholder="So Done by" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Sv Done By</label>
+                        <input type="text" name="executive" placeholder="Sv Done By" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Sv Category</label>
+                        <input type="text" name="team_lead" placeholder="Sv Category" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Source</label>
+                        <input type="text" name="sr_team_lead" placeholder="Source" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Status</label>
+                        <input type="text" name="project_lead" placeholder="Status" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Booked On</label>
+                        <input type="text" name="type_bkg" placeholder="Booked On" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Booked Sry NO</label>
+                        <input type="text" name="indvl_paid" placeholder="Booked Sry NO" class="form-input" >
+                    </div>
+                </div>
+                <div class="text-center">
+                    <input type="submit" value="Submit Application" class="btn btn-success mt-5">
+                    <input type="reset" value="Clear" class="btn btn-info mt-5">
+                    <input type="button" value="Close" onclick="mymodel();" class="btn btn-danger mt-5">
+                </div>
+            </div>
         </div>
     </div>
+</form>
+
+
     <script>
-        function add_more_field() {
-            var container = document.getElementById("container");
-            
-            var newRow = document.createElement("div");
-            newRow.innerHTML = `
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
-            <div class="p-1">
-                <label class="p-1">Seniority No</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Cust Name</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Phone No</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Executive</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Team Lead</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Proj Head</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">SO Done By</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">SV Done By</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">SV Category</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Source</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Status</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Booked ON</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Booked SRY No</label>
-                <input>
-            </div>
-            <button class="btn btn-danger text-lg font-semibold dark:text-white-light p-1"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Close</button>
-        </div>
-            `;
-            
-            container.appendChild(newRow);
-        }
-        function remove_field(button) {
-            var row = button.parentNode;
-            row.parentNode.removeChild(row);
+
+        // model show
+        function mymodel() {
+            var form = document.getElementById('form');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
         }
     </script>
 {% endblock %}

@@ -7,74 +7,83 @@
     a{
         color: black;
     }
-</style>    
-    <div class="panel p" id="container" >
-        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Add Cancellation</b></h1>
-        <div class="p-1">
-            <label class="p-1"></label>
-            <button class="btn btn-success text-lg font-semibold dark:text-white-light"type="button" onclick="add_more_field()">Add More</button>
+</style>
+<form>
+    <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+        <div class="panel p" id="container" >
+            <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Cancellation</b></h1>
+            <input type="button" value="Add Button"onclick="mymodel();" class="btn btn-success">
+            <form class="mx-auto w-full sm:w-1/2 mb-5">
+                
+            </form>
+            <div id="form" class="panel p-1 mt-3" style="display : none">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-2" >
+                    <div class="p-1">
+                        <label class="p-1">Seniority No</label>
+                        <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Cust Name</label>
+                        <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Date of Cancel</label>
+                        <input type="text" name="Date of Cancel" placeholder="Date of Cancel" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Type of Cancel</label>
+                        <input type="text" name="Type of Cancel" placeholder="Type of Cancel" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Date of Refund</label>
+                        <input type="text" name="sft_form" placeholder="Date of Refund" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Mode of Refund</label>
+                        <input type="text" name="sft_to" placeholder="Mode of Refund" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Refund Cheque No</label>
+                        <input type="text" name="diff" placeholder="Refund Cheque No" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Refund Amount</label>
+                        <input type="text" name="executive" placeholder="Refund Amount" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Amount Paid By Member</label>
+                        <input type="text" name="team_lead" placeholder="Amount Paid By Member" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Type of Refund</label>
+                        <input type="text" name="sr_team_lead" placeholder="Type of Refund" class="form-input" >
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Issued By</label>
+                        <input type="text" name="project_lead" placeholder="Issued By" class="form-input" >
+                    </div>                    
+                </div>
+                <div class="text-center">
+                    <input type="submit" value="Submit Application" class="btn btn-success mt-5">
+                    <input type="reset" value="Clear" class="btn btn-warning mt-5">
+                    <input type="button" value="Close" onclick="mymodel();" class="btn btn-danger mt-5">
+                </div>
+            </div>
         </div>
     </div>
+</form>
+
+
     <script>
-        function add_more_field() {
-            var container = document.getElementById("container");
-            
-            var newRow = document.createElement("div");
-            newRow.innerHTML = `
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
-            <div class="p-1">
-                <label class="p-1">Seniority No</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Cust Name</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Date Of Cancel</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Type of Cancel</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Date of Refund</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Mode of Refund</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Refund Cheque No</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Refund Amount</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Amount Paid By Member</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Type oF Refund</label>
-                <input>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Issued By</label>
-                <input>
-            </div>
-            <button class="btn btn-danger text-lg font-semibold dark:text-white-light p-1"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Close</button>
-        </div>
-            `;
-            
-            container.appendChild(newRow);
-        }
-        function remove_field(button) {
-            var row = button.parentNode;
-            row.parentNode.removeChild(row);
+
+        // model show
+        function mymodel() {
+            var form = document.getElementById('form');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
         }
     </script>
 {% endblock %}

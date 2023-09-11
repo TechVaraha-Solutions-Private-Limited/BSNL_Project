@@ -3,7 +3,7 @@
 {% load static %}
 {% load widget_tweaks %}
 {% include 'bootstrap.html' %}
-
+{% load customer_filters %}
 <style>
     input{
         margin-top: 15px;
@@ -41,8 +41,9 @@
         <div>
             <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
-                    <label>Plot Size</label>
-                    <input type="text" name="plotsize" class="form-control" placeholder="Enter Plot Size" required>
+                    <form method="post">
+                        <input type="text" name="plotsize" class="form-control" placeholder="Enter Plot Size" required>
+                    </form>                    
                 </div>
             </div>
             <div class="text-center">
@@ -65,7 +66,7 @@
                             {% for role in data %}
                             <tr>
                                 <td>{{ forloop.counter }}</td>
-                                <td>{{ role.plotsize }}</td>
+                                <td>{{ role.plotsize|lower }}</td>
                                 <td class="border-b border-[#ebedf2] p-3 text-center dark:border-[#191e3a]">
                                     <!-- <a href="{% url 'updateprojectlist' role.id %}" type="button" style="border:solid;border-color: rgba(240, 248, 255, 0);" x-tooltip="Edit">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 ltr:mr-2 rtl:ml-2">

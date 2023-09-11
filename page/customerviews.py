@@ -1,8 +1,8 @@
 from django.shortcuts import render,get_object_or_404,HttpResponse,redirect
-from app.models import Project,Receipt,User,Role
+# from app.models import Project,Receipt,User,Role
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
-from app.models import Newbooking
+# from app.models import Newbooking
 from django.http import FileResponse
 from django.views.generic import View
 from django.http import FileResponse
@@ -15,12 +15,12 @@ def home(request):
     return render(request,'page/customer/home.html')
 
 @login_required
-def product(request):
-    user = request.user
-    rec = Receipt.objects.filter(username=user.username)
-    for r in rec:
-        print(r.username)
-    return render(request,'page/customer/product.html',{'user':user})
+# def product(request):
+#     user = request.user
+#     rec = Receipt.objects.filter(username=user.username)
+#     for r in rec:
+#         print(r.username)
+#     return render(request,'page/customer/product.html',{'user':user})
 
 @login_required
 def payment(request):

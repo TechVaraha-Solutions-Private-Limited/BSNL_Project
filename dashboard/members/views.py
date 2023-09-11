@@ -8,71 +8,73 @@ def home(request):
 
 def add_new_bookings(request):
     data = LandDetails.objects.all()
-    # project = Project.objects.filter()
+    project = Project.objects.all()
+    print(project)
     # landsize = PlotSize.objects.filter()
     # landdetail = LandDetails.objects.get(projectname=project, plotsize=landsize)
+    landdetail = LandDetails.objects.all()
     if request.method=='POST':
         user=User()
-        # user.first_name=request.POST.get('first_name')
-        # user.last_name=request.POST.get('last_name')
-        # user.mobile_no = request.POST.get('mobile_no')
-        # user.email = request.POST.get('email')
+        user.first_name=request.POST.get('first_name')
+        user.last_name=request.POST.get('last_name')
+        user.mobile_no = request.POST.get('mobile_no')
+        user.email = request.POST.get('email')
         user.password = request.POST.get('password')
         user.save()
 
-        # details = UserDetail()
-        # details.user = user
-        # details.dob = request.POST.get('dob')
-        # details.age = request.POST.get('age')
-        # details.alternate_no = request.POST.get('alternate_no')
-        # details.aadhhaarno = request.POST.get('aadhhaarno')
-        # details.aadhar_proof = request.POST.get('aadhar_proof')
-        # details.panno = request.POST.get('panno')
-        # details.pan_proof = request.POST.get('pan_proof')
-        # details.profile = request.POST.get('profile')
-        # details.address = request.POST.get('address')
-        # details.city = request.POST.get('city')
-        # details.state = request.POST.get('state')
-        # details.save()
+        details = UserDetail()
+        details.user = user
+        details.dob = request.POST.get('dob')
+        details.age = request.POST.get('age')
+        details.alternate_no = request.POST.get('alternate_no')
+        details.aadhhaarno = request.POST.get('aadhhaarno')
+        details.aadhar_proof = request.POST.get('aadhar_proof')
+        details.panno = request.POST.get('panno')
+        details.pan_proof = request.POST.get('pan_proof')
+        details.profile = request.POST.get('profile')
+        details.address = request.POST.get('address')
+        details.city = request.POST.get('city')
+        details.state = request.POST.get('state')
+        details.save()
 
-        # nominee = UserNominee()
-        # nominee.user = user
-        # nominee.nominee_name = request.POST.get('nominee_name')
-        # nominee.nominee_age = request.POST.get('nominee_age')
-        # nominee.address = request.POST.get('address1')
-        # nominee.city = request.POST.get('city1')
-        # nominee.state = request.POST.get('state1')
-        # nominee.nominee_relationship = request.POST.get('nominee_relationship')
-        # nominee.save()
+        nominee = UserNominee()
+        nominee.user = user
+        nominee.nominee_name = request.POST.get('nominee_name')
+        nominee.nominee_age = request.POST.get('nominee_age')
+        nominee.address = request.POST.get('address1')
+        nominee.city = request.POST.get('city1')
+        nominee.state = request.POST.get('state1')
+        nominee.nominee_relationship = request.POST.get('nominee_relationship')
+        nominee.save()
         
-        # family = UserFamilyDetails()
-        # family.user = user
-        # family.member_name = request.POST.get('state1')
-        # family.member_age = request.POST.get('state1')
-        # family.member_relation = request.POST.get('state1')
-        # family.save()
+        family = UserFamilyDetails()
+        family.user = user
+        family.member_name = request.POST.get('state1')
+        family.member_age = request.POST.get('state1')
+        family.member_relation = request.POST.get('state1')
+        family.save()
 
-        # book = Bookings()
-        # book.user = user
-        # book.project = request.POST.get('project_id')
-        # book.seniority_id = request.POST.get('seniority_id')
-        # book.dimension = request.POST.get('dimension')
-        # book.total_site_value = request.POST.get('total_site_value')
-        # book.downpayment = request.POST.get('downpayment')
-        # book.site_refer = request.POST.get('site_refer')
-        # book.save()
+        book = Bookings()
+        book.user = user
+        book.project = request.POST.get('project_id')
+        book.seniority_id = request.POST.get('seniority_id')
+        book.dimension = request.POST.get('dimension')
+        book.total_site_value = request.POST.get('total_site_value')
+        book.downpayment = request.POST.get('downpayment')
+        book.site_refer = request.POST.get('site_refer')
+        book.save()
 
-        # payments = PaymentDetails()
-        # payments.booking=book
-        # payments.payment_mode = request.POST.get('payment_mode')
-        # payments.bank = request.POST.get('bank')
-        # payments.branch = request.POST.get('branch')
-        # payments.cheque_no = request.POST.get('cheque_no')
-        # payments.payment_data = request.POST.get('payment_data')
-        # payments.amount = request.POST.get('amount')
-        # payments.am_no = request.POST.get('am_no')
-        # payments.receipt_no = request.POST.get('receipt_no')
-        # payments.save()
+        payments = PaymentDetails()
+        payments.booking=book
+        payments.payment_mode = request.POST.get('payment_mode')
+        payments.bank = request.POST.get('bank')
+        payments.branch = request.POST.get('branch')
+        payments.cheque_no = request.POST.get('cheque_no')
+        payments.payment_data = request.POST.get('payment_data')
+        payments.amount = request.POST.get('amount')
+        payments.am_no = request.POST.get('am_no')
+        payments.receipt_no = request.POST.get('receipt_no')
+        payments.save()
     
     return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':data})
 
@@ -192,6 +194,7 @@ def activemember(request):
                                                   'project':project,
                                                   'book':book,
                                                   'userdet':userdet})
+
 def inactivemember(request):
     user = User.objects.all()
     project =Project.objects.all()
@@ -209,3 +212,39 @@ def confirmletter(request):
     return render(request,'view/confirmleter.html',{'user':user,
                                                     'userdet':userdet,
                                                     'project':project})
+
+def view_history(request):
+    return render(request,'display/view_history.html')
+
+def user_access(request):
+    return render(request,'input/update_user/user_access.html')
+
+def view_user_access(request):
+    return render(request,'input/update_user/view_user_access.html')
+
+def rate_update(request):
+    return render(request,'input/update_rate/rate_update.html')
+
+def view_rate_update(request):
+    return render(request,'input/update_rate/view_rate_update.html')
+
+def update_sales_staff(request):
+    return render(request,'input/update_sales_staff/update_staff.html')
+
+def view_update_sales_staff(request):
+    return render(request,'input/update_sales_staff/view_update_staff.html')
+
+def blocked_seniority(request):
+    return render(request,'input/blocked_update/block_seniority.html')
+
+def view_blocked_seniority(request):
+    return render(request,'input/blocked_update/view_block_seniority.html')
+
+def update_pdc(request):
+    return render(request,'input/pdc/update_pdc.html')
+
+def view_update_pdc(request):
+    return render(request,'input/pdc/view_update_pdc.html')
+
+def cr_code(request):
+    return render(request,'input/cr_code/update_cr_code.html')
