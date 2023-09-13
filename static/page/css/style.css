@@ -70,7 +70,6 @@
 /*** Navbar ***/
 .nav-bar {
     position: relative;
-    margin-top: 45px;
     padding: 0 3rem;
     transition: .5s;
     z-index: 9999;
@@ -437,4 +436,96 @@
     margin-right: 0;
     padding-right: 0;
     border-right: none;
+}
+
+@media (max-width:600px) {
+    .carousel-caption{
+        /* display:flex;
+        flex-wrap: wrap; */
+        top:12%;
+        z-index:1 ;
+       
+    }
+    .d-md-block {
+        display: block !important;
+    }
+    .percent
+    {
+      font-size: 10px !important;
+      margin-bottom: 0px ;
+      text-shadow: 1px 1px 2px black;
+    }
+    #h5font
+    {
+      font-size: 8px !important;
+      text-shadow: 1px 1px 2px black;
+     
+    }
+    #para{
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        letter-spacing: -1px !important;
+        text-shadow: 1px 1px 2px rgb(2, 246, 87);
+    }
+    #bsnlhead{
+        font-size: 12px;
+        margin-bottom: 0px !important;
+        text-shadow: 2px 2px 5px white;
+        color:#087af5;
+    }
+    #loginBtn
+    {
+        /* height:20px ;
+        width:90px; */
+        padding:7px;
+        padding-left: 10px;
+        padding-right: 10px;
+        background-color: #06c8c7; 
+        border-radius:5px;    
+    }
+    #loginBtn:hover
+    {
+        color: white;
+        background-color: steelblue;
+    }
+}
+
+@media (min-width:601px) {
+    .carousel-caption{
+        z-index:1;
+        top:40%;
+    }
+    #para{
+        text-shadow: 1px 1px 2px rgb(2, 246, 87);
+        margin-bottom: 10%;
+        font-size: 4vh;
+    }
+    #bsnlhead{
+        text-shadow: 1px 1px 2px white;
+        color:#00B98E;
+        font-size: 8vh;
+    }
+    .percent
+    {
+      text-shadow: 1px 1px 2px black;
+    }
+    #h5font
+    {
+      text-shadow: 1px 1px 2px black;
+     
+    }
+    #loginBtn
+    {
+        /* height:20px ;
+        width:90px; */
+        padding:7px;
+        background-color: #06c8c7; 
+        border-radius:5px;    
+    }
+    #loginBtn:hover
+    {
+        color: white;
+        background-color: steelblue;
+    }
+    
 }

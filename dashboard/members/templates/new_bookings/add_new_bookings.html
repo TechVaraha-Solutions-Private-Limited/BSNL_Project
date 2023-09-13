@@ -144,21 +144,11 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label>Select Project</label><br>
-                    <select name="project_id" class="form-control" required>
-                        {% for project in landdetail %}
-                            <option disabled selected hidden>Click to Select Project</option>
-                            <option value="{{project.project_id}}">{{project.project.projectname}}</option>
-                        {% endfor %}
-                    </select>
+                    <input type="text" name="projectname">
                 </div>
                 <div class="p-1">
                     <label>Dimension</label><br>
-                    <select name="dimension" class="form-control mt-1" required>
-                        {% for pltsize in data %}
-                            <option disabled selected hidden>Click to Select Plot Size</option>
-                            <option value="{{pltsize.plotsize_id}}">{{pltsize.plotsize.plotsize}}</option>
-                        {% endfor %}
-                    </select>
+                    <input type="text" name="dimension">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Total Site Value</label>

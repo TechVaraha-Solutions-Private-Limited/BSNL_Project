@@ -56,7 +56,7 @@ def add_new_bookings(request):
 
         book = Bookings()
         book.user = user
-        book.project = request.POST.get('project_id')
+        book.project = request.POST.get('projectname')
         book.seniority_id = request.POST.get('seniority_id')
         book.dimension = request.POST.get('dimension')
         book.total_site_value = request.POST.get('total_site_value')

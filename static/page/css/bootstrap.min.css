@@ -2167,6 +2167,10 @@ progress {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch
     }
+    .d-md-block {
+        display: block !important;
+       
+    }
 }
 
 @media (max-width: 767.98px) {
@@ -7997,9 +8001,9 @@ fieldset:disabled .btn {
     padding: .5rem !important
 }
 
-.p-3 {
+/* .p-3 {
     padding: 1rem !important
-}
+} */
 
 .p-4 {
     padding: 1.5rem !important
