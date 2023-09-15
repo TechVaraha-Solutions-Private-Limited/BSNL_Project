@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 # def signin(request):
 #     error_message = None
-#     users = User.objects.all()    
+#     users = User.objects.all()
 #     for user in users:
 #          print(user.username)
 
@@ -49,13 +49,13 @@ def index(request):
 def contact(request):
     return render(request, 'page/contact.html')
 
-# def project(request):
-#     data = Project.objects.all()
-#     context={
-#         "data":data
-#     }
+def project(request):
+    # data = Project.objects.all()
+    # context={
+    #     "data":data
+    # }, {"data": data}
     
-#     return render(request, 'page/projects.html', {"data": data})
+    return render(request, 'page/projects.html')
 
 def services(request):
     return render(request, 'page/services.html')
@@ -73,12 +73,12 @@ def about(request):
 def test(request):
     return render(request,'page/customer/home.html')
  
-# def product(request):
-#     value = Receipt.objects.all()
-#     context={
-#         "value":value
-#     }
-#     return render(request,'page/customer/product.html', {"value": value})
+def product(request):
+    # value = Receipt.objects.all()
+    # context={
+    #     "value":value
+    # }, {"value": value}
+    return render(request,'page/customer/product.html')
 
 
 

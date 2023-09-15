@@ -1,9 +1,9 @@
 {% extends 'page/commons/base.html' %}
-
+{% load static %}
 {% block content %}
 <!-- Jumbotron -->
 <div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white1"
-     style="background-image: url('static/page/img/p1.jpg'); height: 350px ">
+     style="background-image: url('{% static 'page/img/p1.jpg' %} '); height: 350px ">
     <h1 class="mb-3 h2">BSNL</h1>
 
     <p>
@@ -22,23 +22,19 @@
             </div>
         </div>
         <div class="tab-content">
-            
             <div id="tab-1" class="tab-pane fade show p-0 active">
-            
                 <div class="row g-4">
-                    {% for mydata in data %}
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
-                                <a href=""><img class="img-fluid" src="{{mydata.images}}" alt=""></a>
-                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">{{mydata.status}}</div>
+                                <a href=""><img class="img-fluid" src="static/page/img/p1.jpg" alt=""></a>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Active</div>
                                 <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Plots</div>
                             </div>
                             <div class="p-4 pb-0">
-                                <h5 class="text-primary mb-3">₹ {{mydata.dp_price}}</h5>
-                                <a class="d-block h5 mb-2" href="">{{mydata.projectname}}</a>
-                                <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{mydata.address}}</p>
-                                <p><i class="fa fa-ruler-combined text-primary me-2"></i>1000 Sqft</p>
+                                <h5 class="text-primary mb-3">₹12,345</h5>
+                                <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
+                                <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street, India</p>
                             </div>
                             <div class="d-flex border-top">
                                 <small class="flex-fill text-center border-end py-2"><a href="static/page/1.pdf"><i class="fa fa-eye text-primary me-2" aria-hidden="true"></i>Layouts Plan</a></small>
@@ -50,7 +46,7 @@
                                         <div class="modal-content">
                                             <div class="modal-body">
                                                 <div class="modal-header">
-            
+
                                                 </div>
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
@@ -66,8 +62,8 @@
                                         </div>
                                     </div>
                                 </div>
-            
-            
+
+
                                 <small class="flex-fill text-center py-2 "><a data-bs-toggle="modal" data-bs-target="#staticBackdrop1"><i class="fa fa-tags  text-primary me-2"></i>Price</a></small>
                                 <!-- Button trigger modal -->
                                 <!-- Modal -->
@@ -91,7 +87,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <th scope="row">1</th>
-                                                            <td>{{mydata.first_install}}</td>
+                                                            <td>Mark</td>
                                                             <td>Otto</td>
                                                             <td>@mdo</td>
                                                         </tr>
@@ -118,11 +114,189 @@
                             </div>
                         </div>
                     </div>
-                    {%endfor%}
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="property-item rounded overflow-hidden">
+                            <div class="position-relative overflow-hidden">
+                                <a href=""><img class="img-fluid" src="static/page/img/p4.jpg" alt=""></a>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Active</div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Plots</div>
+                            </div>
+                            <div class="p-4 pb-0">
+                                <h5 class="text-primary mb-3">₹12,345</h5>
+                                <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
+                                <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street,India</p>
+                            </div>
+                            <div class="d-flex border-top">
+                                <small class="flex-fill text-center border-end py-2"><a href="static/page/1.pdf"><i class="fa fa-eye text-primary me-2" aria-hidden="true"></i>Layouts Plan</a></small>
+                                <small class="flex-fill text-center border-end py-2 "><a data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-ruler-combined"></i>Location</a></small>
+                                <!-- Button trigger modal -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered model-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="modal-header">
+
+                                                </div>
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="col-md-12 ">
+                                                    <iframe class="position-relative rounded w-100 h-100"
+                                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
+                                                            frameborder="0" style="min-height: 400px; border:0;" allowfullscreen="" aria-hidden="false"
+                                                            tabindex="0"></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <small class="flex-fill text-center py-2 "><a data-bs-toggle="modal" data-bs-target="#staticBackdrop1"><i class="fa fa-tags  text-primary me-2"></i>Price</a></small>
+                                <!-- Button trigger modal -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-xl ">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">First</th>
+                                                            <th scope="col">Last</th>
+                                                            <th scope="col">Handle</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">1</th>
+                                                            <td>Mark</td>
+                                                            <td>Otto</td>
+                                                            <td>@mdo</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">2</th>
+                                                            <td>Jacob</td>
+                                                            <td>Thornton</td>
+                                                            <td>@fat</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">3</th>
+                                                            <td colspan="2">Larry the Bird</td>
+                                                            <td>@twitter</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="property-item rounded overflow-hidden">
+                            <div class="position-relative overflow-hidden">
+                                <a href=""><img class="img-fluid" src="static/page/img/p3.jpg" alt=""></a>
+                                <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">Active</div>
+                                <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">Plots</div>
+                            </div>
+                            <div class="p-4 pb-0">
+                                <h5 class="text-primary mb-3">₹12,345</h5>
+                                <a class="d-block h5 mb-2" href="">Golden Urban House For Sell</a>
+                                <p><i class="fa fa-map-marker-alt text-primary me-2"></i>123 Street,India</p>
+                            </div>
+                            <div class="d-flex border-top">
+                                <small class="flex-fill text-center border-end py-2"><a href="static/page/1.pdf"><i class="fa fa-eye text-primary me-2" aria-hidden="true"></i>Layouts Plan</a></small>
+                                <small class="flex-fill text-center border-end py-2 "><a data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-ruler-combined"></i>Location</a></small>
+                                <!-- Button trigger modal -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered model-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="modal-header">
+
+                                                </div>
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="col-md-12 ">
+                                                    <iframe class="position-relative rounded w-100 h-100"
+                                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd"
+                                                            frameborder="0" style="min-height: 400px; border:0;" allowfullscreen="" aria-hidden="false"
+                                                            tabindex="0"></iframe>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <small class="flex-fill text-center py-2 "><a data-bs-toggle="modal" data-bs-target="#staticBackdrop1"><i class="fa fa-tags  text-primary me-2"></i>Price</a></small>
+                                <!-- Button trigger modal -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-xl ">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">First</th>
+                                                            <th scope="col">Last</th>
+                                                            <th scope="col">Handle</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">1</th>
+                                                            <td>Mark</td>
+                                                            <td>Otto</td>
+                                                            <td>@mdo</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">2</th>
+                                                            <td>Jacob</td>
+                                                            <td>Thornton</td>
+                                                            <td>@fat</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">3</th>
+                                                            <td colspan="2">Larry the Bird</td>
+                                                            <td>@twitter</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-               
             </div>
-            
+
         </div>
     </div>
 </div>
