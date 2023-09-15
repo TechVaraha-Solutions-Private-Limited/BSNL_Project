@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 # def signin(request):
 #     error_message = None
-#     users = User.objects.all()
+#     users = User.objects.all()    
 #     for user in users:
 #          print(user.username)
 
