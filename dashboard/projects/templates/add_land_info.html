@@ -47,84 +47,85 @@
 
 <div class="divbox p-3 mt-2">
 <h3 class="font-weight-bold mt-4 addproject">ADD LAND INFORMATION</h3>
+</div>
 <form method="POST">
-{% csrf_token %}
-<div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
-    <div>
-        <label>Select Project</label><br>
-        <select name="projectname" class="projectname mt-3" required>
-        {% for project in projects %}
-            <option disabled selected hidden>Click to Select Project</option>
-            <option value="{{project.id}}">{{project.projectname}}</option>
-        {% endfor %}
-    </select>
-    </div>
-    <div>
-        <label>Select Plot Size</label><br>
-        <select name="plotsize" class="plotsize mt-3" required>
-            {% for pltsize in pltsizes %}
-                <option disabled selected hidden>Click to Select Plot Size</option>
-                <option value="{{pltsize.id}}">{{pltsize.plotsize}}</option>
+    {% csrf_token %}
+    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
+        <div>
+            <label>Select Project</label><br>
+            <select name="projectname" class="projectname mt-3" required>
+            {% for project in projects %}
+                <option disabled selected hidden>Click to Select Project</option>
+                <option value="{{project.id}}">{{project.projectname}}</option>
             {% endfor %}
         </select>
+        </div>
+        <div>
+            <label>Select Plot Size</label><br>
+            <select name="plotsize" class="plotsize mt-3" id="plotsize" required>
+                {% for pltsize in pltsizes %}
+                    <option disabled selected hidden>Click to Select Plot Size</option>
+                    <option value="{{pltsize.id}}">{{pltsize.plotsize}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Per Square Feet Amount</label>
+            <input type="number" name="persquarefeetamount" id="cal" class="form-control" placeholder="Enter Per Square Feet Amount" required>
+        </div>
     </div>
 
-    <div>
-        <label>Per Square Feet Amount</label>
-        <input type="number" name="persquarefeetamount" class="form-control" placeholder="Enter Per Square Feet Amount" required>
-    </div>
-</div>
 
+    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
+        <div>
+            <label>Total Amount</label>
+            <input type="number" name="totalamount" id="demo" class="form-control" placeholder="Enter Total Amount" required>
+        </div>
 
-<div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
-    <div>
-        <label>Total Amount</label>
-        <input type="number" name="totalamount" class="form-control" placeholder="Enter Total Amount" required>
-    </div>
+        <div>
+            <label>Down Payment</label>
+            <input type="text" name="downamount" id="" class="form-control" placeholder="Enter Down Payment" required>
+        </div>
+        <div>
+            <label>Select to Installment</label>
+            <select class="form-control" id="inputfield">
+                <option>--select option--</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div id="mytable" style="display: none;">
+            <label>First Installment</label>
+            <input type="number" name="firstinstallment" id="first_name" class="form-control" placeholder="Enter First Installment">
+        </div>
+        <div id="project" style="display:none;">
+            <label>Second Installment</label>
+            <input type="text" name="secondinstallment" id="second" class="form-control" placeholder="Enter Second Installment">
+        </div>
+        <div id="table3" style="display:none;" >
+            <label>Thrid Installment</label>
+            <input type="text" name="thirdinstallment" id="thrid" class="form-control" placeholder="Enter Thrid Installment">
+        </div>
+        <div id="table4" style="display:none;">
+            <label>Fourth Installment</label>
+            <input type="text" name="fourthinstallment" id="fourth" class="form-control" placeholder="Enter Fourth Installment">
+        </div>
+        <div id="table5" style="display:none;">
+            <label >Fifth Installment</label>
+            <input type="text" name="fifthinstallment" id="fifth" class="form-control" placeholder="Enter Fifth Installment">
+        </div>
 
-    <div>
-        <label>Down Payment</label>
-        <input type="number" name="downamount" id="result" class="form-control" placeholder="Enter Down Payment" required>
     </div>
-    <div>
-        <label>Select to Installment</label>
-        <select class="form-control" id="inputfield">
-            <option>--select option--</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-        </select>
     </div>
-    <div id="mytable" style="display: none;">
-        <label>First Installment</label>
-        <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" required>
-    </div>
-    <div id="project" style="display:none;">
-        <label>Second Installment</label>
-        <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-    </div>
-    <div id="table3" style="display:none;" >
-        <label>Thrid Installment</label>
-        <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-    </div>
-    <div id="table4" style="display:none;">
-        <label>Fourth Installment</label>
-        <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-    </div>
-    <div id="table5" style="display:none;">
-        <label >Fifth Installment</label>
-        <input type="text" name="secondinstallment" class="form-control" placeholder="Enter Second Installment" required>
-    </div>
-
-</div>
-</div>
-    
-    <div class="text-center">
-        <input type="submit" value="Add Land Information" class="btn btn-primary mt-5">
-        <input type="reset" value="Clear" class="btn btn-danger mt-5">
-    </div>
+        
+        <div class="text-center">
+            <input type="submit" value="Add Land Information" class="btn btn-primary mt-5" id="submit-btn">
+            <input type="reset" value="Clear" class="btn btn-danger mt-5">
+        </div>
 
 
 </form>
@@ -137,36 +138,62 @@
     const Table5 = document.getElementById('table5');
 
     inputField.addEventListener('input', function () {
+        console.log(inputField.value);
         if (inputField.value === '1') {
             myTable.style.display = 'table';// Show the table
+            const testing = document.getElementById('first_name').setAttribute('required', '');
             Project.style.display = 'none';
             Table3.style.display = 'none';
             Table4.style.display = 'none';
             Table5.style.display = 'none';
+            const testing1 = document.getElementById('second').removeAttribute('required', '');
+            const testing2 = document.getElementById('thrid').removeAttribute('required', '');
+            const testing3 = document.getElementById('fourth').removeAttribute('required', '');
+            const testing4 = document.getElementById('fifth').removeAttribute('required', '');
         } else if (inputField.value === '2') {
             myTable.style.display = 'table';// Show the table
             Project.style.display = 'table';
+            const testing = document.getElementById('first_name').setAttribute('required', '');
+            const testing1 = document.getElementById('second').setAttribute('required', '');
             Table3.style.display = 'none';
             Table4.style.display = 'none';
             Table5.style.display = 'none';
+            const testing2 = document.getElementById('thrid').removeAttribute('required', '');
+            const testing3 = document.getElementById('fourth').removeAttribute('required', '');
+            const testing4 = document.getElementById('fifth').removeAttribute('required', '');
         } else if (inputField.value === '3') {
             myTable.style.display = 'table';// Show the table
             Project.style.display = 'table';
             Table3.style.display = 'table';
+            const testing = document.getElementById('first_name').setAttribute('required', '');
+            const testing1 = document.getElementById('second').setAttribute('required', '');
+            const testing2 = document.getElementById('thrid').setAttribute('required', '');
             Table4.style.display = 'none';
             Table5.style.display = 'none';
+            const testing3 = document.getElementById('fourth').removeAttribute('required', '');
+            const testing4 = document.getElementById('fifth').removeAttribute('required', '');
         } else if(inputField.value ==='4'){
             myTable.style.display = 'table';// Show the table
             Project.style.display = 'table';
+            const testing = document.getElementById('first_name').setAttribute('required', '');
+            const testing1 = document.getElementById('second').setAttribute('required', '');
+            const testing2 = document.getElementById('thrid').setAttribute('required', '');
+            const testing3 = document.getElementById('fourth').setAttribute('required', '');
             Table3.style.display = 'table';
             Table4.style.display = 'table';
             Table5.style.display = 'none';
+            const testing4 = document.getElementById('fifth').removeAttribute('required', '');
         } else if(inputField.value ==='5'){
             myTable.style.display = 'table';
             Project.style.display = 'table';
             Table3.style.display = 'table';
             Table4.style.display = 'table';
             Table5.style.display = 'table';
+            const testing = document.getElementById('first_name').setAttribute('required', '');
+            const testing1 = document.getElementById('second').setAttribute('required', '');
+            const testing2 = document.getElementById('thrid').setAttribute('required', '');
+            const testing3 = document.getElementById('fourth').setAttribute('required', '');
+            const testing4 = document.getElementById('fifth').setAttribute('required', '');
         }
         else {
             myTable.style.display = 'none';
@@ -176,39 +203,39 @@
             Table5.style.display = 'none';
         }
     });
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get the input and result elements
-        const inputValue = document.getElementById('input-value');
-        const resultElement = document.getElementById('result');
-    
-        // Add an event listener for input changes
-        inputValue.addEventListener('input', function() {
-            // Get the input value from the input field
-            const input = inputValue.value;
-    
-            // Split the input value at 'X'
-            const numbers = input.split('X');
+    $('#cal').change(function() {
+        const inputValue = document.getElementById('plotsize');
+        
+        const input = inputValue.options[inputValue.selectedIndex].text;
+        const numbers = input.split('X');
     
             if (numbers.length !== 2) {
                 resultElement.textContent = "Invalid input format. Please use 'numberXnumber' format.";
                 return;
             }
-    
-            // Convert the numbers to integers
             const num1 = parseInt(numbers[0]);
             const num2 = parseInt(numbers[1]);
-    
+            
             if (isNaN(num1) || isNaN(num2)) {
                 resultElement.textContent = "Invalid input. Please provide valid integers.";
                 return;
             }
-    
-            // Perform the multiplication
-            const result = num1 * num2;
-    
-            // Display the result
-            resultElement.textContent = `The result of ${num1} * ${num2} is ${result}`;
-        });
-    });
+            const result = num1 * num2;           
+            var setText= document.getElementById('cal').value;
+            const total = result * setText;
+            document.getElementById("demo").value=total;
+        console.log(inputValue.options[inputValue.selectedIndex].text);
+        console.log(numbers);
+        console.log(result);
+        console.log(total);
+});
+
+// $("#submit-btn").click(function(){
+   
+//     $("[name='firstinstallment']").prop('required',true);
+
+
+// });
 </script>
+
 {% endblock %}
