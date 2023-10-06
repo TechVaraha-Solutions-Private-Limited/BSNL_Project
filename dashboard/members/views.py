@@ -1,15 +1,16 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee
 from .models import Bookings,PaymentDetails,Ugdg,Receipts
 from dashboard.projects.models import Project,PlotSize,LandDetails
+from django.forms.models import model_to_dict
 # Create your views here.
 def home(request):
     return render(request,'common/index.html')
 
 def add_new_bookings(request):
     data = LandDetails.objects.all()
-    project = Project.objects.all()
-    print(project)
+    projects = Project.objects.all()
     # landsize = PlotSize.objects.filter()
     # landdetail = LandDetails.objects.get(projectname=project, plotsize=landsize)
     landdetail = LandDetails.objects.all()
@@ -76,8 +77,14 @@ def add_new_bookings(request):
         payments.receipt_no = request.POST.get('receipt_no')
         payments.save()
     
-    return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':data})
+    return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':data,'projects':projects})
 
+def get_dimension(request):
+    if request.method == "POST":
+        id = request.POST.get('id','').strip()
+        dimensions = PlotSize.objects.filter(landdetails__project=id).values()
+        return JsonResponse({"values":list(dimensions)})
+    return JsonResponse({})
 def booksum(request):
     return render(request,'home/booksum.html')
 
@@ -91,7 +98,6 @@ def generate(request):
     username = None 
 
     if request.method == 'POST':
-
         action = request.POST.get('action')
         print('aution:',action)
 

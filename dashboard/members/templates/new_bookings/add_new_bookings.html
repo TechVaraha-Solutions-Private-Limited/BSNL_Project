@@ -3,7 +3,7 @@
 {% load static %}
 {% include 'common/bootstrap.html'%}
 <style>
-    a{
+    a {
         color: black;
         text-decoration: none;
     }
@@ -11,44 +11,46 @@
 <form class="space-y-5 " method="POST" action="">
     {% csrf_token %}
     <div class="p-2" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-        <label class="text-lg font-semibold dark:text-white-light p-2" style="background-color: blueviolet; border-radius: 9px;"><b>ADD CREDENTIALS - New Booking</b></label>
-        <h2 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Member Particulars</b></h2>
+        <label class="text-lg font-semibold dark:text-white-light p-2"
+            style="background-color: blueviolet; border-radius: 9px;"><b>ADD CREDENTIALS - New Booking</b></label>
+        <h2 class="text-lg font-semibold dark:text-white-light p-1"
+            style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Member Particulars</b></h2>
         <div class="panel p-1">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Member Name</label>
-                    <input type="text" name="first_name"  class="form-input" placeholder="Member Name" required>
+                    <input type="text" name="first_name" class="form-input" placeholder="Member Name" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Father/Husband Name</label>
-                    <input type="text" name="last_name"  class="form-input" placeholder="Surname Name" required>
+                    <input type="text" name="last_name" class="form-input" placeholder="Surname Name" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Date of Brith</label>
-                    <input type="date" name="dob"  class="form-input" placeholder="DOB" >
+                    <input type="date" name="dob" class="form-input" placeholder="DOB">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Age</label>
-                    <input type="number" name="age"  class="form-input" placeholder="Age" >
+                    <input type="number" name="age" class="form-input" placeholder="Age">
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Moblie Number</label>
-                    <input type="number" name="mobile_no" placeholder="Moblie Number"  class="form-input" >
+                    <input type="number" name="mobile_no" placeholder="Moblie Number" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Alternate Number</label>
-                    <input type="number" name="alternate_no" placeholder="Alternate Number"  class="form-input" >
+                    <input type="number" name="alternate_no" placeholder="Alternate Number" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Email ID</label>
-                    <input type="email" name="email" placeholder="E-Mail Id" class="form-input" >
+                    <input type="email" name="email" placeholder="E-Mail Id" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Profile</label>
                     <input type="file" name="profile">
-                </div>         
+                </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
@@ -57,21 +59,21 @@
                 </div>
                 <div class="p-1">
                     <label class="p-1">City</label>
-                    <input type="text" name="city" placeholder="City" class="form-input" >
+                    <input type="text" name="city" placeholder="City" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">State</label>
-                    <input type="text" name="state" placeholder="State" class="form-input" >
+                    <input type="text" name="state" placeholder="State" class="form-input">
                 </div>
                 <div>
                     <label class="p-1">Password</label>
-                    <input type="text" name="password" placeholder="password" class="form-input" >
+                    <input type="text" name="password" placeholder="password" class="form-input">
                 </div>
-            </div> 
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Pan Number</label>
-                    <input type="number" name="panno" placeholder="Pan Number" class="form-input" >
+                    <input type="number" name="panno" placeholder="Pan Number" class="form-input">
                 </div>
                 <div class="custom-file-container p-7">
                     <label></label>
@@ -81,7 +83,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Aadhhar Number</label>
-                    <input type="number" name="aadhhaarno" placeholder="Aadhhar Number" class="form-input" >
+                    <input type="number" name="aadhhaarno" placeholder="Aadhhar Number" class="form-input">
                 </div>
                 <div class="p-7">
                     <label></label>
@@ -90,96 +92,109 @@
             </div>
         </div>
         <div class="panel p-1">
-            <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Nominee Particulars</b></h1>
+            <h1 class="text-lg font-semibold dark:text-white-light p-1"
+                style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Nominee Particulars</b></h1>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-                <div class="p-1"> 
+                <div class="p-1">
                     <label class="p-1">Nominee Name</label>
-                    <input type="text" name="nominee_name" placeholder="Nominee Name"  class="form-input" >
+                    <input type="text" name="nominee_name" placeholder="Nominee Name" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Nominee Age</label>
-                    <input type="number" name="nominee_age" placeholder="Nominee Age" class="form-input" >
+                    <input type="number" name="nominee_age" placeholder="Nominee Age" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Nominee Relationship</label>
-                    <input type="text" name="nominee_relationship" placeholder="Nominee Relationship" class="form-input" >
+                    <input type="text" name="nominee_relationship" placeholder="Nominee Relationship"
+                        class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Nominee Address</label>
-                    <input type="text" name="address1" placeholder="Nominee Address" class="form-input" >
+                    <input type="text" name="address1" placeholder="Nominee Address" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">City</label>
-                    <input type="text" name="city1" placeholder="City" class="form-input" >
+                    <input type="text" name="city1" placeholder="City" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">State</label>
-                    <input type="text" name="state1" placeholder="State" class="form-input" >
-                </div>  
+                    <input type="text" name="state1" placeholder="State" class="form-input">
+                </div>
             </div>
         </div>
         <div class="panel p-1" id="container">
-            <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Family Details</b></h1>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
-                <div class="p-1"> 
+            <h1 class="text-lg font-semibold dark:text-white-light p-1"
+                style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Family Details</b></h1>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="p-1">
                     <label class="p-1">Family-Member Name</label>
-                    <input type="text" name="alternate_no" placeholder="Family-Member Name" class="form-input" >
+                    <input type="text" name="alternate_no" placeholder="Family-Member Name" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Family-Member Age</label>
-                    <input type="age" name="alternate_no" placeholder="Family-Member Age" class="form-input" >
+                    <input type="age" name="alternate_no" placeholder="Family-Member Age" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Family-Member Relationship</label>
-                    <input type="text" name="alternate_no" placeholder="Family-Member Relationship" class="form-input" >
+                    <input type="text" name="alternate_no" placeholder="Family-Member Relationship" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1"></label>
-                    <button class="btn btn-success text-lg font-semibold dark:text-white-light"type="button" onclick="add_more_field()">Add More</button>
+                    <button class="btn btn-success text-lg font-semibold dark:text-white-light" type="button"
+                        onclick="add_more_field()">Add More</button>
                 </div>
             </div>
         </div>
         <div class="panel p-1">
-            <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Site Details</b></h1>
+            <h1 class="text-lg font-semibold dark:text-white-light p-1"
+                style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Site Details</b></h1>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label>Select Project</label><br>
-                    <input type="text" name="projectname">
+                    <select class="form-control" id="projectname" name="projectname">
+                        <option value="">Select</option>
+                        {% for project in projects %}
+                        <option value="{{project.id}}">{{project.projectname}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="p-1">
                     <label>Dimension</label><br>
-                    <input type="text" name="dimension">
+                    <select class="form-control" id="selectDimension" name="selectDimension" disabled>
+                        <option>Select</option>
+                    </select>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Total Site Value</label>
-                    <input type="text" name="total_site_value" placeholder="Total Site Value" class="form-input" >
+                    <input type="text" name="total_site_value" placeholder="Total Site Value" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Down Payment value</label>
-                    <input type="text" name="downpayment" placeholder="Down Payment value" class="form-input" >
+                    <input type="text" name="downpayment" placeholder="Down Payment value" class="form-input">
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
-                    <label class="p-1" >Site Reference</label>
-                    <input type="text" name="site_refer" placeholder="Site Reference" class="form-input" >
+                    <label class="p-1">Site Reference</label>
+                    <input type="text" name="site_refer" placeholder="Site Reference" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Seniority No</label>
-                    <input type="text" name="seniority_id" placeholder="Seniority No" class="form-input" >
+                    <input type="text" name="seniority_id" placeholder="Seniority No" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">AM No</label>
-                    <input type="text" name="alternate_no" placeholder="AM No" class="form-input" >
+                    <input type="text" name="alternate_no" placeholder="AM No" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Receipt No</label>
-                    <input type="text" name="receipt_no" placeholder="Receipt No" class="form-input" >
+                    <input type="text" name="receipt_no" placeholder="Receipt No" class="form-input">
                 </div>
             </div>
         </div>
         <div class="panel p-1">
-            <h2 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Payment Details</b></h2>
+            <h2 class="text-lg font-semibold dark:text-white-light p-1"
+                style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Payment Details</b></h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div class="p-1">
                     <div>
@@ -195,31 +210,31 @@
                 </div>
                 <div class="p-1" id="mytable" style="display :none;">
                     <label class="p-1">Bank</label>
-                    <input type="text" name="bank" placeholder="Bank" class="form-input" >
+                    <input type="text" name="bank" placeholder="Bank" class="form-input">
                 </div>
                 <div class="p-1" id="project" style="display :none;">
-                    <label class="p-1" >Branch</label>
-                    <input type="text" name="branch" placeholder="Branch"  class="form-input" >
+                    <label class="p-1">Branch</label>
+                    <input type="text" name="branch" placeholder="Branch" class="form-input">
                 </div>
                 <div class="p-1" id="table3" style="display :none;">
                     <label class="p-1">Cheque No</label>
-                    <input type="text" name="cheque_no" placeholder="Cheque No" class="form-input" >
+                    <input type="text" name="cheque_no" placeholder="Cheque No" class="form-input">
                 </div>
                 <div class="p-1" id="table4" style="display :none;">
                     <label class="p-1">Pay Date</label>
-                    <input type="date" name="payment_data" placeholder="Pay Date" class="form-input" >
+                    <input type="date" name="payment_data" placeholder="Pay Date" class="form-input">
                 </div>
                 <div class="p-1" id="table5" style="display :none;">
                     <label>Amount</label>
-                    <input type="text" name="amount" placeholder="Amount"  class="form-input" >
+                    <input type="text" name="amount" placeholder="Amount" class="form-input">
                 </div>
                 <div class="p-1" id="table6" style="display:none;">
                     <label>Transaction Id</label>
-                    <input type="text" name="amount" placeholder="Amount"  class="form-input" >
+                    <input type="text" name="amount" placeholder="Amount" class="form-input">
                 </div>
                 <div class="p-1" id="table7" style="display:none;">
                     <label>DD No</label>
-                    <input type="text" name="amount" placeholder="Amount"  class="form-input" >
+                    <input type="text" name="amount" placeholder="Amount" class="form-input">
                 </div>
             </div>
         </div>
@@ -232,7 +247,7 @@
 <script>
     function add_more_field() {
         var container = document.getElementById("container");
-        
+
         var newRow = document.createElement("div");
         newRow.innerHTML = `
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5 p-1">
@@ -248,67 +263,100 @@
             <button class="btn btn-danger text-lg font-semibold dark:text-white-light"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Close</button>
         </div>
         `;
-        
+
         container.appendChild(newRow);
     }
 
-    
+
     function remove_field(button) {
         var row = button.parentNode;
         row.parentNode.removeChild(row);
 
     }
-        const inputField = document.getElementById('inputfield');
-        const myTable = document.getElementById('mytable');
-        const Project = document.getElementById('project');
-        const Table3 = document.getElementById('table3');
-        const Table4 = document.getElementById('table4');
-        const Table5 = document.getElementById('table5');
-        const Table6 = document.getElementById('table6');
-        const Table7 = document.getElementById('table7');
-        inputField.addEventListener('input', function () {
-            if (inputField.value === 'cheque') {
-                myTable.style.display = 'table';// Show the table
-                Project.style.display = 'table';
-                Table3.style.display = 'table';
-                Table4.style.display = 'table';
-                Table5.style.display = 'table';
-                Table6.style.display = 'none';
-                Table7.style.display = "none";
-            } else if (inputField.value === 'net_banking') {
-                Project.style.display = 'table';
-                myTable.style.display = 'table';// Show the table
-                Table3.style.display = 'none';
-                Table4.style.display = 'table';
-                Table5.style.display = 'table';
-                Table6.style.display = 'table';
-                Table7.style.display = "none";
-            } else if (inputField.value === 'cash') {
-                myTable.style.display = 'none';// Show the table
-                Project.style.display = 'none';
-                Table3.style.display = 'none';
-                Table4.style.display = 'table';
-                Table5.style.display = 'table';
-                Table6.style.display = 'none';
-                Table7.style.display = "none";
-            } else if(inputField.value ==='dd'){
-                myTable.style.display = 'table';// Show the table
-                Project.style.display = 'table';
-                Table3.style.display = 'none';
-                Table4.style.display = 'table';
-                Table5.style.display = 'table';
-                Table6.style.display = 'none';
-                Table7.style.display = "table";
-            } else {
-                myTable.style.display = 'none';
-                Project.style.display = 'none';
-                Table3.style.display = 'none';
-                Table4.style.display = 'none';
-                Table5.style.display = 'none';
-                Table6.style.display = 'none';
-                Table7.style.display = 'none';
-            }
-        });
+    const inputField = document.getElementById('inputfield');
+    const myTable = document.getElementById('mytable');
+    const Project = document.getElementById('project');
+    const Table3 = document.getElementById('table3');
+    const Table4 = document.getElementById('table4');
+    const Table5 = document.getElementById('table5');
+    const Table6 = document.getElementById('table6');
+    const Table7 = document.getElementById('table7');
+    inputField.addEventListener('input', function () {
+        if (inputField.value === 'cheque') {
+            myTable.style.display = 'table';// Show the table
+            Project.style.display = 'table';
+            Table3.style.display = 'table';
+            Table4.style.display = 'table';
+            Table5.style.display = 'table';
+            Table6.style.display = 'none';
+            Table7.style.display = "none";
+        } else if (inputField.value === 'net_banking') {
+            Project.style.display = 'table';
+            myTable.style.display = 'table';// Show the table
+            Table3.style.display = 'none';
+            Table4.style.display = 'table';
+            Table5.style.display = 'table';
+            Table6.style.display = 'table';
+            Table7.style.display = "none";
+        } else if (inputField.value === 'cash') {
+            myTable.style.display = 'none';// Show the table
+            Project.style.display = 'none';
+            Table3.style.display = 'none';
+            Table4.style.display = 'table';
+            Table5.style.display = 'table';
+            Table6.style.display = 'none';
+            Table7.style.display = "none";
+        } else if (inputField.value === 'dd') {
+            myTable.style.display = 'table';// Show the table
+            Project.style.display = 'table';
+            Table3.style.display = 'none';
+            Table4.style.display = 'table';
+            Table5.style.display = 'table';
+            Table6.style.display = 'none';
+            Table7.style.display = "table";
+        } else {
+            myTable.style.display = 'none';
+            Project.style.display = 'none';
+            Table3.style.display = 'none';
+            Table4.style.display = 'none';
+            Table5.style.display = 'none';
+            Table6.style.display = 'none';
+            Table7.style.display = 'none';
+        }
+    });
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+    $('#projectname').on('change', function (event) {
+        event.preventDefault();
+        let id = this.value;
+        if (this.value != '') {
+            mydata = { id: id, csrfmiddlewaretoken: '{{ csrf_token }}' }
+            $.ajax({
+                url: "{% url 'get_dimension' %}",
+                method: "POST",
+                data: mydata,
+                success: function (data) {
+
+                    $("#selectDimension").removeAttr("disabled");
+                    $("#selectDimension option").remove();
+                    $('#selectDimension').append($('<option></option>').val("").html("Select"))
+                    $.each(data.values, function (i, p) {
+                        $('#selectDimension').append($('<option></option>').val(p.id).html(p.plotsize));
+                    });
+                }
+            })
+
+        }
+
+        else {
+            $("#selectDimension").prop('disabled', 'disabled');
+            $("#selectDimension option").remove();
+            $('#selectDimension').append($('<option></option>').val("").html("Select"))
+        }
+    });
 
 </script>
 {% endblock %}

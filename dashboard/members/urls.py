@@ -4,6 +4,7 @@ from .views import *
 urlpatterns = [
     path('home',home,name='home'),
     path('newbooking', add_new_bookings, name='newbooking'),
+    path('get_dimension',get_dimension,name="get_dimension"),
     path('booksum',booksum,name='booksum'),
     path('bss',bss,name='bss'),
     path('generate',generate,name='generate'),
