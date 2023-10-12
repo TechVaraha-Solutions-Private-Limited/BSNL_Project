@@ -42,10 +42,7 @@
             <th>ID</th>
             <th>Project Name</th>
             <th>Short Code</th>
-            <th>DP Price</th>
-            <th>First Installment</th>
-            <th>Second Installment</th>
-            <th>Third Installment</th>
+            <th>Address</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -56,10 +53,7 @@
             <td>{{projectslist.id}}</td>
             <td>{{projectslist.projectname}}</td>
             <td>{{projectslist.shortcode}}</td>
-            <td>{{projectslist.dp_price}}</td>
-            <td>{{projectslist.first_install}}</td>
-            <td>{{projectslist.second_install}}</td>
-            <td>{{projectslist.third_install}}</td>
+            <td>{{projectslist.address}},{{projectslist.city}},{{projectslist.state}}</td>
             <td>
                 {% if projectslist.status == 1 %}
                 Active

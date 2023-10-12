@@ -3,5 +3,5 @@ from dashboard.reports import views
 
 
 urlpatterns=[
-    path('confirmletter_view',views.confirmletter_view,name='confirmletter_view'),
+    path('confirmletter_view/<id>',views.confirmletter_view,name='confirmletter_view'),
 ]
