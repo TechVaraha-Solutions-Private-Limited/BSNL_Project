@@ -19,6 +19,7 @@ urlpatterns = [
     path('inactivemember',inactivemember,name='inactivemember'),
     path('confirmletter',confirmletter,name='confirmletter'),
     path('view_history',view_history,name='view_history'),
+    path('print_receipt',print_receipt,name='print_receipt'),
     path('user_access',user_access,name='user_access'),
     path('view_user_access',view_user_access,name='view_user_access'),
     path('rate_update',rate_update,name='rate_update'),

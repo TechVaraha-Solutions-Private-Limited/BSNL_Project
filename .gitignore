@@ -1,7 +1,8 @@
 __pycache__/
-.venv
+.venv/
 migrations/
 .env
 .vscode
 db.sqlite3
 media/
+vnv/

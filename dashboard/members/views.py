@@ -91,6 +91,9 @@ def booksum(request):
 def bss(request):
     return render(request,'home/bss.html')
 
+def print_receipt(request):
+    return render(request, 'display/print_receipt.html')
+
 def generate(request):
     selected_customer = None
     order_created = False
