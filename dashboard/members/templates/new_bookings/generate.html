@@ -19,60 +19,85 @@
             </div>
         </div>
     </form>
-    
-    {% if matching_customers %}
+    {% if customer %}
     <form method="POST" action="" class="space-y-5">
         {% csrf_token %}
         <ul>
-            {% for customer in matching_customers %}
+            
                 <li>
                     <div class="panel">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                           
                             <div>
                                 <label for="customer">Customers:</label>
-                                <input class="form-input" type="text" name="username"  value="{{ customer.user_id }}">
+                                <input class="form-input" type="text" name="user_id"  value="{{ customer.user.id }}" readonly>
                             </div>
                             <div>
                                 <label for="seniorityno">Seniority No:</label>
-                                <input class="form-input" type="text" name="seniority_id"value="{{ customer.seniority_id }}">
+                                <input class="form-input" type="text" name="seniority_id"value="{{ customer.seniority_id }}" readonly>
                             </div>
                             <div >
                                 <label for="amount">Amount:</label>
-                                <input class="form-input" type="text" name="amount" value="{{ customer.downpayment }}">
+                                <input class="form-input" type="text" name="amount" value="{{ customer.downpayment }}" readonly>
                             </div>
                             <div class="p-1">
-                                <label for="dimension">Dimension</label>
-                                <input class="form-input" type="text" name="dimension"  value="{{ customer.dimension }}">
+                                <label for="dimensions">Dimension</label>
+                                <input class="form-input" type="text" name="dimension"  value="{{ customer.land_details.plotsize.plotsize }}" readonly>
                             </div>
                             <div class="p-1">
-                                <label for="modeofpay">Modeofpay</label>
-                                <input class="form-input" type="text" name="modeofpay" value="123">
+                                <label>Date-of-receipt</label>
+                                <input class="form-input" type="date" name="dateofreceipt">
                             </div>
-                            <div class="p-1">
-                                <label for="bank">bank</label>
-                                <input class="form-input" type="text" name="bank">
+                            <div>
+                                <label>Receipt No</label>
+                                <input class="form-input" type="number" name="receipt_no">
                             </div>
-                            <div class="p-1">
-                                <label for="chequeno">chequeno</label>
-                                <input class="form-input" type="text" name="chequeno">
+                        </div>
+                        <div class="panel p-1">
+                            <h2 class="text-lg font-semibold dark:text-white-light p-1"
+                                style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Payment Details</b></h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                <div class="p-1">
+                                    <div>
+                                        <label>Select to Payment Option</label>
+                                        <select class="form-control" id="inputfield" name="modeofpay">
+                                            <option>--select option--</option>
+                                            <option value="cheque">Cheque</option>
+                                            <option value="net_banking">Net Banking</option>
+                                            <option value="cash">Cash</option>
+                                            <option value="dd">DD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="p-1" id="mytable" style="display :none;">
+                                    <label class="p-1">Bank</label>
+                                    <input type="text" name="bank" placeholder="Bank" class="form-input">
+                                </div>
+                                <div class="p-1" id="project" style="display :none;">
+                                    <label class="p-1">Branch</label>
+                                    <input type="text" name="branch" placeholder="Branch" class="form-input">
+                                </div>
+                                <div class="p-1" id="table3" style="display :none;">
+                                    <label class="p-1">Cheque No</label>
+                                    <input type="text" name="cheque_no" placeholder="Cheque No" class="form-input">
+                                </div>
+                                <div class="p-1" id="table4" style="display :none;">
+                                    <label class="p-1">Pay Date</label>
+                                    <input type="date" name="payment_data" placeholder="Pay Date" class="form-input">
+                                </div>
+                                <div class="p-1" id="table5" style="display :none;">
+                                    <label>Amount</label>
+                                    <input type="text" name="amount" placeholder="Amount" class="form-input">
+                                </div>
+                                <div class="p-1" id="table6" style="display:none;">
+                                    <label>Transaction Id</label>
+                                    <input type="text" name="transaction" placeholder="Transaction Id" class="form-input">
+                                </div>
+                                <div class="p-1" id="table7" style="display:none;">
+                                    <label>DD No</label>
+                                    <input type="text" name="ddno" placeholder="DD No" class="form-input">
+                                </div>
                             </div>
-                            <div class="p-1">
-                                <label for="branch">branch</label>
-                                <input class="form-input" type="text" name="branch">
-                            </div>
-                            <div class="p-1">
-                                <label for="paydate">paydate</label>
-                                <input class="form-input" type="date" name="paydate">
-                            </div>
-                            <div class="p-1">
-                                <label for="paystatus">paystatus</label>
-                                <input class="form-input" type="text" name="paystatus">
-                            </div>
-                            <div class="p-1">
-                                <label for="dateofreceipt">dateofreceipt</label>
-                                <input  class="form-input" type="date" name="dateofreceipt">
-                            </div>
-                            
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                             <div>
@@ -84,10 +109,9 @@
                         </div>
                     </div>
                 </li>
-            {% endfor %}
+          
         </ul>
-    </form>
-        
+    </form>   
     {%endif%}
 </div>
 
@@ -96,4 +120,58 @@
         Order for {{ selected_customer.membername }} created successfully!
     </div>
 {% endif %}
+<script>
+    const inputField = document.getElementById('inputfield');
+    const myTable = document.getElementById('mytable');
+    const Project = document.getElementById('project');
+    const Table3 = document.getElementById('table3');
+    const Table4 = document.getElementById('table4');
+    const Table5 = document.getElementById('table5');
+    const Table6 = document.getElementById('table6');
+    const Table7 = document.getElementById('table7');
+    inputField.addEventListener('input', function () {
+        if (inputField.value === 'cheque') {
+            myTable.style.display = 'table';// Show the table
+            Project.style.display = 'table';
+            Table3.style.display = 'table';
+            Table4.style.display = 'table';
+            Table5.style.display = 'table';
+            Table6.style.display = 'none';
+            Table7.style.display = "none";
+        } else if (inputField.value === 'net_banking') {
+            Project.style.display = 'table';
+            myTable.style.display = 'table';// Show the table
+            Table3.style.display = 'none';
+            Table4.style.display = 'table';
+            Table5.style.display = 'table';
+            Table6.style.display = 'table';
+            Table7.style.display = "none";
+        } else if (inputField.value === 'cash') {
+            myTable.style.display = 'none';// Show the table
+            Project.style.display = 'none';
+            Table3.style.display = 'none';
+            Table4.style.display = 'table';
+            Table5.style.display = 'table';
+            Table6.style.display = 'none';
+            Table7.style.display = "none";
+        } else if (inputField.value === 'dd') {
+            myTable.style.display = 'table';// Show the table
+            Project.style.display = 'table';
+            Table3.style.display = 'none';
+            Table4.style.display = 'table';
+            Table5.style.display = 'table';
+            Table6.style.display = 'none';
+            Table7.style.display = "table";
+        } else {
+            myTable.style.display = 'none';
+            Project.style.display = 'none';
+            Table3.style.display = 'none';
+            Table4.style.display = 'none';
+            Table5.style.display = 'none';
+            Table6.style.display = 'none';
+            Table7.style.display = 'none';
+        }
+    });
+
+</script>
 {% endblock %}

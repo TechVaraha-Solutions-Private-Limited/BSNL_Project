@@ -5,6 +5,7 @@ urlpatterns = [
     path('home',home,name='home'),
     path('newbooking', add_new_bookings, name='newbooking'),
     path('get_dimension',get_dimension,name="get_dimension"),
+    path('get_project_id',get_project_id,name="get_project_id"),
     path('booksum',booksum,name='booksum'),
     path('bss',bss,name='bss'),
     path('generate',generate,name='generate'),
@@ -30,4 +31,5 @@ urlpatterns = [
     path('update_pdc',update_pdc,name='update_pdc'),
     path('view_update_pdc',view_update_pdc,name='view_update_pdc'),
     path('cr_code',cr_code,name='cr_code'),
+    path('deletereceipts/<id>',deletereceipts,name='deletereceipts'),
 ]

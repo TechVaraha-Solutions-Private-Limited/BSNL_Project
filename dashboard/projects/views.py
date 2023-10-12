@@ -6,13 +6,12 @@ def addproject(request):
         Project(
             projectname = request.POST['projectname'].upper(),
 	        shortcode = request.POST['shortcode'].upper(),
-	        # dp_price = request.POST['dpprice'],
-	        # first_install = request.POST['firstinstallment'],
-	        # second_install = request.POST['secondinstallment'],
-	        # third_install = request.POST['thirdinstallment'],
+	        state = request.POST['state'],
+			city = request.POST['city'],
+			pincode = request.POST['pincode'],
 	        images = request.FILES['imageupload'],
-	        address = request.POST['address']
-	        #updated_by = request.user
+	        address = request.POST['address'],
+	        updated_by = request.user
             ).save()
     return render(request, 'add_project.html')
 
@@ -49,12 +48,14 @@ def addlandinfo(request):
             project=project_instance,
             plotsize=plotsize_instance,
             per_square_feet_amount=request.POST['persquarefeetamount'],
-            # total_amount=request.POST['totalamount'],
-            # down_payment=request.POST['downamount'],
-            # installment_1=request.POST['firstinstallment'],
-            # installment_2=request.POST['secondinstallment'],
-            # installment_3=request.POST['thirdinstallment']
-            #updated_by=request.user
+            total_amount=request.POST['totalamount'],
+            down_payment=request.POST['downamount'],
+            installment_1=request.POST['firstinstallment'],
+            installment_2=request.POST['secondinstallment'],
+            installment_3=request.POST['thirdinstallment'],
+			installment_4=request.POST['fourthinstallment'],
+			installment_5=request.POST['fifthinstallment'],
+            updated_by=request.user
         )
         return redirect('addlandinfo')
 
@@ -72,11 +73,10 @@ def updatingprojectlist(request,id):
 	updatingprojectlist=Project.objects.get(id=id)
 	updatingprojectlist.projectname = request.POST['projectname'].upper()
 	updatingprojectlist.shortcode = request.POST['shortcode'].upper()
-	# updatingprojectlist.dp_price = request.POST['dpprice']
-	# updatingprojectlist.first_install = request.POST['firstinstallment']
-	# updatingprojectlist.second_install = request.POST['secondinstallment']
-	# updatingprojectlist.third_install = request.POST['thirdinstallment']
 	updatingprojectlist.address = request.POST['address']
+	updatingprojectlist.state = request.POST['state']
+	updatingprojectlist.city = request.POST['city']
+	updatingprojectlist.pincode = request.POST['pincode']
 	#updated_by = request.user
 	updatingprojectlist.save()
 	return redirect(projectlist)

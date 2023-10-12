@@ -128,15 +128,15 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Family-Member Name</label>
-                    <input type="text" name="alternate_no" placeholder="Family-Member Name" class="form-input">
+                    <input type="text" name="member_name" placeholder="Family-Member Name" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Family-Member Age</label>
-                    <input type="age" name="alternate_no" placeholder="Family-Member Age" class="form-input">
+                    <input type="age" name="member_age" placeholder="Family-Member Age" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Family-Member Relationship</label>
-                    <input type="text" name="alternate_no" placeholder="Family-Member Relationship" class="form-input">
+                    <input type="text" name="member_relation" placeholder="Family-Member Relationship" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1"></label>
@@ -164,9 +164,10 @@
                         <option>Select</option>
                     </select>
                 </div>
+                <input type="hidden" name="project_id" id="" value="">
                 <div class="p-1">
-                    <label class="p-1">Total Site Value</label>
-                    <input type="text" name="total_site_value" placeholder="Total Site Value" class="form-input">
+                    <label class="p-1">Total Site Value</label> 
+                    <input type="text" name="total_site_value" placeholder="Total Site Value" value="" class="form-input" readonly>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Down Payment value</label>
@@ -182,14 +183,6 @@
                     <label class="p-1">Seniority No</label>
                     <input type="text" name="seniority_id" placeholder="Seniority No" class="form-input">
                 </div>
-                <div class="p-1">
-                    <label class="p-1">AM No</label>
-                    <input type="text" name="alternate_no" placeholder="AM No" class="form-input">
-                </div>
-                <div class="p-1">
-                    <label class="p-1">Receipt No</label>
-                    <input type="text" name="receipt_no" placeholder="Receipt No" class="form-input">
-                </div>
             </div>
         </div>
         <div class="panel p-1">
@@ -199,7 +192,7 @@
                 <div class="p-1">
                     <div>
                         <label>Select to Payment Option</label>
-                        <select class="form-control" id="inputfield">
+                        <select class="form-control" id="inputfield" name="payment_mode">
                             <option>--select option--</option>
                             <option value="cheque">Cheque</option>
                             <option value="net_banking">Net Banking</option>
@@ -239,7 +232,7 @@
             </div>
         </div>
         <div class="text-center">
-            <input type="submit" value="Submit Application" class="btn btn-primary mt-5">
+            <input type="submit" value="Submit Application"   class="btn btn-primary mt-5">
             <input type="reset" value="Clear" class="btn btn-danger mt-5">
         </div>
     </div>
@@ -324,7 +317,6 @@
             Table7.style.display = 'none';
         }
     });
-
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
@@ -339,6 +331,7 @@
                 method: "POST",
                 data: mydata,
                 success: function (data) {
+                    console.log(data);
 
                     $("#selectDimension").removeAttr("disabled");
                     $("#selectDimension option").remove();
@@ -346,6 +339,31 @@
                     $.each(data.values, function (i, p) {
                         $('#selectDimension').append($('<option></option>').val(p.id).html(p.plotsize));
                     });
+                }
+            })
+
+        }
+
+        else {
+            $("#selectDimension").prop('disabled', 'disabled');
+            $("#selectDimension option").remove();
+            $('#selectDimension').append($('<option></option>').val("").html("Select"))
+        }
+    });
+    $('#selectDimension').on('change', function (event) {
+        event.preventDefault();
+        let plot_id = this.value;
+        let project_id = 1
+        if (this.value != '') {
+            mydata = { plot_id: plot_id, project_id: project_id, csrfmiddlewaretoken: '{{ csrf_token }}' }
+            $.ajax({
+                url: "{% url 'get_project_id' %}",
+                method: "POST",
+                data: mydata,
+                success: function (data) {
+                    console.log(data);
+
+                
                 }
             })
 
