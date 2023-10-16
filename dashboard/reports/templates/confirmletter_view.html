@@ -30,8 +30,14 @@
 <header>
 <div class="re-container">
 	<div class="wrapper p2 rtop">
-		<a href="/members/confirmletter" style="float:left;color:black;font-weight:900;font-size:19px;" >Back </a>
-		<a href="#" style="color:black;float:right;font-weight:900;font-size:19px;" onclick="printDiv('printer_ticket');">Click to Print</a>
+		<a href="/members/confirmletter" style="float:left;color:black;font-weight:900;font-size:19px;" >
+			<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M459.5 440.6c9.5 7.9 22.8 9.7 34.1 4.4s18.4-16.6 18.4-29V96c0-12.4-7.2-23.7-18.4-29s-24.5-3.6-34.1 4.4L288 214.3V256v41.7L459.5 440.6zM256 352V256 128 96c0-12.4-7.2-23.7-18.4-29s-24.5-3.6-34.1 4.4l-192 160C4.2 237.5 0 246.5 0 256s4.2 18.5 11.5 24.6l192 160c9.5 7.9 22.8 9.7 34.1 4.4s18.4-16.6 18.4-29V352z"/></svg>
+			Back </a>
+		<a href="#" style="color:black;float:right;font-weight:900;font-size:19px;" onclick="printDiv('printer_ticket');">
+			<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+				<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/>
+			</svg> 
+			Click to Print</a>
 	</div>
 </div>   
 </header>
@@ -40,7 +46,7 @@
 
 <div class="wrapper p9">
 <div class="receipt-border" id="printer_ticket">
-<div style="position:absolute;width:99%;opacity: 55%;margin-top:170px;"><img src="assets/images/watermark.jpg" width="100%" alt=""/></div>
+<!-- <div style="position:absolute;width:99%;opacity: 55%;margin-top:170px;"><img src="assets/images/watermark.jpg" width="100%" alt=""/></div> -->
 <div class="inner-box ">
 <div ></div> 
 	<div class="receipt-border1">
@@ -68,7 +74,7 @@
 				Have booked a site of measuring <b>{{user.land_details.plotsize.plotsize}}</b> in the <b>{{user.land_details.project.projectname}}</b> Located at {{user.land_details.project.address}}, {{user.land_details.project.city}} Taluk, {{user.land_details.project.state}} {{user.land_details.project.pincode}} from BSNL Employees and Citizens House Building Co-Operative Society Ltd. on <b>{{user.land_details.project.created_on.date}}</b>.
 				You have booked your site by paying an initial amount of                             											
 				<b>Rs. {{user.downpayment}}/-</b> by Ref No. :<b>324359028125</b> 
-                Drawn at <b>STATE BANK OF INDIA</b> Bank <b>BANGALORE</b> Branch.<b> Membership Id: {{payment.am_no}}. Seniority ID: {{user.seniority_id}}</b><br/><br/></p>
+                Drawn at <b>STATE BANK OF INDIA</b> Bank <b>BANGALORE</b> Branch.<b> Membership Id: {{user.am_no}}. Seniority ID: {{user.seniority_id}}</b><br/><br/></p>
 					<p class="logo-cnt1"><span style="float:left;margin-right:10px;font-weight:normal;font-size: 18px;">
 						<b>The site is booked under the following conditions.</b><br/><br/>
 							<ol class="list" style="float:left;margin-right:10px;font-weight:normal;font-family: 'HelveticaLTStdRoman_0';    font-size: 18px;    line-height:24px;width:100%;">

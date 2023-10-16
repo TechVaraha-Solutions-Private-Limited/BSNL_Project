@@ -2,7 +2,6 @@
 {% block content %}
 {% load static %}
 {% include 'bootstrap.html' %}
-
 <style>
     .flex-container{
         display: flex;
@@ -14,157 +13,209 @@
 
 <div class="mb-5 mt-3" style="font-size: 20px; font-weight: bold;">
     <span style="float: left;">
-        <i class='fas fa-reply-all'></i><u>Back</u>
+        <u><a href="/members/confirmletter" style="float:left;color:black;font-weight:900;font-size:19px;" >Back </a></u>
     </span>
     <span style="float: right;">
-        <u>Click to Print</u>
+        <u><a href="#" style="color:black;float:right;font-weight:900;font-size:19px;" onclick="printDiv('printer_ticket');">Click to Print</a></u>
     </span>
 </div>
 
 
-<div style="border: 2px solid black; padding: 2%;">
-    <div class="flex-container" >
+<div style="border: 2px solid black; padding: 2%;"  id="printer_ticket">
+    <div class="flex-container">
         <h3 style="margin-right: 24%;">No. <span style="font-weight: bold;">5669</span></h3>
         <h3 style="margin-right: 24%; border: 1px solid black;padding-top: 0.5%;padding-left: 0.5%;padding-right: 0.5%;">RECEIPT</h3>
         <h3>Date: <span style="font-weight: bold;">01-10-2023</span></h3>
     </div>
-
-    <div class="mt-5">
-        <label style="font-size: 20px;">Received from: </label>
-        <label style="font-size: 20px; font-weight: bold;"><u>NISHANT SHRIKRISHNA RAUT</u></label>
-        <br>
-        <label style="font-size: 20px;">Address: </label>
-        <label style="font-size: 20px; font-weight: bold;"><u>#662, AECS LAYOUT C BLOCK 2ND MAIN, MARATHAHALLI, BANGALORE - 560037</u></label>
-        <br>
-        <label style="font-size: 20px;">Rupees: </label>
-        <label style="font-size: 20px; font-weight: bold;"><u>FIFTY TWO THOUSANDS SIX HUNDRED ONLY</u></label>
-        <br>
-        <label style="font-size: 20px;">For: </label>
-        <label style="font-size: 20px; font-weight: bold;"><u>BHISHMA GREENS-II (Seniority ID: BG-II/SR-0194) (Membership ID: AM-3012)</u></label>
+    <div id="invoice">
+        <div class="mt-5">
+            <label style="font-size: 20px;">Received from: </label>
+            <label style="font-size: 20px; font-weight: bold;"><u>NISHANT SHRIKRISHNA RAUT</u></label>
+            <br>
+            <label style="font-size: 20px;">Address: </label>
+            <label style="font-size: 20px; font-weight: bold;"><u>#662, AECS LAYOUT C BLOCK 2ND MAIN, MARATHAHALLI, BANGALORE - 560037</u></label>
+            <br>
+            <label style="font-size: 20px;">Rupees: </label>
+            <label style="font-size: 20px; font-weight: bold;"><u>FIFTY TWO THOUSANDS SIX HUNDRED ONLY</u></label>
+            <br>
+            <label style="font-size: 20px;">For: </label>
+            <label style="font-size: 20px; font-weight: bold;"><u>BHISHMA GREENS-II (Seniority ID: BG-II/SR-0194) (Membership ID: AM-3012)</u></label>
+        </div>
+    
+        <div class="mt-5">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Payment Type</th>
+                        <th>Dimension</th>
+                        <th>Payment Mode</th>
+                        <th>Bank</th>
+                        <th>Branch</th>
+                        <th>Cheque / Transaction ID / DD No.</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PART DOWN PAYMENT</td>
+                        <td>30 X 50</td>
+                        <td>Cheque</td>
+                        <td>ICICI BANK</td>
+                        <td>JP NAGAR</td>
+                        <td>001018</td>
+                        <td>50000</td>
+                    </tr>
+                    <tr>
+                        <td>MEMBERSHIP FEE	</td>
+                        <td>30 X 50</td>
+                        <td>Cheque</td>
+                        <td>ICICI BANK</td>
+                        <td>JP NAGAR</td>
+                        <td>001018</td>
+                        <td>2600</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+        <div class="mt-5">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>L.F</th>
+                        <th>Rs.</th>
+                        <th>P</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1. </td>
+                        <td>Application Fee</td>
+                        <td>______________</td>
+                        <td></td>
+                        <td>200</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2. </td>
+                        <td>Admission Fee</td>
+                        <td>______________</td>
+                        <td></td>
+                        <td>200</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3. </td>
+                        <td>Share Fee</td>
+                        <td>______________</td>
+                        <td></td>
+                        <td>200</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>4. </td>
+                        <td>Share Amount ( Min 2 Shares )</td>
+                        <td>______________</td>
+                        <td></td>
+                        <td>2000</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>5. </td>
+                        <td>Miscellaneous</td>
+                        <td>______________</td>
+                        <td></td>
+                        <td>0</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>6. </td>
+                        <td>PART DOWN PAYMENT</td>
+                        <td>______________</td>
+                        <td></td>
+                        <td>50000</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td style="font-weight: bold;">Round Off</td>
+                        <td></td>
+                        <td style="font-weight: bold;">52600</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    
+        <div class="text-center" style="margin-left:-60%;font-size: 15px;">
+            <label><img src="{% static 'images/president.jpg' %}"/></label><br>
+            <label>President</label> <br>
+            <label>(S Dilip Kumar)</label>
+        </div>
+    
+        <hr>
+    
+        <div class="text-center" style="font-size: 15px;">
+            <label>Note: The receipt & booking is valid only after the cheque realisation.</label>
+        </div>
     </div>
-
-    <div class="mt-5">
-        <table>
-            <thead>
-                <tr>
-                    <th>Payment Type</th>
-                    <th>Dimension</th>
-                    <th>Payment Mode</th>
-                    <th>Bank</th>
-                    <th>Branch</th>
-                    <th>Cheque / Transaction ID / DD No.</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>PART DOWN PAYMENT</td>
-                    <td>30 X 50</td>
-                    <td>Cheque</td>
-                    <td>ICICI BANK</td>
-                    <td>JP NAGAR</td>
-                    <td>001018</td>
-                    <td>50000</td>
-                </tr>
-                <tr>
-                    <td>MEMBERSHIP FEE	</td>
-                    <td>30 X 50</td>
-                    <td>Cheque</td>
-                    <td>ICICI BANK</td>
-                    <td>JP NAGAR</td>
-                    <td>001018</td>
-                    <td>2600</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="mt-5">
-        <table>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>L.F</th>
-                    <th>Rs.</th>
-                    <th>P</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1. </td>
-                    <td>Application Fee</td>
-                    <td>______________</td>
-                    <td></td>
-                    <td>200</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>2. </td>
-                    <td>Admission Fee</td>
-                    <td>______________</td>
-                    <td></td>
-                    <td>200</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>3. </td>
-                    <td>Share Fee</td>
-                    <td>______________</td>
-                    <td></td>
-                    <td>200</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>4. </td>
-                    <td>Share Amount ( Min 2 Shares )</td>
-                    <td>______________</td>
-                    <td></td>
-                    <td>2000</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>5. </td>
-                    <td>Miscellaneous</td>
-                    <td>______________</td>
-                    <td></td>
-                    <td>0</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>6. </td>
-                    <td>PART DOWN PAYMENT</td>
-                    <td>______________</td>
-                    <td></td>
-                    <td>50000</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td style="font-weight: bold;">Round Off</td>
-                    <td></td>
-                    <td style="font-weight: bold;">52600</td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="text-center" style="margin-left:-60%;font-size: 15px;">
-        <label><img src="{% static 'images/president.jpg' %}"/></label><br>
-        <label>President</label> <br>
-        <label>(S Dilip Kumar)</label>
-    </div>
-
-    <hr>
-
-    <div class="text-center" style="font-size: 15px;">
-        <label>Note: The receipt & booking is valid only after the cheque realisation.</label>
-    </div>
-
 </div>
 
+<script language="javascript" type="text/javascript">
+	function printDiv(divID) {
+	//alert(divID);
+		//Get the HTML of div
+		var divElements = document.getElementById(divID).innerHTML;
+		//Get the HTML of whole page
+		var oldPage = document.body.innerHTML;
+
+		//Reset the page's HTML with div's HTML only
+		document.body.innerHTML = 
+		  "<html><head><title></title></head><body>" + divElements + "</body>";
+		//Print Page
+		window.print();
+		//Restore orignal HTML
+		document.body.innerHTML = oldPage;
+	}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+<script>
+    window.onload = function () {
+    document.getElementById("download")
+        .addEventListener("click", () => {
+            const invoice = this.document.getElementById("invoice");
+            var fileName;
+            fileName = "fcom-invoice-for-"
+            fileName = $('#user_full_name').val()
+            fileName = fileName + ".pdf";
+            // console.log(invoice);
+            // console.log(window);
+            var opt = {
+                // margin: 1,
+                filename: fileName,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 1 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().from(invoice).set(opt).save();
+        })
+}
+
+
+
+
+$('#print').click(function(){
+            Popup($('#invoice')[0].outerHTML);
+            function Popup(data) 
+            {
+                window.print();
+                return true;
+            }
+        });
+</script>
 
 {% endblock %}

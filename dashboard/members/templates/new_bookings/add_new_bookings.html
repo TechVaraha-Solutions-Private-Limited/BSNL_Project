@@ -9,6 +9,14 @@
     }
 </style>
 <form class="space-y-5 " method="POST" action="">
+    {% for message in messages %}
+    
+            <div class="alert alert-success">
+                <a class="close" href="#" data-dismiss="alert">×</a>
+                {{ message }}
+            </div>
+
+        {% endfor %}
     {% csrf_token %}
     <div class="p-2" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
         <label class="text-lg font-semibold dark:text-white-light p-2"
@@ -19,11 +27,11 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Member Name</label>
-                    <input type="text" name="first_name" class="form-input" placeholder="Member Name" required>
+                    <input type="text" name="first_name" class="form-input" placeholder="Member Name" >
                 </div>
                 <div class="p-1">
                     <label class="p-1">Father/Husband Name</label>
-                    <input type="text" name="last_name" class="form-input" placeholder="Surname Name" required>
+                    <input type="text" name="last_name" class="form-input" placeholder="Surname Name">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Date of Brith</label>
@@ -237,6 +245,9 @@
         </div>
     </div>
 </form>
+
+        
+        
 <script>
     function add_more_field() {
         var container = document.getElementById("container");

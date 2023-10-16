@@ -1,0 +1,91 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+{% include 'common/bootstrap.html'%}
+<style>
+    a {
+        color: black;
+        text-decoration: none;
+    }
+</style>
+<form class="space-y-5 " method="POST" action="">
+    {% csrf_token %}
+    <div class="p-2" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+        <label class="text-lg font-semibold dark:text-white-light p-2"
+            style="background-color: blueviolet; border-radius: 9px;"><b>Update ActiveMember</b></label>
+        <h2 class="text-lg font-semibold dark:text-white-light p-1"
+            style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Member Particulars</b></h2>
+        <div class="panel p-1">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="p-1">
+                    <label class="p-1">Member Name</label>
+                    <input type="text" name="first_name" class="form-input" placeholder="Member Name" value="{{user.first_name}}">
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Seniority</label>
+                    <input type="text" name="seniority_id" class="form-input" placeholder="Seniority" value="{{book.seniority_id}}">
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Date of Booking</label>
+                    <input type="date" name="created_on" class="form-input" placeholder="DOB" value="{{updateactivemember.created_on.date}}">
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Am No</label>
+                    <input type="text" name="am_no" class="form-input" placeholder="Age" value="{{book.am_no}}">
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="p-1">
+                    <label class="p-1">Moblie Number</label>
+                    <input type="number" name="mobile_no" placeholder="Moblie Number" class="form-input" value="{{user.mobile_no}}">
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Alternate Number</label>
+                    <input type="number" name="alternate_no" placeholder="Alternate Number" class="form-input" value="{{userdetail.aadhhaarno}}">
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Email ID</label>
+                    <input type="email" name="email" placeholder="E-Mail Id" class="form-input" value="{{user.email}}">
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Residential Address</label>
+                    <textarea class="form-input" type="text" name="address" placeholder="Residential Address" rows="3">{{userdetail.address}}</textarea>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="p-1">
+                    <label class="p-1">City</label>
+                    <input type="text" name="city" placeholder="City" class="form-input" value="{{userdetail.city}}">
+                </div>
+                <div class="p-1">
+                    <label class="p-1">State</label>
+                    <input type="text" name="state" placeholder="State" class="form-input" value="{{userdetail.state}}">
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="p-1">
+                    <label class="p-1">Project Name</label>
+                    <input type="text" name="projectname" placeholder="Project Name" class="form-input" value="{{book.land_details.project.projectname}}">
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Dimension</label>
+                    <input type="text" name="dimension_id" placeholder="Dimension" class="form-input" value="{{book.land_details.plotsize.plotsize}}">
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Site Preference</label>
+                    <input type="text" name="state" placeholder="Site Preference" class="form-input">
+                </div>
+                <div class="p-1">
+                    <label class="p-1">Active/Inactive Status</label>
+                    <input type="text" name="state" placeholder="Active/Inactive Status" class="form-input" value="{{book.status}}">
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <input type="submit" value="Submit Application"   class="btn btn-primary mt-5">
+            <input type="reset" value="Clear" class="btn btn-danger mt-5">
+        </div>
+    </div>
+</form>
+
+{%endblock%}

@@ -15,7 +15,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div class="p-1"> 
                     <label class="p-1">Project Name</label>
-                    <input type="text" name="nominee_name" placeholder="Employee Name"  class="form-input" >
+                    <select class="form-control" id="projectname" name="projectname">
+                        <option value="">Select</option>
+                        {% for project in projects %}
+                        <option value="{{project.landsdetails.project.id}}">{{project.landsdetails.project.projectname}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Project Code</label>
@@ -25,7 +30,9 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div class="p-1">
                         <label class="p-1">Dimension</label>
-                        <input type="text" name="nominee_relationship" placeholder="Login Type" class="form-input" >
+                        <select class="form-control" id="selectDimension" name="selectDimension" disabled>
+                            <option>Select</option>
+                        </select>
                     </div>
                     <div class="p-1">
                         <label class="p-1">Rate</label>
@@ -44,5 +51,63 @@
         </div>
     </div>
 </form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
 
+    $('#projectname').on('change', function (event) {
+        event.preventDefault();
+        let id = this.value;
+        if (this.value != '') {
+            mydata = { id: id, csrfmiddlewaretoken: '{{ csrf_token }}' }
+            $.ajax({
+                url: "{% url 'get_dimension' %}",
+                method: "POST",
+                data: mydata,
+                success: function (data) {
+                    console.log(data);
+
+                    $("#selectDimension").removeAttr("disabled");
+                    $("#selectDimension option").remove();
+                    $('#selectDimension').append($('<option></option>').val("").html("Select"))
+                    $.each(data.values, function (i, p) {
+                        $('#selectDimension').append($('<option></option>').val(p.id).html(p.plotsize));
+                    });
+                }
+            })
+
+        }
+
+        else {
+            $("#selectDimension").prop('disabled', 'disabled');
+            $("#selectDimension option").remove();
+            $('#selectDimension').append($('<option></option>').val("").html("Select"))
+        }
+    });
+    $('#selectDimension').on('change', function (event) {
+        event.preventDefault();
+        let plot_id = this.value;
+        let project_id = 1
+        if (this.value != '') {
+            mydata = { plot_id: plot_id, project_id: project_id, csrfmiddlewaretoken: '{{ csrf_token }}' }
+            $.ajax({
+                url: "{% url 'get_project_id' %}",
+                method: "POST",
+                data: mydata,
+                success: function (data) {
+                    console.log(data);
+
+                
+                }
+            })
+
+        }
+
+        else {
+            $("#selectDimension").prop('disabled', 'disabled');
+            $("#selectDimension option").remove();
+            $('#selectDimension').append($('<option></option>').val("").html("Select"))
+        }
+    });
+
+</script>
 {% endblock %}

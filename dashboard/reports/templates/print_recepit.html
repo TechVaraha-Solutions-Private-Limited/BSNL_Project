@@ -1,0 +1,285 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/print/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/print/style.css' %}">
+    
+<style>
+	ul#menu li a.active {
+	
+	background-color:#eee;color:#428bca;
+	
+	}
+	.home ul#menu li a.hactive {
+	
+		background-color:#eee;color:#428bca;
+	
+	}
+	.logo-cnt{width:666px;font: 24px 'HelveticaLTStdRoman_0';    line-height: 30px;}
+	.logo-cnt2{width:320px;}
+	.logo-cnt4 {
+		float: left;
+		font: 24px 'HelveticaLTStdRoman_0';
+		color: #1b1b1b;
+		padding: 5px 20px;
+		text-decoration: none;
+		font-weight: 600;
+		border: #000 1px solid;
+	}
+	.receipt-border1{padding: 70px 20px 0px 20px;}
+
+</style>
+</head>
+
+<body style="background:#fff;">
+<header>
+<div class="re-container">
+	<div class="wrapper p2 rtop">
+		<a href="/members/receipt"  style="float:left;color:black;font-weight:900;font-size:19px;" >
+			<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M459.5 440.6c9.5 7.9 22.8 9.7 34.1 4.4s18.4-16.6 18.4-29V96c0-12.4-7.2-23.7-18.4-29s-24.5-3.6-34.1 4.4L288 214.3V256v41.7L459.5 440.6zM256 352V256 128 96c0-12.4-7.2-23.7-18.4-29s-24.5-3.6-34.1 4.4l-192 160C4.2 237.5 0 246.5 0 256s4.2 18.5 11.5 24.6l192 160c9.5 7.9 22.8 9.7 34.1 4.4s18.4-16.6 18.4-29V352z"/></svg>
+			&nbsp;Back </a>
+		<a href="#" style="color:black;float:right;font-weight:900;font-size:19px;" onclick="printDiv('printer_ticket');">
+			<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+				<path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/>
+			</svg> 
+			&nbsp;Click to Print</a>
+	</div>
+</div>   
+</header>
+<section>
+	<div class="re-container">
+		<div class="wrapper p9">
+			<div class="receipt-border" id="printer_ticket">
+			<!--<div style="position:absolute;width:99%;opacity: 55%;margin-top:170px;"><img src="assets/images/watermark.jpg" width="100%" alt=""/></div>-->
+				<div class="receipt-border1" style="padding: 0px 20px 0px 20px;">
+					<div class="wrapper p5">
+					</div>
+					<div class="wrapper p4">
+					<p>
+						<span class="logo-cnt2"><span style="font-weight:normal;">No.</span> 05701</span> 
+						<span class="logo-cnt4">RECEIPT</span> 
+						<span class="logo-cnt3">Date :
+							<span class="date-dot">{{payment.created_on}}</span>
+						</span>
+					</p>
+					</div>
+					<div class="wrapper p3">
+						<p class="logo-cnt1"><span style="float:left;margin-right:3px;font-weight:normal;background:#fff;">Received from </span>
+							<span class="date-dot1">: {{user.user.email}}</span>
+						</p>
+					</div>
+					<div class="wrapper p3">
+						<p class="logo-cnt1">
+							<span class="date-dot11"><span style="float:left;margin-right:3px;font-weight:normal;background:#fff;"> Address</span>  :
+					#{{userdetail.address}},{{userdetail.state}},{{userdetail.city}} -560064</span>
+					</p>
+					</div>
+				</div>
+
+				<div class="receipt-bg">
+				<!--<div class="wmark"><img src="http://http://www.bsnlplots.com/admin/images/logo-new.png" alt=""/></div>-->
+					<div class="receipt-border2 p0">
+					<div class="wrapper">
+									<p class="logo-cnt1 p3">Rupees  :
+							<span class="date-dot2">THREE LAKH  ONLY</span>
+						</p>
+						<!-- Membership code -->
+												<p class="logo-cnt1 p3">For  :
+							<span class="date-dot2">
+
+								{{user.land_details.project.projectname}} (Seniority ID: {{user.seniority_id}}) (Membership ID:{{user.am_no}}) 				</span>
+						</p>
+						<div class="pay_details">
+						<table class="payment_details">
+						<tr>
+							<th>Payment Type</th> 
+							<th>Dimension</th>
+							<th>Payment Mode</th>
+							<th>Bank</th>
+							<th>Branch</th>
+							<th>Cheque / <br/>Transaction ID / DD No.</th>
+							<th>Amount</th>
+						</tr>
+										<tr>
+							<td>{{payment.payment_mode}}</td> 
+							<td>40 X 60</td>
+							<td>Cheque</td>
+							<td>BANK OF BARODA</td>
+							<td>YELAHANKA </td>
+							<td>000011</td>
+												<td>300000</td>
+											</tr>
+																</table>
+									</div>
+					</div>
+					</div>
+					
+					<div class="receipt-border2">
+						<table class="re-ceipt" style="border-bottom: #000 solid 2px;border-top: #000 solid 2px;">
+							<tr class="re-mob_ftr">
+							<th></th>
+							<th>L.F</th>
+							<th>Rs.</th>
+							<th>P</th>
+							</tr>
+							
+											<tr>
+								<td>
+													<span style="float:left; width:50px;">1.</span> Share 
+								<span class="tab-dot"></span></td>
+								<td></td>
+								<td style="text-align:right;">0 
+								</td>
+								<td>
+													</td>
+								</tr>
+							</tr>
+							<tr>
+								<td>
+													<span style="float:left; width:50px;">2.</span> Application Fee 
+								<span class="tab-dot"></span></td>
+								<td></td>
+								<td style="text-align:right;">0 
+								</td>
+								<td>
+													</td>
+								</tr>
+							</tr>
+							<tr>
+								<td>
+													<span style="float:left; width:50px;">3.</span> Admission Fee 
+								<span class="tab-dot"></span></td>
+								<td></td>
+								<td style="text-align:right;">0 
+								</td>
+								<td>
+													</td>
+								</tr>
+							</tr>
+							<tr>
+								<td>
+													<span style="float:left; width:50px;">4.</span> Share Fee 
+								<span class="tab-dot"></span></td>
+								<td></td>
+								<td style="text-align:right;">0 
+								</td>
+								<td>
+													</td>
+								</tr>
+							</tr>
+							<tr>
+								<td>
+													<span style="float:left; width:50px;">5.</span> Welfare Fund 
+								<span class="tab-dot"></span></td>
+								<td></td>
+								<td style="text-align:right;">0 
+								</td>
+								<td>
+													</td>
+								</tr>
+							</tr>
+							<tr>
+								<td>
+													<span style="float:left; width:50px;">6.</span> Miscellaneous 
+								<span class="tab-dot"></span></td>
+								<td></td>
+								<td style="text-align:right;">0 
+								</td>
+								<td>
+													</td>
+								</tr>
+							</tr>
+										
+															<tr >
+								<td>
+												<span style="float:left; width:50px;margin-bottom:0px;">7.</span>DOWNPAYMENT					<span class="tab-dot"></span>
+								</td>
+								<td></td>
+								<td style="text-align:right;">
+								300000</td>
+								<td>
+													</td>
+							</tr>
+							<tr>
+							<td>
+								<!--<span style="font-weight:bold;float:right;">Total</span>-->
+							</td>
+							<td></td>
+							
+							<td style="text-align:right;">
+							<!----></td>
+							<td>
+							<!---->
+							</td>
+							</tr>
+							<tr>
+							<td>
+								<span style="font-weight:bold;float:right;">Round Off</span>
+							</td>
+							<td></td>
+							
+							<td style="text-align:right;font-size: 22px;font-weight: bold;">
+							300000</td>
+							<td>
+							
+							</td>
+							</tr>
+							
+						</table>
+						
+					</div>
+
+						<div class="wrapper">
+					<div class="receipt-border1" style="padding: 20px 20px 0px 20px;">
+						<p class="mtop1" style="margin-top:0px;">
+											<span class=" logo-cnt2" style="text-align:center;font-weight:normal;font-size:18px;"><img style="width: 142px;" src="assets/images/sign_president.jpg" alt=""/><br/>President<br/>(S Dilip Kumar)</span> 
+
+							<!--<span class=" logo-cnt2" style="text-align:center;font-weight:normal;font-size:18px;"><img  style="width: 142px;"  src="images/Psign.jpg" alt=""/><br/>President<br/>()</span> -->
+							<!--<span class="fright logo-cnt3" style="text-align:center;width:230px;font-size:18px;"><img src="images/sign_vpresident.png" alt=""/><br/>Vice -President<br/>()</span>-->
+						</p>
+					</div>
+					<hr>
+									<span class="" style="font-weight:normal;font-size:18px;width:100%;text-align:center; float: left;    margin: 10px 0px;">Note: The receipt & booking is valid only after the cheque realisation.</span> 
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--==================section end===================-->
+<!--======================footer start===============-->
+<footer>
+</footer>
+<!--==================footer end===================-->
+</body>
+<script language="javascript" type="text/javascript">
+	function printDiv(divID) {
+	//alert(divID);
+		//Get the HTML of div
+		var divElements = document.getElementById(divID).innerHTML;
+		//Get the HTML of whole page
+		var oldPage = document.body.innerHTML;
+
+		//Reset the page's HTML with div's HTML only
+		document.body.innerHTML = 
+		  "<html><head><title></title></head><body>" + divElements + "</body>";
+		//Print Page
+		window.print();
+		//Restore orignal HTML
+		document.body.innerHTML = oldPage;
+	}
+</script>  
+<script type="text/javascript">
+	function setActive() {
+	  aObj = document.getElementById('menu').getElementsByTagName('a');
+	  for(i=0;i<aObj.length;i++) { 
+		if(document.location.href.indexOf(aObj[i].href)>=0) {
+		  aObj[i].className='active';
+		}
+	  }
+	}
+	window.onload = setActive;
+	</script>
+</html>

@@ -67,6 +67,7 @@ def projectlist(request):
 
 def updateprojectlist(request,id):
 	updateproject=Project.objects.get(id=id)
+
 	return render(request,'update_project_list.html',{'updateproject':updateproject})
 
 def updatingprojectlist(request,id):
@@ -79,8 +80,9 @@ def updatingprojectlist(request,id):
 	updatingprojectlist.pincode = request.POST['pincode']
 	#updated_by = request.user
 	updatingprojectlist.save()
+	print(id)
 	return redirect(projectlist)
-
+	print(id)
 def deleteprojectlist(request,id):
 	deletingprojectlist=Project.objects.get(id=id)
 	deletingprojectlist.delete()
