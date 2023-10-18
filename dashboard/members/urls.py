@@ -37,4 +37,8 @@ urlpatterns = [
     # delete function
     path('deleteactivememberlist/<id>',deleteactivememberlist,name='deleteactivememberlist'),
     path('deletereceipts/<id>',deletereceipts,name='deletereceipts'),
+
+
+    # images
+    path('banner_images',banner_images,name='banner_images')
 ]

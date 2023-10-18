@@ -61,3 +61,8 @@ class Receipts(models.Model):
 	paydate=models.DateField(max_length=120)
 	paystatus=models.CharField(max_length=120)
 	dateofreceipt=models.DateField(max_length=120)
+     
+class Images(models.Model):
+    images = models.ImageField(upload_to= settings.PROJECT_UPLOAD_PATH, null=True) 
+    place =models.CharField(max_length=120)
+    status =  models.SmallIntegerField(default=1, null=True)

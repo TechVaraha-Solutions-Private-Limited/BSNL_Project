@@ -45,10 +45,8 @@ INSTALLED_APPS = [
     'dashboard.members',
     'dashboard.documents',
     'dashboard.reports',
-    'mathfilters',
-    
+    'mathfilters',  
 ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

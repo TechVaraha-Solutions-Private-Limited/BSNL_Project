@@ -1,11 +1,11 @@
 from django.shortcuts import render,redirect, HttpResponse
-# from app.models import Project,Receipt
-# from app.models import Newbooking,Role
+from dashboard.projects.models import LandDetails,Project
+from dashboard.members.models import Bookings
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from page.models import Contact
 # Create your views here.
 # def signin(request):
 #     error_message = None
@@ -40,22 +40,40 @@ from django.contrib.auth.decorators import login_required
 #     return render(request,'registration/login.html', {'error_message': error_message})
 
 def index(request):
-    # data = Project.objects.all()
-    # context={
-    #     "data":data
-    # }
-    # return render(request,'page/home.html', {"data": data})
-    return render(request,'page/home.html')
+    data = LandDetails.objects.all()
+    projects = Project.objects.filter(status=1).all()
+    complete = Project.objects.filter(status=0).all()
+    # user = UserDetail.objects.filter(user__is_active=1).all()
+    count = Bookings.objects.count
+    value = Contact.objects.all()
+    context={
+        "data":data,
+        "projects":projects,
+        'complete':complete,
+        "count":count,
+        "value":value
+    }
+    return render(request,'page/home.html', context)
 def contact(request):
+    if request.method == 'POST':
+        Contact(
+            name = request.POST['name'],
+            email = request.POST['email'],
+            subject = request.POST['subject'],
+            messages = request.POST['message']
+            ).save()
     return render(request, 'page/contact.html')
 
 def project(request):
-    # data = Project.objects.all()
-    # context={
-    #     "data":data
-    # }, {"data": data}
+    data = LandDetails.objects.all()
+    projects = Project.objects.all()
     
-    return render(request, 'page/projects.html')
+    context={
+        "data":data,
+        "projects":projects
+    }
+    
+    return render(request, 'page/projects.html',context)
 
 def services(request):
     return render(request, 'page/services.html')

@@ -36,6 +36,8 @@ class LandDetails(models.Model):
 	installment_1 = models.CharField(max_length=40)
 	installment_2 = models.CharField(max_length=40)
 	installment_3 = models.CharField(max_length=40)
+	installment_4 = models.CharField(max_length=40)
+	installment_5 = models.CharField(max_length=40)
 	status = models.SmallIntegerField(default=1, null=True)
 	updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	created_on = models.DateTimeField(auto_now_add=True)

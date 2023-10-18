@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+{% include 'common/bootstrap.html'%}
+<style>
+    a {
+        color: black;
+        text-decoration: none;
+    }
+</style>
+<form method="POST">
+    {% csrf_token %}
+    <div class="p-2" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+        <label class="text-lg font-semibold dark:text-white-light p-2"
+            style="background-color: blueviolet; border-radius: 9px;"><b>Images</b></label>
+        <div class="panel p-1">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="p-1">
+                    <label class="p-1">Profile</label>
+                    <span>(Gallery Size (811X460))</span>
+                    <input type="file" name="profile">
+                </div>
+            </div>
+        </div>
+        <div class="text-center">
+            <input type="submit" value="Submit Application"   class="btn btn-primary mt-5">
+            <input type="reset" value="Clear" class="btn btn-danger mt-5">
+        </div>
+    </div>
+</form>
+
+{% endblock %}

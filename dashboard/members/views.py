@@ -1,11 +1,19 @@
 from django.shortcuts import render,redirect, HttpResponse
 from django.http import JsonResponse
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee
-from .models import Bookings,PaymentDetails,Ugdg,Receipts
+from .models import Bookings,PaymentDetails,Ugdg,Receipts,Images
 from dashboard.projects.models import Project,PlotSize,LandDetails
 from django.forms.models import model_to_dict
 from django.contrib import messages
 # Create your views here.
+def banner_images(request):
+    if request.method =='POST':
+        Images(
+            images=request.POST['profile'],
+            place = "Banner"
+        ).save()        
+    return render(request,'image/banner.html')
+
 def home(request):
     return render(request,'common/index.html')
 
