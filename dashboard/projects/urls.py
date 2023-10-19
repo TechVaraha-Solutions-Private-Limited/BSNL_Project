@@ -13,4 +13,5 @@ urlpatterns = [
     path('updatingprojectlist/<id>',views.updatingprojectlist,name='updatingprojectlist'),
     path('deleteprojectlist/<id>',views.deleteprojectlist,name='deleteprojectlist'),
     path('deleteplotsize/<id>',views.deleteplotsize,name='deleteplotsize'),
+    
 ]

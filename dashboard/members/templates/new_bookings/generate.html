@@ -15,28 +15,27 @@
 </div>
 {% endfor %}
 <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-    <form method="POST" class="space-y-5">
+    <form method="POST" class="space-y-5" autocomplete="off">
         {% csrf_token %}
         <div class="panel" >
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <label for="search_membername">Search your Customer:</label>
-                <input type="text" class="form-input" name="search_membername" id="search_membername" >
+                <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
                 <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
             </div>
         </div>
     </form>
     {% if customer %}
-    <form method="POST" action="" class="space-y-5">
+    <form method="POST" action="" class="space-y-5" autocomplete="off">
         {% csrf_token %}
         <ul>
-            
                 <li>
                     <div class="panel">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                            
                             <div>
                                 <label for="customer">Customers:</label>
-                                <input class="form-input" type="text" name="user_id"  value="{{ customer.user.id }}" readonly>
+                                <input class="form-input" type="text" name="user_id"  value="{{ customer.user.first_name }}" readonly>
                             </div>
                             <div>
                                 <label for="seniorityno">Seniority No:</label>
@@ -53,10 +52,6 @@
                             <div class="p-1">
                                 <label>Date-of-receipt</label>
                                 <input class="form-input" type="date" name="dateofreceipt">
-                            </div>
-                            <div>
-                                <label>Receipt No</label>
-                                <input class="form-input" type="number" name="receipt_no">
                             </div>
                         </div>
                         <div class="panel p-1">
@@ -115,17 +110,10 @@
                         </div>
                     </div>
                 </li>
-          
         </ul>
     </form>   
     {%endif%}
 </div>
-
-{% if order_created %}
-    <div>
-        Order for {{ selected_customer.membername }} created successfully!
-    </div>
-{% endif %}
 <script>
     const inputField = document.getElementById('inputfield');
     const myTable = document.getElementById('mytable');

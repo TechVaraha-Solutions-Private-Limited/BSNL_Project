@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 # from commons.user_roles import check_permission, admin_only
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from .models import User
+from django.contrib.auth.hashers import make_password
 
 def admin_login(request):
     if request.method == 'POST':
@@ -11,7 +12,7 @@ def admin_login(request):
         password = request.POST.get('password', '')
         user = authenticate(request,email=email, password=password)
         if user and user.is_active:
-            login(request, user)
+            auth_login(request, user)
             return redirect('/members/home')
     return render(request, 'login.html')
 
@@ -25,16 +26,26 @@ def add_user(request):
         user.role = request.POST.get('role')
         user.mobile_no = request.POST.get('mobile_no','').strip()
         user.email = request.POST.get('email','').strip()
-        user.password = request.POST.get('password1','').strip()
+        user.password = make_password(request.POST.get('password1','').strip())
         user.save()
     return render(request, 'users/add_user.html')
+def signin(request):
+    if request.method == 'POST':
+        mobile_no = request.POST.get('mobile_no')
+        password = request.POST.get('password')
+        user_email = User.objects.get(mobile_no=mobile_no)
+        user = authenticate(request, email=user_email.email, password=password)
+        if user and user_email.is_active and user_email.role == "Customer":
+            auth_login(request, user)
+            return redirect('/')
+    return render(request, 'registration/login.html')
 
 @login_required
 def logout_admin_user(request):
     if request.user.is_authenticated:
         if request.user.role == 'Customer':
             logout(request)
-            #return redirect(customerpage)
+            return redirect(signin)
         else:
             logout(request)
             return redirect(admin_login)

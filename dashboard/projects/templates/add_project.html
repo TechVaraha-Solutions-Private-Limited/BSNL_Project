@@ -30,8 +30,16 @@
 </style>
 
 <div class="divbox p-3 mt-2">
+    {% for message in messages %}
+    
+    <div class="alert alert-success">
+        <a class="close" href="#" data-dismiss="alert">×</a>
+        {{ message }}
+    </div>
+
+{% endfor %}
 <h3 class="font-weight-bold mt-4 addproject">ADD YOUR PROJECT</h3>
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" autocomplete="off">
 {% csrf_token %}
 <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
     <div>
@@ -86,6 +94,10 @@
     <div>
         <label>Pin-code</label>
         <input type="number" name="pincode" class="form-input" placeholder="Pin-code" required>
+    </div>
+    <div>
+        <label>G-Map Link</label>
+        <input type="link" name="gmaplink" class="form-input" placeholder="G-Map">
     </div>
 </div>
 

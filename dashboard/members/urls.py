@@ -6,6 +6,7 @@ urlpatterns = [
     path('newbooking', add_new_bookings, name='newbooking'),
     path('get_dimension',get_dimension,name="get_dimension"),
     path('get_project_id',get_project_id,name="get_project_id"),
+    path('get_project_value',get_project_value, name="get_project_value"),
     path('booksum',booksum,name='booksum'),
     path('bss',bss,name='bss'),
     path('generate',generate,name='generate'),

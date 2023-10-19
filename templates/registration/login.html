@@ -27,7 +27,13 @@
         x-data="main"
         class="relative overflow-x-hidden font-nunito text-sm font-normal antialiased"
         :class="[ $store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ?  'dark' : '', $store.app.menu, $store.app.layout,$store.app.rtlClass]">
-
+        {% for message in messages %}
+            <div class="alert alert-success">
+                <a class="close" href="#" data-dismiss="alert">×</a>
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% csrf_token %}
         <div class="main-container min-h-screen text-black dark:text-white-dark">
             <!-- start main content section -->
             <div class="flex min-h-screen items-center justify-center bg-[url('../images/map.svg')] bg-cover bg-center dark:bg-[url('../images/map-dark.svg')]">
@@ -37,8 +43,8 @@
                     <form class="space-y-5" method="POST">
                         {% csrf_token %}
                             <div>
-                                <label for="username">PhoneNo</label>
-                                <input id="username" type="text" name="username" class="form-input" placeholder="Enter PhoneNo" />
+                                <label for="mobile_no">PhoneNo</label>
+                                <input id="mobile_no" type="text" name="mobile_no" class="form-input" placeholder="Enter PhoneNo" />
                             </div>
                             <div>
                                 <label for="password">Password</label>

@@ -12,7 +12,22 @@ class Bookings(models.Model):
     total_site_value = models.CharField(max_length=120)
     downpayment = models.CharField(max_length=120)
     site_refer = models.CharField(max_length=120)
+    #user
     am_no = models.CharField(max_length=20,null=False)
+    date_of_change = models.DateField(null=True)
+    type_of_change = models.CharField(max_length=120,null=True)
+    sft_form = models.CharField(max_length=20,null=True)
+    sft_to = models.CharField(max_length=20,null=True)
+    diff = models.CharField(max_length=20,null=True)
+    exective = models.CharField(max_length=20,null=True)
+    team_lead = models.CharField(max_length=20,null=True)
+    sr_team_lead = models.CharField(max_length=20,null=True)
+    project_lead = models.CharField(max_length=20,null=True)
+    type_bkg = models.CharField(max_length=20,null=True)
+    indvl_paid = models.CharField(max_length=20,null=True)
+    tl_paid = models.CharField(max_length=20,null=True)
+    stl_paid = models.CharField(max_length=20,null=True)
+    
     # updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
@@ -34,20 +49,7 @@ class PaymentDetails(models.Model):
 
 class Ugdg(models.Model):
      seniority_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)
-     cut_name = models.CharField(max_length=50)
-     date_of_change = models.DateField()
-     type_of_change = models.CharField(max_length=120)
-     sft_form = models.CharField(max_length=20)
-     sft_to = models.CharField(max_length=20)
-     diff = models.CharField(max_length=20)
-     exective = models.CharField(max_length=20)
-     team_lead = models.CharField(max_length=20)
-     sr_team_lead = models.CharField(max_length=20)
-     project_lead = models.CharField(max_length=20)
-     type_bkg = models.CharField(max_length=20)
-     indvl_paid = models.CharField(max_length=20,null=True)
-     tl_paid = models.CharField(max_length=20,null=True)
-     stl_paid = models.CharField(max_length=20,null=True)
+
 
 class Receipts(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)

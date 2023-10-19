@@ -12,10 +12,7 @@ urlpatterns = [
    path('page/services',views.services, name='services'),
    # path('signin',views.signin,name='signin'),
    path('page/about',views.about),
+   # path('logout',views.logout),
    # customer views
-   path('customer/home',customerviews.home),
-   # path('customer/product',customerviews.product,name='product'),
-   path('customer/payment',customerviews.payment),
-   path('customer/pdf',customerviews.pdf),
-   path('customer/logout',customerviews.logout,name='logout')
+   path('profile',customerviews.profile,name='profile'),
 ]

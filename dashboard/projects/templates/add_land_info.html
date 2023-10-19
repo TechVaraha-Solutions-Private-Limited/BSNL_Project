@@ -48,7 +48,7 @@
 <div class="divbox p-3 mt-2">
 <h3 class="font-weight-bold mt-4 addproject">ADD LAND INFORMATION</h3>
 </div>
-<form method="POST">
+<form method="POST" autocomplete="off">
     {% csrf_token %}
     <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
         <div>
@@ -85,40 +85,20 @@
 
         <div>
             <label>Down Payment</label>
-            <input type="text" name="downamount" id="" class="form-control" placeholder="Enter Down Payment" required>
+            <input type="text" name="downamount" id="downpay" class="form-control" placeholder="Enter Down Payment" readonly>
         </div>
-        <div>
-            <label>Select to Installment</label>
-            <select class="form-control" id="inputfield">
-                <option>--select option--</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-        </div>
-        <div id="mytable" style="display: none;">
+        <div >
             <label>First Installment</label>
-            <input type="number" name="firstinstallment" id="first_name" class="form-control" placeholder="Enter First Installment">
+            <input type="number" name="firstinstallment" id="first" class="form-control" placeholder="Enter First Installment" readonly>
         </div>
-        <div id="project" style="display:none;">
+        <div >
             <label>Second Installment</label>
-            <input type="text" name="secondinstallment" id="second" class="form-control" placeholder="Enter Second Installment">
+            <input type="text" name="secondinstallment" id="second" class="form-control" placeholder="Enter Second Installment" readonly>
         </div>
-        <div id="table3" style="display:none;" >
+        <div >
             <label>Thrid Installment</label>
-            <input type="text" name="thirdinstallment" id="thrid" class="form-control" placeholder="Enter Thrid Installment">
+            <input type="text" name="thirdinstallment" id="thrid" class="form-control" placeholder="Enter Thrid Installment" readonly>
         </div>
-        <div id="table4" style="display:none;">
-            <label>Fourth Installment</label>
-            <input type="text" name="fourthinstallment" id="fourth" class="form-control" placeholder="Enter Fourth Installment">
-        </div>
-        <div id="table5" style="display:none;">
-            <label >Fifth Installment</label>
-            <input type="text" name="fifthinstallment" id="fifth" class="form-control" placeholder="Enter Fifth Installment">
-        </div>
-
     </div>
     </div>
         
@@ -130,79 +110,6 @@
 
 </form>
 <script>
-    const inputField = document.getElementById('inputfield');
-    const myTable = document.getElementById('mytable');
-    const Project = document.getElementById('project');
-    const Table3 = document.getElementById('table3');
-    const Table4 = document.getElementById('table4');
-    const Table5 = document.getElementById('table5');
-
-    inputField.addEventListener('input', function () {
-        console.log(inputField.value);
-        if (inputField.value === '1') {
-            myTable.style.display = 'table';// Show the table
-            const testing = document.getElementById('first_name').setAttribute('required', '');
-            Project.style.display = 'none';
-            Table3.style.display = 'none';
-            Table4.style.display = 'none';
-            Table5.style.display = 'none';
-            const testing1 = document.getElementById('second').removeAttribute('required', '');
-            const testing2 = document.getElementById('thrid').removeAttribute('required', '');
-            const testing3 = document.getElementById('fourth').removeAttribute('required', '');
-            const testing4 = document.getElementById('fifth').removeAttribute('required', '');
-        } else if (inputField.value === '2') {
-            myTable.style.display = 'table';// Show the table
-            Project.style.display = 'table';
-            const testing = document.getElementById('first_name').setAttribute('required', '');
-            const testing1 = document.getElementById('second').setAttribute('required', '');
-            Table3.style.display = 'none';
-            Table4.style.display = 'none';
-            Table5.style.display = 'none';
-            const testing2 = document.getElementById('thrid').removeAttribute('required', '');
-            const testing3 = document.getElementById('fourth').removeAttribute('required', '');
-            const testing4 = document.getElementById('fifth').removeAttribute('required', '');
-        } else if (inputField.value === '3') {
-            myTable.style.display = 'table';// Show the table
-            Project.style.display = 'table';
-            Table3.style.display = 'table';
-            const testing = document.getElementById('first_name').setAttribute('required', '');
-            const testing1 = document.getElementById('second').setAttribute('required', '');
-            const testing2 = document.getElementById('thrid').setAttribute('required', '');
-            Table4.style.display = 'none';
-            Table5.style.display = 'none';
-            const testing3 = document.getElementById('fourth').removeAttribute('required', '');
-            const testing4 = document.getElementById('fifth').removeAttribute('required', '');
-        } else if(inputField.value ==='4'){
-            myTable.style.display = 'table';// Show the table
-            Project.style.display = 'table';
-            const testing = document.getElementById('first_name').setAttribute('required', '');
-            const testing1 = document.getElementById('second').setAttribute('required', '');
-            const testing2 = document.getElementById('thrid').setAttribute('required', '');
-            const testing3 = document.getElementById('fourth').setAttribute('required', '');
-            Table3.style.display = 'table';
-            Table4.style.display = 'table';
-            Table5.style.display = 'none';
-            const testing4 = document.getElementById('fifth').removeAttribute('required', '');
-        } else if(inputField.value ==='5'){
-            myTable.style.display = 'table';
-            Project.style.display = 'table';
-            Table3.style.display = 'table';
-            Table4.style.display = 'table';
-            Table5.style.display = 'table';
-            const testing = document.getElementById('first_name').setAttribute('required', '');
-            const testing1 = document.getElementById('second').setAttribute('required', '');
-            const testing2 = document.getElementById('thrid').setAttribute('required', '');
-            const testing3 = document.getElementById('fourth').setAttribute('required', '');
-            const testing4 = document.getElementById('fifth').setAttribute('required', '');
-        }
-        else {
-            myTable.style.display = 'none';
-            Project.style.display = 'none';
-            Table3.style.display = 'none';
-            Table4.style.display = 'none';
-            Table5.style.display = 'none';
-        }
-    });
     $('#cal').change(function() {
         const inputValue = document.getElementById('plotsize');
         
@@ -224,6 +131,12 @@
             var setText= document.getElementById('cal').value;
             const total = result * setText;
             document.getElementById("demo").value=total;
+            const downpayment = total/4;
+            document.getElementById("downpay").value=downpayment;
+            document.getElementById("first").value=downpayment;
+            document.getElementById("second").value=downpayment;
+            document.getElementById("thrid").value=downpayment;
+            alert(downpayment)
         console.log(inputValue.options[inputValue.selectedIndex].text);
         console.log(numbers);
         console.log(result);

@@ -1,9 +1,10 @@
 from django.shortcuts import render,redirect
 from dashboard.projects.models import Project,PlotSize,LandDetails
+from django.contrib import messages
 
 def addproject(request):
-    if request.method == 'POST':
-        Project(
+	if request.method == 'POST':
+		Project(
             projectname = request.POST['projectname'].upper(),
 	        shortcode = request.POST['shortcode'].upper(),
 	        state = request.POST['state'],
@@ -11,15 +12,19 @@ def addproject(request):
 			pincode = request.POST['pincode'],
 	        images = request.FILES['imageupload'],
 	        address = request.POST['address'],
+			gmap = request.POST['gmaplink'],
 	        updated_by = request.user
             ).save()
-    return render(request, 'add_project.html')
+		messages.error(request,'Successfully Saved')
+	return render(request, 'add_project.html')
+    
 
 def addplotsize(request):
 	if request.method == 'POST':
 		PlotSize(
-			plotsize = request.POST['plotsize']
+			plotsize = request.POST['plotsize']+'X'+request.POST['plotsize1']
 			).save()
+		messages.error(request,'Successfully Saved')
 	else:
 		None
 	data = PlotSize.objects.all()
@@ -43,7 +48,7 @@ def addlandinfo(request):
 
         project_instance = Project.objects.get(id=project_id)
         plotsize_instance = PlotSize.objects.get(id=plotsize_id)
-
+		
         LandDetails.objects.create(
             project=project_instance,
             plotsize=plotsize_instance,
@@ -53,10 +58,9 @@ def addlandinfo(request):
             installment_1=request.POST['firstinstallment'],
             installment_2=request.POST['secondinstallment'],
             installment_3=request.POST['thirdinstallment'],
-			installment_4=request.POST['fourthinstallment'],
-			installment_5=request.POST['fifthinstallment'],
             updated_by=request.user
         )
+			
         return redirect('addlandinfo')
 
     return render(request, 'add_land_info.html', {'projects': projects, 'pltsizes': pltsizes})

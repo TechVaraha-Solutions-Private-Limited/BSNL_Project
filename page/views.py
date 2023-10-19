@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, HttpResponse
 from dashboard.projects.models import LandDetails,Project
 from dashboard.members.models import Bookings
-from django.contrib.auth.models import User
+from dashboard.userinfo.models import User
 from django.contrib.auth import authenticate,login as auth_login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -9,35 +9,17 @@ from page.models import Contact
 # Create your views here.
 # def signin(request):
 #     error_message = None
-#     users = User.objects.all()
-#     for user in users:
-#          print(user.username)
-
+#     users = User.objects.filter(role=1)
+#     mobile_no = None
 #     if request.method == 'POST':
-#         username = request.POST.get('username')
+#         mobile_no = request.POST.get('mobile_no')
 #         password = request.POST.get('password')
-#         print('hello')
-#         user = authenticate(request, username=username, password=password)
-#         print(user)
-
-#         if user:
+#         user_email = User.objects.get(mobile_no=mobile_no)
+#         user = authenticate(request, email=user_email.email, password=password)
+#         if user and user_email.is_active and user_email.role == "Customer":
 #             auth_login(request, user)
-#             print(username)
-#             try:
-#                 role = Role.objects.get(username=user)
-#                 if role.role == 'admin':
-#                     print(role)
-#                     return redirect('home1')
-#                 elif role.role == 'customer':
-#                     return redirect('customer/home')
-#                 # Add more role checks here
-                
-#             except Role.DoesNotExist:
-#                 error_message = "Role not defined for this user"
-#         else:
-#             error_message = "Invalid username or password"
-
-#     return render(request,'registration/login.html', {'error_message': error_message})
+#             return redirect('/')
+#     return render(request, 'registration/login.html')
 
 def index(request):
     data = LandDetails.objects.all()
@@ -54,6 +36,7 @@ def index(request):
         "value":value
     }
     return render(request,'page/home.html', context)
+
 def contact(request):
     if request.method == 'POST':
         Contact(
@@ -90,7 +73,7 @@ def about(request):
 
 def test(request):
     return render(request,'page/customer/home.html')
- 
+
 def product(request):
     # value = Receipt.objects.all()
     # context={
@@ -98,6 +81,10 @@ def product(request):
     # }, {"value": value}
     return render(request,'page/customer/product.html')
 
-
+# @login_required
+# def logout(request):
+#     if request.user.is_authenticated:
+#         logout(request)
+#         return redirect(signin)
 
 

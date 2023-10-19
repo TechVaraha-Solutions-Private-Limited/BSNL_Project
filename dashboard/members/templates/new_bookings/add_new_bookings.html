@@ -8,15 +8,13 @@
         text-decoration: none;
     }
 </style>
-<form class="space-y-5 " method="POST" action="">
+<form class="space-y-5 " method="POST" action="" autocomplete="off">
     {% for message in messages %}
-    
             <div class="alert alert-success">
                 <a class="close" href="#" data-dismiss="alert">×</a>
                 {{ message }}
             </div>
-
-        {% endfor %}
+    {% endfor %}
     {% csrf_token %}
     <div class="p-2" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
         <label class="text-lg font-semibold dark:text-white-light p-2"
@@ -75,7 +73,7 @@
                 </div>
                 <div>
                     <label class="p-1">Password</label>
-                    <input type="text" name="password" placeholder="password" class="form-input">
+                    <input type="password" name="password" placeholder="password" class="form-input">
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
@@ -130,28 +128,30 @@
                 </div>
             </div>
         </div>
-        <div class="panel p-1" id="container">
+        <div class="panel p-1" >
             <h1 class="text-lg font-semibold dark:text-white-light p-1"
                 style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Family Details</b></h1>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-                <div class="p-1">
-                    <label class="p-1">Family-Member Name</label>
-                    <input type="text" name="member_name" placeholder="Family-Member Name" class="form-input">
+                <div id="family-form">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-5 family-member">
+                        <div class="p-1">
+                            <label class="p-1">Family-Member Name</label>
+                            <input type="text" name="member_name" placeholder="Family-Member Name" class="form-input">
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Family-Member Age</label>
+                            <input type="age" name="member_age" placeholder="Family-Member Age" class="form-input">
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Family-Member Relationship</label>
+                            <input type="text" name="member_relation" placeholder="Family-Member Relationship" class="form-input">
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1"></label>
+                            <button class="btn btn-success text-lg font-semibold dark:text-white-light" type="button"
+                                id="add-more">Add More</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-1">
-                    <label class="p-1">Family-Member Age</label>
-                    <input type="age" name="member_age" placeholder="Family-Member Age" class="form-input">
-                </div>
-                <div class="p-1">
-                    <label class="p-1">Family-Member Relationship</label>
-                    <input type="text" name="member_relation" placeholder="Family-Member Relationship" class="form-input">
-                </div>
-                <div class="p-1">
-                    <label class="p-1"></label>
-                    <button class="btn btn-success text-lg font-semibold dark:text-white-light" type="button"
-                        onclick="add_more_field()">Add More</button>
-                </div>
-            </div>
         </div>
         <div class="panel p-1">
             <h1 class="text-lg font-semibold dark:text-white-light p-1"
@@ -175,11 +175,11 @@
                 <input type="hidden" name="project_id" id="" value="">
                 <div class="p-1">
                     <label class="p-1">Total Site Value</label> 
-                    <input type="text" name="total_site_value" placeholder="Total Site Value" value="" class="form-input" readonly>
+                    <input type="text" name="total_site_value" id="total_site_value" placeholder="Total Site Value" value="" class="form-input" readonly>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Down Payment value</label>
-                    <input type="text" name="downpayment" placeholder="Down Payment value" class="form-input">
+                    <input type="text" name="downpayment" id="downpayment" placeholder="Down Payment value" class="form-input" readonly>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
@@ -204,7 +204,6 @@
                             <option>--select option--</option>
                             <option value="cheque">Cheque</option>
                             <option value="net_banking">Net Banking</option>
-                            <option value="cash">Cash</option>
                             <option value="dd">DD</option>
                         </select>
                     </div>
@@ -249,29 +248,6 @@
         
         
 <script>
-    function add_more_field() {
-        var container = document.getElementById("container");
-
-        var newRow = document.createElement("div");
-        newRow.innerHTML = `
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5 p-1">
-            <div class="p-1"> 
-                <input type="text" name="alternate_no" placeholder="Age" class="form-input" >
-            </div>
-            <div class="p-1">
-                <input type="text" name="alternate_no" placeholder="Age" class="form-input" >
-            </div>
-            <div class="p-1">
-                <input type="text" name="alternate_no" placeholder="Age" class="form-input" >
-            </div>
-            <button class="btn btn-danger text-lg font-semibold dark:text-white-light"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Close</button>
-        </div>
-        `;
-
-        container.appendChild(newRow);
-    }
-
-
     function remove_field(button) {
         var row = button.parentNode;
         row.parentNode.removeChild(row);
@@ -302,14 +278,6 @@
             Table5.style.display = 'table';
             Table6.style.display = 'table';
             Table7.style.display = "none";
-        } else if (inputField.value === 'cash') {
-            myTable.style.display = 'none';// Show the table
-            Project.style.display = 'none';
-            Table3.style.display = 'none';
-            Table4.style.display = 'table';
-            Table5.style.display = 'table';
-            Table6.style.display = 'none';
-            Table7.style.display = "none";
         } else if (inputField.value === 'dd') {
             myTable.style.display = 'table';// Show the table
             Project.style.display = 'table';
@@ -331,6 +299,25 @@
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
+     $('#selectDimension').on('change', function (event){
+        let project_id = $('#projectname option:selected').val();
+        let plot_id = this.value;
+        mydata = { project_id: project_id, plot_id:plot_id,csrfmiddlewaretoken: '{{ csrf_token }}' }
+            $.ajax({
+                url: "{% url 'get_project_value' %}",
+                method: "POST",
+                data: mydata,
+                success: function (data) {
+                    console.log(data.values[0]);
+                    $('#total_site_value').val(data.values[0].total_amount)
+                    $('#downpayment').val(data.values[0].installment_1)
+
+
+                 
+                }
+            })
+     });
+    
 
     $('#projectname').on('change', function (event) {
         event.preventDefault();
@@ -361,31 +348,41 @@
             $('#selectDimension').append($('<option></option>').val("").html("Select"))
         }
     });
-    $('#selectDimension').on('change', function (event) {
-        event.preventDefault();
-        let plot_id = this.value;
-        let project_id = 1
-        if (this.value != '') {
-            mydata = { plot_id: plot_id, project_id: project_id, csrfmiddlewaretoken: '{{ csrf_token }}' }
-            $.ajax({
-                url: "{% url 'get_project_id' %}",
-                method: "POST",
-                data: mydata,
-                success: function (data) {
-                    console.log(data);
+</script>  
+<!-- Add this script below your HTML code -->
+<!-- Add this script below your HTML code -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let formCount = 1;
+        const formContainer = $('#family-form');
 
-                
-                }
-            })
+        $('#add-more').click(function () {
+            const newForm = formContainer.clone(true);
+            formCount += 1;
 
-        }
+            // Clear input values in the cloned form
+            newForm.find('input[type="text"]').val('');
 
-        else {
-            $("#selectDimension").prop('disabled', 'disabled');
-            $("#selectDimension option").remove();
-            $('#selectDimension').append($('<option></option>').val("").html("Select"))
-        }
+            // Update input names to avoid conflicts
+            newForm.find('input').each(function () {
+                const name = $(this).attr('name');
+                $(this).attr('name', name.replace('-1-', '-' + formCount + '-'));
+            });
+
+            // Add a "Close" button to remove the form
+            const closeButton = $('<div class="p-1"><label class="p-1"></label><button type="button" class="btn btn-danger text-lg font-semibold dark:text-white-light">Close</button></div></div>');
+            closeButton.click(function () {
+                newForm.remove();
+            });
+            newForm.append(closeButton);
+
+            // Append the cloned form to the container
+            formContainer.after(newForm);
+        });
     });
-
 </script>
+
+
+
 {% endblock %}
