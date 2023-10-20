@@ -13,9 +13,17 @@
         {% csrf_token %}
         <div class="panel" >
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-                <label for="search_membername">Search your Customer:</label>
-                <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
-                <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
+                <div>
+                    <label for="search_membername">Search your Customer:</label>
+                    <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
+                </div>
+                <div>
+                    <label for="search_membername">Search New Customer Id:</label>
+                    <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
+                </div>
             </div>
         </div>
     </form>
