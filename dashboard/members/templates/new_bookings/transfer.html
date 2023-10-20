@@ -8,88 +8,92 @@
         color: black;
     }
 </style>
-<form>
-    <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-        <div class="panel p" id="container" >
-            <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Transfer</b></h1>
-            <input type="button" value="Add Button"onclick="mymodel();" class="btn btn-success">
-            <div id="form" class="panel p-1 mt-3" style="display : none">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-2" >
-                    <div class="p-1">
-                        <label class="p-1">Seniority No</label>
-                        <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Cust Name</label>
-                        <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Exis Project</label>
-                        <input type="text" name="date_of_change" placeholder="Exis Project" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Date of Transfer</label>
-                        <input type="text" name="type_of_change" placeholder="Date of Transfer" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Type of Transfer</label>
-                        <input type="text" name="sft_form" placeholder="Type of Transfer" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Transferred To</label>
-                        <input type="text" name="sft_to" placeholder="Transferred To" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">New Mem Seniorty</label>
-                        <input type="text" name="diff" placeholder="New Mem Seniorty" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">New Mem Mobile</label>
-                        <input type="text" name="executive" placeholder="New Mem Mobile" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">New Mem E-mail</label>
-                        <input type="text" name="team_lead" placeholder="New Mem E-mail" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Amount Paid by Exis Customer</label>
-                        <input type="text" name="sr_team_lead" placeholder="Amount Paid by Exis Customer" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Amount Transferred</label>
-                        <input type="text" name="project_lead" placeholder="Amount Transferred" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Affidavit Upload</label>
-                        <input type="File" name="type_bkg" placeholder="Affidavit Upload" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Death cert(Death of Member)</label>
-                        <input type="File" name="indvl_paid" placeholder="indvl_paid" class="form-input" >
-                    </div>
-                    
-                </div>
-                <div class="text-center">
-                    <input type="submit" value="Submit Application" class="btn btn-success mt-5">
-                    <input type="reset" value="Clear" class="btn btn-warning mt-5">
-                    <input type="button" value="Close" onclick="mymodel();" class="btn btn-danger mt-5">
-                </div>
+<div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+    <form method="POST" class="space-y-5" autocomplete="off">
+        {% csrf_token %}
+        <div class="panel" >
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <label for="search_membername">Search your Customer:</label>
+                <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
+                <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
             </div>
         </div>
-    </div>
-</form>
-
-
-    <script>
-
-        // model show
-        function mymodel() {
-            var form = document.getElementById('form');
-            if (form.style.display === 'none') {
-                form.style.display = 'block';
-            } else {
-                form.style.display = 'none';
-            }
-        }
-    </script>
+    </form>
+    {% if customer %}
+    <form autocomplete="off" method="POST">
+        {% csrf_token %}
+        <ul>
+            <li>
+                <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+                    <div class="panel p">
+                        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Transfer</b></h1>
+                        <div id="form" class="panel p-1 mt-3">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-2" >
+                                <div class="p-1">
+                                    <label class="p-1">Seniority No</label>
+                                    <input type="text" name="seniority" placeholder="Seniority No" class="form-input" value="{{ customer.seniority_id }}" readonly>
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Cust Name</label>
+                                    <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" value="{{ customer.user.first_name }}" readonly>
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Exis Project</label>
+                                    <input type="text" name="date_of_change" placeholder="Exis Project" class="form-input" value="{{ customer.land_details.project.projectname}}"  class="form-input" readonly>
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Date of Transfer</label>
+                                    <input type="date" name="type_of_change" placeholder="Date of Transfer" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Type of Transfer</label>
+                                    <input type="text" name="sft_form" placeholder="Type of Transfer" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Transferred To</label>
+                                    <input type="text" name="sft_to" placeholder="Transferred To" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">New Mem Seniorty</label>
+                                    <input type="text" name="diff" placeholder="New Mem Seniorty" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">New Mem Mobile</label>
+                                    <input type="text" name="executive" placeholder="New Mem Mobile" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">New Mem E-mail</label>
+                                    <input type="text" name="team_lead" placeholder="New Mem E-mail" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Amount Paid by Exis Customer</label>
+                                    <input type="text" name="sr_team_lead" placeholder="Amount Paid by Exis Customer" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Amount Transferred</label>
+                                    <input type="text" name="project_lead" placeholder="Amount Transferred" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Affidavit Upload</label>
+                                    <input type="File" name="type_bkg" placeholder="Affidavit Upload" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Death cert(Death of Member)</label>
+                                    <input type="File" name="indvl_paid" placeholder="indvl_paid" class="form-input" >
+                                </div>
+                                
+                            </div>
+                            <div class="text-center">
+                                <input type="submit" value="Submit Application" class="btn btn-success mt-5">
+                                <input type="reset" value="Clear" class="btn btn-warning mt-5">
+                                <input type="button" value="Close" onclick="mymodel();" class="btn btn-danger mt-5">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </form>   
+    {%endif%}
+</div>
 {% endblock %}

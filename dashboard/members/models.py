@@ -9,15 +9,14 @@ class Bookings(models.Model):
     membership_id = models.CharField(max_length=20,unique=True,null=True)
     status = models.SmallIntegerField(default=1, null=True)
     land_details = models.ForeignKey(LandDetails, on_delete=models.CASCADE)
+    old_land_details = models.ForeignKey(LandDetails, related_name ='old_land_details',on_delete=models.CASCADE,null=True)
     total_site_value = models.CharField(max_length=120)
     downpayment = models.CharField(max_length=120)
     site_refer = models.CharField(max_length=120)
-    #user
     am_no = models.CharField(max_length=20,null=False)
-    date_of_change = models.DateField(null=True)
+    #UGDG
+    date_of_change = models.CharField(max_length=120,null=True)
     type_of_change = models.CharField(max_length=120,null=True)
-    sft_form = models.CharField(max_length=20,null=True)
-    sft_to = models.CharField(max_length=20,null=True)
     diff = models.CharField(max_length=20,null=True)
     exective = models.CharField(max_length=20,null=True)
     team_lead = models.CharField(max_length=20,null=True)
@@ -27,7 +26,8 @@ class Bookings(models.Model):
     indvl_paid = models.CharField(max_length=20,null=True)
     tl_paid = models.CharField(max_length=20,null=True)
     stl_paid = models.CharField(max_length=20,null=True)
-    
+    #Tranfer
+
     # updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)

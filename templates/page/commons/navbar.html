@@ -1,4 +1,10 @@
 {% load static %}
+<style>
+    .user{
+        border-radius: 25px;
+        border-color: #00b98e;
+    }
+</style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 <div class="container-fluid nav-bar bg-transparent" >
@@ -24,11 +30,8 @@
                 {% if request.user.is_authenticated %}
 
                 <div class="dropdown navbar-collapse">
-                    <button type="button" class="btn25 btn27 dropdown-toggle" data-bs-toggle="dropdown" id="dropdownMenuButton">
-
-                        
+                    <button type="button" class="btn25 btn27 dropdown-toggle user" style="background-color: #ffffff;" data-bs-toggle="dropdown" id="dropdownMenuButton">
                         {{ request.user.first_name|title }}
-                        
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <div class="profile-title">

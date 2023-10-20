@@ -17,22 +17,16 @@ def banner_images(request):
 def home(request):
     return render(request,'common/index.html')
 
-def add_new_bookings(request):
-    projects = Project.objects.all()
-    landdetail = LandDetails.objects.all()
-    if request.method=='POST':
+def addcustomer(request):
+    if request.method == "POST":
         first_name=request.POST.get('first_name')
         email = request.POST.get('email')
         mobile_no = request.POST.get('mobile_no')
-        seniority_id = request.POST.get('seniority_id')
-        seniority_id_is_exit =Bookings.objects.filter(seniority_id=seniority_id).exists()
         email_is_exit = User.objects.filter(email=email).exists()|User.objects.filter(mobile_no=mobile_no).exists()
         if not first_name :
             messages.error(request,'Enter the Name')
         elif email_is_exit:
             messages.error(request,'E-mail Already Exists')
-        elif seniority_id_is_exit:
-            messages.error(request,'Seniority Already Exists')
         else:
             user=User()
             user.first_name=first_name
@@ -40,6 +34,7 @@ def add_new_bookings(request):
             user.mobile_no = mobile_no
             user.email = email
             user.password = request.POST.get('password')
+            user.role = "Customer"
             user.save()
             details = UserDetail()
             details.user = user
@@ -65,29 +60,84 @@ def add_new_bookings(request):
             nominee.state = request.POST.get('state1')
             nominee.nominee_relationship = request.POST.get('nominee_relationship')
             nominee.save()
-            post_data = request.POST
 
-        family_members = []
-        i = 0
-        while f'member_name_{i}' in post_data:
-            member_name = post_data[f'member_name_{i}']
-            member_age = post_data[f'member_age_{i}']
-            member_relation = post_data[f'member_relation_{i}']
-            family_member = UserFamilyDetails(
-                member_name=member_name,
-                member_age=member_age,
-                member_relation=member_relation,
-            )
-            family_members.append(family_member)
-            i += 1
-            UserFamilyDetails.objects.bulk_create(family_members)
+            check_input_no = request.POST.get('check_input_no')
+            for val in range(int(check_input_no)): 
+                member_name_key = f'member_name{val+1}'        
+                member_age_key = f'member_age{val+1}'
+                member_relation_key = f'member_relation{val+1}'
 
-                # family = UserFamilyDetails()
-                # family.user = user
-                # family.member_name = request.POST.get('')
-                # family.member_age = request.POST.get('state1')
-                # family.member_relation = request.POST.get('state1')
-                # family.save()
+                family = UserFamilyDetails()
+                family.user = user
+                family.member_name = request.POST.get(member_name_key)
+                family.member_age = request.POST.get(member_age_key)
+                family.member_relation = request.POST.get(member_relation_key)
+                family.save()
+    return render(request,'new_bookings/addcustomer.html')
+
+def add_new_bookings(request):
+    projects = Project.objects.all()
+    landdetail = LandDetails.objects.all()
+    if request.method=='POST':
+        first_name=request.POST.get('first_name')
+        email = request.POST.get('email')
+        mobile_no = request.POST.get('mobile_no')
+        seniority_id = request.POST.get('seniority_id')
+        seniority_id_is_exit =Bookings.objects.filter(seniority_id=seniority_id).exists()
+        email_is_exit = User.objects.filter(email=email).exists()|User.objects.filter(mobile_no=mobile_no).exists()
+        if not first_name :
+            messages.error(request,'Enter the Name')
+        elif email_is_exit:
+            messages.error(request,'E-mail Already Exists')
+        elif seniority_id_is_exit:
+            messages.error(request,'Seniority Already Exists')
+        else:
+            user=User()
+            user.first_name=first_name
+            user.last_name=request.POST.get('last_name')
+            user.mobile_no = mobile_no
+            user.email = email
+            user.password = request.POST.get('password')
+            user.role = "Customer"
+            user.save()
+            details = UserDetail()
+            details.user = user
+            details.dob = request.POST.get('dob')
+            details.age = request.POST.get('age')
+            details.alternate_no = request.POST.get('alternate_no')
+            details.aadhhaarno = request.POST.get('aadhhaarno')
+            details.aadhar_proof = request.POST.get('aadhar_proof')
+            details.panno = request.POST.get('panno')
+            details.pan_proof = request.POST.get('pan_proof')
+            details.profile = request.POST.get('profile')
+            details.address = request.POST.get('address')
+            details.city = request.POST.get('city')
+            details.state = request.POST.get('state')
+            details.save()
+
+            nominee = UserNominee()
+            nominee.user = user
+            nominee.nominee_name = request.POST.get('nominee_name')
+            nominee.nominee_age = request.POST.get('nominee_age')
+            nominee.address = request.POST.get('address1')
+            nominee.city = request.POST.get('city1')
+            nominee.state = request.POST.get('state1')
+            nominee.nominee_relationship = request.POST.get('nominee_relationship')
+            nominee.save()
+
+            check_input_no = request.POST.get('check_input_no')
+            for val in range(int(check_input_no)): 
+                member_name_key = f'member_name{val+1}'        
+                member_age_key = f'member_age{val+1}'
+                member_relation_key = f'member_relation{val+1}'
+
+                family = UserFamilyDetails()
+                family.user = user
+                family.member_name = request.POST.get(member_name_key)
+                family.member_age = request.POST.get(member_age_key)
+                family.member_relation = request.POST.get(member_relation_key)
+                family.save()
+            
             get_last_number = PaymentDetails.objects.all().order_by('-id')[:1]
             if get_last_number:
                 auto_genrate = "AM-" + str(get_last_number[0].id + 1).zfill(5)
@@ -125,7 +175,7 @@ def add_new_bookings(request):
             payments.receipt_no = get_number
             payments.save()
             messages.error(request,'Successfully Saved')
-        #Vicky    
+            # Vicky    
     return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':landdetail,'projects':projects})
 
 def get_dimension(request):
@@ -207,6 +257,7 @@ def generate(request):
 
 def ugdg(request):
     customers = {}
+    pltsizes = PlotSize.objects.all()
     if request.method == 'POST':
         action = request.POST.get('action')
         user_id = request.POST.get('user_id')
@@ -218,30 +269,55 @@ def ugdg(request):
                     messages.error(request, 'Profile details updated.')
             except:
                 customers = {}  
+                
         elif action == 'create_order':
             seniority = request.POST.get('seniority_id')
             book = Bookings.objects.get(user_id=user_id,seniority_id=seniority)
-            Ugdg(
-            cut_name=request.POST.get['cust_name'],
-            data_of_change = request.POST.get['date_of_change'],
-            type_of_change = request.POST.get['type_of_change'],
-            sft_form = request.POST.POST.get['sft_form'],
-            sft_to = request.POST.get['sft_to'],
-            diff = request.POST.get['diff'],
-            executive = request.POST.get['executive'],
-            team_lead = request.POST.get['team_lead'],
-            sr_team_lead = request.POST.get['sr_team_lead'],
-            project_lead  = request.POST.get['project_lead'],
-            type_bkg = request.POST.get['type_bkg'],
-            indvl_paid =request.POST.get['indvl_paid'],
-            tl_paid =request.POST.get['tl_paid'],
-            stl_paid = request.POST.get['stl_paid'],
-        ).save()
+            project_id = request.POST.get('projectname')
+            str_form = request.POST.get('selectDimension')
+            str_to = request.POST.get('plotsize')
+            print('str_to:',str_to)
+            land_detail = LandDetails.objects.get(project_id=project_id,plotsize_id=str_to)
+            old_land_detail = LandDetails.objects.get(project_id=project_id,plotsize_id=str_form)
+            print(land_detail,old_land_detail)
+            book.date_of_change = request.POST.get('date_of_change')
+            book.type_of_change = request.POST.get('type_of_change')
+            book.diff = request.POST.get('diff')
+            book.exective = request.POST.get('executive')
+            book.team_lead = request.POST.get('team_lead')
+            book.sr_team_lead = request.POST.get('sr_team_lead')
+            book.project_lead  = request.POST.get('project_lead')
+            book.type_bkg = request.POST.get('type_bkg')
+            book.indvl_paid =request.POST.get('indvl_paid')
+            book.tl_paid =request.POST.get('tl_paid')
+            book.stl_paid = request.POST.get('stl_paid')
+            book.old_land_details = old_land_detail
+            book.land_details = land_detail
+            book.save()
         
-    return render(request,'new_bookings/ugdg.html',{'customer': customers})
+    return render(request,'new_bookings/ugdg.html',{
+            'pltsizes':pltsizes,
+            'customer': customers
+        })
 
 def transfer(request):
-    return render(request,'new_bookings/transfer.html')
+    customers = {}
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        user_id = request.POST.get('user_id')
+        seniority_id = request.POST.get('search_membername')
+        if action == 'search_customer':
+            try:
+                customers = Bookings.objects.get(seniority_id=seniority_id)
+                
+                if customers =='':
+                    messages.error(request, 'Profile details updated.')
+                    print('mmm')
+            except:
+                customers = {}
+        elif action == 'create_order':
+            print('HI')
+    return render(request,'new_bookings/transfer.html',{'customer':customers})
 
 def site_visit(request):
     return render(request,'new_bookings/site_visit.html')

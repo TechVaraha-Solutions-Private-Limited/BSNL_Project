@@ -20,7 +20,8 @@
         </div>
     </form>
     {% if customer %}
-    <form autocomplete="off">
+    <form autocomplete="off" method="POST">
+        {% csrf_token %}
         <ul>
             <li>
                 <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
@@ -30,11 +31,12 @@
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
                                 <div class="p-1">
                                     <label class="p-1">Seniority No</label>
-                                    <input class="form-input" type="text" name="seniority_id"value="{{ customer.seniority_id }}" readonly>
+                                    <input class="form-input" type="text" name="seniority_id" value="{{ customer.seniority_id }}" readonly>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Cust Name</label>
-                                    <input class="form-input" type="text" name="user_id"  value="{{ customer.user.first_name }}" readonly>
+                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" readonly>
+                                    <input class="form-input" type="text" name="user"  value="{{ customer.user.first_name }}" readonly>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Date Of Change</label>
@@ -46,11 +48,19 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">SFT - From</label>
-                                    <input type="text" name="sft_form" placeholder="sft_form" value="{{ customer.land_details.project.projectname}}"  class="form-input" readonly >
+                                    <input type="hidden" name="projectname" placeholder="sft_form" value="{{ customer.land_details.project.id}}"  class="form-input" readonly >
+                                    <input type="hidden" name="selectDimension" placeholder="sft_form" value="{{ customer.land_details.plotsize.id}}"  class="form-input" readonly >
+                                    <input type="text" name="selectDimensio" placeholder="sft_form" value="{{ customer.land_details.plotsize.plotsize}}"  class="form-input" readonly >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">SFT - To</label>
-                                    <input type="text" name="sft_to" placeholder="sft_to" class="form-input" >
+                                    <select name="plotsize" class="plotsize form-input"   required>
+                                        <option >Click to Select Plot Size</option>
+                                        {% for pltsize in pltsizes %}
+                                           
+                                            <option value="{{pltsize.id}}">{{pltsize.plotsize}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Diff</label>
@@ -91,7 +101,7 @@
                                 
                             </div>
                             <div class="text-center">
-                                <input type="submit" value="Submit Application" class="btn btn-success mt-5">
+                                <input type="submit" name="action" value="create_order" class="btn btn-success mt-5">
                                 <input type="reset" value="Clear" class="btn btn-info mt-5">
                             </div>
                         </div>
@@ -103,80 +113,4 @@
     </form>   
     {%endif%}
 </div>
-<!-- <form>
-    <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-        <div class="panel p" id="container" >
-            <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Add UGDG</b></h1>
-            <div id="form" class="panel p-1 mt-3">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
-                    <div class="p-1">
-                        <label class="p-1">Seniority No</label>
-                        <input type="text" name="seniority" placeholder="Seniority No" class="form-input" required>
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Cust Name</label>
-                        <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Date Of Change</label>
-                        <input type="text" name="date_of_change" placeholder="date_of_change" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Type of Dim Change</label>
-                        <input type="text" name="type_of_change" placeholder="type_of_change" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">SFT - From</label>
-                        <input type="text" name="sft_form" placeholder="sft_form" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">SFT - To</label>
-                        <input type="text" name="sft_to" placeholder="sft_to" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Diff</label>
-                        <input type="text" name="diff" placeholder="diff" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Exective</label>
-                        <input type="text" name="executive" placeholder="executive" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Team Lead</label>
-                        <input type="text" name="team_lead" placeholder="team_lead" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">SR Team Lead</label>
-                        <input type="text" name="sr_team_lead" placeholder="sr_team_lead" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Project Head</label>
-                        <input type="text" name="project_lead" placeholder="project_lead" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Type of BKG</label>
-                        <input type="text" name="type_bkg" placeholder="type_bkg" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">INDVL Paid</label>
-                        <input type="text" name="indvl_paid" placeholder="indvl_paid" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">TL Paid</label>
-                        <input type="text" name="tl_paid" placeholder="tl_paid" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">STL Paid</label>
-                        <input type="text" name="stl_paid" placeholder="stl_paid" class="form-input" >
-                    </div>
-                    
-                </div>
-                <div class="text-center">
-                    <input type="submit" value="Submit Application" class="btn btn-success mt-5">
-                    <input type="reset" value="Clear" class="btn btn-info mt-5">
-                </div>
-            </div>
-        </div>
-    </div>
-</form> -->
 {% endblock %}
