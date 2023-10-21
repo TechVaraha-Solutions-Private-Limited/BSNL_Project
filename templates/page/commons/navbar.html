@@ -34,14 +34,6 @@
                         {{ request.user.first_name|title }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <div class="profile-title">
-                            {% if request.user.is_details_added %}
-                                <h3 id="">Customer</h3>
-                            {% else %}  
-                                <a href=''> Update Profile </a> 
-                            {% endif %}
-                            
-                        </div>
                         <a class="dropdown-item" href="/profile">My Account</a>
                         <a class="dropdown-item" href="">My Bookings</a>
                         <a class="dropdown-item" href="/login/logout">Logout</a>

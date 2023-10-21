@@ -18,8 +18,8 @@
                     <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
                 </div>
                 <div>
-                    <label for="search_membername">Search New Customer Id:</label>
-                    <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
+                    <label for="user_id">Search New Customer Id:</label>
+                    <input type="text" class="form-input" name="user_id" id="user_id" placeholder="Enter the Seniorityno" >
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
@@ -40,6 +40,7 @@
                                 <div class="p-1">
                                     <label class="p-1">Seniority No</label>
                                     <input type="text" name="seniority" placeholder="Seniority No" class="form-input" value="{{ customer.seniority_id }}" readonly>
+                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" readonly>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Cust Name</label>
@@ -51,27 +52,27 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Date of Transfer</label>
-                                    <input type="date" name="type_of_change" placeholder="Date of Transfer" class="form-input" >
+                                    <input type="date" name="date_of_transfer" placeholder="Date of Transfer" class="form-input" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Type of Transfer</label>
-                                    <input type="text" name="sft_form" placeholder="Type of Transfer" class="form-input" >
+                                    <input type="text" name="type_of_transfer" placeholder="Type of Transfer" class="form-input" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Transferred To</label>
-                                    <input type="text" name="sft_to" placeholder="Transferred To" class="form-input" >
+                                    <input type="text" name="sft_to" placeholder="Transferred To" class="form-input" value="{{user.first_name}}" readonly >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">New Mem Seniorty</label>
-                                    <input type="text" name="diff" placeholder="New Mem Seniorty" class="form-input" >
+                                    <input type="text" name="new_seniorty" placeholder="New Mem Seniorty" class="form-input" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">New Mem Mobile</label>
-                                    <input type="text" name="executive" placeholder="New Mem Mobile" class="form-input" >
+                                    <input type="text" name="executive" placeholder="New Mem Mobile" class="form-input" value="{{user.mobile_no}}" readonly>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">New Mem E-mail</label>
-                                    <input type="text" name="team_lead" placeholder="New Mem E-mail" class="form-input" >
+                                    <input type="text" name="team_lead" placeholder="New Mem E-mail" class="form-input" value="{{user.email}}" readonly>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Amount Paid by Exis Customer</label>
@@ -83,16 +84,16 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Affidavit Upload</label>
-                                    <input type="File" name="type_bkg" placeholder="Affidavit Upload" class="form-input" >
+                                    <input type="File" name="affidavit" placeholder="Affidavit Upload" class="form-input" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Death cert(Death of Member)</label>
-                                    <input type="File" name="indvl_paid" placeholder="indvl_paid" class="form-input" >
+                                    <input type="File" name="deathcerft" placeholder="indvl_paid" class="form-input" >
                                 </div>
                                 
                             </div>
                             <div class="text-center">
-                                <input type="submit" value="Submit Application" class="btn btn-success mt-5">
+                                <input type="submit" name="action" value="create_order" class="btn btn-success mt-5">
                                 <input type="reset" value="Clear" class="btn btn-warning mt-5">
                                 <input type="button" value="Close" onclick="mymodel();" class="btn btn-danger mt-5">
                             </div>

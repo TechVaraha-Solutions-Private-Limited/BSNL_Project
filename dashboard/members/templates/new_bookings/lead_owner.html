@@ -1,117 +1,124 @@
 {% extends 'index.html'%}
 {% block content %}
 {% load static %}
-{% load widget_tweaks %}
 {% include 'common/bootstrap.html'%}
 <style>
     a{
         color: black;
+        text-decoration: none;
     }
 </style>
-<form>
-    <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-        <div class="panel p" id="container" >
-            <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Lead Owner</b></h1>
-            <input type="button" value="Add Button"onclick="mymodel();" class="btn btn-success">
-            <form class="mx-auto w-full sm:w-1/2 mb-5">
-                
-            </form>
-            <div id="form" class="panel p-1 mt-3" style="display : none">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-2" >
-                    <div class="p-1">
-                        <label class="p-1">Seniority No</label>
-                        <input type="text" name="seniority" placeholder="Seniority No" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Cust Name</label>
-                        <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Executive</label>
-                        <input type="text" name="" placeholder="Executive" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Team Lead</label>
-                        <input type="text" name="Type of Cancel" placeholder="Team Lead" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">SR Team Lead</label>
-                        <input type="text" name="sft_form" placeholder="SR Team Lead" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Project Head</label>
-                        <input type="text" name="sft_to" placeholder="Project Head" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Type of Booking</label>
-                        <input type="text" name="diff" placeholder="Type of Booking" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Ref Exis Cust SRY</label>
-                        <input type="text" name="executive" placeholder="Ref Exis Cust SRY" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Ref Exis Cust Name</label>
-                        <input type="text" name="team_lead" placeholder="Ref Exis Cust Name" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Date of Sv</label>
-                        <input type="text" name="sr_team_lead" placeholder="Date of Sv" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Sv Done Cust</label>
-                        <input type="text" name="project_lead" placeholder="Sv Done Cust" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Source</label>
-                        <input type="text" name="project_lead" placeholder="Source" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">ID Card Status</label>
-                        <input type="text" name="project_lead" placeholder="ID Card Status" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Fup Category</label>
-                        <input type="text" name="project_lead" placeholder="Fup Category" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Install Fup Status</label>
-                        <input type="text" name="project_lead" placeholder="Install Fup Status" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Install Fup Date</label>
-                        <input type="text" name="project_lead" placeholder="Install Fup Date" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Excep Category</label>
-                        <input type="text" name="project_lead" placeholder="Excep Category" class="form-input" >
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Excep Reason</label>
-                        <input type="text" name="project_lead" placeholder="Excep Reason" class="form-input" >
-                    </div>                    
-                </div>
-                <div class="text-center p-2">
-                    <input type="submit" value="Submit Application" class="btn btn-success mt-3 p-2">
-                    <input type="reset" value="Clear" class="btn btn-warning mt-3 p-2">
-                    <input type="button" value="Close" onclick="mymodel();" class="btn btn-danger mt-3 p-2">
-                </div>
+{% for message in messages %}
+<div class="alert alert-success">
+    <a class="close" href="#" data-dismiss="alert">×</a>
+    {{ message }}
+</div>
+{% endfor %}
+<div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+    <form method="POST" class="space-y-5" autocomplete="off">
+        {% csrf_token %}
+        <div class="panel" >
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <label for="search_membername">Search your Customer:</label>
+                <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
+                <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
             </div>
         </div>
-    </div>
-</form>
-
-
-    <script>
-
-        // model show
-        function mymodel() {
-            var form = document.getElementById('form');
-            if (form.style.display === 'none') {
-                form.style.display = 'block';
-            } else {
-                form.style.display = 'none';
-            }
-        }
-    </script>
+    </form>
+    {% if customer %}
+    <form method="POST" action="" class="space-y-5" autocomplete="off">
+        {% csrf_token %}
+        <ul>
+            <li>
+                <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+                    <div class="panel p" id="container" >
+                        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Lead Owner</b></h1>
+                        <div id="form" class="panel p-1 mt-3">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-2" >
+                                <div class="p-1">
+                                    <label class="p-1">Seniority No</label>
+                                    <input type="text" name="seniority" placeholder="Seniority No" class="form-input" value="{{ customer.seniority_id }}" readonly>
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Cust Name</label>
+                                    <input type="hidden" name="user_id" placeholder="Cust Name" class="form-input"  value="{{ customer.user.id }}" readonly>
+                                    <input type="text" name="user" placeholder="Cust Name" class="form-input"  value="{{ customer.user.first_name }}" readonly>
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Executive</label>
+                                    <input type="text" name="executive" placeholder="Executive" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Team Lead</label>
+                                    <input type="text" name="team_lead" placeholder="Team Lead" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">SR Team Lead</label>
+                                    <input type="text" name="sr_team_lead" placeholder="SR Team Lead" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Project Head</label>
+                                    <input type="text" name="project_head" placeholder="Project Head" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Type of Booking</label>
+                                    <input type="text" name="type_of_booking" placeholder="Type of Booking" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Ref Exis Cust SRY</label>
+                                    <input type="text" name="ref_exis_cust_sry" placeholder="Ref Exis Cust SRY" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Ref Exis Cust Name</label>
+                                    <input type="text" name="ref_exis_cust_name" placeholder="Ref Exis Cust Name" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Date of Sv</label>
+                                    <input type="date" name="date_of_sitevisit" placeholder="Date of Sv" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Sv Done Cust</label>
+                                    <input type="text" name="sv_done_cust" placeholder="Sv Done Cust" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Source</label>
+                                    <input type="text" name="source" placeholder="Source" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">ID Card Status</label>
+                                    <input type="text" name="id_card_status" placeholder="ID Card Status" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Fup Category</label>
+                                    <input type="text" name="fup_category" placeholder="Fup Category" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Install Fup Status</label>
+                                    <input type="text" name="install_fup_status" placeholder="Install Fup Status" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Install Fup Date</label>
+                                    <input type="text" name="install_fup_date" placeholder="Install Fup Date" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Excep Category</label>
+                                    <input type="text" name="exep_category" placeholder="Excep Category" class="form-input" >
+                                </div>
+                                <div class="p-1">
+                                    <label class="p-1">Excep Reason</label>
+                                    <input type="text" name="excep_reason" placeholder="Excep Reason" class="form-input" >
+                                </div>                    
+                            </div>
+                            <div class="text-center p-2">
+                                <input type="submit" name="action" value="create_order" class="btn btn-success mt-3 p-2">
+                                <input type="reset" value="Clear" class="btn btn-warning mt-3 p-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </form>
+    {%endif%}
+</div>
 {% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, HttpResponse
 from django.http import JsonResponse
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee
-from .models import Bookings,PaymentDetails,Ugdg,Receipts,Images
+from .models import Bookings,PaymentDetails,Ugdg,Receipts,Images,Leadowner,Site_visit
 from dashboard.projects.models import Project,PlotSize,LandDetails
 from django.forms.models import model_to_dict
 from django.contrib import messages
@@ -221,6 +221,7 @@ def generate(request):
         if action == 'search_customer':
             try:
                 customers = Bookings.objects.get(seniority_id=seniority_id)
+                
                 if customers =='':
                     messages.error(request, 'Profile details updated.')
             except:
@@ -276,10 +277,8 @@ def ugdg(request):
             project_id = request.POST.get('projectname')
             str_form = request.POST.get('selectDimension')
             str_to = request.POST.get('plotsize')
-            print('str_to:',str_to)
             land_detail = LandDetails.objects.get(project_id=project_id,plotsize_id=str_to)
             old_land_detail = LandDetails.objects.get(project_id=project_id,plotsize_id=str_form)
-            print(land_detail,old_land_detail)
             book.date_of_change = request.POST.get('date_of_change')
             book.type_of_change = request.POST.get('type_of_change')
             book.diff = request.POST.get('diff')
@@ -302,6 +301,7 @@ def ugdg(request):
 
 def transfer(request):
     customers = {}
+    user ={}
     if request.method == 'POST':
         action = request.POST.get('action')
         user_id = request.POST.get('user_id')
@@ -309,24 +309,139 @@ def transfer(request):
         if action == 'search_customer':
             try:
                 customers = Bookings.objects.get(seniority_id=seniority_id)
+                user=User.objects.get(id=user_id)
+                print(user.first_name)
+                if customers =='':
+                    messages.error(request, 'Profile details updated.')
+            except:
+                customers = {}
+                user={}
+        elif action == 'create_order':
+            seniority = request.POST.get('seniority')
+            user_id = request.POST.get('user_id')
+            print(seniority)
+            old_book = Bookings.objects.get(user_id=user_id,seniority_id=seniority)
+            old_book.status=0
+            land_details_id = old_book.land_details_id
+            book = Bookings()
+            book.old_seniority_id = seniority
+            book.user_id =user_id
+            book.membership_id = request.POST.get('new_seniorty')
+            book.seniority_id = request.POST.get('new_seniorty')
+            book.date_of_transfer = request.POST.get('date_of_transfer')
+            book.type_of_transfer = request.POST.get('type_of_transfer')
+            book.affidavit = request.POST.get('affidavit')
+            book.death_cert = request.POST.get('deathcerft')
+            book.total_site_value = old_book.total_site_value
+            book.downpayment = old_book.downpayment
+            book.land_details_id = land_details_id
+            book.save()
+            old_book.save()
+
+    return render(request,'new_bookings/transfer.html',{'customer':customers,'user':user})
+
+def site_visit(request):
+    customers = {}
+    detail = {}
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        seniority_id = request.POST.get('search_membername')
+        if action == 'search_customer':
+            try:
+                customers = Bookings.objects.get(seniority_id=seniority_id)
+                detail = Leadowner.objects.get(seniorityno_id=seniority_id)
+                if customers =='':
+                    messages.error(request, 'Profile details updated.')
+            except:
+                customers = {}
+                detail = {}
+                print('Muthu')
+        elif action == 'create_order':
+            print('muthu')
+            user_id = request.POST.get('user_id')
+            user_instance= Leadowner.objects.get(seniorityno_id=seniority_id)
+            # user_instance = Leadowner.objects.get(user_id=user_id)
+            Site_visit(
+                leadowner =user_instance,
+                so_done_by = request.POST.get('so_done_by'),
+                sv_don_by = request.POST.get('sv_done_by'),
+                sv_category = request.POST.get('sv_category'),
+                source = request.POST.get('source'),
+                booked_no = request.POST.get('booked_no'),
+                booked_sry_no = request.POST.get('booked_sry_no')
+            ).save()
+    return render(request,'new_bookings/site_visit.html',{'customer':detail})
+
+def lead_owner(request):
+    customers = {}
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        seniority_id = request.POST.get('search_membername')
+        if action == 'search_customer':
+            try:
+                customers = Bookings.objects.get(seniority_id=seniority_id)
                 
                 if customers =='':
                     messages.error(request, 'Profile details updated.')
-                    print('mmm')
             except:
                 customers = {}
+                print('Muthu')
         elif action == 'create_order':
-            print('HI')
-    return render(request,'new_bookings/transfer.html',{'customer':customers})
-
-def site_visit(request):
-    return render(request,'new_bookings/site_visit.html')
-
-def lead_owner(request):
-    return render(request,'new_bookings/lead_owner.html')
+            user_id = request.POST.get('user_id')
+            user_instance = User.objects.get(id=user_id)
+            print('muthu')
+            Leadowner(
+                seniorityno_id = request.POST.get('seniority'),
+                user_id = user_instance,
+                executive = request.POST.get('executive'),
+                team_lead = request.POST.get('team_lead'),
+                sr_team_lead =request.POST.get('sr_team_lead'),
+                project_head = request.POST.get('project_head'),
+                type_of_booking = request.POST.get('type_of_booking'),
+                ref_exis_cust_sry = request.POST.get('ref_exis_cust_sry'),
+                ref_exis_cust_name = request.POST.get('ref_exis_cust_name'),
+                date_of_sitevisit = request.POST.get('date_of_sitevisit'),
+                sv_done_cust = request.POST.get('sv_done_cust'),
+                source = request.POST.get('sv_done_cust'),
+                id_card_status = request.POST.get('id_card_status'),
+                fup_category = request.POST.get('fup_category'),
+                install_fup_status = request.POST.get('install_fup_status'),
+                install_fup_date = request.POST.get('install_fup_date'),
+                exep_category = request.POST.get('exep_category'),
+                excep_reason = request.POST.get('excep_reason')
+            ).save()
+    return render(request,'new_bookings/lead_owner.html',{'customer':customers})
 
 def cancel(request):
-    return render(request,'new_bookings/cancel.html')
+    customers = {}
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        seniority_id = request.POST.get('search_membername')
+        user_id = request.POST.get('user_id')
+        if action == 'search_customer':
+            try:
+                customers = Bookings.objects.get(seniority_id=seniority_id)
+                
+                if customers =='':
+                    messages.error(request, 'Profile details updated.')
+            except:
+                customers = {}
+                print('Muthu')
+        elif action == 'create_order': 
+            user_id=user_id
+            seniority = request.POST.get('seniority')
+            book = Bookings.objects.get(user_id=user_id,seniority_id=seniority)
+            book.status=0
+            book.date_of_cancel =request.POST.get('date_of_cancel')
+            book.type_of_cancel = request.POST.get('type_of_cancel')
+            book.date_of_refund = request.POST.get('date_of_refund')
+            book.mode_of_refund = request.POST.get('mode_of_refund')
+            book.refund_cheque_no = request.POST.get('refund_cheque_no')
+            book.refund_amount = request.POST.get('refund_amount')
+            book.type_of_refund = request.POST.get('type_of_refund')
+            book.issued_by = request.POST.get('issued_by')
+            book.save()
+    return render(request,'new_bookings/cancel.html',{'customer':customers})
 
 def receipts(request):
     details = PaymentDetails.objects.all()

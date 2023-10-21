@@ -15,12 +15,11 @@ def profile(request):
     user = request.user
     userdetails=UserDetail.objects.filter(user_id=user.id)
     noimee = UserNominee.objects.filter(user_id=user.id)
-    print(user.id)
-    for userdetail in userdetails:
-        print(userdetail.address)
+    family = UserFamilyDetails.objects.filter(user_id=user.id)
     context={
         'user':user,
         'userdetails':userdetails,
-        'noimee':noimee
+        'noimee':noimee,
+        'family':family
     }
     return render(request,'page/customer_view/profile.html',context)

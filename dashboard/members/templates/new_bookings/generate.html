@@ -35,11 +35,12 @@
                            
                             <div>
                                 <label for="customer">Customers:</label>
-                                <input class="form-input" type="text" name="user_id"  value="{{ customer.user.first_name }}" readonly>
+                                <input class="form-input" type="text" name="user"  value="{{ customer.user.first_name }}" readonly>
+                                <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" readonly>
                             </div>
                             <div>
                                 <label for="seniorityno">Seniority No:</label>
-                                <input class="form-input" type="text" name="seniority_id"value="{{ customer.seniority_id }}" readonly>
+                                <input class="form-input" type="text" name="seniority" value="{{ customer.seniority_id }}" readonly>
                             </div>
                             <div >
                                 <label for="amount">Amount:</label>
