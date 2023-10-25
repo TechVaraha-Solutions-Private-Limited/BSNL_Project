@@ -15,4 +15,5 @@ urlpatterns = [
    # path('logout',views.logout),
    # customer views
    path('profile',customerviews.profile,name='profile'),
+   path('booking',customerviews.booking,name='booking'),
 ]

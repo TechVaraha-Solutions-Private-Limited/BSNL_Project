@@ -1,5 +1,6 @@
 from django.shortcuts import render,get_object_or_404,HttpResponse,redirect
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee
+from dashboard.members.models import Bookings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
 # from app.models import Newbooking
@@ -23,3 +24,12 @@ def profile(request):
         'family':family
     }
     return render(request,'page/customer_view/profile.html',context)
+
+def booking(request):
+    user = request.user
+    landdetails=Bookings.objects.get(user_id=user.id)
+    print(landdetails.land_details.project.projectname)
+    context = {
+        'landdetails':landdetails,
+    }
+    return render(request,'page/customer_view/booking.html',context)

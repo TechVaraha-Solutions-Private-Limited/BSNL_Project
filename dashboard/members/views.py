@@ -159,24 +159,74 @@ def add_new_bookings(request):
             book.am_no = auto_genrate
             book.save()
             #vicky
-            get_number = PaymentDetails.objects.all().order_by('-id')[:1]
-            if get_number:
-                get_number = "B-" + str(get_number[0].id + 1).zfill(5)
-            else:
-                get_number = "B-00001"             
-            payments = PaymentDetails()
-            payments.booking=book
-            payments.payment_mode = request.POST.get('payment_mode')
-            payments.bank = request.POST.get('bank')
-            payments.branch = request.POST.get('branch')
-            payments.cheque_no = request.POST.get('cheque_no')
-            payments.user = user
-            payments.payment_data = request.POST.get('payment_data')
-            payments.amount = request.POST.get('amount')
-            payments.receipt_no = get_number
-            payments.save()
+       
+            
+            split_amount = int(book.total_site_value) / 4
+            
+            paid_amount =  request.POST.get('amount','').strip()
+            print(paid_amount)
+            payment_amount = int(paid_amount) -2260
+            if paid_amount:
+
+                membership_fee = PaymentDetails()
+                membership_fee.booking=book
+
+                membership_fee.payment_mode = request.POST.get('payment_mode')
+                membership_fee.bank = request.POST.get('bank')
+                membership_fee.branch = request.POST.get('branch')
+                membership_fee.cheque_no = request.POST.get('cheque_no')
+                membership_fee.user = user
+                membership_fee.payment_data = request.POST.get('payment_data')
+                
+                membership_fee.amount = 2260
+                get_number = PaymentDetails.objects.all().order_by('-id')[:1]
+                if get_number:
+                    get_number = "B-" + str(get_number[0].id + 1).zfill(5)
+                else:
+                    get_number = "B-00001" 
+                membership_fee.receipt_no = get_number
+                membership_fee.save()
+
+                for i in range(4):
+                    get_number = PaymentDetails.objects.all().order_by('-id')[:1]
+                    if get_number:
+                        get_number = "B-" + str(get_number[0].id + 1).zfill(5)
+                    else:
+                        get_number = "B-00001" 
+                    if split_amount  < payment_amount:
+                        payments = PaymentDetails()
+                        payments.booking=book
+
+                        payments.payment_mode = request.POST.get('payment_mode')
+                        payments.bank = request.POST.get('bank')
+                        payments.branch = request.POST.get('branch')
+                        payments.cheque_no = request.POST.get('cheque_no')
+                        payments.user = user
+                        payments.payment_data = request.POST.get('payment_data')
+                        
+                        payments.amount = split_amount
+                        payments.receipt_no = get_number
+                        payments.save()
+                        payment_amount = payment_amount - split_amount 
+                    elif payment_amount > 0:
+                    
+                        payments = PaymentDetails()
+                        payments.booking=book
+
+                        payments.payment_mode = request.POST.get('payment_mode')
+                        payments.bank = request.POST.get('bank')
+                        payments.branch = request.POST.get('branch')
+                        payments.cheque_no = request.POST.get('cheque_no')
+                        payments.user = user
+                        payments.payment_data = request.POST.get('payment_data')
+                        
+                        payments.amount = payment_amount
+                        payments.receipt_no = get_number
+                        payments.save()
+                        break
             messages.error(request,'Successfully Saved')
             # Vicky    
+        
     return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':landdetail,'projects':projects})
 
 def get_dimension(request):
@@ -187,7 +237,6 @@ def get_dimension(request):
     return JsonResponse({})
 
 def get_project_value(request):
-    print('hello')
     if request.method == "POST":
         project_id = request.POST.get('project_id','').strip()
         plot_id = request.POST.get('plot_id','').strip()
