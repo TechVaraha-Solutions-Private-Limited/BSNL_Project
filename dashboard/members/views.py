@@ -5,6 +5,7 @@ from .models import Bookings,PaymentDetails,Ugdg,Receipts,Images,Leadowner,Site_
 from dashboard.projects.models import Project,PlotSize,LandDetails
 from django.forms.models import model_to_dict
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password
 # Create your views here.
 def banner_images(request):
     if request.method =='POST':
@@ -33,7 +34,7 @@ def addcustomer(request):
             user.last_name=request.POST.get('last_name')
             user.mobile_no = mobile_no
             user.email = email
-            user.password = request.POST.get('password')
+            user.password = make_password(request.POST.get('password','').strip())
             user.role = "Customer"
             user.save()
             details = UserDetail()
@@ -97,7 +98,7 @@ def add_new_bookings(request):
             user.last_name=request.POST.get('last_name')
             user.mobile_no = mobile_no
             user.email = email
-            user.password = request.POST.get('password')
+            user.password = make_password(request.POST.get('password','').strip())
             user.role = "Customer"
             user.save()
             details = UserDetail()
