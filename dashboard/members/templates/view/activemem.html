@@ -76,7 +76,7 @@
           
                   {% for mydata in book %}
                     <tr>
-                        <td>{{mydata.id}}</td>
+                        <td>{{forloop.counter}}</td>
                         <td><div>
                             <p>{{mydata.user.first_name}}</p>
                             <p>{{mydata.seniority_id}}</p>
@@ -258,7 +258,7 @@
               
                     {% for mydata in user %}
                       <tr>
-                          <td>{{mydata.id}}</td>
+                          <td>{{forloop.counter}}</td>
                           <td><div>
                             <p>{{mydata.user.first_name}}</p>
                             <p>{{mydata.seniority_id}}</p>

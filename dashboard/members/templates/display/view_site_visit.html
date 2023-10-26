@@ -1,0 +1,181 @@
+{% extends 'index.html'%}
+{% block content %}
+{% load static %}
+{% load mathfilters %}
+<style>
+    h1 {
+        font: 20px
+    }
+    .plotsize{
+        width: 50%;
+        font-size: 15px;
+        padding: 7px 0px;
+        border: 1px solid lightgray;
+        border-radius: 0%;
+    }
+    .search{
+        width:30%;
+        float: right;
+    }
+    
+    
+    .search_size{
+        border: 2px solid rgb(247, 243, 243);
+        border-radius: 15px;
+    }
+</style>
+<div class="table-responsive pt-3" id="mytable" style="display: show;"> 
+    <h2 class="text-lg font-semibold dark:text-white-light p-1" 
+    style="background-color: rgb(188, 224, 198); border-radius: 9px; text-align: center;">
+    <b>In-Active Members Details</b></h2>
+    <div class="relative search mt-2">
+        <input type="text" id="searchInput" placeholder="Search Details..." class="form-input search_size" />
+        <button type="button" class="btn absolute ltr:right-1 rtl:left-1 inset-y-0 m-auto rounded-full w-9 h-9 p-0 flex items-center justify-center"style="border-color:white">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+            <path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+            </svg>
+        </button>
+    </div><br>
+    <div class=" p-2">
+        <table id="data" class="emInfo">
+            <thead>
+                <tr>
+                    <th>S.NO</th>
+                    <th><div>
+                        <p>Customer Name/</p>
+                        <p>Seniority/</p>
+                        <p>Date of Booking/</p>
+                        <p>Am No</p>
+                    </div></th>
+                    <th><div>
+                        <p>Moblie No/</p>
+                        <p>Email id/</p>
+                        <p>Executive/</p>
+                        <p>Active</p>
+                    </div></th>
+                    <th>Dimensive</th>
+                    <th>Amount Paid</th>
+                    <th hidden>Total Amount</th>
+                    <th>Balance Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+      
+              {% for mydata in book1 %}
+                <tr>
+                    <td>{{mydata.id}}</td>
+                    <td><div>
+                        <p>{{mydata.user.first_name}}</p>
+                        <p>{{mydata.seniority_id}}</p>
+                        <p>{{mydata.created_on.date}}</p>
+                        <p>{{mydata.am_no}}</p>
+                    </div>  
+                    </td>
+                    <td><div>
+                        <p>{{mydata.user.mobile_no}}</p>
+                        <p>{{mydata.seniority_id}}</p>
+                        <p>{{mydata.user.email}}</p>
+                        <p>{% if mydata.status == 0 %}
+                            Active
+                            {% else %}
+                            Inactive
+                            {% endif %}</p>
+                    </div>  
+                    </td>
+                    <td>{{mydata.land_details.plotsize.plotsize}}</td>
+                    <td >{{mydata.downpayment}}</td>
+                    <td>{{ mydata.downpayment|sub:mydata.total_site_value }}</td>
+              {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: right;" >
+        <div class="inline-flex items-center space-x-1 rtl:space-x-reverse m-auto mb-4">
+            <button id="prevPage" type="button" class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 256 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 256c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-128-128z"/></svg>
+            </button>
+            <span id="currentPage" class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary">1</span>
+            <button id="nextPage" type="button" class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 256 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/></svg>
+            </button>
+        </div>
+    </div>
+    
+</div>
+<script>
+    // Initialize variables
+    var currentPage = 1;
+    var rowsPerPage = 5; // Number of rows per page
+
+    // Function to show/hide rows based on the current page
+    function updateTable() {
+        var tableRows = document.querySelectorAll(".emInfo tbody tr");
+        var start = (currentPage - 1) * rowsPerPage;
+        var end = start + rowsPerPage;
+
+        for (var i = 0; i < tableRows.length; i++) {
+            if (i >= start && i < end) {
+                tableRows[i].style.display = "table-row";
+            } else {
+                tableRows[i].style.display = "none";
+            }
+        }
+
+        // Update the "Page X" indicator
+        document.getElementById("currentPage").textContent =  currentPage;
+    }
+
+    // Handle the "Next" button click
+    document.getElementById("nextPage").addEventListener("click", function () {
+        var tableRows = document.querySelectorAll(".emInfo tbody tr");
+        var maxPage = Math.ceil(tableRows.length / rowsPerPage);
+        if (currentPage < maxPage) {
+            currentPage++;
+            updateTable();
+        }
+    });
+
+    // Handle the "Previous" button click
+    document.getElementById("prevPage").addEventListener("click", function () {
+        if (currentPage > 1) {
+            currentPage--;
+            updateTable();
+        }
+    });
+    // Initial table update
+    updateTable();
+</script>
+<script>
+    // Function to filter the table rows
+    function searchTable() {
+        var input, filter, table, tr, td, i, j, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.querySelector(".emInfo");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            // Get all the cells in the current row
+            td = tr[i].getElementsByTagName("td");
+            // Initialize a flag to indicate if the row should be displayed
+            var showRow = false;
+            for (j = 0; j < td.length; j++) {
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    showRow = true;
+                    break; // If a match is found, no need to check other cells in the row
+                }
+            }
+            // Display or hide the row based on the showRow flag
+            if (showRow) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+    // Attach the search function to the input element's "keyup" event
+    document.getElementById("searchInput").addEventListener("keyup", searchTable);
+// sub total - downpayment
+
+</script>
+{% endblock %}

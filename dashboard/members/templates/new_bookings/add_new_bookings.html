@@ -140,7 +140,7 @@
                 </div>
                 <div class="p-1">
                     <label class="p-1">Family-Member Age</label>
-                    <input type="age" name="member_age1" placeholder="Family-Member Age" class="form-input">
+                    <input type="number" name="member_age1" placeholder="Family-Member Age" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Family-Member Relationship</label>
@@ -189,7 +189,7 @@
                 </div>
                 <div class="p-1">
                     <label class="p-1">Seniority No</label>
-                    <input type="text" name="seniority_id" placeholder="Seniority No" class="form-input">
+                    <input type="text" id="seniority" name="seniority_id" placeholder="Seniority No" class="form-input">
                 </div>
             </div>
         </div>
@@ -312,8 +312,6 @@
                     $('#total_site_value').val(data.values[0].total_amount)
                     $('#downpayment').val(data.values[0].installment_1)
 
-
-                 
                 }
             })
      });
@@ -329,8 +327,9 @@
                 method: "POST",
                 data: mydata,
                 success: function (data) {
-                    console.log(data);
+                    console.log('check',data);
 
+                    $("#seniority").val(data.shortcut);
                     $("#selectDimension").removeAttr("disabled");
                     $("#selectDimension option").remove();
                     $('#selectDimension').append($('<option></option>').val("").html("Select"))
@@ -407,42 +406,7 @@
         document.getElementById("check_input_no").value = current;
     }
 
-  </script>
+</script>
   
-<!-- Add this script below your HTML code -->
-<!-- Add this script below your HTML code -->
-<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        let formCount = 1;
-        const formContainer = $('#family-form');
-
-        $('#add-more').click(function () {
-            const newForm = formContainer.clone(true);
-            formCount += 1;
-
-            // Clear input values in the cloned form
-            newForm.find('input[type="text"]').val('');
-
-            // Update input names to avoid conflicts
-            newForm.find('input').each(function () {
-                const name = $(this).attr('name');
-                $(this).attr('name', name.replace('-1-', '-' + formCount + '-'));
-            });
-
-            // Add a "Close" button to remove the form
-            const closeButton = $('<div class="p-1"><label class="p-1"></label><button type="button" class="btn btn-danger text-lg font-semibold dark:text-white-light">Close</button></div></div>');
-            closeButton.click(function () {
-                newForm.remove();
-            });
-            newForm.append(closeButton);
-
-            // Append the cloned form to the container
-            formContainer.after(newForm);
-        });
-    });
-</script> -->
-
-
 
 {% endblock %}

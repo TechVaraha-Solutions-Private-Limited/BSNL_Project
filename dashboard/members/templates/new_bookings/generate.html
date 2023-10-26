@@ -43,8 +43,8 @@
                                 <input class="form-input" type="text" name="seniority" value="{{ customer.seniority_id }}" readonly>
                             </div>
                             <div >
-                                <label for="amount">Amount:</label>
-                                <input class="form-input" type="text" name="amount" value="{{ customer.downpayment }}" readonly>
+                                <label for="amount">Total-Amount:</label>
+                                <input class="form-input" type="text" name="amount" value="{{ customer.total_site_value }}" readonly>
                             </div>
                             <div class="p-1">
                                 <label for="dimensions">Dimension</label>
@@ -53,6 +53,10 @@
                             <div class="p-1">
                                 <label>Date-of-receipt</label>
                                 <input class="form-input" type="date" name="dateofreceipt">
+                            </div>
+                            <div class="p-1">
+                                <label>Pending Amount</label>
+                                <input class="form-input" type="text" value="{{difference}}" readonly>
                             </div>
                         </div>
                         <div class="panel p-1">
