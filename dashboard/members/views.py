@@ -7,6 +7,7 @@ from django.forms.models import model_to_dict
 from django.contrib import messages
 from django.db.models import Q,Sum
 from django.contrib.auth.hashers import make_password
+from dashboard.members.models import Update_blocked
 # Create your views here.
 def banner_images(request):
     if request.method =='POST':
@@ -641,11 +642,33 @@ def confirmletter(request):
 def view_history(request):
     return render(request,'display/view_history.html')
 
-def user_access(request):
-    return render(request,'input/update_user/user_access.html')
+def user_access(request,id):
+    user_log=User.objects.get(id=id)
+    if request.method == "POST":
+        user_log.first_name = request.POST['first_name']
+        user_log.last_name = request.POST['last_name']
+        user_log.employee_id = request.POST['employee_id']
+        user_log.user_role = request.POST['user_role']
+        user_log.email = request.POST['email_id']
+        user_log.mobile_no = request.POST['mobile_no']
+        user_log.date_joined = request.POST['date_joined']
+        user_log.save()
+    return render(request,'input/update_user/user_access.html',{'user_log':user_log})
 
 def view_user_access(request):
-    return render(request,'input/update_user/view_user_access.html')
+    view_user=User.objects.filter(is_active=1)
+    return render(request,'input/update_user/view_user_access.html',{'view_user':view_user})
+
+def delete_user_access(request,id):
+    book = User.objects.get(id=id)
+    if book.is_active == True:
+        book.is_active=False
+        book.save()
+    context={
+        'book':book,
+    }
+
+    return redirect(view_user_access)
 
 def rate_update(request):
     return render(request,'input/update_rate/rate_update.html')
@@ -661,10 +684,42 @@ def view_update_sales_staff(request):
     return render(request,'input/update_sales_staff/view_update_staff.html')
 
 def blocked_seniority(request):
+    if request.method == 'POST':
+        Update_blocked(
+            project=request.POST['project'],
+            seniority_no=request.POST['seniority_no'],
+            blocked_date=request.POST['blocked_date'],
+            executive=request.POST['executive'],
+            customer_name=request.POST['customer_name'],
+        ).save()
     return render(request,'input/blocked_update/block_seniority.html')
 
 def view_blocked_seniority(request):
-    return render(request,'input/blocked_update/view_block_seniority.html')
+    view_block=Update_blocked.objects.filter(is_active=1)
+    return render(request,'input/blocked_update/view_block_seniority.html',{'view_block':view_block})
+
+def update_block(request,id):
+    block_update=Update_blocked.objects.get(id=id)
+    if request.method == "POST":
+        block_update.project = request.POST['project']
+        block_update.seniority_no = request.POST['seniority_no']
+        block_update.blocked_date = request.POST['blocked_date']
+        block_update.executive = request.POST['executive']
+        block_update.customer_name = request.POST['customer_name']
+        block_update.save()
+    return render(request,'input/blocked_update/update_block.html',{'block_update':block_update})
+
+def delete_block(request,id):
+    book = Update_blocked.objects.get(id=id)
+    if book.is_active == True:
+        book.is_active=False
+        book.save()
+    context={
+        'book':book,
+    }
+
+    return redirect(view_blocked_seniority)
+
 
 def update_pdc(request):
     return render(request,'input/pdc/update_pdc.html')
@@ -675,10 +730,3 @@ def view_update_pdc(request):
 
 def cr_code(request):
     return render(request,'input/cr_code/update_cr_code.html')
-
-
-def delete_user_access(request,id):
-    return HttpResponse('Hello')
-
-def update_block(request,id):
-    return HttpResponse('Hello')
