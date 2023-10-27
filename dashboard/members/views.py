@@ -669,9 +669,16 @@ def view_blocked_seniority(request):
 def update_pdc(request):
     return render(request,'input/pdc/update_pdc.html')
 
+
 def view_update_pdc(request):
     return render(request,'input/pdc/view_update_pdc.html')
 
 def cr_code(request):
     return render(request,'input/cr_code/update_cr_code.html')
 
+
+def delete_user_access(request,id):
+    return HttpResponse('Hello')
+
+def update_block(request,id):
+    return HttpResponse('Hello')
