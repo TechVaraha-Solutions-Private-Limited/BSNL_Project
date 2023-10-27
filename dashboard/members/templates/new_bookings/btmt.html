@@ -27,69 +27,80 @@
         color:black
     }
 </style>
+{% for message in messages %}
+<div class="alert   {% if message.tags == 'error' %}
+                        alert-danger
+                    {% elif message.tags == 'success' %}
+                        alert-success
+                    {% endif %}">
+    <a class="close" href="#" data-dismiss="alert">×</a>
+    {{ message }}
+</div>
+{% endfor %}
 <div class="divbox p-3 mt-2">
     <h3 class="font-weight-bold mt-4 addcredentialtitle">BANK STATEMENT UPLOAD</h3>
-    <form method="POST">
+    <form method="POST" autocomplete="off">
         {% csrf_token %}
         <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
             <div>
                 <label>Select One Project</label><br>
                 <select name="projectname" class="form-control mt-3" id="select" onchange="selected()" required>
-                    <option value="" >Click to Select Project</option>
-                    <option value="fv">project name</option>
-                    <option value="dsf">None</option>
+                    <option value="">Select the Project</option>
+                    {% for proj in project %}
+                    <option value="{{proj.projectname}}">{{proj.projectname}}</option>
+                    {% endfor %}
             </select>
             </div>
-            <div class="text-center" id="button" style="display: none;">
+            <!-- <div class="text-center" id="button" style="display: none;">
                 <a class="btn btn-primary mt-5" onclick="upload()">Upload</a>
                 <a class="btn btn-danger mt-5">View </a>
-            </div>
+            </div> -->
         </div>
-        <div id="form" class="panel p-1 mt-3" style="display : none">
+        <div id="form" class="panel p-1 mt-3" style="display : block">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-2" >
                 <div class="p-1">
                     <label class="p-1">Credit Date</label>
-                    <input type="date" name="creditdate" placeholder="Credit Date" class="form-input" >
+                    <input type="date" name="creditdate" placeholder="Credit Date" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Transaction Particulars</label>
-                    <input type="text" name="transaction" placeholder="Transaction Particulars" class="form-input" >
+                    <input type="text" name="transaction" placeholder="Transaction Particulars" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Cheque No</label>
-                    <input type="text" name="Chequeno" placeholder="Cheque No" class="form-input" >
+                    <input type="text" name="Chequeno" placeholder="Cheque No" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Statemnt Amount</label>
-                    <input type="text" name="stmtamount" placeholder="Statemnt Amount" class="form-input" >
+                    <input type="text" name="stmtamount" placeholder="Statemnt Amount" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Trans Category</label>
-                    <input type="text" name="transcategory" placeholder="Trans Category" class="form-input" >
+                    <input type="text" name="transcategory" placeholder="Trans Category" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Trans Amount</label>
-                    <input type="number" name="transamount" placeholder="Trans Amount" class="form-input" >
+                    <input type="number" name="transamount" placeholder="Trans Amount" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Receipt No</label>
-                    <input type="number" name="receiptno" placeholder="Receipt No" class="form-input" >
+                    <input type="text" name="receiptno" placeholder="Receipt No" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Cr/Dr Code</label>
-                    <input type="text" name="Cr/Dr_code" placeholder="Cr/Dr Code" class="form-input" >
+                    <input type="text" name="Cr/Dr_code" placeholder="Cr/Dr Code" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Code Description</label>
-                    <input type="text" name="codedescription" placeholder="Code Description" class="form-input" >
+                    <input type="text" name="codedescription" placeholder="Code Description" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Seniority No</label>
-                    <input type="number" name="seniority_no" placeholder="Seniority No" class="form-input" >
+                    <input type="text" name="seniority_no" placeholder="Seniority No" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">AMT Remarks/Customer Name</label>
-                    <input type="text" name="project_lead" placeholder="Sv Done Cust" class="form-input" >
+                    <input type="text" name="project_lead" placeholder="Sv Done Cust" class="form-input" required>
                 </div>                
             </div>
             <div class="text-center p-2">
@@ -100,7 +111,7 @@
         </div>
     </form>
 </div>
-<script>
+<!-- <script>
     function selected(){
         var selec = document.getElementById('select');
         var btn = document.getElementById('button');
@@ -119,23 +130,27 @@
     function upload(){
         var sel = document.getElementById('select');
         console.log(sel.value);
-        debugger
+        
         if(sel.value ==''){
         }
         else{
             var form=document.getElementById('form');
+            var btn = document.getElementById('button');
             if(sel.value !=''){
                 sel.disabled;
             }
             if(form.style.display==='none')
             {
                 form.style.display='block'
+                debugger
+                if (form.style.display ==="block"){
+                    btn.style.display='none'
+                }
             }
             else{
             form.style.display='none'
             }
         }
-        
     }
-</script>
+</script> -->
 {% endblock %}
