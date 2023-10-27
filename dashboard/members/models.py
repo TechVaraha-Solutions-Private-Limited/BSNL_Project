@@ -2,6 +2,7 @@ from django.db import models
 from bsnl import settings
 from dashboard.projects.models import LandDetails,Project
 from dashboard.userinfo.models import User
+
 class Bookings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -14,7 +15,6 @@ class Bookings(models.Model):
     downpayment = models.CharField(max_length=120)
     site_refer = models.CharField(max_length=120)
     am_no = models.CharField(max_length=20,null=False)
-    
     #UGDG
     date_of_change = models.CharField(max_length=120,null=True)
     type_of_change = models.CharField(max_length=120,null=True)
@@ -59,7 +59,6 @@ class PaymentDetails(models.Model):
     transaction = models.CharField(max_length=20)
     ddno =models.CharField(max_length=20)
     dateofreceipt = models.CharField(max_length=20)
-    paymentname = models.CharField(max_length=30,null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
 
@@ -114,3 +113,10 @@ class Site_visit(models.Model):
     booked_no = models.CharField(max_length=20,null=True)
     booked_sry_no = models.CharField(max_length=20,null=True)
 
+class Update_blocked(models.Model):
+     project=models.CharField(max_length=50,null=True)
+     seniority_no=models.CharField(max_length=50,null=True)
+     blocked_date=models.CharField(max_length=50,null=True)
+     executive=models.CharField(max_length=50,null=True)
+     customer_name=models.CharField(max_length=50,null=True)
+     is_active = models.BooleanField(default=True)

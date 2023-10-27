@@ -45,10 +45,13 @@ class User(AbstractBaseUser):
     is_password_set = models.BooleanField(default=False, null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    date_joined = models.DateTimeField(auto_now_add=True, null=True)
+    date_create = models.DateTimeField(auto_now_add=True, null=True)
+    date_joined=models.CharField(max_length=50,null=True)
     objects = MyUserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['password']
+    login_type = models.CharField(max_length=50,null=True)
+    employee_id = models.CharField(max_length=50,null=True)
 
     def save(self, *args, **kwargs):
         self.s_password = make_password(self.password)

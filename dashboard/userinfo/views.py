@@ -27,6 +27,8 @@ def add_user(request):
         user.mobile_no = request.POST.get('mobile_no','').strip()
         user.email = request.POST.get('email','').strip()
         user.password = make_password(request.POST.get('password1','').strip())
+        user.employee_id=request.POST.get('employee_id','').strip()
+        user.date_joined=request.POST.get('date_joined','').strip()
         user.save()
     return render(request, 'users/add_user.html')
 def signin(request):
@@ -49,6 +51,3 @@ def logout_admin_user(request):
         else:
             logout(request)
             return redirect(admin_login)
-
-
-

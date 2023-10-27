@@ -42,4 +42,8 @@ urlpatterns = [
     path('banner_images',banner_images,name='banner_images'),
     #add Customer
     path('addcustomer',addcustomer,name='addcustomer'),
+    path('user_access/<id>',user_access,name='user_access'),
+    path('delete_user_access/<id>',delete_user_access,name='delete_user_access'),
+    path('update_block/<id>',update_block,name='update_block'),
+    path('delete_user_access/<id>',delete_user_access,name='delete_user_access'),
 ]

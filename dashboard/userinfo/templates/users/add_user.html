@@ -24,8 +24,8 @@
                 <select class="form-control" name="role" >
                     <option value="">Select Role</option>                                
                     <option value="Admin">Admin</option>                                
-                    <option value="User">User</option>                                
-                    <option value="Customer">Customer</option>                                
+                    <option value="User">User</option>
+                    <option value="Staff">Staff</option>                                                                
                 </select>
             </div>
             <div>
@@ -37,6 +37,10 @@
                 <input type="text" name="email"  class="form-input" >
             </div>
             <div>
+                <label>Employee ID</label>
+                <input type="text" name="employee_id"  class="form-input" >
+            </div>
+            <div>
                 <label>password</label>
                 <input type="text" name="password1"  class="form-input" >
             </div>
@@ -44,9 +48,13 @@
                 <label>Confirm Password</label>
                 <input type="text" name="password2"  class="form-input" >
             </div>
+            <div>
+                <label>DOJ</label>
+                <input type="date" name="date_joined"  class="form-input" >
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
-                <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light">Submit Application</button></center>
+                <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light">Add User</button></center>
             </div>
         </div>
     </div>
