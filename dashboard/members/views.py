@@ -565,10 +565,10 @@ def receipts(request):
     return render(request,'view/receipts.html',{'details':details}) 
 
 def update_receipts(request,id):
-    # update_receipts=PaymentDetails.objects.get(id=id)
-
+    update_receipts=PaymentDetails.objects.get(id=id)
     # if request.method == "POST":
-        # update_receipts. = request.POST['']
+    #     None
+        #update_receipts.dateofreceipt = request.POST['']
         # update_receipts. = request.POST['']
         # update_receipts. = request.POST['']
         # update_receipts. = request.POST['']
@@ -584,9 +584,7 @@ def update_receipts(request,id):
         # update_receipts.save()
         # return redirect('/view/receipts')
 
-        # ,{'update_receipts':update_receipts}
-    return render(request,'view/update_view/update_receipt.html')
-
+    return render(request,'view/update_view/update_receipt.html',{'update_receipts':update_receipts})
 
 def deletereceipts(request,id):
     details=PaymentDetails.objects.get(id=id)
