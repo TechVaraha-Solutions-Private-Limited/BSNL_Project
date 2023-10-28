@@ -572,7 +572,31 @@ def cancel(request):
 
 def receipts(request):
     details = PaymentDetails.objects.all()
-    return render(request,'view/receipts.html',{'details':details})   
+    return render(request,'view/receipts.html',{'details':details}) 
+
+def update_receipts(request,id):
+    # update_receipts=PaymentDetails.objects.get(id=id)
+
+    # if request.method == "POST":
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts. = request.POST['']
+        # update_receipts.save()
+        # return redirect('/view/receipts')
+
+        # ,{'update_receipts':update_receipts}
+    return render(request,'view/update_view/update_receipt.html')
+
 
 def deletereceipts(request,id):
     details=PaymentDetails.objects.get(id=id)
@@ -653,13 +677,14 @@ def user_access(request,id):
         user_log.mobile_no = request.POST['mobile_no']
         user_log.date_joined = request.POST['date_joined']
         user_log.save()
+        return redirect('/members/view_user_access')
     return render(request,'input/update_user/user_access.html',{'user_log':user_log})
 
 def view_user_access(request):
     view_user=User.objects.filter(is_active=1)
     return render(request,'input/update_user/view_user_access.html',{'view_user':view_user})
 
-def delete_user_access(request,id):
+def delete_user_access(id):
     book = User.objects.get(id=id)
     if book.is_active == True:
         book.is_active=False
@@ -706,10 +731,11 @@ def update_block(request,id):
         block_update.blocked_date = request.POST['blocked_date']
         block_update.executive = request.POST['executive']
         block_update.customer_name = request.POST['customer_name']
-        block_update.save()
+        block_update.save() 
+        return redirect('/members/view_blocked_seniority')
     return render(request,'input/blocked_update/update_block.html',{'block_update':block_update})
 
-def delete_block(request,id):
+def delete_block(id):
     book = Update_blocked.objects.get(id=id)
     if book.is_active == True:
         book.is_active=False

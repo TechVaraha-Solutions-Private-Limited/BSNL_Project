@@ -46,4 +46,5 @@ urlpatterns = [
     path('delete_user_access/<id>',delete_user_access,name='delete_user_access'),
     path('update_block/<id>',update_block,name='update_block'),
     path('delete_block/<id>',delete_block,name='delete_block'),
+    path('update_receipts/<id>',update_receipts,name='update_receipts'),
 ]

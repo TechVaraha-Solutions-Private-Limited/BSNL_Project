@@ -339,31 +339,14 @@
                         </div>
                     </button>
                     <ul x-cloak x-show="activeDropdown === 'inputs'" x-collapse class="sub-menu text-gray-500">
-                        <li x-data="{subActive:null}">
-                            <button type="button" class="before:h-[5px] bord before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900" @click="subActive === 'error' ? subActive = null : subActive = 'error'">
-                                Update Login/Access
-                                <div class="ltr:ml-auto rtl:mr-auto rtl:rotate-180" :class="{'!rotate-90' : subActive === 'error'}">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9 5L15 12L9 19"
-                                              stroke="currentColor"
-                                              stroke-width="1.5"
-                                              stroke-linecap="round"
-                                              stroke-linejoin="round" />
-                                    </svg>
-                                </div>
-                            </button>
-                            <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'error'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
-                                <li>
-                                    <a href="/members/user_access" style="text-decoration: none">Add Login/Access</a>
-                                </li>
-                                <li>
-                                    <a href="/members/view_user_access" style="text-decoration: none">Login/Access List</a>
-                                </li>
-                            </ul>
+
+                        <li>
+                            <a href="/members/view_user_access" style="text-decoration: none">Login Access List</a>
                         </li>
+
                         <li x-data="{subActive:null}">
                             <button type="button" class="before:h-[5px] bord before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900" @click="subActive === 'error' ? subActive = null : subActive = 'error'">
-                               Update Rate
+                                 Blocked Seniority
                                 <div class="ltr:ml-auto rtl:mr-auto rtl:rotate-180" :class="{'!rotate-90' : subActive === 'error'}">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9 5L15 12L9 19"
@@ -376,51 +359,7 @@
                             </button>
                             <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'error'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
                                 <li>
-                                    <a href="/members/rate_update" style="text-decoration: none">Update Rate</a>
-                                </li>
-                                <li>
-                                    <a href="/members/view_rate_update" style="text-decoration: none">Updated Rate list</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li x-data="{subActive:null}">
-                            <button type="button" class="before:h-[5px] bord before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900" @click="subActive === 'error' ? subActive = null : subActive = 'error'">
-                                Update Sales Staff
-                                <div class="ltr:ml-auto rtl:mr-auto rtl:rotate-180" :class="{'!rotate-90' : subActive === 'error'}">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9 5L15 12L9 19"
-                                              stroke="currentColor"
-                                              stroke-width="1.5"
-                                              stroke-linecap="round"
-                                              stroke-linejoin="round" />
-                                    </svg>
-                                </div>
-                            </button>
-                            <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'error'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
-                                <li>
-                                    <a href="/members/update_sales_staff" style="text-decoration: none">Update Sales Staff</a>
-                                </li>
-                                <li>
-                                    <a href="/members/view_update_sales_staff" style="text-decoration: none">Updated Staff list</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li x-data="{subActive:null}">
-                            <button type="button" class="before:h-[5px] bord before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900" @click="subActive === 'error' ? subActive = null : subActive = 'error'">
-                                Updates Blocked Seniority
-                                <div class="ltr:ml-auto rtl:mr-auto rtl:rotate-180" :class="{'!rotate-90' : subActive === 'error'}">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M9 5L15 12L9 19"
-                                              stroke="currentColor"
-                                              stroke-width="1.5"
-                                              stroke-linecap="round"
-                                              stroke-linejoin="round" />
-                                    </svg>
-                                </div>
-                            </button>
-                            <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'error'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
-                                <li>
-                                    <a href="/members/blocked_seniority" style="text-decoration: none">Update Block Seniority</a>
+                                    <a href="/members/blocked_seniority" style="text-decoration: none">Create Block Seniority</a>
                                 </li>
                                 <li>
                                     <a href="/members/view_blocked_seniority" style="text-decoration: none">Block Seniority list</a>
