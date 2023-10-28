@@ -54,7 +54,7 @@ class PaymentDetails(models.Model):
     branch = models.CharField(max_length=200,null=True)
     receipt_no = models.CharField(max_length=20,null=False)
     cheque_no = models.CharField(max_length=20,null=True)
-    payment_data = models.DateField(null=True)
+    payment_data = models.CharField(max_length=50,null=True)
     amount = models.CharField(max_length=20,null=True)
     transaction = models.CharField(max_length=20)
     ddno =models.CharField(max_length=20)
@@ -62,6 +62,7 @@ class PaymentDetails(models.Model):
     paymentname = models.CharField(max_length=20,null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
+    date_cleared=models.CharField(max_length=50,null=True)
 
 class Ugdg(models.Model):
      seniority_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)

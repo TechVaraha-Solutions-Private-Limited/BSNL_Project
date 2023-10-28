@@ -3,83 +3,114 @@
 {% load static %}
 {% include 'common/bootstrap.html' %}
 <style>
-    a{
+    a {
         color: black;
     }
 </style>
 <form class="pt-5" method="post">
     <div class="p-2" style="border:solid; border-color: rgb(123, 123, 233); border-radius: 10px;">
         <div class="panel p-1">
-            <h2 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Update Receipt</b></h2>
+            <h2 class="text-lg font-semibold dark:text-white-light p-1"
+                style="background-color: rgb(138, 202, 167); border-radius: 9px;">
+                <center> <b>Update Receipt List</b></center>
+            </h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-                <div class="p-1"> 
+                <div class="p-1">
                     {% csrf_token %}
                     <label class="p-1">Customer Name</label>
-                    <input type="text" name="first_name" value="{{update_receipts.booking.user.first_name}}" placeholder="Customer Name"  class="form-input" >
+                    <input type="text" name="first_name" value="{{update_receipts.booking.user.first_name}}"
+                        placeholder="Customer Name" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Date Of Receipt</label>
-                    <input type="date" name="dateofreceipt" value="{{update_receipts.dateofreceipt|date:'Y-m-d'}}" placeholder="Last Name" class="form-input" >
+                    <input type="date" name="dateofreceipt" value="{{update_receipts.dateofreceipt}}"
+                        placeholder="Last Name" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Branch</label>
-                    <input type="text" name="employee_id"  placeholder="Branch" value="{{update_receipts.branch}}" class="form-input">
+                    <input type="text" name="branch" placeholder="Branch" value="{{update_receipts.branch}}"
+                        class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Pay Status</label>
-                    <input type="text" name="email_id" value="{{update_receipts.email}}" placeholder="Pay Status" class="form-input" >
+                    <input type="text" name="paymentname" value="{{update_receipts.paymentname}}"
+                        placeholder="Pay Status" class="form-input">
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Payment Date</label>
-                    <input type="date" name="mobile_no" value="{{update_receipts.payment_data|date:'Y-m-d'}}" placeholder="Payment Date" class="form-input" >
+                    <input type="date" name="payment_data" value="{{update_receipts.payment_data}}"  
+                        placeholder="Payment Date" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Receipt No</label>
-                    <input type="text" name="receipt_no" value="{{update_receipts.receipt_no}}" placeholder="Receipt No" class="form-input" >
+                    <input type="text" name="receipt_no" value="{{update_receipts.receipt_no}}" placeholder="Receipt No"
+                        class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Seniority No</label>
-                    <input type="text" name="date_joined" value="{{update_receipts.booking.seniority_id}}" placeholder="Seniority No" class="form-input" >
+                    <input type="text" name="seniority_id" value="{{update_receipts.booking.seniority_id}}"
+                        placeholder="Seniority No" class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Project</label>
-                    <input type="text" name="date_joined" value="{{update_receipts.booking.land_details.project.projectname}}" placeholder="Project" class="form-input" >
+                    <input type="text" name="projectname"
+                        value="{{update_receipts.booking.land_details.project.projectname}}" placeholder="Project"
+                        class="form-input">
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Amount</label>
-                    <input type="text" name="date_joined" value="{{update_receipts.date_joined}}" placeholder="Amount" class="form-input" >
+                    <input type="text" name="amount" value="{{update_receipts.amount}}" placeholder="Amount"
+                        class="form-input">
                 </div>
-                
+
                 <div class="p-1">
                     <label class="p-1">Bank Name</label>
-                    <input type="text" name="bank" value="{{update_receipts.bank}}" placeholder="Bank Name" class="form-input" >
+                    <input type="text" name="bank" value="{{update_receipts.bank}}" placeholder="Bank Name"
+                        class="form-input">
                 </div>
+
                 <div class="p-1">
-                    <label class="p-1">Cheque No</label>
-                    <input type="text" name="cheque_no" value="{{update_receipts.cheque_no}}" placeholder="Cheque No" class="form-input" >
+                    <label class="p-1">Payment Type</label>
+                    <input type="text" name="payment_mode" value="{{update_receipts.payment_mode}}"
+                        placeholder="Payment Type" class="form-input">
                 </div>
+
                 <div class="p-1">
-                    <label class="p-1">Payment</label>
-                    <input type="text" name="date_joined" value="{{update_receipts.date_joined}}" placeholder="Payment" class="form-input" >
+                    <label>
+                        {% if update_receipts.payment_mode == "cheque" %}
+                        Cheque No
+                        {% elif update_receipts.payment_mode == "dd" %}
+                        DD No
+                        {% elif update_receipts.payment_mode == "transaction" %}
+                        Transaction ID
+                        {% else %}
+                        Payment Info
+                        {% endif %}
+                    </label>
+                    <input type="text" name="{% if update_receipts.payment_mode == 'cheque' %}cheque_no{% elif update_receipts.payment_mode == 'dd' %}ddno{% elif update_receipts.payment_mode == 'transaction' %}transaction{% else %}payment_info{% endif %}"
+                        value="{% if update_receipts.payment_mode == 'cheque' %}{{ update_receipts.cheque_no }}{% elif update_receipts.payment_mode == 'dd' %}{{ update_receipts.ddno }}{% elif update_receipts.payment_mode == 'transaction' %}{{ update_receipts.transaction }}{% else %}{{ update_receipts.payment_info }}{% endif %}"
+                        placeholder="{% if update_receipts.payment_mode == 'cheque' %}Cheque No{% elif update_receipts.payment_mode == 'dd' %}DD No{% elif update_receipts.payment_mode == 'transaction' %}Transaction ID{% else %}Payment Info{% endif %}"
+                        class="form-input">
                 </div>
+                
+
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Date Cleared</label>
-                    <input type="date" name="date_joined" value="{{update_receipts.date_joined}}" placeholder="Date Cleared" class="form-input" >
+                    <input type="date" name="date_cleared" value="{{update_receipts.date_cleared}}"
+                        placeholder="Date Cleared" class="form-input">
                 </div>
             </div>
             <div class="text-center p-3">
                 <input type="submit" value="Update" class="btn btn-primary">
-                   <input type="reset" value="Clear" class="btn btn-danger">  
-                
+                <input type="reset" value="Clear" class="btn btn-danger">
             </div>
         </div>
-    </div>
 </form>
 
 {% endblock %}
