@@ -82,7 +82,7 @@
                             <p>{{mydata.seniority_id}}</p>
                             <p>{{mydata.created_on.date}}</p>
                             <p>{{mydata.am_no}}</p>
-                        </div>  
+                        </div>
                         </td>
                         <td><div>
                             <p>{{mydata.user.mobile_no}}</p>
@@ -257,7 +257,7 @@
                 <tbody>
               
                     {% for mydata in user %}
-                    {% for nomiee in nomiee%}
+                   
                       <tr>
                           <td>{{forloop.counter}}</td>
                           <td><div>
@@ -272,12 +272,14 @@
                             <p>{{mydata.aadhhaarno}}</p>
                         </div>  
                         </td>
-                        <td><div>
+                        <td>     {% for nomiee in mydata.user.usernominee_set.all %}
+                            <div>
                                 <p>{{nomiee.nominee_name}}</p>
                                 <p>{{nomiee.nominee_age}}</p>
                                 <p>{{nomiee.nominee_relationship}}</p>
                                 <p>{{nomiee.address}}</p>
-                        </div>  
+                            </div>  
+                            {% endfor %}
                         </td>
                           <td></td>
                           <td>{{mydata.active}}</td>
@@ -301,7 +303,7 @@
                             </div>
                           </td>
                       </tr>
-                      {% endfor %}
+                 
                     {%endfor%}
                   </tbody>
             </table>

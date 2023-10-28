@@ -59,6 +59,7 @@ class PaymentDetails(models.Model):
     transaction = models.CharField(max_length=20)
     ddno =models.CharField(max_length=20)
     dateofreceipt = models.CharField(max_length=20)
+    paymentname = models.CharField(max_length=20,null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
 
