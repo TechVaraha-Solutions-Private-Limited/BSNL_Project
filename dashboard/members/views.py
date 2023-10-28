@@ -174,6 +174,8 @@ def add_new_bookings(request):
                 membership_fee.bank = request.POST.get('bank')
                 membership_fee.branch = request.POST.get('branch')
                 membership_fee.cheque_no = request.POST.get('cheque_no')
+                membership_fee.transaction = request.POST.get('transaction_id')
+                membership_fee.ddno=request.POST.get('dd_no')
                 membership_fee.user = user
                 membership_fee.payment_data = request.POST.get('payment_data')
                 
@@ -209,6 +211,8 @@ def add_new_bookings(request):
                         payments.bank = request.POST.get('bank')
                         payments.branch = request.POST.get('branch')
                         payments.cheque_no = request.POST.get('cheque_no')
+                        payments.transaction = request.POST.get('transaction_id')
+                        payments.ddno=request.POST.get('dd_no')
                         payments.user = user
                         payments.payment_data = request.POST.get('payment_data')
                         payments.paymentname =paymentname
@@ -225,6 +229,8 @@ def add_new_bookings(request):
                         payments.bank = request.POST.get('bank')
                         payments.branch = request.POST.get('branch')
                         payments.cheque_no = request.POST.get('cheque_no')
+                        payments.transaction = request.POST.get('transaction_id')
+                        payments.ddno=request.POST.get('dd_no')
                         payments.user = user
                         payments.payment_data = request.POST.get('payment_data')
                         payments.paymentname =paymentname
@@ -285,6 +291,7 @@ def generate(request):
                 payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))                
                 payment_total = payment['amount__sum'] or 0  # Use 0 if payment is None
                 total_site_value = customers.total_site_value
+
                 if not customers:
                     messages.error(request, 'Profile details updated.')
             except:
@@ -292,8 +299,10 @@ def generate(request):
         elif action == 'create_order':
             print('User ID:',user_id)
             seniority = request.POST.get('seniority')
-            print(seniority)
-            
+            customers = Bookings.objects.get(seniority_id=seniority)
+            payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))                
+            payment_total = payment['amount__sum'] or 0  # Use 0 if payment is None
+            total_site_value = customers.total_site_value
             book = Bookings.objects.get(user_id=user_id, seniority_id=seniority)
             payment = PaymentDetails.objects.filter(booking_id = book.id).aggregate(Sum('amount'))
             
@@ -306,43 +315,40 @@ def generate(request):
                 else:
                     get_number = "B-00001"
                 split_amount = int(book.total_site_value) / 4
+                #Customer paid amount
                 paid_amount =  request.POST.get('amount','').strip()
+                # To find the remaining balance Amount
                 difference = int(total_site_value) - int(payment_total)
-                payment_amount = int(paid_amount)-int(difference)
-                
-                if int(payment_total) < 2260: 
-                    payment_amount = int(paid_amount) -2260
-                    membership_fee = PaymentDetails()
-                    membership_fee.booking=book
 
-                    membership_fee.payment_mode = request.POST.get('payment_mode')
-                    membership_fee.bank = request.POST.get('bank')
-                    membership_fee.branch = request.POST.get('branch')
-                    membership_fee.cheque_no = request.POST.get('cheque_no')
-                    membership_fee.payment_data = request.POST.get('payment_data')
-                    
-                    membership_fee.amount = 2260
-                    membership_fee.paymentname = "Membership"
-             
-                    membership_fee.receipt_no = get_number
-                    membership_fee.save()
+
+                # Need to resolve
+                payment_amount = int(paid_amount)-int(difference)
+
+
 
 
                 if paid_amount:
-                    membership_fee = PaymentDetails()
-                    membership_fee.booking=book
-                    membership_fee.payment_mode = request.POST.get('payment_mode')
-                    membership_fee.bank = request.POST.get('bank')
-                    membership_fee.branch = request.POST.get('branch')
-                    membership_fee.cheque_no = request.POST.get('cheque_no')
-                    membership_fee.payment_data = request.POST.get('payment_data')
-                    membership_fee.dateofreceipt = request.POST.get('dateofreceipt')
-                    membership_fee.receipt_no = get_number
-                    membership_fee.payment_mode = request.POST.get('modeofpay')    
-                    membership_fee.amount = request.POST.get('amount')
-                    membership_fee.save()
+                    if int(payment_total) < 2260: 
+                        payment_amount = int(paid_amount) -2260
+                        membership_fee = PaymentDetails()
+                        membership_fee.booking=book
+                        membership_fee.payment_mode = request.POST.get('payment_mode')
+                        membership_fee.bank = request.POST.get('bank')
+                        membership_fee.branch = request.POST.get('branch')
+                        membership_fee.cheque_no = request.POST.get('cheque_no')
+                        membership_fee.transaction = request.POST.get('transaction_id')
+                        membership_fee.ddno=request.POST.get('dd_no')
+                        membership_fee.payment_data = request.POST.get('payment_data')
+                        membership_fee.amount = 2260
+                        membership_fee.paymentname = "Membership"
+                        membership_fee.receipt_no = get_number
+                        membership_fee.save()
+                        print('3:',membership_fee.amount)
                     for i in range(4):
                         if i == 0:
+                            payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))
+                            if split_amount == payment :
+                                continue
                             paymentname = 'DownPayment'
                         elif i ==1:
                             paymentname = 'FirstInstallment'
@@ -357,6 +363,8 @@ def generate(request):
                             payments.bank = request.POST.get('bank')
                             payments.branch = request.POST.get('branch')
                             payments.cheque_no = request.POST.get('cheque_no')
+                            payments.transaction = request.POST.get('transaction_id')
+                            payments.ddno=request.POST.get('dd_no')
                             payments.payment_data = request.POST.get('payment_data')
                             payments.paymentname =paymentname
                             payments.amount = split_amount
@@ -370,17 +378,19 @@ def generate(request):
                             payments.bank = request.POST.get('bank')
                             payments.branch = request.POST.get('branch')
                             payments.cheque_no = request.POST.get('cheque_no')
+                            payments.transaction = request.POST.get('transaction_id')
+                            payments.ddno=request.POST.get('dd_no')
                             payments.payment_data = request.POST.get('payment_data')
                             payments.paymentname =paymentname
                             payments.amount = payment_amount
                             payments.receipt_no = get_number
                             payments.save()
+                            print('2:',payments.amount)
                             break
                     messages.error(request,'Successfully Saved')
             except Bookings.DoesNotExist:
                 print('failed')
     difference = int(total_site_value) - int(payment_total)
-        # return render(request,'new_bookings/generate.html',{'customer': customers,'difference': difference })
     return render(request,'new_bookings/generate.html',{'customer': customers,'difference': difference})
 
 def ugdg(request):
@@ -492,6 +502,26 @@ def site_visit(request):
 def view_site_visit(request):
     view = Site_visit.objects.all()
     return render (request,'display/view_site_visit.html',{'view':view})
+
+def update_site_visit(request,id):
+    update = Site_visit.objects.get(id=id)
+    if request.method =='POST':
+        update.date_of_site_visit = request.POST.get("date_of_visit")
+        update.cust_name = request.POST.get("cust_name")
+        update.phone_no = request.POST.get("phone_no")
+        update.executive = request.POST.get("executive")
+        update.team_lead = request.POST.get("team_lead")
+        update.proj_head = request.POST.get("proj_lead")
+        update.so_done_by = request.POST.get("so_done_by")
+        update.sv_don_by = request.POST.get("sv_done_by")
+        update.sv_category = request.POST.get("sv_category")
+        update.source = request.POST.get("source")
+        update.booked_no = request.POST.get("booked_no")
+        update.booked_sry_no = request.POST.get("booked_sry_no")
+        update.save()
+        return redirect('/members/view_site_visit')
+    messages.success(request,'Updated Succesfully')
+    return render (request,'display/update_display/update_site_view.html',{'update':update})
 
 def lead_owner(request):
     customers = {}
@@ -659,9 +689,7 @@ def updateactivememberlist(request,id):
     return render(request,'view/update_view/update_acmember.html',context)
 
 def deleteactivememberlist(request,id):
-    print("id:",id)
     book = Bookings.objects.get(id=id)
-    print("id:",id,book.user.is_active)
     if book.user.is_active == True:
         book.user.is_active=False
         book.user.save()
@@ -674,6 +702,13 @@ def inactivemember(request):
     book1 = Bookings.objects.filter(user__is_active=0).all()
     user = User.objects.filter(is_active=True).all()
     return render (request,'view/inactivemem.html',{'book1':book1,'user':user})
+
+def update_inactive(request,id):
+    book = Bookings.objects.get(id=id)
+    if book.user.is_active == False:
+        book.user.is_active=True
+        book.user.save()
+    return redirect('/members/inactivemember')
 
 def confirmletter(request):
     user=Bookings.objects.all()

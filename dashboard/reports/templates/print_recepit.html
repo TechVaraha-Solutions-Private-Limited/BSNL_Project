@@ -57,16 +57,16 @@
 					</div>
 					<div class="wrapper p4">
 					<p>
-						<span class="logo-cnt2"><span style="font-weight:normal;">No.</span> 05701</span> 
+						<span class="logo-cnt2"><span style="font-weight:normal;">No.</span>{{payment.receipt_no}}</span> 
 						<span class="logo-cnt4">RECEIPT</span> 
 						<span class="logo-cnt3">Date :
-							<span class="date-dot">{{payment.created_on}}</span>
+							<span class="date-dot">{{payment.created_on.date|date:'d-m-y'}}</span>
 						</span>
 					</p>
 					</div>
 					<div class="wrapper p3">
 						<p class="logo-cnt1"><span style="float:left;margin-right:3px;font-weight:normal;background:#fff;">Received from </span>
-							<span class="date-dot1">: {{user.user.email}}</span>
+							<span class="date-dot1">: {{user.user.first_name}}</span>
 						</p>
 					</div>
 					<div class="wrapper p3">
@@ -92,26 +92,35 @@
 						</p>
 						<div class="pay_details">
 						<table class="payment_details">
-						<tr>
-							<th>Payment Type</th> 
-							<th>Dimension</th>
-							<th>Payment Mode</th>
-							<th>Bank</th>
-							<th>Branch</th>
-							<th>Cheque / <br/>Transaction ID / DD No.</th>
-							<th>Amount</th>
-						</tr>
-										<tr>
-							<td>{{payment.payment_mode}}</td> 
-							<td>40 X 60</td>
-							<td>Cheque</td>
-							<td>BANK OF BARODA</td>
-							<td>YELAHANKA </td>
-							<td>000011</td>
-												<td>300000</td>
-											</tr>
-																</table>
-									</div>
+							<tr>
+								<th>Payment Type</th> 
+								<th>Dimension</th>
+								<th>Payment Mode</th>
+								<th>Bank</th>
+								<th>Branch</th>
+								<th>Cheque / <br/>Transaction ID / DD No.</th>
+								<th>Amount</th>
+							</tr>
+							{% for i in payment %}
+							<tr>
+								<td>{{i.paymentname}}</td> 
+								<td>{{user.land_details.plotsize.plotsize}}</td>
+								<td>{{i.payment_mode}}</td>
+								<td>{{i.bank}}</td>
+								<td>{{i.branch}}</td>
+								<td>{% if i.payment_mode == "cheque" %}
+									{{ i.cheque_no }}
+									{% elif i.payment_mode == "dd"%}
+									{{ i.ddno }}
+									{% elif i.payment_mode == "net_banking" %}
+									{{ i.transaction }}
+								  	{% endif %}
+								</td>
+								<td>{{i.amount}}</td>
+							</tr>
+							{% endfor %}
+						</table>
+					</div>
 					</div>
 					</div>
 					
@@ -132,18 +141,18 @@
 								<td style="text-align:right;">0 
 								</td>
 								<td>
-													</td>
+								</td>
 								</tr>
 							</tr>
 							<tr>
 								<td>
-													<span style="float:left; width:50px;">2.</span> Application Fee 
+								<span style="float:left; width:50px;">2.</span> Application Fee 
 								<span class="tab-dot"></span></td>
 								<td></td>
 								<td style="text-align:right;">0 
 								</td>
 								<td>
-													</td>
+								</td>
 								</tr>
 							</tr>
 							<tr>

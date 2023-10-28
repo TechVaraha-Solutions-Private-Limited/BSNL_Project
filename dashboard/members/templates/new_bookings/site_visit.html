@@ -9,7 +9,11 @@
     }
 </style>
 {% for message in messages %}
-<div class="alert alert-success">
+<div class="alert   {% if message.tags == 'error' %}
+                        alert-danger
+                    {% elif message.tags == 'success' %}
+                        alert-success
+                    {% endif %}">
     <a class="close" href="#" data-dismiss="alert">×</a>
     {{ message }}
 </div>
@@ -82,11 +86,11 @@
                         </div> -->
                         <div class="p-1">
                             <label class="p-1">Booked On</label>
-                            <input type="text" name="booked_no" placeholder="Booked On" class="form-input" >
+                            <input type="date" name="booked_no" placeholder="Booked On" class="form-input" value="{{update.booked_no|date:'y-m-d'}}">
                         </div>
                         <div class="p-1">
                             <label class="p-1">Booked Sry NO</label>
-                            <input type="text" name="booked_sry_no" placeholder="Booked Sry NO" class="form-input" >
+                            <input type="text" name="booked_sry_no" placeholder="Booked Sry NO" class="form-input" value="{{update.booked_sry_no}}">
                         </div>
                     </div>
                     <div class="text-center">
