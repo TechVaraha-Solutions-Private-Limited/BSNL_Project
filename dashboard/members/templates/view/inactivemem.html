@@ -57,13 +57,14 @@
                     <th>Amount Paid</th>
                     <th hidden>Total Amount</th>
                     <th>Balance Amount</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
       
               {% for mydata in book1 %}
                 <tr>
-                    <td>{{mydata.id}}</td>
+                    <td>{{forloop.counter}}</td>
                     <td><div>
                         <p>{{mydata.user.first_name}}</p>
                         <p>{{mydata.seniority_id}}</p>
@@ -84,7 +85,8 @@
                     </td>
                     <td>{{mydata.land_details.plotsize.plotsize}}</td>
                     <td >{{mydata.downpayment}}</td>
-                    <td>{{ mydata.downpayment|sub:mydata.total_site_value }}</td>
+                    <td>{{ mydata.total_site_value|sub:mydata.downpayment }}</td>
+                    <td><a href="update_inactive/{{mydata.id}}" type="button" style=" border: solid;border-color: #00c200; border-spacing: 12px;border-radius: 3px; background-color:#00c200; padding: 5%; color:white">Active</a></td>
               {%endfor%}
             </tbody>
         </table>

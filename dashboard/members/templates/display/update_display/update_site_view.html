@@ -8,12 +8,7 @@
         text-decoration: none;
     }
 </style>
-{% for message in messages %}
-<div class="alert alert-success">
-    <a class="close" href="#" data-dismiss="alert">×</a>
-    {{ message }}
-</div>
-{% endfor %}
+
     <form method="POST" action="" class="space-y-5" autocomplete="off" >
         {% csrf_token %}
         <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
@@ -23,39 +18,40 @@
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
                         <div class="p-1">
                             <label class="p-1">Date of Sv</label>
-                            <input type="date" name="date_of_visit" placeholder="Date of Sv" class="form-input" required>
+                            <input type="date" name="date_of_visit" placeholder="Date of Sv" class="form-input" value="{{update.date_of_site_visit|date:'Y-m-d'}}" required>
                         </div>
                         <div class="p-1">
                             <label class="p-1">Cust Name</label>
-                            <input class="form-input" type="text" name="cust_name" placeholder="Cust Name" required>
+                            <input class="form-input" type="text" name="cust_name" placeholder="Cust Name" value="{{update.cust_name}}" required>
                         </div>
                         <div class="p-1">
                             <label class="p-1">Phone No</label>
-                            <input type="number" name="phone_no" placeholder="Phone No" class="form-input" required>
+                            <input type="number" name="phone_no" placeholder="Phone No" class="form-input" value="{{update.phone_no}}" required>
                         </div>
                         <div class="p-1">
                             <label class="p-1">Executive</label>
-                            <input type="text" name="executive" placeholder="Executive" class="form-input" required>
+                            <input type="text" name="executive" placeholder="Executive" class="form-input" value="{{update.executive}}" required>
                         </div>
                         <div class="p-1">
                             <label class="p-1">Team Lead</label>
-                            <input type="text" name="team_lead" placeholder="Team Lead" class="form-input" required>
+                            <input type="text" name="team_lead" placeholder="Team Lead" class="form-input" value="{{update.team_lead}}" required>
                         </div>
                         <div class="p-1">
                             <label class="p-1">Proj Head</label>
-                            <input type="text" name="proj_lead" placeholder="Proj Head" class="form-input" required>
+                            <input type="text" name="proj_lead" placeholder="Proj Head" class="form-input" value="{{update.proj_head}}" required>
                         </div>
                         <div class="p-1">
                             <label class="p-1">So Done by</label>
-                            <input type="text" name="so_done_by" placeholder="So Done by" class="form-input" required>
+                            <input type="text" name="so_done_by" placeholder="So Done by" class="form-input" value="{{update.so_done_by}}" required>
                         </div>
                         <div class="p-1">
                             <label class="p-1">Sv Done By</label>
-                            <input type="text" name="sv_done_by" placeholder="Sv Done By" class="form-input" required>
+                            <input type="text" name="sv_done_by" placeholder="Sv Done By" class="form-input" value="{{update.sv_don_by}}" required>
                         </div>
                         <div class="p-1">
                             <label class="p-1">Sv Category</label>
-                            <select class="form-control" name="sv_category" required> 
+                            <select class="form-control" name="sv_category" required>
+                                <option value="{{update.sv_category}}">{{update.sv_category}}</option>
                                 <option>Select</option>
                                 <option value="BOTH">BOTH</option>
                                 <option value="DSVD">DSVD</option>
@@ -68,6 +64,7 @@
                         <div class="p-1">
                             <label class="p-1">Source</label>
                             <select class="form-control" name="source" required>
+                                <option value="{{update.source}}">{{update.source}}</option>
                                 <option>Select</option>
                                 <option value="SMS">SMS</option>
                                 <option value="PAMPHLET">PAMPHLET</option>
@@ -82,7 +79,7 @@
                         </div> -->
                         <div class="p-1">
                             <label class="p-1">Booked On</label>
-                            <input type="text" name="booked_no" placeholder="Booked On" class="form-input" >
+                            <input type="date" name="booked_no" placeholder="Booked On" class="form-input" >
                         </div>
                         <div class="p-1">
                             <label class="p-1">Booked Sry NO</label>

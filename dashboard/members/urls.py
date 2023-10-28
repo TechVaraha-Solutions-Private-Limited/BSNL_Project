@@ -36,6 +36,8 @@ urlpatterns = [
     path('view_site_visit',view_site_visit,name='view_site_visit'),
     # update function
     path('updateactivememberlist/<id>',updateactivememberlist,name='updateactivememberlist'),
+    path('update_site_visit/<id>',update_site_visit,name='update_site_visit'),
+    path('update_inactive/<id>',update_inactive,name='update_inactive'),
     # delete function
     path('deleteactivememberlist/<id>',deleteactivememberlist,name='deleteactivememberlist'),
     # images

@@ -106,7 +106,7 @@ class Leadowner(models.Model):
     excep_reason = models.CharField(max_length=20,null=True)
 
 class Site_visit(models.Model):
-    date_of_site_visit = models.CharField(max_length=20,null=True)
+    date_of_site_visit = models.DateTimeField(max_length=20,null=True)
     cust_name = models.CharField(max_length=20,null=True)
     phone_no = models.CharField(max_length=20,null=True)
     executive = models.CharField(max_length=20,null=True)
@@ -116,7 +116,7 @@ class Site_visit(models.Model):
     sv_don_by = models.CharField(max_length=20,null=True)
     sv_category = models.CharField(max_length=20,null=True)
     source = models.CharField(max_length=20,null=True)
-    booked_no = models.CharField(max_length=20,null=True)
+    booked_no = models.DateTimeField(max_length=20,null=True)
     booked_sry_no = models.CharField(max_length=20,null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
