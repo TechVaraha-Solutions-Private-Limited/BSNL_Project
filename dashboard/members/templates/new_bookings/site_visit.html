@@ -14,91 +14,87 @@
     {{ message }}
 </div>
 {% endfor %}
-<div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-    <form method="POST" class="space-y-5" autocomplete="off">
+    <form method="POST" action="" class="space-y-5" autocomplete="off" >
         {% csrf_token %}
-        <div class="panel" >
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-                <label for="search_membername">Search your Customer:</label>
-                <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
-                <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
+        <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+            <div class="panel p" id="container" >
+                <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Site Visit</b></h1>
+                <div id="form" class="panel p-1 mt-3">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
+                        <div class="p-1">
+                            <label class="p-1">Date of Sv</label>
+                            <input type="date" name="date_of_visit" placeholder="Date of Sv" class="form-input" required>
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Cust Name</label>
+                            <input class="form-input" type="text" name="cust_name" placeholder="Cust Name" required>
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Phone No</label>
+                            <input type="number" name="phone_no" placeholder="Phone No" class="form-input" required>
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Executive</label>
+                            <input type="text" name="executive" placeholder="Executive" class="form-input" required>
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Team Lead</label>
+                            <input type="text" name="team_lead" placeholder="Team Lead" class="form-input" required>
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Proj Head</label>
+                            <input type="text" name="proj_lead" placeholder="Proj Head" class="form-input" required>
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">So Done by</label>
+                            <input type="text" name="so_done_by" placeholder="So Done by" class="form-input" required>
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Sv Done By</label>
+                            <input type="text" name="sv_done_by" placeholder="Sv Done By" class="form-input" required>
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Sv Category</label>
+                            <select class="form-control" name="sv_category" required> 
+                                <option>Select</option>
+                                <option value="BOTH">BOTH</option>
+                                <option value="DSVD">DSVD</option>
+                                <option value="SOD ONLY">SOD ONLY</option>
+                                <option value="SVD ONLY">SVD ONLY</option>
+                                <option value="EH">EH</option>
+                            </select>
+                            <!-- <input type="text" name="sv_category" placeholder="Sv Category" class="form-input" > -->
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Source</label>
+                            <select class="form-control" name="source" required>
+                                <option>Select</option>
+                                <option value="SMS">SMS</option>
+                                <option value="PAMPHLET">PAMPHLET</option>
+                                <option value="REFERENCE">REFERENCE</option>
+                                <option value="WALK-IN">WALK-IN</option>
+                            </select>
+                            <!-- <input type="text" name="sr_team_lead" placeholder="Source" class="form-input" > -->
+                        </div>
+                        <!-- <div class="p-1">
+                            <label class="p-1">Status</label>
+                            <input type="text" name="status" placeholder="Status" class="form-input" >
+                        </div> -->
+                        <div class="p-1">
+                            <label class="p-1">Booked On</label>
+                            <input type="text" name="booked_no" placeholder="Booked On" class="form-input" >
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">Booked Sry NO</label>
+                            <input type="text" name="booked_sry_no" placeholder="Booked Sry NO" class="form-input" >
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success mt-5" name="action" value="create_order">Sumbit</button>
+                        <input type="reset" value="Clear" class="btn btn-info mt-5">
+                    </div>
+                </div>
             </div>
         </div>
     </form>
-    {% if customer %}
-    <form method="POST" action="" class="space-y-5" autocomplete="off">
-        {% csrf_token %}
-        <ul>
-            <li>
-                <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-                    <div class="panel p" id="container" >
-                        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Site Visit</b></h1>
-                        <div id="form" class="panel p-1 mt-3">
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
-                                <div class="p-1">
-                                    <label class="p-1">Date of Sv</label>
-                                    <input type="text" name="seniority" placeholder="Date of Sv" class="form-input" value="{{ customer.date_of_sitevisit }}" readonly>
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Cust Name</label>
-                                    <input class="form-input" type="text" name="user"  value="{{ customer.user_id.first_name }}" readonly>
-                                <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user_id.id }}" readonly>
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Phone No</label>
-                                    <input type="text" name="date_of_change" placeholder="Phone No" class="form-input" value="{{ customer.user_id.mobile_no }}" readonly>
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Executive</label>
-                                    <input type="text" name="type_of_change" placeholder="Executive" class="form-input" value="{{ customer.executive }}" readonly>
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Team Lead</label>
-                                    <input type="text" name="sft_form" placeholder="Team Lead" class="form-input" value="{{ customer.team_lead }}" readonly>
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Proj Head</label>
-                                    <input type="text" name="sft_to" placeholder="Proj Head" class="form-input" value="{{ customer.project_head }}" readonly>
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">So Done by</label>
-                                    <input type="text" name="so_done_by" placeholder="So Done by" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Sv Done By</label>
-                                    <input type="text" name="sv_done_by" placeholder="Sv Done By" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Sv Category</label>
-                                    <input type="text" name="sv_category" placeholder="Sv Category" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Source</label>
-                                    <input type="text" name="sr_team_lead" placeholder="Source" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Status</label>
-                                    <input type="text" name="source" placeholder="Status" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Booked On</label>
-                                    <input type="text" name="booked_no" placeholder="Booked On" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Booked Sry NO</label>
-                                    <input type="text" name="booked_sry_no" placeholder="Booked Sry NO" class="form-input" >
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <input type="submit" class="btn btn-success mt-5" name="action" value="create_order">
-                                <input type="reset" value="Clear" class="btn btn-info mt-5">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </form>   
-    {%endif%}
-</div>
 {% endblock %}

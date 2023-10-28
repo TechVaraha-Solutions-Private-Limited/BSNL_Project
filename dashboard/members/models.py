@@ -65,7 +65,6 @@ class PaymentDetails(models.Model):
 class Ugdg(models.Model):
      seniority_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)
 
-
 class Receipts(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	seniorityno=models.ForeignKey(Bookings, on_delete=models.CASCADE)
@@ -105,13 +104,21 @@ class Leadowner(models.Model):
     excep_reason = models.CharField(max_length=20,null=True)
 
 class Site_visit(models.Model):
-    leadowner = models.ForeignKey(Leadowner, on_delete=models.CASCADE)
+    date_of_site_visit = models.CharField(max_length=20,null=True)
+    cust_name = models.CharField(max_length=20,null=True)
+    phone_no = models.CharField(max_length=20,null=True)
+    executive = models.CharField(max_length=20,null=True)
+    team_lead = models.CharField(max_length=20,null=True)
+    proj_head = models.CharField(max_length=20,null=True)
     so_done_by = models.CharField(max_length=20,null=True)
     sv_don_by = models.CharField(max_length=20,null=True)
     sv_category = models.CharField(max_length=20,null=True)
     source = models.CharField(max_length=20,null=True)
     booked_no = models.CharField(max_length=20,null=True)
     booked_sry_no = models.CharField(max_length=20,null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on =  models.DateTimeField(auto_now=True)
+    status =  models.BooleanField(default=True)
 
 class Update_blocked(models.Model):
      project=models.CharField(max_length=50,null=True)
@@ -120,3 +127,17 @@ class Update_blocked(models.Model):
      executive=models.CharField(max_length=50,null=True)
      customer_name=models.CharField(max_length=50,null=True)
      is_active = models.BooleanField(default=True)
+
+class Btmt(models.Model):
+    date_of_credit = models.CharField(max_length=50,null=True)
+    transaction_particulars = models.CharField(max_length=50,null=True)
+    cheque_no = models.CharField(max_length=50,null=True)
+    statemnt_amount = models.CharField(max_length=50,null=True)
+    trans_category = models.CharField(max_length=50,null=True)
+    trans_amount = models.CharField(max_length=50,null=True)
+    receipt_no = models.CharField(max_length=50,null=True)
+    cr_dr_Code = models.CharField(max_length=50,null=True)
+    code_description = models.CharField(max_length=50,null=True)
+    seniority_no = models.CharField(max_length=50,null=True)
+    amt_remark = models.CharField(max_length=50,null=True)
+    project = models.CharField(max_length=40,null=True)

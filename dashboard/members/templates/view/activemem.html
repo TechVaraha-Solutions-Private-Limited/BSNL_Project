@@ -257,6 +257,7 @@
                 <tbody>
               
                     {% for mydata in user %}
+                    {% for nomiee in nomiee%}
                       <tr>
                           <td>{{forloop.counter}}</td>
                           <td><div>
@@ -272,10 +273,10 @@
                         </div>  
                         </td>
                         <td><div>
-                            <p>{{mydata.nominee_name}}</p>
-                            <p>{{mydata.nominee_age}}</p>
-                            <p>{{value.nominee_relationship}}</p>
-                            <p>{{value.address}}</p>
+                                <p>{{nomiee.nominee_name}}</p>
+                                <p>{{nomiee.nominee_age}}</p>
+                                <p>{{nomiee.nominee_relationship}}</p>
+                                <p>{{nomiee.address}}</p>
                         </div>  
                         </td>
                           <td></td>
@@ -300,6 +301,7 @@
                             </div>
                           </td>
                       </tr>
+                      {% endfor %}
                     {%endfor%}
                   </tbody>
             </table>

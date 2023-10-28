@@ -11,7 +11,7 @@
 </style>
 <div class="panel mt-6">
   <div class="table-responsive">
-    <table>
+    <table class="emInfo responsive">
       <thead>
           <tr>
               <th>S.NO</th>
@@ -26,7 +26,7 @@
       <tbody>
         {% for mydata in details %}
           <tr>
-              <td>{{mydata.id}}</td>
+              <td>{{forloop.counter}}</td>
               <td>{{mydata.booking.user.email}}</td>
               <td>{{mydata.dateofreceipt}}</td>
               <td>{{mydata.receipt_no}}</td>

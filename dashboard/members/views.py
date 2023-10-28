@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, HttpResponse
 from django.http import JsonResponse
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee
-from .models import Bookings,PaymentDetails,Ugdg,Receipts,Images,Leadowner,Site_visit
+from .models import Bookings,PaymentDetails,Ugdg,Receipts,Images,Leadowner,Site_visit,Btmt
 from dashboard.projects.models import Project,PlotSize,LandDetails
 from django.forms.models import model_to_dict
 from django.contrib import messages
@@ -232,7 +232,7 @@ def add_new_bookings(request):
                         payments.receipt_no = get_number
                         payments.save()
                         break
-            messages.error(request,'Successfully Saved')
+            messages.success(request,'Successfully Saved')
             # Vicky    
         
     return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':landdetail,'projects':projects})
@@ -468,28 +468,17 @@ def transfer(request):
     return render(request,'new_bookings/transfer.html',{'customer':customers,'user':user})
 
 def site_visit(request):
-    customers = {}
     detail = {}
     if request.method == 'POST':
         action = request.POST.get('action')
-        seniority_id = request.POST.get('search_membername')
-        if action == 'search_customer':
-            try:
-                customers = Bookings.objects.get(seniority_id=seniority_id)
-                detail = Leadowner.objects.get(seniorityno_id=seniority_id)
-                if customers =='':
-                    messages.error(request, 'Profile details updated.')
-            except:
-                customers = {}
-                detail = {}
-                print('Muthu')
-        elif action == 'create_order':
-            print('muthu')
-            user_id = request.POST.get('user_id')
-            user_instance= Leadowner.objects.get(seniorityno_id=seniority_id)
-            # user_instance = Leadowner.objects.get(user_id=user_id)
+        if action == 'create_order':
             Site_visit(
-                leadowner =user_instance,
+                date_of_site_visit = request.POST.get('date_of_visit'),
+                cust_name = request.POST.get('cust_name'),
+                phone_no = request.POST.get('phone_no'),
+                executive = request.POST.get('executive'),
+                team_lead = request.POST.get('team_lead'),
+                proj_head = request.POST.get('proj_lead'),
                 so_done_by = request.POST.get('so_done_by'),
                 sv_don_by = request.POST.get('sv_done_by'),
                 sv_category = request.POST.get('sv_category'),
@@ -497,6 +486,7 @@ def site_visit(request):
                 booked_no = request.POST.get('booked_no'),
                 booked_sry_no = request.POST.get('booked_sry_no')
             ).save()
+        messages.success(request,'Successfully Saved')
     return render(request,'new_bookings/site_visit.html',{'customer':detail})
 
 def lead_owner(request):
@@ -604,14 +594,37 @@ def deletereceipts(request,id):
     return redirect(receipts)
 
 def btmt(request):
-    return render(request,'new_bookings/btmt.html')
+    project = Project.objects.all()
+    context={
+        'project':project
+    }
+    if request.method =="POST":
+        data=Btmt()
+        data.transaction_particulars = request.POST.get('transaction')
+        data.cheque_no = request.POST.get('Chequeno')
+        data.statemnt_amount = request.POST.get('stmtamount')
+        data.date_of_credit = request.POST.get('creditdate')
+        data.trans_category = request.POST.get('transcategory')
+        data.trans_amount = request.POST.get('transamount')
+        data.receipt_no = request.POST.get('receiptno')
+        data.cr_dr_Code = request.POST.get('Cr/Dr_code')
+        data.code_description = request.POST.get('codedescription')
+        data.seniority_no = request.POST.get('seniority_no')
+        data.amt_remark = request.POST.get('project_lead')
+        data.project = request.POST.get('projectname')
+        data.save()
+        messages.success(request,'Successfully Saved')
+
+    return render(request,'new_bookings/btmt.html',context)
 
 def activemember(request):
     user = UserDetail.objects.filter(user__is_active=1).all()
-    book = Bookings.objects.filter(user__is_active=1).all()   
+    nomiee = UserNominee.objects.filter(user__is_active=1).all
+    book = Bookings.objects.filter(user__is_active=1).all() 
     context={
         'user':user,
         'book':book,
+        'nomiee':nomiee
     }
     return render (request,'view/activemem.html',context)
 
@@ -750,9 +763,15 @@ def delete_block(id):
 def update_pdc(request):
     return render(request,'input/pdc/update_pdc.html')
 
-
 def view_update_pdc(request):
     return render(request,'input/pdc/view_update_pdc.html')
 
 def cr_code(request):
+    return render(request,'input/cr_code/update_cr_code.html')
+
+def delete_user_access(request,id):
+    return HttpResponse('Hello')
+
+def update_block(request,id):
+    return HttpResponse('Hello')
     return render(request,'input/cr_code/update_cr_code.html')
