@@ -15,7 +15,7 @@
                 <div class="p-1"> 
                     {% csrf_token %}
                     <label class="p-1">First Name</label>
-                    <input type="text" name="nominee_name" value="{{user_log.first_name}}" placeholder="Employee Name"  class="form-input" >
+                    <input type="text" name="first_name" value="{{user_log.first_name}}" placeholder="Employee Name"  class="form-input" >
                 </div>
                 <div class="p-1">
                     <label class="p-1">Last Name</label>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="p-1">
                     <label class="p-1">User Role</label>
-                    <select class="form-control" name="user_role" value="{{user_log.role}}" >
+                    <select class="form-control" name="user_role" value="{{user_log.user_role}}" >
                         <option value="">Select Role</option>                                
                         <option value="Admin">Admin</option>                                
                         <option value="User">User</option>
