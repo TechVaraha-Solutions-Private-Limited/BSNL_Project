@@ -489,6 +489,10 @@ def site_visit(request):
         messages.success(request,'Successfully Saved')
     return render(request,'new_bookings/site_visit.html',{'customer':detail})
 
+def view_site_visit(request):
+    view = Site_visit.objects.all()
+    return render (request,'display/view_site_visit.html',{'view':view})
+
 def lead_owner(request):
     customers = {}
     if request.method == 'POST':
@@ -617,8 +621,9 @@ def btmt(request):
 
 def activemember(request):
     user = UserDetail.objects.filter(user__is_active=1).all()
+    userinfo = User.objects.get(id=9)
     nomiee = UserNominee.objects.filter(user__is_active=1).all
-    book = Bookings.objects.filter(user__is_active=1).all() 
+    book = Bookings.objects.filter(user__is_active=1).all()
     context={
         'user':user,
         'book':book,
@@ -754,9 +759,7 @@ def delete_block(id):
     context={
         'book':book,
     }
-
     return redirect(view_blocked_seniority)
-
 
 def update_pdc(request):
     return render(request,'input/pdc/update_pdc.html')
