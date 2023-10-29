@@ -7,14 +7,35 @@
     a{
         color: black;
     }
+    .addproject{
+        text-align: center;
+        padding:15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+        font-size: 19px;
+    }
 </style>
-<div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+{% for message in messages %}
+<div class="alert   {% if message.tags == 'error' %}
+                        alert-danger
+                    {% elif message.tags == 'success' %}
+                        alert-success
+                    {% endif %}">
+    <a class="close" href="#" data-dismiss="alert">×</a>
+    {{ message }}
+</div>
+{% endfor %}
+<div class=" mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
     <form method="POST" class="space-y-5" autocomplete="off">
         {% csrf_token %}
-        <div class="panel" >
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-                <label for="search_membername">Search your Customer:</label>
-                <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
+        <div class="panel">
+            <label class="text-lg dark:text-white-light p-2 font-weight-bold addproject"
+                style="background-color: #00c200;color:white; width:100%;"><b>UGDG</b></label>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5 pt-4">
+                <label for="search_membername " class="pl-3">Search your Customer:</label>
+                <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniority no" >
                 <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
             </div>
         </div>
@@ -24,10 +45,9 @@
         {% csrf_token %}
         <ul>
             <li>
-                <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-                    <div class="panel p" id="container" >
-                        <h1 class="text-lg font-semibold dark:text-white-light p-1" style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Add UGDG</b></h1>
-                        <div id="form" class="panel p-1 mt-3">
+                <div >
+                    <div class="panel" id="container" >
+                        <div id="form">
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
                                 <div class="p-1">
                                     <label class="p-1">Seniority No</label>
@@ -100,9 +120,9 @@
                                 </div>
                                 
                             </div>
-                            <div class="text-center">
-                                <input type="submit" name="action" value="create_order" class="btn btn-success mt-5">
-                                <input type="reset" value="Clear" class="btn btn-info mt-5">
+                            <div class="text-center mt-4">
+                                <button type="submit" name="action" value="create_order" class="btn btn-success" style="background-color: #00c200;">Update</button>
+                                <input type="reset" value="Clear" class="btn btn-info">
                             </div>
                         </div>
                     </div>

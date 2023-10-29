@@ -281,14 +281,18 @@ def generate(request):
     customers = {}
     total_site_value = 0
     payment_total = 0
+
     if request.method == 'POST':
         action = request.POST.get('action')
         user_id = request.POST.get('user_id')
         seniority_id = request.POST.get('search_membername')
         if action == 'search_customer':
             try:
+                # Retrieve customer details based on seniority_id
                 customers = Bookings.objects.get(seniority_id=seniority_id)
-                payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))                
+
+                # Calculate the total payment amount for the customer
+                payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))
                 payment_total = payment['amount__sum'] or 0  # Use 0 if payment is None
                 total_site_value = customers.total_site_value
 
@@ -401,6 +405,8 @@ def ugdg(request):
         user_id = request.POST.get('user_id')
         seniority_id = request.POST.get('search_membername')
         if action == 'search_customer':
+            if seniority_id == '':
+                messages.error(request, 'Please Enter the Seniorty No')
             try:
                 customers = Bookings.objects.get(seniority_id=seniority_id)
                 if customers =='':
@@ -430,7 +436,7 @@ def ugdg(request):
             book.old_land_details = old_land_detail
             book.land_details = land_detail
             book.save()
-        
+            messages.error(request, 'Successfull Update')
     return render(request,'new_bookings/ugdg.html',{
             'pltsizes':pltsizes,
             'customer': customers
@@ -447,7 +453,6 @@ def transfer(request):
             try:
                 customers = Bookings.objects.get(seniority_id=seniority_id)
                 user=User.objects.get(id=user_id)
-                print(user.first_name)
                 if customers =='':
                     messages.error(request, 'Profile details updated.')
             except:
