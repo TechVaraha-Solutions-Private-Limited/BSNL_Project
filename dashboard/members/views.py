@@ -605,30 +605,28 @@ def receipts(request):
 
 def update_receipts(request,id):
     update_receipts=PaymentDetails.objects.get(id=id)
-    # if request.method == "POST":
-    #     None
-        #update_receipts.dateofreceipt = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts. = request.POST['']
-        # update_receipts.save()
-        # return redirect('/view/receipts')
+    if request.method == "POST":
+        update_receipts.booking.user.first_name = request.POST['first_name']
+        update_receipts.dateofreceipt = request.POST['dateofreceipt']
+        update_receipts.branch = request.POST['branch']
+        update_receipts.paymentname = request.POST['paymentname']
+        update_receipts.payment_data = request.POST['payment_data']
+        update_receipts.receipt_no = request.POST['receipt_no']
+        update_receipts.booking.seniority_id = request.POST['seniority_id']
+        update_receipts.booking.land_details.project.projectname = request.POST['projectname']
+        update_receipts.amount = request.POST['amount']
+        update_receipts.bank = request.POST['bank']
+        update_receipts.payment_mode = request.POST['payment_mode']
+        update_receipts.date_cleared = request.POST['date_cleared']
+        if update_receipts.payment_mode == 'cheque':
+            update_receipts.cheque_no = request.POST['cheque_no']
+        elif update_receipts.payment_mode == 'dd':
+            update_receipts.ddno = request.POST['ddno']
+        elif update_receipts.payment_mode == 'transaction':
+            update_receipts.transaction = request.POST['transaction']
+        update_receipts.save()
 
     return render(request,'view/update_view/update_receipt.html',{'update_receipts':update_receipts})
-
-def deletereceipts(request,id):
-    details=PaymentDetails.objects.get(id=id)
-    details.delete()
-    return redirect(receipts)
 
 def btmt(request):
     project = Project.objects.all()

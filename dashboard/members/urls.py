@@ -40,7 +40,6 @@ urlpatterns = [
     path('update_inactive/<id>',update_inactive,name='update_inactive'),
     # delete function
     path('deleteactivememberlist/<id>',deleteactivememberlist,name='deleteactivememberlist'),
-    path('deletereceipts/<id>',deletereceipts,name='deletereceipts'),
     # images
     path('banner_images',banner_images,name='banner_images'),
     #add Customer
