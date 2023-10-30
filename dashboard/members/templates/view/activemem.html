@@ -18,7 +18,15 @@
         float: right;
     }
     
-    
+    .addproject{
+        text-align: center;
+        padding:15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+        font-size: 19px;
+    }
     .search_size{
         border: 2px solid rgb(247, 243, 243);
         border-radius: 15px;
@@ -26,9 +34,9 @@
 </style>
 
 <div  class="panel">
-    <h2 class="text-lg font-semibold dark:text-white-light p-1" 
-    style="background-color: rgb(188, 188, 224); border-radius: 9px;">
-    <b>Active Members</b></h2>
+    <h2 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject" 
+    style="background-color: #00c200;color:white; width:100%;">
+    <b>ACTIVE MEMBERS</b></h2>
     <label class="p-2" for="browser">Choose your browser from the list:</label>
     <select class="plotsize p-1" id="inputfield">
         <option>--Select Option--</option>
@@ -39,7 +47,7 @@
    <!-- #<div class="table-responsive" id="mytable" style="display: none;margin-left:auto;margin-right:auto;"></div> -->
     <div class="table-responsive pt-3" id="mytable" style="display: show;"> 
         <h2 class="text-lg font-semibold dark:text-white-light p-1" 
-        style="background-color: rgb(188, 224, 198); border-radius: 9px; text-align: center;">
+        style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;">
         <b>Booking Details</b></h2>
         <div class="relative search mt-2">
             <input type="text" id="searchInput" placeholder="Search Details..." class="form-input search_size" />

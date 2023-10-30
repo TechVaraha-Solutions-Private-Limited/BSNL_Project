@@ -426,9 +426,9 @@ def generate(request):
                         #     print('2:',payments.amount)
                         #     break
                     
-                    messages.error(request,'Successfully Saved')
+                    messages.success(request,'Successfully Saved')
             except Bookings.DoesNotExist:
-                print('failed')
+                messages.error(request,'Saved failed')
     difference = int(total_site_value) - int(payment_total)
     return render(request,'new_bookings/generate.html',{'customer': customers,'difference': difference})
 
@@ -635,11 +635,26 @@ def cancel(request):
     return render(request,'new_bookings/cancel.html',{'customer':customers})
 
 def receipts(request):
-    details = PaymentDetails.objects.all()
-    return render(request,'view/receipts.html',{'details':details}) 
+    booking = Bookings.objects.all()
+    for mydata in booking:
+        total_amount = 0
+        print(mydata.id)
+        sum_val=0
+        for payment in mydata.paymentdetails_set.all():
+            sum_val += float(payment.amount)
+            try:
+                amount = int(payment.amount)
+                total_amount += amount
+            except ValueError:                
+                pass
+        
+        mydata.total_amount = total_amount
+        mydata.sum_val = sum_val
+   
+    return render(request,'view/receipts.html',{'booking':booking}) 
 
 def update_receipts(request,id):
-    update_receipts=PaymentDetails.objects.get(id=id)
+    update_receipts=PaymentDetails.objects.filter(booking=id).last()
     if request.method == "POST":
         update_receipts.booking.user.first_name = request.POST['first_name']
         update_receipts.dateofreceipt = request.POST['dateofreceipt']
@@ -660,8 +675,14 @@ def update_receipts(request,id):
         elif update_receipts.payment_mode == 'transaction':
             update_receipts.transaction = request.POST['transaction']
         update_receipts.save()
-
+        return redirect("/members/receipt")
     return render(request,'view/update_view/update_receipt.html',{'update_receipts':update_receipts})
+
+def view_receipt(request,id):
+    payment = PaymentDetails.objects.filter(booking=id).last()
+    payments = PaymentDetails.objects.filter(booking=id)
+
+    return render(request,'view/view_history.html',{'payment':payment,'payments':payments})
 
 def btmt(request):
     project = Project.objects.all()
