@@ -7,20 +7,36 @@
         color: black;
         text-decoration: none;
     }
+    .addproject{
+        text-align: center;
+        padding:15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+        font-size: 19px;
+    }
+
 </style>
 {% for message in messages %}
-<div class="alert alert-success">
+<div class="alert   {% if message.tags == 'error' %}
+                        alert-danger
+                    {% elif message.tags == 'success' %}
+                        alert-success
+                    {% endif %}">
     <a class="close" href="#" data-dismiss="alert">×</a>
     {{ message }}
 </div>
 {% endfor %}
-<div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+<div class=" mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
     <form method="POST" class="space-y-5" autocomplete="off">
         {% csrf_token %}
         <div class="panel" >
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <label class="text-lg dark:text-white-light p-2 font-weight-bold addproject"
+                style="background-color: #00c200;color:white; width:100%;"><b>GENERATE RECEIPT</b></label>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5 pt-4" >
                 <label for="search_membername">Search your Customer:</label>
-                <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" >
+                <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniority No" required>
                 <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
             </div>
         </div>
@@ -31,87 +47,90 @@
         <ul>
                 <li>
                     <div class="panel">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                           
-                            <div>
-                                <label for="customer">Customers:</label>
-                                <input class="form-input" type="text" name="user"  value="{{ customer.user.first_name }}" readonly>
-                                <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" readonly>
-                            </div>
-                            <div>
-                                <label for="seniorityno">Seniority No:</label>
-                                <input class="form-input" type="text" name="seniority" value="{{ customer.seniority_id }}" readonly>
-                            </div>
-                            <div >
-                                <label for="amount">Total-Amount:</label>
-                                <input class="form-input" type="text" name="amount" value="{{ customer.total_site_value }}" readonly>
-                            </div>
-                            <div class="p-1">
-                                <label for="dimensions">Dimension</label>
-                                <input class="form-input" type="text" name="dimension"  value="{{ customer.land_details.plotsize.plotsize }}" readonly>
-                            </div>
-                            <div class="p-1">
-                                <label>Date-of-receipt</label>
-                                <input class="form-input" type="date" name="dateofreceipt">
-                            </div>
-                            <div class="p-1">
-                                <label>Pending Amount</label>
-                                <input class="form-input" type="text" value="{{difference}}" readonly>
-                            </div>
-                        </div>
-                        <div class="panel p-1">
-                            <h2 class="text-lg font-semibold dark:text-white-light p-1"
-                                style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Payment Details</b></h2>
+                        <div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                           
+                                <div>
+                                    <label for="customer">Customers:</label>
+                                    <input class="form-input" type="text" name="user"  value="{{ customer.user.first_name }}" readonly>
+                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" readonly>
+                                </div>
+                                <div>
+                                    <label for="seniorityno">Seniority No:</label>
+                                    <input class="form-input" type="text" name="seniority" value="{{ customer.seniority_id }}" readonly>
+                                </div>
+                                <div >
+                                    <label for="amount">Total-Amount:</label>
+                                    <input class="form-input" type="text" name="amount" value="{{ customer.total_site_value }}" readonly>
+                                </div>
                                 <div class="p-1">
-                                    <div>
-                                        <label>Select to Payment Option</label>
-                                        <select class="form-control" id="inputfield" name="modeofpay">
-                                            <option>--select option--</option>
-                                            <option value="cheque">Cheque</option>
-                                            <option value="net_banking">Net Banking</option>
-                                            <option value="dd">DD</option>
-                                        </select>
+                                    <label for="dimensions">Dimension</label>
+                                    <input class="form-input" type="text" name="dimension"  value="{{ customer.land_details.plotsize.plotsize }}" readonly>
+                                </div>
+                                <div class="p-1">
+                                    <label>Date-of-receipt</label>
+                                    <input class="form-input" type="date" name="dateofreceipt">
+                                </div>
+                                <div class="p-1">
+                                    <label>Pending Amount</label>
+                                    <input class="form-input" type="text" value="{{difference}}" readonly>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <h2 class="text-lg font-semibold dark:text-white-light"
+                                    style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Payment Details</b></h2>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                    <div class="p-1">
+                                        <div>
+                                            <label>Select to Payment Option</label>
+                                            <select class="form-control" id="inputfield" name="payment_mode">
+                                                <option>--select option--</option>
+                                                <option value="cheque">Cheque</option>
+                                                <option value="net_banking">Net Banking</option>
+                                                <option value="dd">DD</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="p-1" id="mytable" style="display :none;">
+                                        <label class="p-1">Bank</label>
+                                        <input type="text" name="bank" placeholder="Bank" class="form-input">
+                                    </div>
+                                    <div class="p-1" id="project" style="display :none;">
+                                        <label class="p-1">Branch</label>
+                                        <input type="text" name="branch" placeholder="Branch" class="form-input">
+                                    </div>
+                                    <div class="p-1" id="table3" style="display :none;">
+                                        <label class="p-1">Cheque No</label>
+                                        <input type="text" name="cheque_no" placeholder="Cheque No" class="form-input">
+                                    </div>
+                                    <div class="p-1" id="table4" style="display :none;">
+                                        <label class="p-1">Pay Date</label>
+                                        <input type="date" name="payment_data" placeholder="Pay Date" class="form-input">
+                                    </div>
+                                    <div class="p-1" id="table5" style="display :none;">
+                                        <label>Amount</label>
+                                        <input type="text" name="amount" placeholder="Amount" class="form-input">
+                                    </div>
+                                    <div class="p-1" id="table6" style="display:none;">
+                                        <label>Transaction Id</label>
+                                        <input type="text" name="transaction_id" placeholder="Transaction Id" class="form-input">
+                                    </div>
+                                    <div class="p-1" id="table7" style="display:none;">
+                                        <label>DD No</label>
+                                        <input type="text" name="dd_no" placeholder="DD No" class="form-input">
                                     </div>
                                 </div>
-                                <div class="p-1" id="mytable" style="display :none;">
-                                    <label class="p-1">Bank</label>
-                                    <input type="text" name="bank" placeholder="Bank" class="form-input">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                <div>
+                                    <label></label>
                                 </div>
-                                <div class="p-1" id="project" style="display :none;">
-                                    <label class="p-1">Branch</label>
-                                    <input type="text" name="branch" placeholder="Branch" class="form-input">
-                                </div>
-                                <div class="p-1" id="table3" style="display :none;">
-                                    <label class="p-1">Cheque No</label>
-                                    <input type="text" name="cheque_no" placeholder="Cheque No" class="form-input">
-                                </div>
-                                <div class="p-1" id="table4" style="display :none;">
-                                    <label class="p-1">Pay Date</label>
-                                    <input type="date" name="payment_data" placeholder="Pay Date" class="form-input">
-                                </div>
-                                <div class="p-1" id="table5" style="display :none;">
-                                    <label>Amount</label>
-                                    <input type="text" name="amount" placeholder="Amount" class="form-input">
-                                </div>
-                                <div class="p-1" id="table6" style="display:none;">
-                                    <label>Transaction Id</label>
-                                    <input type="text" name="transaction_id" placeholder="Transaction Id" class="form-input">
-                                </div>
-                                <div class="p-1" id="table7" style="display:none;">
-                                    <label>DD No</label>
-                                    <input type="text" name="dd_no" placeholder="DD No" class="form-input">
+                                <div class="p-1 mt-4">
+                                    <center><button type="submit" class="btn btn-success text-lg font-semibold dark:text-white-light" style="background-color: #00c200;" name="action" value="create_order">Create Order</button></center>
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                            <div>
-                                <label></label>
-                            </div>
-                            <div class="p-1">
-                                <center><button type="submit" class="btn btn-success text-lg font-semibold dark:text-white-light" name="action" value="create_order">Create Order</button></center>
-                            </div>
-                        </div>
+                        
                     </div>
                 </li>
         </ul>

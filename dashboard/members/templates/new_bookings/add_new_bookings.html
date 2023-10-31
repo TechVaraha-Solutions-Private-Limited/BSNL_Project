@@ -7,6 +7,16 @@
         color: black;
         text-decoration: none;
     }
+    .addproject{
+        text-align: center;
+        padding:15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+        font-size: 19px;
+    }
+
 </style>
 <form class="space-y-5 " method="POST" action="" autocomplete="off">
 {% for message in messages %}
@@ -21,10 +31,10 @@
 {% endfor %}
 {% csrf_token %}
 <div class="p-2" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-    <label class="text-lg font-semibold dark:text-white-light p-2"
-        style="background-color: blueviolet; border-radius: 9px;"><b>ADD CREDENTIALS - New Booking</b></label>
-    <h2 class="text-lg font-semibold dark:text-white-light p-1"
-        style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Member Particulars</b></h2>
+    <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
+        style="background-color: #00c200;color:white; width:100%;"><b>ADD CREDENTIALS - New Booking</b></label>
+    <h2 class="text-lg font-semibold dark:text-white-light"
+        style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Member Particulars</b></h2>
     <div class="panel p-1">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="p-1">
@@ -102,8 +112,8 @@
         </div>
     </div>
     <div class="panel p-1">
-        <h1 class="text-lg font-semibold dark:text-white-light p-1"
-            style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Nominee Particulars</b></h1>
+        <h1 class="text-lg font-semibold dark:text-white-light"
+            style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Nominee Particulars</b></h1>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="p-1">
                 <label class="p-1">Nominee Name</label>
@@ -134,8 +144,8 @@
     </div>
     <input type="hidden" name="check_input_no" id="check_input_no" value="1">
     <div class="panel p-1" id="container" >
-        <h1 class="text-lg font-semibold dark:text-white-light p-1"
-            style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Family Details</b></h1>
+        <h1 class="text-lg font-semibold dark:text-white-light"
+            style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Family Details</b></h1>
             <div></div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5" id="family-form">
             <div class="p-1">
@@ -152,14 +162,14 @@
             </div>
             <div class="p-1">
                 <label class="p-1"></label>
-                <button id="hello1" class="btn btn-success text-lg font-semibold dark:text-white-light" type="button"
+                <button id="hello1" class="btn btn-success text-lg font-semibold dark:text-white-light" style="background-color: #00c200;" type="button"
                     onclick="add_more_field()">Add More</button>
             </div>
         </div>
     </div>
     <div class="panel p-1">
-        <h1 class="text-lg font-semibold dark:text-white-light p-1"
-            style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Site Details</b></h1>
+        <h1 class="text-lg font-semibold dark:text-white-ligh"
+            style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Site Details</b></h1>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="p-1">
                 <label>Select Project</label><br>
@@ -198,8 +208,8 @@
         </div>
     </div>
     <div class="panel p-1">
-        <h2 class="text-lg font-semibold dark:text-white-light p-1"
-            style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Payment Details</b></h2>
+        <h2 class="text-lg font-semibold dark:text-white-light"
+            style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Payment Details</b></h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div class="p-1">
                 <div>

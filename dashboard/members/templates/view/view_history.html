@@ -34,16 +34,16 @@
 <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
     <div>
         <label>Seniority ID</label>
-        <input type="text" name="projectname" class="form-input" placeholder="Enter Seniority ID" required>
+        <input type="text" name="projectname" class="form-input" placeholder="Enter Seniority ID" value="{{payment.booking.seniority_id}}" readonly>
     </div>
     <div>
         <label>Customer Name</label>
-        <input type="text" name="shortcode" class="form-input" placeholder="Enter Customer Name" required>
+        <input type="text" name="shortcode" class="form-input" placeholder="Enter Customer Name" value="{{payment.booking.user.first_name}}" readonly>
     </div>
 
     <div>
         <label>Booking Date</label>
-        <input type="number" name="dpprice" class="form-input" placeholder="Enter Booking Date" required>
+        <input type="text" name="dpprice" class="form-input" placeholder="Enter Booking Date" value="{{payment.booking.created_on|date:'d-m-y'}}" readonly>
     </div>
 </div>
 
@@ -51,17 +51,17 @@
 <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
     <div>
         <label>Project</label>
-        <input type="number" name="secondinstallment" class="form-input" placeholder="Enter Project" required>
+        <input type="text" name="secondinstallment" class="form-input" placeholder="Enter Project" value="{{payment.booking.land_details.project.projectname}}" readonly>
     </div>
 
     <div>
         <label>AM No</label>
-        <input type="number" name="secondinstallment" class="form-input" placeholder="Enter AM No" required>
+        <input type="text" name="secondinstallment" class="form-input" placeholder="Enter AM No" value="{{payment.booking.am_no}}" readonly>
     </div>
     
     <div>
         <label>Dimension</label>
-        <input type="number" name="secondinstallment" class="form-input" placeholder="Enter Dimension" required>
+        <input type="text" name="secondinstallment" class="form-input" placeholder="Enter Dimension" value="{{payment.booking.land_details.plotsize.plotsize}}" readonly>
     </div>
 </div>
 
@@ -75,20 +75,27 @@
             <th>Amount</th>
             <th>Receipt No</th>
             <th>Date</th>
-            <th>Pay Status</th>
         </tr>
     </thead>
     <tbody>
+       {% for payment in payments %}
         <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
+            <td>{{payment.paymentname}}</td>
+            <td>{{payment.payment_mode}}</td>
+            <td>{{payment.bank}}</td>
+            <td>{% if payment.payment_mode == 'cheque' %}
+                    {{ payment.cheque_no }}
+                {% elif payment.payment_mode == 'dd' %}
+                    {{ payment.ddno }}
+                {% elif payment.payment_mode == 'net_banking' %}
+                    {{ payment.transaction }}
+                {% endif %}
+            </td>
+            <td>{{payment.amount}}</td>
+            <td>{{payment.receipt_no}}</td>
+            <td>{{payment.payment_data}}</td>
         </tr>
+        {%endfor%}
     </tbody>
 </table>
 
