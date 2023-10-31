@@ -1,0 +1,488 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+{% include 'common/bootstrap.html' %}
+<style>
+    a {
+        color: black;
+    }
+
+    .addproject {
+        text-align: center;
+        padding: 15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+        font-size: 19px;
+    }
+</style>
+<form class="pt-5" method="post">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="p-1">
+            <label class="p-1">Booking Report</label>
+            <select class="form-control" id="reportType" name="reportType">
+                <option value="" disabled selected hidden>Select Report</option>
+                <option value="project">Project Wise</option>
+                <option value="date">Date Wise</option>
+                <option value="projhead">Proj Head Wise</option>
+                <option value="executive">Executive Wise</option>
+                <option value="payment">Payment Type Wise</option>
+                <option value="paystatus">Pay Status Wise</option>
+            </select>
+        </div>        
+        <div id="dynamicDropdown" style="display: none;" class="p-1">
+        </div>
+    </div>
+</form>
+<br>
+<div>
+    <!-- 1st table project all -->
+    <div id="projectAll">
+        <table>
+            <h3 class="font-weight-bold mt-4 addproject">PROJECT WISE</h3>
+            <thead>
+                <tr>
+                    <th>All projects</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- 2nd table project wise specific -->
+    <div id="specificproject">
+        <label class="p-1"> Select Project </label>
+        <select class="form-control" id="specificProjectDropdown" name="project_id">
+            <option>Select a project</option>
+            {% for data in view_report %}
+                <option value="">{{ data.land_details.project.projectname }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <!-- 3rd table date wise all -->
+    <div id="dateTable">
+        <h3 class="font-weight-bold mt-4 addproject">DATE WISE</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>date vise table</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 4th table project head wise all -->
+    <div id="headall">
+        <h3 class="font-weight-bold mt-4 addproject">PROJECT HEAD WISE</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>PROJECT HEAD WISE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 5th table executive wise all -->
+    <div id="exeall">
+        <h3 class="font-weight-bold mt-4 addproject">EXECUTIVE WISE</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>EXECUTIVE WISE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- payment wise -->
+    <div id="paymentall">
+        <h3 class="font-weight-bold mt-4 addproject">PAYMENT WISE</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>payment WISE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- down payment -->
+    <div id="down_payment">
+        <h3 class="font-weight-bold mt-4 addproject">DOWN PAYMENT</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>down payment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- first installment -->
+    <div id="first_install">
+        <h3 class="font-weight-bold mt-4 addproject">FIRST INSTALLMENT</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>first installment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- second installment -->
+    <div id="second_install">
+        <h3 class="font-weight-bold mt-4 addproject">SECOND INSTALLMENT</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>second installment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- third installment -->
+    <div id="third_install">
+        <h3 class="font-weight-bold mt-4 addproject">THIRD INSTALLMENT</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>third installment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- pay status wise -->
+    <div id="payall">
+        <h3 class="font-weight-bold mt-4 addproject">PAY STATUS WISE</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>PAY STATUS WISE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- pay part wise -->
+    <div id="pay_part">
+        <h3 class="font-weight-bold mt-4 addproject">PAY STATUS PART WISE</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>PAY STATUS PART WISE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- pay full wise -->
+    <div id="pay_full">
+        <h3 class="font-weight-bold mt-4 addproject">PAY STATUS FULL WISE</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>PAY STATUS Full WISE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in view_report %}
+                <tr>
+                    <td>{{data.land_details.project.projectname}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<script>
+    var reportTypeDropdown = document.getElementById('reportType');
+    var dynamicDropdown = document.getElementById('dynamicDropdown');
+    var projectAll = document.getElementById('projectAll');
+    var specificproject = document.getElementById('specificproject');
+    var dateTable = document.getElementById('dateTable');
+    var headall = document.getElementById('headall');
+    var exeall = document.getElementById('exeall');
+    var paymentall = document.getElementById('paymentall');
+    var down_payment = document.getElementById('down_payment');
+    var first_install = document.getElementById('first_install');
+    var second_install = document.getElementById('second_install');
+    var third_install = document.getElementById('third_install');
+    var payall = document.getElementById('payall');
+    var pay_part = document.getElementById('pay_part');
+    var pay_full = document.getElementById('pay_full');
+
+    // Initialize the tables to be hidden
+    projectAll.style.display = 'none';
+    specificproject.style.display = 'none';
+    dateTable.style.display = 'none';
+    headall.style.display = 'none';
+    exeall.style.display = 'none';
+    paymentall.style.display = 'none';
+    down_payment.style.display = 'none';
+    first_install.style.display = 'none';
+    second_install.style.display = 'none';
+    third_install.style.display = 'none';
+    payall.style.display = 'none';
+    pay_part.style.display = 'none';
+    pay_full.style.display = 'none';
+
+    reportTypeDropdown.addEventListener('change', function () {
+        var selectedOption = reportTypeDropdown.value;
+
+        // Hide both tables initially
+        projectAll.style.display = 'none';
+        dateTable.style.display = 'none';
+        specificproject.style.display = 'none';
+        headall.style.display = 'none';
+        exeall.style.display = 'none';
+        paymentall.style.display = 'none';
+        down_payment.style.display = 'none';
+        first_install.style.display = 'none';
+        second_install.style.display = 'none';
+        third_install.style.display = 'none';
+        payall.style.display = 'none';
+        pay_part.style.display = 'none';
+        pay_full.style.display = 'none';
+        // 1st block
+        if (selectedOption === 'project') {
+            dynamicDropdown.innerHTML = `
+                <label class="p-1">Project Wise Options</label>
+                <select class="form-control" id="projectOption" name="projectOption">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="all">All</option>
+                    {% for data in view_report %}
+                        <option value="">{{ data.land_details.project.projectname }}</option>
+                    {% endfor %}
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 2nd block
+        } else if (selectedOption === 'date') {
+            dynamicDropdown.innerHTML = `
+                <label class="p-1">Date Wise Options</label>
+                <select class="form-control" id="projectDate" name="projectDate">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="dateall">All</option>
+                    <option value="">PERIOD (FROM ---- TO ----)</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 3rd block
+        } else if (selectedOption === 'projhead') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">Proj Head Wise</label>
+                <select class="form-control" id="projecthead" name="projecthead">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="headall">All</option>
+                    <option value="">Specific Proj Head</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 4th block 
+        } else if (selectedOption === 'executive') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">Executive Wise</label>
+                <select class="form-control" id="projectexe" name="projectexe">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="exeall">All</option>
+                    <option value="specifyexe">Specific Executive</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 5th block
+        } else if (selectedOption === 'payment') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">Payment Type Wise</label>
+                <select class="form-control" id="payment" name="payment">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="paymentall">All</option>
+                    <option value="down_payment">Down Payment</option>
+                    <option value="first_install">First Installment</option>
+                    <option value="second_install">Second Installment</option>
+                    <option value="third_install">Third Installment</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 6th block
+        } else if (selectedOption === 'paystatus') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">Pay Status Wise</label>
+                <select class="form-control" id="pay_status" name="pay_status">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="payall">All</option>
+                    <option value="pay_part">Part</option>
+                    <option value="pay_full">Full</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+        } else {
+            dynamicDropdown.style.display = 'none';
+        }
+    });
+
+    dynamicDropdown.addEventListener('change', function () {
+        var projectOption = document.getElementById('projectOption');
+        var projectDate = document.getElementById('projectDate');
+        var projecthead = document.getElementById('projecthead');
+        var projectexe = document.getElementById('projectexe');
+        var projectOption = document.getElementById('projectOption');
+        var payment = document.getElementById('payment');
+        var pay_status = document.getElementById('pay_status');
+
+        //1st tab
+        if (projectOption && projectOption.value === 'all') {
+            projectAll.style.display = 'block';
+            // specificproject.style.display = 'none';
+        }  else {
+            projectAll.style.display = 'none';
+        }
+
+        //2nd tab
+        if (projectDate && projectDate.value === 'dateall') {
+            dateTable.style.display = 'block';
+        } else {
+            dateTable.style.display = 'none';
+        }
+
+        //3rd tab
+        if (projecthead && projecthead.value === 'headall') {
+            headall.style.display = 'block';
+            specificproject.style.display = 'none';
+        } else if (projecthead && projecthead.value === 'specificproject') {
+            specificproject.style.display = 'block';
+            headall.style.display = 'none';
+        } else {
+            headall.style.display = 'none';
+        }
+
+        //4th tab
+        if (projectexe && projectexe.value === 'exeall') {
+            exeall.style.display = 'block';
+        } else {
+            exeall.style.display = 'none';
+        }
+
+        //5th tab
+        if (payment && payment.value === 'paymentall') {
+            paymentall.style.display = 'block';
+            down_payment.style.display = 'none';
+            first_install.style.display = 'none';
+            second_install.style.display = 'none';
+            third_install.style.display = 'none';
+        } else if (payment && payment.value === 'down_payment') {
+            down_payment.style.display = 'block';
+            paymentall.style.display = 'none';
+            first_install.style.display = 'none';
+        } else if (payment && payment.value === 'first_install') {
+            first_install.style.display = 'block';
+            down_payment.style.display = 'none';
+            second_install.style.display = 'none';
+        } else if (payment && payment.value === 'second_install') {
+            second_install.style.display = 'block';
+            first_install.style.display = 'none';
+            third_install.style.display = 'none';
+        } else if (payment && payment.value === 'third_install') {
+            third_install.style.display = 'block';
+            second_install.style.display = 'none';
+        } else {
+            paymentall.style.display = 'none';
+            down_payment.style.display = 'none';
+            third_install.style.display = 'none';
+        }
+
+        //6th tab
+        if (pay_status && pay_status.value === 'payall') {
+            payall.style.display = 'block';
+            pay_full.style.display = 'none';
+            pay_part.style.display = 'none';
+        } else if (pay_status && pay_status.value === 'pay_part') {
+            pay_part.style.display = 'block';
+            payall.style.display = 'none';
+            pay_full.style.display = 'none';
+        } else if (pay_status && pay_status.value === 'pay_full') {
+            pay_full.style.display = 'block';
+            payall.style.display = 'none';
+            pay_part.style.display = 'none';
+        } else {
+
+        }
+    });
+</script>
+
+{% endblock %}

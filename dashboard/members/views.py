@@ -721,7 +721,7 @@ def user_access(request,id):
         user_log.first_name = request.POST['first_name']
         user_log.last_name = request.POST['last_name']
         user_log.employee_id = request.POST['employee_id']
-        user_log.user_role = request.POST['user_role']
+        user_log.role = request.POST['user_role']
         user_log.email = request.POST['email_id']
         user_log.mobile_no = request.POST['mobile_no']
         user_log.date_joined = request.POST['date_joined']

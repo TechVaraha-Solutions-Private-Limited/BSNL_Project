@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>view</title>
+</head>
+<body>
+    <table class="table table-bordered">
+       <thead>
+        <tr>
+            <th>name</th>
+            <th>email</th>
+            <th>password</th>
+        </tr>
+       </thead>
+        <tbody>
+            {% for val in name %}
+            <tr> 
+                
+                <td>{{val.name}}</td>
+                <td>{{val.email}}</td>
+                <td>{{val.password}}</td>
+                <td><button><a href="update/{{val.id}}">Update</a></button>
+                    <form method="post">
+                    {% csrf_token %}
+                    <button><a href="delete/{{val.id}}">Delete</button></td>
+                    </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
