@@ -9,4 +9,4 @@ sqlparse==0.4.4
 tzdata==2023.3
 virtualenv==20.23.1
 django-mathfilters==1.0.0;
-
+num2words==0.5.13

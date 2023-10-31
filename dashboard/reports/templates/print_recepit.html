@@ -57,11 +57,15 @@
 					</div>
 					<div class="wrapper p4">
 					<p>
-						<span class="logo-cnt2"><span style="font-weight:normal;">No.</span>{{payment.receipt_no}}</span> 
-						<span class="logo-cnt4">RECEIPT</span> 
-						<span class="logo-cnt3">Date :
-							<span class="date-dot">{{payment.created_on.date|date:'d-m-y'}}</span>
-						</span>
+						{% for i in payment %}
+							{% if forloop.last %}
+								<span class="logo-cnt2"><span style="font-weight:normal;">No.</span>{{i.receipt_no}}</span> 
+								<span class="logo-cnt4">RECEIPT</span> 
+								<span class="logo-cnt3">Date :
+									<span class="date-dot">{{i.created_on.date|date:'d-m-y'}}</span>
+								</span>
+							{% endif %}
+						{% endfor %}
 					</p>
 					</div>
 					<div class="wrapper p3">
@@ -82,7 +86,7 @@
 					<div class="receipt-border2 p0">
 					<div class="wrapper">
 									<p class="logo-cnt1 p3">Rupees  :
-							<span class="date-dot2">THREE LAKH  ONLY</span>
+							<span class="date-dot2">{{ word|upper }} ONLY</span>
 						</p>
 						<!-- Membership code -->
 												<p class="logo-cnt1 p3">For  :
@@ -102,22 +106,41 @@
 								<th>Amount</th>
 							</tr>
 							{% for i in payment %}
-							<tr>
-								<td>{{i.paymentname}}</td> 
-								<td>{{user.land_details.plotsize.plotsize}}</td>
-								<td>{{i.payment_mode}}</td>
-								<td>{{i.bank}}</td>
-								<td>{{i.branch}}</td>
-								<td>{% if i.payment_mode == "cheque" %}
-									{{ i.cheque_no }}
-									{% elif i.payment_mode == "dd"%}
-									{{ i.ddno }}
-									{% elif i.payment_mode == "net_banking" %}
-									{{ i.transaction }}
-								  	{% endif %}
-								</td>
-								<td>{{i.amount}}</td>
-							</tr>
+								{% if payment_count == 1 %}			
+								<tr>
+									<td>{{i.paymentname}}</td> 
+									<td>{{user.land_details.plotsize.plotsize}}</td>
+									<td>{{ i.payment_mode }}
+									<td>{{i.bank}}</td>
+									<td>{{i.branch}}</td>
+									<td>{% if i.payment_mode == "cheque" %}
+										{{ i.cheque_no }}
+										{% elif i.payment_mode == "dd"%}
+										{{ i.ddno }}
+										{% elif i.payment_mode == "net_banking" %}
+										{{ i.transaction }}
+										{% endif %}
+									</td>
+									<td>{{i.amount}}</td>
+								</tr>
+								{% elif i.paymentname != "Membership" %}
+									<tr>
+									<td>{{i.paymentname}}</td> 
+									<td>{{user.land_details.plotsize.plotsize}}</td>
+									<td>{{ i.payment_mode }}
+									<td>{{i.bank}}</td>
+									<td>{{i.branch}}</td>
+									<td>{% if i.payment_mode == "cheque" %}
+										{{ i.cheque_no }}
+										{% elif i.payment_mode == "dd"%}
+										{{ i.ddno }}
+										{% elif i.payment_mode == "net_banking" %}
+										{{ i.transaction }}
+										{% endif %}
+									</td>
+									<td>{{i.amount}}</td>
+								</tr>
+								{% endif %}
 							{% endfor %}
 						</table>
 					</div>
@@ -206,7 +229,7 @@
 								</td>
 								<td></td>
 								<td style="text-align:right;">
-								300000</td>
+									{{value}}</td>
 								<td>
 													</td>
 							</tr>
@@ -229,7 +252,7 @@
 							<td></td>
 							
 							<td style="text-align:right;font-size: 22px;font-weight: bold;">
-							300000</td>
+							{{value}}</td>
 							<td>
 							
 							</td>
