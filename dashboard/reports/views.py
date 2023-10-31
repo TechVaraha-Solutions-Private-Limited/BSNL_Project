@@ -37,3 +37,8 @@ def print_recepit(request,id):
         'value':value,
     }
     return render (request,'print_recepit.html',context)
+
+
+def booking_report(request):
+    view_report = Bookings.objects.all()
+    return render(request, 'booking_report.html', {'view_report': view_report})
