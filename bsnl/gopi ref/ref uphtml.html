@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login page</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Add Font Awesome for the eye icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+
+<body style="margin: 0; background: linear-gradient(to bottom, #0074e4, #005cbf);">
+
+    <div class="container my-5" style="padding: 10px; width: auto;">
+        <div class="row justify-content-center">
+            <div class="col-md-8"
+                style="border: 2px solid transparent; background-image: linear-gradient(to bottom, #87cefa, #5e9af2); padding: 10px;">
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-3 col-form-label text-right">Name:</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" id="name" name='namedb' value="{{upname.name}}" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-3 col-form-label text-right">Email:</label>
+                        <div class="col-sm-5">
+                            <input type="email" class="form-control" id="email" value="{{upname.email}}" name="emaildb" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-3 col-form-label text-right">Password:</label>
+                        <div class="col-sm-5">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password" value="{{update.password}}" name="passworddb" placeholder="Password">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-secondary" id="showPasswordToggle">
+                                        <i class="fas fa-eye" id="showPasswordIcon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-5 offset-sm-3">
+
+                            <button type="submit" class="btn btn-primary btn-sm">update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        const passwordInput = document.getElementById("password");
+        const showPasswordToggle = document.getElementById("showPasswordToggle");
+        const showPasswordIcon = document.getElementById("showPasswordIcon");
+
+        showPasswordToggle.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                showPasswordIcon.classList.remove("fa-eye");
+                showPasswordIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                showPasswordIcon.classList.remove("fa-eye-slash");
+                showPasswordIcon.classList.add("fa-eye");
+            }
+        });
+    </script>
+</body>
+
+</html>

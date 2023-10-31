@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from dashboard.members.models import Bookings,PaymentDetails
+from dashboard.projects.models import Project
 from dashboard.userinfo.models import UserDetail
 from num2words import num2words
 # Create your views here.

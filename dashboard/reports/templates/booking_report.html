@@ -1,0 +1,153 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+{% include 'common/bootstrap.html' %}
+<style>
+    a {
+        color: black;
+    }
+
+    .addproject {
+        text-align: center;
+        padding: 15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+        font-size: 19px;
+    }
+</style>
+<form class="pt-5" method="post">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="p-1">
+            <label class="p-1">Booking Report</label>
+            <select class="form-control" id="reportType" name="reportType">
+                <option value="" disabled selected hidden>Select Report</option>
+                <option value="project">Project Wise</option>
+                <option value="date">Date Wise</option>
+                <option value="projhead">Proj Head Wise</option>
+                <option value="executive">Executive Wise</option>
+                <option value="payment">Payment Type Wise</option>
+                <option value="paystatus">Pay Status Wise</option>
+            </select>
+        </div>
+        <div id="dynamicDropdown" style="display: none;" class="p-1">
+        </div>
+    </div>
+</form>
+<br>
+<div>
+    <table class="table-responsive" class="emInfo responsive" >
+        <thead>
+            <th>Seniority</th>
+            <th>Customer Name</th>
+            <th>Date of Booking</th>
+            <th>Project</th>
+            <th>Dimension</th>
+            <th>AM Number</th>
+            <th>Mobile No</th>
+            <th>Alternate No</th>
+            <th>Email ID</th>
+            <th>Address</th>
+            <th>Tot Value</th>
+            <th>DP Value</th>
+            <th>DP Paid</th>
+            <th>Tot Paid</th>
+            <th>Executive</th>
+            <th>Proj Head</th>
+            <th>Pay Status</th>
+            <th>Payment Type</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+<script>
+    var reportTypeDropdown = document.getElementById('reportType');
+    var dynamicDropdown = document.getElementById('dynamicDropdown');
+
+    reportTypeDropdown.addEventListener('change', function () {
+        var selectedOption = reportTypeDropdown.value;
+
+        // 1st block
+        if (selectedOption === 'project') {
+            dynamicDropdown.innerHTML = `
+                <label class="p-1">Project Wise Options</label>
+                <select class="form-control" id="projectOption" name="projectOption">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="all">All</option>
+                    {% for data in view_report %}
+                        <option value="">{{ data.land_details.project.projectname }}</option>
+                    {% endfor %}
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 2nd block
+        } else if (selectedOption === 'date') {
+            dynamicDropdown.innerHTML = `
+                <label class="p-1">Date Wise Options</label>
+                <select class="form-control" id="projectDate" name="projectDate">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="dateall">All</option>
+                    <option value="">PERIOD (FROM ---- TO ----)</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 3rd block
+        } else if (selectedOption === 'projhead') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">Proj Head Wise</label>
+                <select class="form-control" id="projecthead" name="projecthead">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="headall">All</option>
+                    <option value="">Specific Proj Head</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 4th block 
+        } else if (selectedOption === 'executive') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">Executive Wise</label>
+                <select class="form-control" id="projectexe" name="projectexe">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="exeall">All</option>
+                    <option value="specifyexe">Specific Executive</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 5th block
+        } else if (selectedOption === 'payment') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">Payment Type Wise</label>
+                <select class="form-control" id="payment" name="payment">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="paymentall">All</option>
+                    <option value="down_payment">Down Payment</option>
+                    <option value="first_install">First Installment</option>
+                    <option value="second_install">Second Installment</option>
+                    <option value="third_install">Third Installment</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 6th block
+        } else if (selectedOption === 'paystatus') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">Pay Status Wise</label>
+                <select class="form-control" id="pay_status" name="pay_status">
+                    <option disabled selected hidden>Select Report Type</option>
+                    <option value="payall">All</option>
+                    <option value="pay_part">Part</option>
+                    <option value="pay_full">Full</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+        } else {
+            dynamicDropdown.style.display = 'none';
+        }
+    });
+
+
+</script>
+
+{% endblock %}
