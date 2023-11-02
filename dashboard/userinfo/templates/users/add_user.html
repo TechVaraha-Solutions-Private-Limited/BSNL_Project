@@ -7,7 +7,8 @@
 </style>
 <form class="space-y-5" method="POST" action="">
     {% csrf_token %}
-    <label class="text-xl font-semibold dark:text-white-light p-2" style="background-color: blueviolet;"><b>Add User</b></label>
+    <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
+    style="background-color: #00c200;color:white; width:100%; text-align: center;"><b>ADD USER</b></label>
     <div class="panel">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5"> 
             
@@ -52,12 +53,12 @@
                 <label>DOJ</label>
                 <input type="date" name="date_joined"  class="form-input" >
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-1 gap-5">
-                <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light">Add User</button></center>
+        </div>
+            <div class="text-center">
+               <center><input type="submit" value="Add User" class="btn btn-success mt-3 text-lg font-semibold dark:text-white-light" style="background-color: #00c200;"></center>
             </div>
         </div>
-    </div>
+    
 </form>
 
 

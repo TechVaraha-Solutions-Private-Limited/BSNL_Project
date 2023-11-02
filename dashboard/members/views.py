@@ -835,6 +835,7 @@ def view_blocked_seniority(request):
 
 def update_block(request,id):
     block_update=Update_blocked.objects.get(id=id)
+    print('1','Hello')
     if request.method == "POST":
         block_update.project = request.POST['project']
         block_update.seniority_no = request.POST['seniority_no']
@@ -842,6 +843,7 @@ def update_block(request,id):
         block_update.executive = request.POST['executive']
         block_update.customer_name = request.POST['customer_name']
         block_update.save() 
+        print('2','Hello')
         return redirect('/members/view_blocked_seniority')
     return render(request,'input/blocked_update/update_block.html',{'block_update':block_update})
 
@@ -862,11 +864,4 @@ def view_update_pdc(request):
     return render(request,'input/pdc/view_update_pdc.html')
 
 def cr_code(request):
-    return render(request,'input/cr_code/update_cr_code.html')
-
-def delete_user_access(request,id):
-    return HttpResponse('Hello')
-
-def update_block(request,id):
-    return HttpResponse('Hello')
     return render(request,'input/cr_code/update_cr_code.html')

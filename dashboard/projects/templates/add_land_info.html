@@ -46,69 +46,64 @@
 
 
 <div class="divbox p-3 mt-2">
-<h3 class="font-weight-bold mt-4 addproject">ADD LAND INFORMATION</h3>
-</div>
-<form method="POST" autocomplete="off">
-    {% csrf_token %}
-    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
-        <div>
-            <label>Select Project</label><br>
-            <select name="projectname" class="projectname mt-3" required>
-            {% for project in projects %}
-                <option disabled selected hidden>Click to Select Project</option>
-                <option value="{{project.id}}">{{project.projectname}}</option>
-            {% endfor %}
-        </select>
-        </div>
-        <div>
-            <label>Select Plot Size</label><br>
-            <select name="plotsize" class="plotsize mt-3" id="plotsize" required>
-                {% for pltsize in pltsizes %}
-                    <option disabled selected hidden>Click to Select Plot Size</option>
-                    <option value="{{pltsize.id}}">{{pltsize.plotsize}}</option>
+    <h3 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
+    style="background-color: #00c200;color:white; width:100%;">ADD LAND INFORMATION</h3>
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
+            <div>
+                <label>Select Project</label><br>
+                <select name="projectname" class="projectname mt-3" required>
+                {% for project in projects %}
+                    <option disabled selected hidden>Click to Select Project</option>
+                    <option value="{{project.id}}">{{project.projectname}}</option>
                 {% endfor %}
             </select>
-        </div>
+            </div>
+            <div>
+                <label>Select Plot Size</label><br>
+                <select name="plotsize" class="plotsize mt-3" id="plotsize" required>
+                    {% for pltsize in pltsizes %}
+                        <option disabled selected hidden>Click to Select Plot Size</option>
+                        <option value="{{pltsize.id}}">{{pltsize.plotsize}}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-        <div>
-            <label>Per Square Feet Amount</label>
-            <input type="number" name="persquarefeetamount" id="cal" class="form-control" placeholder="Enter Per Square Feet Amount" required>
+            <div>
+                <label>Per Square Feet Amount</label>
+                <input type="number" name="persquarefeetamount" id="cal" class="form-control" placeholder="Enter Per Square Feet Amount" required>
+            </div>
         </div>
-    </div>
+        <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
+            <div>
+                <label>Total Amount</label>
+                <input type="number" name="totalamount" id="demo" class="form-control" placeholder="Enter Total Amount" required readonly>
+            </div>
 
-
-    <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
-        <div>
-            <label>Total Amount</label>
-            <input type="number" name="totalamount" id="demo" class="form-control" placeholder="Enter Total Amount" required readonly>
+            <div>
+                <label>Down Payment</label>
+                <input type="text" name="downamount" id="downpay" class="form-control" placeholder="Enter Down Payment" readonly>
+            </div>
+            <div >
+                <label>First Installment</label>
+                <input type="number" name="firstinstallment" id="first" class="form-control" placeholder="Enter First Installment" readonly>
+            </div>
+            <div >
+                <label>Second Installment</label>
+                <input type="text" name="secondinstallment" id="second" class="form-control" placeholder="Enter Second Installment" readonly>
+            </div>
+            <div >
+                <label>Thrid Installment</label>
+                <input type="text" name="thirdinstallment" id="thrid" class="form-control" placeholder="Enter Thrid Installment" readonly>
+            </div>
         </div>
-
-        <div>
-            <label>Down Payment</label>
-            <input type="text" name="downamount" id="downpay" class="form-control" placeholder="Enter Down Payment" readonly>
-        </div>
-        <div >
-            <label>First Installment</label>
-            <input type="number" name="firstinstallment" id="first" class="form-control" placeholder="Enter First Installment" readonly>
-        </div>
-        <div >
-            <label>Second Installment</label>
-            <input type="text" name="secondinstallment" id="second" class="form-control" placeholder="Enter Second Installment" readonly>
-        </div>
-        <div >
-            <label>Thrid Installment</label>
-            <input type="text" name="thirdinstallment" id="thrid" class="form-control" placeholder="Enter Thrid Installment" readonly>
-        </div>
-    </div>
-    </div>
-        
         <div class="text-center">
             <input type="submit" value="Add Land Information" class="btn btn-primary mt-5" id="submit-btn">
             <input type="reset" value="Clear" class="btn btn-danger mt-5">
         </div>
-
-
-</form>
+    </form>
+</div>
 <script>
     $('#cal').change(function() {
         const inputValue = document.getElementById('plotsize');
