@@ -2,6 +2,7 @@ from django.db import models
 from bsnl import settings
 from dashboard.projects.models import LandDetails,Project
 from dashboard.userinfo.models import User
+from dashboard.userinfo.models import UserDetail
 
 class Bookings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
