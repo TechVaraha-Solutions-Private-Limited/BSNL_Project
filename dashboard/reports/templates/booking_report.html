@@ -37,44 +37,53 @@
 </form>
 <br>
 <div>
-    <table class="table-responsive" class="emInfo responsive">
+    <table class="table-responsive" class="emInfo responsive" >
         <thead>
-            <tr>
+            <tr><th>#</th>
                 <th>Seniority</th>
-                <th>Customer Name</th>
-                <th>Date of Booking</th>
+                <th>Customer_Name</th>
+                <th>Date_of_Booking</th>
                 <th>Project</th>
                 <th>Dimension</th>
-                <th>AM Number</th>
-                <th>Mobile No</th>
-                <th>Alternate No</th>
-                <th>Email ID</th>
+                <th>AM_Number</th>
+                <th>Mobile_No</th>
+                <th>Alternate_No</th>
+                <th>Email_ID</th>
                 <th>Address</th>
-                <th>Tot Value</th>
-                <th>DP Value</th>
-                <th>DP Paid</th>
-                <th>Tot Paid</th>
+                <th>Tot_Value</th>
+                <th>DP_Value</th>
+                <th>DP_Paid</th>
+                <th>Tot_Paid</th>
                 <th>Executive</th>
-                <th>Proj Head</th>
-                <th>Pay Status</th>
-                <th>Payment Type</th>
+                <th>Proj_Head</th>
+                <th>Pay_Status</th>
+                <th>Payment_Type</th>
             </tr>
         </thead>
         <tbody>
-            {% for val in view_report %}
-
+            {% for val in bookings %}
             <tr>
-                <td>{{val.booking.seniority_id}}</td>
-                <td>{{val.booking.user.first_name}}</td>
-                <td>{{val.booking.created_on}}</td>
-                <td>{{val.booking.land_details.project.projectname}}</td>
-                <td>{{val.}}</td>
-                <td>{{val.booking.am_no}}</td>
-                <td>{{val.booking.user.mobile_no}}</td>
-                <td>{{val.userinfo}}</td>
-                <td>{{val.booking.user.email}}</td>
+                <td>{{forloop.counter}}</td>
+                <td>{{val.seniority_id}}</td>
+                <td>{{val.user.first_name|upper}}</td>
+                <td>{{val.created_on|date:'d-m-y'}}</td>
+                <td>{{val.land_details.project.projectname}}</td>
+                <td>{{val.land_details.plotsize.plotsize}}</td>
+                <td>{{val.am_no}}</td>
+                <td>{{val.user.mobile_no}}</td>
+                <td>{{val.alter}}</td>
+                <td>{{val.user.email}}</td>
                 <td>{{val.address}}</td>
-
+                <td>{{val.land_details.total_amount}}</td>
+                <td>{{val.land_details.down_payment}}</td>
+                <td>{% if val.payments.paymentname == 'DownPayment' %}</td>
+                    {{val.payments.paymentname}}
+                    {%endif%}
+                <td>{{val.total_amt}}</td>
+                <td>{{val.exective}}</td>
+                <td>{{val.project_lead}}</td>
+                <td></td>
+                <td>{{val.payments.paymentname}}</td>
             </tr>
             {%endfor%}
         </tbody>
@@ -90,12 +99,13 @@
         // 1st block
         if (selectedOption === 'project') {
             dynamicDropdown.innerHTML = `
+            {% csrf_token %}
                 <label class="p-1">Project Wise Options</label>
-                <select class="form-control" id="projectOption" name="projectOption">
+                <select class="form-control" id="projectOption" name="projectOption" onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
                     <option value="all">All</option>
-                    {% for data in view_report %}
-                        <option value="">{{ data.land_details.project.projectname }}</option>
+                    {% for data in project %}
+                        <option value="{{ data.projectname }}">{{ data.projectname }}</option>
                     {% endfor %}
                 </select>
             `;
