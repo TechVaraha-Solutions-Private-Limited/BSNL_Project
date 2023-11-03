@@ -52,9 +52,16 @@
 		<div class="wrapper p9">
 			<div class="receipt-border" id="printer_ticket">
 			<!--<div style="position:absolute;width:99%;opacity: 55%;margin-top:170px;"><img src="assets/images/watermark.jpg" width="100%" alt=""/></div>-->
-				<div class="receipt-border1" style="padding: 0px 20px 0px 20px;">
-					<div class="wrapper p5">
-					</div>
+			<div class="receipt-border1" style="padding: 0px 20px 0px 20px;">
+				<div class="wrapper p5">
+		<br>
+			<br>
+			<br>
+		<br>
+			<br>
+		<br>
+			<br>
+				</div>
 					<div class="wrapper p4">
 					<p>
 						{% for i in payment %}
@@ -68,15 +75,16 @@
 						{% endfor %}
 					</p>
 					</div>
+
 					<div class="wrapper p3">
 						<p class="logo-cnt1"><span style="float:left;margin-right:3px;font-weight:normal;background:#fff;">Received from </span>
-							<span class="date-dot1">: {{user.user.first_name}}</span>
+							<span class="date-dot1">: {{user.user.first_name|upper}}</span>
 						</p>
 					</div>
 					<div class="wrapper p3">
 						<p class="logo-cnt1">
 							<span class="date-dot11"><span style="float:left;margin-right:3px;font-weight:normal;background:#fff;"> Address</span>  :
-					#{{userdetail.address}},{{userdetail.state}},{{userdetail.city}} -560064</span>
+					#{{userdetail.address|upper}},{{userdetail.state|upper}},{{userdetail.city|upper}} -560064</span>
 					</p>
 					</div>
 				</div>

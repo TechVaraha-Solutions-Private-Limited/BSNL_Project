@@ -39,7 +39,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="p-1">
                 <label class="p-1">Member Name</label>
-                <input type="text" name="first_name" class="form-input" placeholder="Member Name" >
+                <input type="text" name="first_name" class="form-input" placeholder="Member Name" required >
             </div>
             <div class="p-1">
                 <label class="p-1">Father/Husband Name</label>
@@ -57,7 +57,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="p-1">
                 <label class="p-1">Moblie Number</label>
-                <input type="number" name="mobile_no" placeholder="Moblie Number" class="form-input">
+                <input type="number" name="mobile_no" placeholder="Moblie Number" class="form-input" required>
             </div>
             <div class="p-1">
                 <label class="p-1">Alternate Number</label>
@@ -65,7 +65,7 @@
             </div>
             <div class="p-1">
                 <label class="p-1">Email ID</label>
-                <input type="email" name="email" placeholder="E-Mail Id" class="form-input">
+                <input type="email" name="email" placeholder="E-Mail Id" class="form-input" required>
             </div>
             <div class="p-1">
                 <label class="p-1">Profile</label>
@@ -87,20 +87,20 @@
             </div>
             <div>
                 <label class="p-1">Password</label>
-                <input type="password" name="password" placeholder="password" class="form-input">
+                <input type="password" name="password" placeholder="password" class="form-input" required>
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="p-1">
                 <label class="p-1">Pan Number</label>
-                <input type="text" name="panno" placeholder="Pan Number" class="form-input">
+                <input type="text" name="panno" placeholder="Pan Number" class="form-input" required>
             </div>
             <div class="custom-file-container p-7">
                 <label></label>
                 <input type="file" name="pan_proof">
             </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5" required>
             <div class="p-1">
                 <label class="p-1">Aadhhar Number</label>
                 <input type="number" name="aadhhaarno" placeholder="Aadhhar Number" class="form-input">
@@ -409,7 +409,7 @@
   
         if (current > 1){
             document.getElementById("btn"+current).style.display = "block";
-        document.getElementById("hello" + current).style.display = "block";
+            document.getElementById("hello" + current).style.display = "block";
         }
         
         else {
