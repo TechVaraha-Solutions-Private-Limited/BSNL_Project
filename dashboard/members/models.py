@@ -86,6 +86,11 @@ class Images(models.Model):
     place =models.CharField(max_length=120)
     status =  models.SmallIntegerField(default=1, null=True)
 
+class G_image(models.Model):
+    gallery_image= models.ImageField(upload_to= settings.PROFILE_UPLOAD_PATH,null=True)
+    g_place= models.CharField(max_length=150)
+    g_status= models.SmallIntegerField(default=1, null=True)
+
 class Leadowner(models.Model):
     seniorityno_id = models.CharField(max_length=20,null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)

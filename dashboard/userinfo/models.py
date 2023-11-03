@@ -75,6 +75,7 @@ class UserDetail(models.Model):
     modified_by = models.IntegerField(null=True)
     created_on = models.DateTimeField(auto_now_add=True, null=True)
     updated_on = models.DateTimeField(auto_now=True, null=True)
+    id_card=models.CharField(max_length=30,default='Pending')
     
 class UserNominee(models.Model):
     user = models.OneToOneField(User, on_delete=models.DO_NOTHING, null=False)

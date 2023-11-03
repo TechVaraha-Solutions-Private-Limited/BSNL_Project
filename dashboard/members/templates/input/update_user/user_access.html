@@ -3,61 +3,68 @@
 {% load static %}
 {% include 'common/bootstrap.html' %}
 <style>
-    a{
+    a {
         color: black;
     }
 
-    #divbox{
+    #divbox {
         box-shadow: 0px 0px 5px #007bff;
         border-radius: 1%;
     }
-
 </style>
 <form class="pt-5" method="post">
     <div class="p-2" id="divbox">
         <div class="panel p-1">
             <h2 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
-            style="background-color: #00c200;color:white; width:100%; text-align: center;"><b>UPDATE LOGIN ACCESS</b></h2>
+                style="background-color: #00c200;color:white; width:100%; text-align: center;"><b>UPDATE LOGIN
+                    ACCESS</b></h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <div class="p-1"> 
+                <div class="p-1">
                     {% csrf_token %}
                     <label class="p-1">First Name</label>
-                    <input type="text" name="first_name" value="{{user_log.first_name}}" placeholder="Employee Name"  class="form-input" >
+                    <input type="text" name="first_name" value="{{user_log.first_name}}" placeholder="Employee Name"
+                        class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Last Name</label>
-                    <input type="text" name="last_name" value="{{user_log.last_name}}" placeholder="Last Name" class="form-input" >
+                    <input type="text" name="last_name" value="{{user_log.last_name}}" placeholder="Last Name"
+                        class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Employee Id</label>
-                    <input type="text" name="employee_id"  placeholder="Employee Id" value="{{user_log.employee_id}}" class="form-input">
+                    <input type="text" name="employee_id" placeholder="Employee Id" value="{{user_log.employee_id}}"
+                        class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">User Role</label>
-                    <select class="form-control" name="user_role" value="{{user_log.role}}" >
-                        <option value="">Select Role</option>                                
-                        <option value="Admin">Admin</option>                                
+                    <select class="form-control" name="user_role" value="{{user_log.role}}">
+                        <option value="">Select Role</option>
+                        <option value="Admin">Admin</option>
                         <option value="User">User</option>
-                        <option value="Staff">Staff</option>                                                               
+                        <option value="Staff">Staff</option>
                     </select>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Email</label>
-                    <input type="text" name="email_id" value="{{user_log.email}}" placeholder="Email ID" class="form-input" >
+                    <input type="text" name="email_id" value="{{user_log.email}}" placeholder="Email ID"
+                        class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Mobile No:</label>
-                    <input type="text" name="mobile_no" value="{{user_log.mobile_no}}" placeholder="Mobile Number" class="form-input" >
+                    <input type="text" name="mobile_no" value="{{user_log.mobile_no}}" placeholder="Mobile Number"
+                        class="form-input">
                 </div>
                 <div class="p-1">
                     <label class="p-1">DOJ:</label>
-                    <input type="date" name="date_joined" value="{{user_log.date_joined}}" placeholder="Date of Joining" class="form-input" >
+                    <input type="date" name="date_joined" value="{{user_log.date_joined}}" placeholder="Date of Joining"
+                        class="form-input">
                 </div>
             </div>
             <div class="text-center p-3">
-                <input type="submit" value="Update" class="btn btn-primary">
-                   <input type="reset" value="Clear" class="btn btn-danger">  
-                
+                <input type="submit" value="Update"
+                    class="btn btn-success mt-3 text-lg font-semibold dark:text-white-light"
+                    style="background-color: #00c200;">
+
             </div>
         </div>
     </div>

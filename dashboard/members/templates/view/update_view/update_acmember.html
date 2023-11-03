@@ -8,13 +8,15 @@
         text-decoration: none;
     }
 </style>
+
 <form class="space-y-5 " method="POST" action="">
     {% csrf_token %}
+    <br>
     <div class="p-2" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-        <label class="text-lg font-semibold dark:text-white-light p-2"
-            style="background-color: blueviolet; border-radius: 9px;"><b>Update ActiveMember</b></label>
-        <h2 class="text-lg font-semibold dark:text-white-light p-1"
-            style="background-color: rgb(138, 202, 167); border-radius: 9px;"><b>Member Particulars</b></h2>
+        <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
+        style="background-color: #00c200;color:white; width:100%;"><center><b>UPDATE ACTIVEMEMBER</b></center></label>
+        <h2 class="text-lg font-semibold dark:text-white-light"
+        style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Member Particulars</b></h2>
         <div class="panel p-1">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
@@ -61,6 +63,10 @@
                     <label class="p-1">State</label>
                     <input type="text" name="state" placeholder="State" class="form-input" value="{{userdetail.state}}">
                 </div>
+                <div class="p-1">
+                    <label class="p-1">Site Preference</label>
+                    <input type="text" name="state" placeholder="Site Preference" class="form-input">
+                </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
@@ -72,8 +78,13 @@
                     <input type="text" name="dimension_id" placeholder="Dimension" class="form-input" value="{{book.land_details.plotsize.plotsize}}">
                 </div>
                 <div class="p-1">
-                    <label class="p-1">Site Preference</label>
-                    <input type="text" name="state" placeholder="Site Preference" class="form-input">
+                    <label class="p-1">ID Card Status</label>
+                    <select class="form-control" name="id_card" value="{{userdetail.id_card}}">
+                        <option value="{{userdetail.id_card}}" disabled hidden>{{userdetail.id_card}}</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Handover">Handover</option>
+                    </select>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Active/Inactive Status</label>
@@ -82,8 +93,7 @@
             </div>
         </div>
         <div class="text-center">
-            <input type="submit" value="Submit Application"   class="btn btn-primary mt-5">
-            <input type="reset" value="Clear" class="btn btn-danger mt-5">
+            <input type="submit" value="Update"   class="btn btn-success mt-3 text-lg font-semibold dark:text-white-light" style="background-color: #00c200;">
         </div>
     </div>
 </form>

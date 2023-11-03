@@ -43,6 +43,7 @@ urlpatterns = [
     path('deleteactivememberlist/<id>',deleteactivememberlist,name='deleteactivememberlist'),
     # images
     path('banner_images',banner_images,name='banner_images'),
+    path('gallery_images',gallery_images,name='gallery_images'),
     #add Customer
     path('addcustomer',addcustomer,name='addcustomer'),
     path('user_access/<id>',user_access,name='user_access'),

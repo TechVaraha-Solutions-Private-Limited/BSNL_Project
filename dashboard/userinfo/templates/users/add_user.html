@@ -3,65 +3,68 @@
 {% load static %}
 
 <style>
-
+    #divbox {
+        box-shadow: 0px 0px 5px #007bff;
+        border-radius: 1%;
+    }
 </style>
 <form class="space-y-5" method="POST" action="">
     {% csrf_token %}
-    <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
-    style="background-color: #00c200;color:white; width:100%; text-align: center;"><b>ADD USER</b></label>
-    <div class="panel">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5"> 
-            
-            <div>
-                <label>First Name</label>
-                <input type="text" name="first_name"  class="form-input" >
+    <div class="p-2" id="divbox">
+        <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
+            style="background-color: #00c200;color:white; width:100%; text-align: center;"><b>ADD USER</b></label>
+        <div class="panel">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+                <div>
+                    <label>First Name</label>
+                    <input type="text" name="first_name" placeholder="First Name" class="form-input">
+                </div>
+                <div>
+                    <label>Last Name</label>
+                    <input type="text" name="last_name" placeholder="Last Name" class="form-input">
+                </div>
+                <div>
+                    <label>User Role</label>
+                    <select class="form-control" name="role">
+                        <option value="">Select Role</option>
+                        <option value="Admin">Admin</option>
+                        <option value="User">User</option>
+                        <option value="Staff">Staff</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Mobile No</label>
+                    <input type="text" name="mobile_no" placeholder="Mobile No" class="form-input">
+                </div>
+                <div>
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="Email" class="form-input">
+                </div>
+                <div>
+                    <label>Employee ID</label>
+                    <input type="text" name="employee_id" placeholder="Employee ID" class="form-input">
+                </div>
+                <div>
+                    <label>password</label>
+                    <input type="text" name="password1" placeholder="Password" class="form-input">
+                </div>
+                <div>
+                    <label>Confirm Password</label>
+                    <input type="text" name="password2" placeholder="Confirm Password" class="form-input">
+                </div>
+                <div>
+                    <label>DOJ</label>
+                    <input type="date" name="date_joined" placeholder="DOJ" class="form-input">
+                </div>
             </div>
-            <div>
-                <label>Last Name</label>
-                <input type="text" name="last_name"  class="form-input" >
-            </div>
-            <div>
-                <label>User Role</label>
-                <select class="form-control" name="role" >
-                    <option value="">Select Role</option>                                
-                    <option value="Admin">Admin</option>                                
-                    <option value="User">User</option>
-                    <option value="Staff">Staff</option>                                                                
-                </select>
-            </div>
-            <div>
-                <label>Mobile No</label>
-                <input type="text" name="mobile_no"  class="form-input" >
-            </div>
-            <div>
-                <label>Email</label>
-                <input type="text" name="email"  class="form-input" >
-            </div>
-            <div>
-                <label>Employee ID</label>
-                <input type="text" name="employee_id"  class="form-input" >
-            </div>
-            <div>
-                <label>password</label>
-                <input type="text" name="password1"  class="form-input" >
-            </div>
-            <div>
-                <label>Confirm Password</label>
-                <input type="text" name="password2"  class="form-input" >
-            </div>
-            <div>
-                <label>DOJ</label>
-                <input type="date" name="date_joined"  class="form-input" >
-            </div>
+
         </div>
-            <div class="text-center">
-               <center><input type="submit" value="Add User" class="btn btn-success mt-3 text-lg font-semibold dark:text-white-light" style="background-color: #00c200;"></center>
-            </div>
+        <div class="text-center">
+            <center> <input type="submit" value="Add User"
+                    class="btn btn-success mt-3 text-lg font-semibold dark:text-white-light"
+                    style="background-color: #00c200;"></center>
         </div>
-    
+    </div>
 </form>
-
-
-
-
 {% endblock %}
