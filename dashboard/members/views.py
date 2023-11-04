@@ -184,11 +184,15 @@ def add_new_bookings(request):
             for i in range(4):
                 if i == 0:
                     paymentname = 'DownPayment'
+                    status =1 
                 elif i ==1:
+                    status =3
                     paymentname = 'FirstInstallment'
                 elif i == 2:
+                    status =5
                     paymentname = 'SecondInstallment'
                 else:
+                    status =7
                     paymentname = 'ThridInstallment'
                 get_number = PaymentDetails.objects.all().order_by('-id')[:1]
                 if get_number:
@@ -229,6 +233,9 @@ def add_new_bookings(request):
                     payments.amount = payment_amount
                     payments.receipt_no = get_number
                     payments.save()
+                    book.payments_status = status
+                    book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount)
+                    book.save()
                     break
         messages.success(request,'Successfully Saved')
         # Vicky    
@@ -341,11 +348,15 @@ def generate(request):
                             if split_amount == payment :
                                 continue
                             paymentname = 'DownPayment'
+                            status =1 
                         elif i ==1:
+                            status = 3
                             paymentname = 'FirstInstallment'
                         elif i == 2:
+                            status = 5
                             paymentname = 'SecondInstallment'
                         else:
+                            status = 7
                             paymentname = 'ThridInstallment'
 
                     
@@ -354,6 +365,12 @@ def generate(request):
                         else:
                             paid_amt_bal = split_amount - payment_total
                             if paid_amt_bal >= int(paid_amount):
+                                if paid_amt_bal > int(paid_amount):
+                                    payment_name = 'Half'
+
+                                else:
+                                    payment_name = 'Full'
+                                    status +=1
                                 payments = PaymentDetails()
                                 payments.booking=book
                                 payments.payment_mode = request.POST.get('payment_mode')
@@ -363,10 +380,13 @@ def generate(request):
                                 payments.transaction = request.POST.get('transaction_id')
                                 payments.ddno=request.POST.get('dd_no')
                                 payments.payment_data = request.POST.get('payment_data')
-                                payments.paymentname =paymentname
+                                payments.paymentname =paymentname+' '+payment_name
                                 payments.amount = paid_amount
                                 payments.receipt_no = get_number
                                 payments.save()
+                                book.payments_status = status
+                                book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount)
+                                book.save()
                                 break
                             else:
                                 payments = PaymentDetails()
@@ -382,6 +402,9 @@ def generate(request):
                                 payments.amount = paid_amt_bal
                                 payments.receipt_no = get_number
                                 payments.save()
+                                book.payments_status = status
+                                book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount)
+                                book.save()
                                 paid_amount=int(paid_amount) -int(paid_amt_bal)
 
 

@@ -52,13 +52,18 @@ def booking_report(request):
         view_reports = PaymentDetails.objects.distinct()
         bookings = Bookings.objects.filter(land_details__project__projectname = value)
         #filter(booking__land_details__project__projectname=value)
+        print(value)
+        if value == 'all':
+                print(value)
+                bookings = Bookings.objects.all() 
+                print(bookings)
         for booking in bookings:
+            
             payments = booking.paymentdetails_set.all()
             booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
             booking.address = UserDetail.objects.get(user_id = booking.user.id).address
             booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
-        view_reports = PaymentDetails.objects.filter(booking__land_details__project__projectname='PROJECT2').order_by('booking_id')
-
+           
         context={
         'view_report': view_report,
         'project':project,
