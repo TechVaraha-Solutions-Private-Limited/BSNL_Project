@@ -18,6 +18,7 @@
     }
 </style>
 <form class="pt-5" method="post">
+    {% csrf_token %} 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         <div class="p-1">
             <label class="p-1">Booking Report</label>
@@ -34,6 +35,7 @@
         <div id="dynamicDropdown" style="display: none;" class="p-1">
         </div>
     </div>
+
 </form>
 <br>
 <div>
@@ -61,8 +63,6 @@
         </thead>
         <tbody>
             {% for val in bookings %}
-            
-                
                 <tr>
                     <td>{{forloop.counter}}</td>
                     <td>{{val.seniority_id}}</td>
@@ -83,11 +83,42 @@
                     <td></td>
                     <td>{{val.paymentdetails_set.last.paymentname}}</td>
                 </tr>
-               
             {%endfor%}
         </tbody>
     </table>
 </div>
+<div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Select Date</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post" action="{% url 'booking_report' %}">
+        {% csrf_token %}
+        <input type="hidden" name="date" value=date> 
+        <div class="modal-body">
+            <div class="form-group">
+                <label>From Date</label>
+                <input type="hidden" name="reportType" value=date > 
+                <input type="date" class="form-control" name="fromDate" value="" required="">
+            </div>
+            <div class="form-group">
+                <label>To Date</label>
+                
+                <input type="date" class="form-control" name="toDate" value="" required="">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="reset" class="btn btn-secondary">Reset</button>
+          <button type="submit" class="btn btn-primary">Apply</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
 <script>
     var reportTypeDropdown = document.getElementById('reportType');
     var dynamicDropdown = document.getElementById('dynamicDropdown');
@@ -100,6 +131,7 @@
             dynamicDropdown.innerHTML = `
             {% csrf_token %}
                 <label class="p-1">Project Wise Options</label>
+                <input type="hidden" name="reportType" value=project> 
                 <select class="form-control" id="projectOption" name="projectOption" onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
                     <option value="all">All</option>
@@ -113,11 +145,13 @@
         } else if (selectedOption === 'date') {
             dynamicDropdown.innerHTML = `
                 <label class="p-1">Date Wise Options</label>
-                <select class="form-control" id="projectDate" name="projectDate">
-                    <option disabled selected hidden>Select Report Type</option>
-                    <option value="dateall">All</option>
-                    <option value="">PERIOD (FROM <input type="date" class="form-control" id="fromDate" name="fromDate"> TO <input type="date" class="form-control" id="toDate" name="toDate">)</option>
-                </select>
+                <input type="hidden" name="reportType" value=date> 
+                    <div class="card-tools">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                              <i class="fas fa-filter"></i>Filter
+                            </button>
+                        </div>
+                
             `;
             dynamicDropdown.style.display = 'block';
             // 3rd block
@@ -172,42 +206,6 @@
             dynamicDropdown.style.display = 'none';
         }
     });
-</script>
-<script>
-    var fromDatePicker = document.getElementById('fromDate');
-    var toDatePicker = document.getElementById('toDate');
-
-    fromDatePicker.addEventListener('change', function () {
-        // Handle "from" date selection
-        var fromDate = fromDatePicker.value;
-        var toDate = toDatePicker.value;  // Get the "to" date
-
-        // Perform filtering based on fromDate and toDate
-        filterDataByDate(fromDate, toDate);
-    });
-
-    toDatePicker.addEventListener('change', function () {
-        // Handle "to" date selection
-        var fromDate = fromDatePicker.value; // Get the "from" date
-        var toDate = toDatePicker.value;
-
-        // Perform filtering based on fromDate and toDate
-        filterDataByDate(fromDate, toDate);
-    });
-
-    function filterDataByDate(fromDate, toDate) {
-        var tableRows = document.querySelectorAll('.emInfo tbody tr'); // Select all table rows
-        for (var i = 0; i < tableRows.length; i++) {
-            var dateColumn = tableRows[i].querySelector('td:nth-child(4)'); // Assuming date column is the 4th column
-            var dateValue = dateColumn.textContent; // Get the date value
-
-            if (dateValue >= fromDate && dateValue <= toDate) {
-                tableRows[i].style.display = ''; // Show the row if it's within the date range
-            } else {
-                tableRows[i].style.display = 'none'; // Hide the row if it's outside the date range
-            }
-        }
-    }
 </script>
 
 {% endblock %}
