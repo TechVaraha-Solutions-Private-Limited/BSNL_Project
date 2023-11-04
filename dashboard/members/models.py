@@ -16,6 +16,8 @@ class Bookings(models.Model):
     downpayment = models.CharField(max_length=120)
     site_refer = models.CharField(max_length=120)
     am_no = models.CharField(max_length=20,null=False)
+    payments_status = models.CharField(max_length=2,default=0)
+    total_paid_amount = models.CharField(max_length=100,default=0)
     #UGDG
     date_of_change = models.CharField(max_length=120,null=True)
     type_of_change = models.CharField(max_length=120,null=True)
@@ -61,6 +63,8 @@ class PaymentDetails(models.Model):
     ddno =models.CharField(max_length=20)
     dateofreceipt = models.CharField(max_length=20)
     paymentname = models.CharField(max_length=20,null=True)
+    state = models.CharField(max_length=2,default=0)
+    total_paid_amount = models.CharField(max_length=100,default=0)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
     date_cleared=models.CharField(max_length=50,null=True)
