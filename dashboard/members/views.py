@@ -394,38 +394,7 @@ def generate(request):
 
 
                         
-                        # if split_amount  <= payment_amount:
-                        #     payments = PaymentDetails()
-                        #     payments.booking=book
-                        #     payments.payment_mode = request.POST.get('payment_mode')
-                        #     payments.bank = request.POST.get('bank')
-                        #     payments.branch = request.POST.get('branch')
-                        #     payments.cheque_no = request.POST.get('cheque_no')
-                        #     payments.transaction = request.POST.get('transaction_id')
-                        #     payments.ddno=request.POST.get('dd_no')
-                        #     payments.payment_data = request.POST.get('payment_data')
-                        #     payments.paymentname =paymentname
-                        #     payments.amount = split_amount
-                        #     payments.receipt_no = get_number
-                        #     payments.save()
-                        #     payment_amount = payment_amount - split_amount 
-                        # elif payment_amount > 0:
-                        #     payments = PaymentDetails()
-                        #     payments.booking=book
-                        #     payments.payment_mode = request.POST.get('payment_mode')
-                        #     payments.bank = request.POST.get('bank')
-                        #     payments.branch = request.POST.get('branch')
-                        #     payments.cheque_no = request.POST.get('cheque_no')
-                        #     payments.transaction = request.POST.get('transaction_id')
-                        #     payments.ddno=request.POST.get('dd_no')
-                        #     payments.payment_data = request.POST.get('payment_data')
-                        #     payments.paymentname =paymentname
-                        #     payments.amount = payment_amount
-                        #     payments.receipt_no = get_number
-                        #     payments.save()
-                        #     print('2:',payments.amount)
-                        #     break
-                    
+
                     messages.success(request,'Successfully Saved')
             except Bookings.DoesNotExist:
                 messages.error(request,'Saved failed')
@@ -641,6 +610,7 @@ def receipts(request):
         print(mydata.id)
         sum_val=0
         for payment in mydata.paymentdetails_set.all():
+
             sum_val += float(payment.amount)
             try:
                 amount = int(payment.amount)
@@ -709,12 +679,27 @@ def btmt(request):
     return render(request,'new_bookings/btmt.html',context)
 
 def activemember(request):
+    
     user = UserDetail.objects.filter(user__is_active=1).all()
     userinfo = User.objects.get(id=9)
     nomiee = UserNominee.objects.filter(user__is_active=1).all
     book = Bookings.objects.filter(user__is_active=1).all()
     for us in book:
-        us.id_status = UserDetail.objects.get(user_id=us.user.id).id_card
+        userdetail = UserDetail.objects.get(user_id=us.user.id)      
+        us.cus_dob = userdetail.dob
+        us.id_status = userdetail.id_card
+        us.pan_no = userdetail.panno
+        us.pro_img = userdetail.profile
+        us.adhar_no = userdetail.aadhhaarno
+        us.last_n = Bookings.objects.get(user_id=us.user.id).user.last_name
+        us.nomie_name = UserNominee.objects.get(user_id=us.user.id).nominee_name
+        us.nomie_age = UserNominee.objects.get(user_id=us.user.id).nominee_age
+        us.nomie_rel = UserNominee.objects.get(user_id=us.user.id).nominee_relationship
+        us.nomie_adrs = UserNominee.objects.get(user_id=us.user.id).address
+        us.fam_name = UserFamilyDetails.objects.get(user_id=us.user.id).member_name
+        us.fam_age = UserFamilyDetails.objects.get(user_id=us.user.id).member_age
+        us.fam_rel = UserFamilyDetails.objects.get(user_id=us.user.id).member_relation
+        print(us.pro_img.url)
     context={
         'user':user,
         'book':book,
@@ -742,8 +727,8 @@ def updateactivememberlist(request,id):
         userdetail.id_card=request.POST.get('id_card')
         userdetail.save()
         
-
         return redirect('/members/activemember')
+    
     context={
         'user':user,
         'book':book,
@@ -761,6 +746,36 @@ def deleteactivememberlist(request,id):
         'user':book,
     }
     return redirect('/members/activemember',context)
+
+def update_personal(request,id):
+    nomine =  UserNominee.objects.get(user_id=id)
+    family_details =  UserFamilyDetails.objects.get(user_id=id)
+    card_details = UserDetail.objects.get(user_id=id)
+    if request.method =='POST':
+        card_details.aadhhaarno = request.POST.get('aadhhaarno')
+        card_details.panno = request.POST.get('panno')
+        profile = request.POST.get('profile')
+        if profile:
+            card_details.profile = profile
+        card_details.save()
+        nomine.nominee_name = request.POST.get('nominee_name')
+        nomine.nominee_age = request.POST.get('nominee_age')
+        nomine.nominee_relationship = request.POST.get('nominee_relationship')
+        nomine.address = request.POST.get('address')
+        nomine.save()
+        family_details.member_name = request.POST.get('member_name')
+        family_details.member_age = request.POST.get('member_age')
+        family_details.member_relation = request.POST.get('member_relation')
+        family_details.save()
+
+        return redirect('/members/activemember')
+
+    context={
+        'card_details':card_details,
+        'nomine':nomine,
+        'family_details':family_details
+    }
+    return render(request,'view/update_view/update_personal.html',context)
 
 def inactivemember(request):
     book1 = Bookings.objects.filter(user__is_active=0).all()

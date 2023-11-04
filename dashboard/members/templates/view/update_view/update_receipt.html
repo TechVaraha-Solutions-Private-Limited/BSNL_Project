@@ -6,13 +6,18 @@
     a {
         color: black;
     }
+
+    #divbox {
+        box-shadow: 0px 0px 5px #007bff;
+        border-radius: 1%;
+    }
 </style>
 <form class="pt-5" method="post">
-    <div class="p-2" style="border:solid; border-color: rgb(123, 123, 233); border-radius: 10px;">
+    <div class="p-2" id="divbox">
         <div class="panel p-1">
-            <h2 class="text-lg font-semibold dark:text-white-light p-1"
-                style="background-color: rgb(138, 202, 167); border-radius: 9px;">
-                <center> <b>Update Receipt List</b></center>
+            <h2 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
+                style="background-color: #00c200;color:white; width:100%;">
+                <center> <b>UPDATE RECEIPT LIST</b></center>
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
@@ -40,7 +45,7 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Payment Date</label>
-                    <input type="date" name="payment_data" value="{{update_receipts.payment_data}}"  
+                    <input type="date" name="payment_data" value="{{update_receipts.payment_data}}"
                         placeholder="Payment Date" class="form-input">
                 </div>
                 <div class="p-1">
@@ -91,12 +96,12 @@
                         Payment Info
                         {% endif %}
                     </label>
-                    <input type="text" name="{% if update_receipts.payment_mode == 'cheque' %}cheque_no{% elif update_receipts.payment_mode == 'dd' %}ddno{% elif update_receipts.payment_mode == 'transaction' %}transaction{% else %}payment_info{% endif %}"
+                    <input type="text"
+                        name="{% if update_receipts.payment_mode == 'cheque' %}cheque_no{% elif update_receipts.payment_mode == 'dd' %}ddno{% elif update_receipts.payment_mode == 'transaction' %}transaction{% else %}payment_info{% endif %}"
                         value="{% if update_receipts.payment_mode == 'cheque' %}{{ update_receipts.cheque_no }}{% elif update_receipts.payment_mode == 'dd' %}{{ update_receipts.ddno }}{% elif update_receipts.payment_mode == 'transaction' %}{{ update_receipts.transaction }}{% else %}{{ update_receipts.payment_info }}{% endif %}"
                         placeholder="{% if update_receipts.payment_mode == 'cheque' %}Cheque No{% elif update_receipts.payment_mode == 'dd' %}DD No{% elif update_receipts.payment_mode == 'transaction' %}Transaction ID{% else %}Payment Info{% endif %}"
                         class="form-input">
                 </div>
-                
 
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
@@ -107,8 +112,9 @@
                 </div>
             </div>
             <div class="text-center p-3">
-                <input type="submit" value="Update" class="btn btn-primary">
-                <input type="reset" value="Clear" class="btn btn-danger">
+                <input type="submit" value="Update"
+                    class="btn btn-success mt-3 text-lg font-semibold dark:text-white-light"
+                    style="background-color: #00c200;">
             </div>
         </div>
 </form>
