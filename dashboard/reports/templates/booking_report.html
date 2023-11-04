@@ -126,8 +126,9 @@
             <label class="p-1">Proj Head Wise</label>
                 <select class="form-control" id="projecthead" name="projecthead">
                     <option disabled selected hidden>Select Report Type</option>
-                    <option value="headall">All</option>
-                    <option value="">Specific Proj Head</option>
+                    {% for mydata in book %}
+                        <option value="{{ mydata.project_lead }}">{{ mydata.project_lead }}</option>
+                    {% endfor %}
                 </select>
             `;
             dynamicDropdown.style.display = 'block';
@@ -137,8 +138,9 @@
             <label class="p-1">Executive Wise</label>
                 <select class="form-control" id="projectexe" name="projectexe">
                     <option disabled selected hidden>Select Report Type</option>
-                    <option value="exeall">All</option>
-                    <option value="specifyexe">Specific Executive</option>
+                    {% for mydata in book %}
+                        <option value="{{ mydata.project_lead }}">{{ mydata.project_lead }}</option>
+                    {% endfor %}
                 </select>
             `;
             dynamicDropdown.style.display = 'block';

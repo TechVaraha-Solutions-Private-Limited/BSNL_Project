@@ -42,6 +42,7 @@ def print_recepit(request,id):
 def booking_report(request):
     view_report = PaymentDetails.objects.all()
     project = Project.objects.all()
+    book =Bookings.objects.all
     for view in view_report:
         detail = UserDetail.objects.get(user_id = view.booking.user)
         view.userinfo = detail.alternate_no
@@ -51,28 +52,27 @@ def booking_report(request):
         value = request.POST.get('projectOption')
         view_reports = PaymentDetails.objects.distinct()
         bookings = Bookings.objects.filter(land_details__project__projectname = value)
-        #filter(booking__land_details__project__projectname=value)
-        print(value)
+        
         if value == 'all':
-                print(value)
-                bookings = Bookings.objects.all() 
-                print(bookings)
+                bookings = Bookings.objects.all()
+        
         for booking in bookings:
-            
             payments = booking.paymentdetails_set.all()
             booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
             booking.address = UserDetail.objects.get(user_id = booking.user.id).address
             booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
-           
+            
         context={
         'view_report': view_report,
         'project':project,
         'view_reports':view_reports,
         'bookings':bookings,
+        'book':book
         }
         return render(request, 'booking_report.html', context)
     content={
         'project':project,
+        'book':book
         
     }
     return render(request, 'booking_report.html',content)
