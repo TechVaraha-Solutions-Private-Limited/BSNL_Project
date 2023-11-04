@@ -43,6 +43,7 @@ def print_recepit(request,id):
 def booking_report(request):
     view_report = PaymentDetails.objects.all()
     project = Project.objects.all()
+    book =Bookings.objects.all
     for view in view_report:
         detail = UserDetail.objects .get(user_id = view.booking.user)
         view.userinfo = detail.alternate_no
@@ -96,10 +97,12 @@ def booking_report(request):
         'view_report': view_report,
         'project':project,
         'bookings':bookings,
+        'book':book
         }
         return render(request, 'booking_report.html', context)
     content={
         'project':project,
+        'book':book
         
     }
     return render(request, 'booking_report.html',content)

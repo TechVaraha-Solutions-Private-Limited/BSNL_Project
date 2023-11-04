@@ -37,6 +37,7 @@ urlpatterns = [
     path('view_receipt/<id>',view_receipt,name='view_receipt'),
     # update function
     path('updateactivememberlist/<id>',updateactivememberlist,name='updateactivememberlist'),
+    path('update_personal/<id>',update_personal,name='update_personal'),
     path('update_site_visit/<id>',update_site_visit,name='update_site_visit'),
     path('update_inactive/<id>',update_inactive,name='update_inactive'),
     # delete function

@@ -34,11 +34,10 @@
       </thead>
       <tbody>
         {% for mydata in booking %}
-        {% if mydata.sum_val %}
           <tr>
               <td>{{forloop.counter}}</td>
               <td>{{mydata.user.email}}</td>
-              <td>{{mydata.paymentdetails_set.last.dateofreceipt }}
+              <td>{{mydata.date_rec}}
               </td>
               <td>{{mydata.paymentdetails_set.last.receipt_no }}</td>
               <td>{{ mydata.sum_val }}</td>
@@ -70,7 +69,6 @@
                 </div>
               </td>
           </tr>
-          {% endif %}
           <div class="modal fade bd-example-modal-sm" id="exampleModal{{mydata.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-sm" role="document">
               <div class="modal-content">

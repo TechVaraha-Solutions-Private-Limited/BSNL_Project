@@ -97,7 +97,7 @@
                             <th>Amount Paid</th>
                             <th>Balance Amount</th>
                             <th>ID Card Status</th>
-                            <th>Action</th>
+                            <th style="width: 13%; text-align: center;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -129,7 +129,7 @@
                             <td>{{mydata.downpayment}}</td>
                             <td>{{mydata.downpayment}}</td>
                             <td>{{mydata.id_status}}</td>
-                            <td>
+                            <td><center>
                                 <div>
                                     <a href="updateactivememberlist/{{mydata.user.id}}" type="button"
                                         style="border:solid;border-color: rgba(240, 248, 255, 0);" x-tooltip="Edit">
@@ -159,7 +159,7 @@
                                                 d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
                                                 stroke="currentColor" stroke-width="1.5"></path>
                                         </svg></a>
-                                </div>
+                                </div></center>
                             </td>
                         </tr>
                         {%endfor%}
@@ -296,14 +296,14 @@
                                 <div>
                                     <p>Customer Name/</p>
                                     <p>Seniority/</p>
-                                    <p>Father/Husband Name/</p>
+                                    <p>(Father/Husband Name)/</p>
                                     <p>Date of Birth</p>
                                 </div>
                             </th>
                             <th>
                                 <div>
                                     <p>Pan No/</p>
-                                    <p>Aadhaar No/</p>
+                                    <p>Aadhaar No</p>
                                 </div>
                             </th>
                             <th>
@@ -318,12 +318,12 @@
                             <th>Family Memeber Age</th>
                             <th>Family Member Relationship</th>
                             <th>Passport Size Photograp</th>
-                            <th>Actions</th>
+                            <th style="width: 10%; text-align: center;">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
 
-                        {% for mydata in user %}
+                        {% for mydata in book %}
 
                         <tr>
                             <td>{{forloop.counter}}</td>
@@ -331,33 +331,35 @@
                                 <div>
                                     <p>{{mydata.user.first_name}}</p>
                                     <p>{{mydata.seniority_id}}</p>
-                                    <p>{{value.dateofbooking}}</p>
-                                    <p>{{value.amount}}</p>
+                                    <p>{{mydata.last_n}}</p>
+                                    <p>{{mydata.cus_dob}}</p>
                                 </div>
                             </td>
                             <td>
                                 <div>
-                                    <p>{{mydata.panno}}</p>
-                                    <p>{{mydata.aadhhaarno}}</p>
+                                    <p>{{mydata.pan_no}}</p>
+                                    <p>{{mydata.adhar_no}}</p>
                                 </div>
                             </td>
-                            <td> {% for nomiee in mydata.user.usernominee_set.all %}
-                                <div>
-                                    <p>{{nomiee.nominee_name}}</p>
-                                    <p>{{nomiee.nominee_age}}</p>
-                                    <p>{{nomiee.nominee_relationship}}</p>
-                                    <p>{{nomiee.address}}</p>
-                                </div>
-                                {% endfor %}
-                            </td>
-                            <td></td>
-                            <td>{{mydata.active}}</td>
-                            <td></td>
-                            <td></td>
+                            {% for mydata in book %}
                             <td>
                                 <div>
-                                    <a href="" type="button" style="border:solid;border-color: rgba(240, 248, 255, 0);"
-                                        x-tooltip="Edit">
+                                    <p>{{mydata.nomie_name}}</p>
+                                    <p>{{mydata.nomie_age}}</p>
+                                    <p>{{mydata.nomie_rel}}</p>
+                                    <p>{{mydata.nomie_adrs}}</p>
+                                </div>
+                            </td>
+
+                            <td>{{mydata.fam_name}}</td>
+                            <td>{{mydata.fam_age}}</td>
+                            <td>{{mydata.fam_rel}}</td>
+                            <td><img src="{{ mydata.pro_img.url }}" alt="{{ mydata.pro_img.name }}"></td>
+                            {% endfor %}
+                            <td>
+                                <div>
+                                   <center><a href="update_personal/{{mydata.user.id}}" type="button"
+                                        style="border:solid;border-color: rgba(240, 248, 255, 0);" x-tooltip="Edit">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5 ltr:mr-2 rtl:ml-2">
                                             <path
@@ -366,24 +368,7 @@
                                             <path opacity="0.5"
                                                 d="M14.36 4.07812C14.36 4.07812 14.4759 6.04774 16.2138 7.78564C17.9517 9.52354 19.9213 9.6394 19.9213 9.6394M4.19789 21.6777L2.32178 19.8015"
                                                 stroke="currentColor" stroke-width="1.5"></path>
-                                        </svg></a>
-                                    <a href="" type="button" style="border:solid;border-color: rgba(250, 250, 250, 0);"
-                                        x-tooltip="Delete">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
-                                            <path d="M20.5001 6H3.5" stroke="currentColor" stroke-width="1.5"
-                                                stroke-linecap="round"></path>
-                                            <path
-                                                d="M18.8334 8.5L18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5"
-                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-                                            <path opacity="0.5" d="M9.5 11L10 16" stroke="currentColor"
-                                                stroke-width="1.5" stroke-linecap="round"></path>
-                                            <path opacity="0.5" d="M14.5 11L14 16" stroke="currentColor"
-                                                stroke-width="1.5" stroke-linecap="round"></path>
-                                            <path opacity="0.5"
-                                                d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6"
-                                                stroke="currentColor" stroke-width="1.5"></path>
-                                        </svg></a>
+                                        </svg></a></center>
                                 </div>
                             </td>
                         </tr>
