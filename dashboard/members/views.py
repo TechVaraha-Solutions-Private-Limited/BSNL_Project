@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, HttpResponse
 from django.http import JsonResponse
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee
-from .models import Bookings,PaymentDetails,Ugdg,Receipts,Images,Leadowner,Site_visit,Btmt
+from .models import Bookings,PaymentDetails,Ugdg,Receipts,Images,Leadowner,Site_visit,Btmt,G_image
 from dashboard.projects.models import Project,PlotSize,LandDetails
 from django.forms.models import model_to_dict
 from django.contrib import messages
@@ -16,6 +16,14 @@ def banner_images(request):
             place = "Banner"
         ).save()        
     return render(request,'image/banner.html')
+
+def gallery_images(request):
+    if request.method == 'POST':
+        G_image(
+            gallery_image=request.POST['profile'],
+            g_place= "gallery"
+        ).save()
+    return render(request,'image/gallery.html')
 
 def home(request):
     return render(request,'common/index.html')
@@ -728,6 +736,8 @@ def activemember(request):
     userinfo = User.objects.get(id=9)
     nomiee = UserNominee.objects.filter(user__is_active=1).all
     book = Bookings.objects.filter(user__is_active=1).all()
+    for us in book:
+        us.id_status = UserDetail.objects.get(user_id=us.user.id).id_card
     context={
         'user':user,
         'book':book,
@@ -752,7 +762,10 @@ def updateactivememberlist(request,id):
         userdetail.address = request.POST.get('address')
         userdetail.city = request.POST.get('city')
         userdetail.state = request.POST.get('state')
+        userdetail.id_card=request.POST.get('id_card')
         userdetail.save()
+        
+
         return redirect('/members/activemember')
     context={
         'user':user,

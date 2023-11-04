@@ -148,7 +148,7 @@
                 </div>
                 <div class="p-1">
                     <label class="p-1"></label>
-                    <button id="hello1" class="btn btn-success text-lg font-semibold dark:text-white-light" type="button"
+                    <button id="hello1" class="btn btn-success mt-3 text-lg font-semibold dark:text-white-light" style="background-color: #00c200;" type="button"
                      onclick="add_more_field()">Add More</button>
                 </div>
             </div>
@@ -176,9 +176,9 @@
             <div class="p-1">
                 <input type="text" name="member_relation`+i+`" placeholder="Family-Member Relationship" class="form-input">
             </div>
-            <button id="hello`+i+`" class="btn btn-success text-lg font-semibold dark:text-white-light" type="button"
+            <button id="hello`+i+`" class="btn btn-success mt-3 text-lg font-semibold dark:text-white-light" style="background-color: #00c200;" type="button"
                      onclick="add_more_field(this)">Add More</button>
-            <button id="btn`+i+`" class="btn btn-danger text-lg font-semibold dark:text-white-light"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Close</button>
+            <button id="btn`+i+`" class="btn btn-danger text-lg font-semibold dark:text-white-light"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Remove</button>
         </div>
         `;
         container.appendChild(newRow);
