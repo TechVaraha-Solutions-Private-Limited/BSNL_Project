@@ -5,6 +5,7 @@ from dashboard.userinfo.models import UserDetail
 from num2words import num2words
 from django.db.models import Sum
 from datetime import datetime, date, timedelta
+import csv
 # Create your views here.
 def confirmletter_view(request,id):
     book=Bookings.objects.get(id=id)
@@ -43,7 +44,8 @@ def print_recepit(request,id):
 def booking_report(request):
     view_report = PaymentDetails.objects.all()
     project = Project.objects.all()
-    book =Bookings.objects.all
+    bookings =Bookings.objects.all()
+
     for view in view_report:
         detail = UserDetail.objects .get(user_id = view.booking.user)
         view.userinfo = detail.alternate_no
@@ -52,9 +54,6 @@ def booking_report(request):
     if request.method == 'POST':
         value = request.POST.get('projectOption')
         select = request.POST.get('reportType')
-        print(select)
-        fromDate = request.POST.get('fromDate','')
-        
         #filter(booking__land_details__project__projectname=value)
         if select == 'project':
             
@@ -83,6 +82,10 @@ def booking_report(request):
                     booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                     booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                     booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
+        elif select == 'paystatus':
+            value = request.POST.get('payment')
+            if value =='down_payment':
+                down = Bookings.objects.all()
         else:
             bookings = Bookings.objects.all()
             
@@ -91,18 +94,14 @@ def booking_report(request):
                 booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                 booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                 booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
-
-       
         context={
         'view_report': view_report,
         'project':project,
         'bookings':bookings,
-        'book':book
         }
         return render(request, 'booking_report.html', context)
     content={
         'project':project,
-        'book':book
-        
+        'bookings':bookings,
     }
     return render(request, 'booking_report.html',content)
