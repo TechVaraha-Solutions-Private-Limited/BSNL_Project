@@ -36,7 +36,7 @@
                 <div id="form" class=" mt-3">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
                         <div class="p-1">
-                            <label class="p-1">Date of Sv</label>
+                            <label class="p-1">Date of SV</label>
                             <input type="date" name="date_of_visit" placeholder="Date of Sv" class="form-input" required>
                         </div>
                         <div class="p-1">
@@ -60,17 +60,26 @@
                             <input type="text" name="proj_lead" placeholder="Proj Head" class="form-input" required>
                         </div>
                         <div class="p-1">
-                            <label class="p-1">So Done by</label>
+                            <label class="p-1">SO Done by</label>
                             <input type="text" name="so_done_by" placeholder="So Done by" class="form-input" required>
                         </div>
                         <div class="p-1">
-                            <label class="p-1">Sv Done By</label>
+                            <label class="p-1">SV Done By</label>
                             <input type="text" name="sv_done_by" placeholder="Sv Done By" class="form-input" required>
                         </div>
+
                         <div class="p-1">
-                            <label class="p-1">Sv Category</label>
+                            <label class="p-1">SV Status</label>
+                            <select class="form-control" name="sv_status" required> 
+                                <option disabled selected hidden>Select</option>
+                                <option value="booked">Booked</option>
+                                <option value="not_nterested">Not Interested</option>
+                            </select>
+                        </div>
+                        <div class="p-1">
+                            <label class="p-1">SV Category</label>
                             <select class="form-control" name="sv_category" required> 
-                                <option>Select</option>
+                                <option disabled selected hidden>Select</option>
                                 <option value="BOTH">BOTH</option>
                                 <option value="DSVD">DSVD</option>
                                 <option value="SOD ONLY">SOD ONLY</option>
@@ -82,18 +91,13 @@
                         <div class="p-1">
                             <label class="p-1">Source</label>
                             <select class="form-control" name="source" required>
-                                <option>Select</option>
+                                <option disabled selected hidden>Select</option>
                                 <option value="SMS">SMS</option>
                                 <option value="PAMPHLET">PAMPHLET</option>
                                 <option value="REFERENCE">REFERENCE</option>
                                 <option value="WALK-IN">WALK-IN</option>
                             </select>
-                            <!-- <input type="text" name="sr_team_lead" placeholder="Source" class="form-input" > -->
                         </div>
-                        <!-- <div class="p-1">
-                            <label class="p-1">Status</label>
-                            <input type="text" name="status" placeholder="Status" class="form-input" >
-                        </div> -->
                         <div class="p-1">
                             <label class="p-1">Booked On</label>
                             <input type="date" name="booked_no" placeholder="Booked On" class="form-input" value="{{update.booked_no|date:'y-m-d'}}">
@@ -104,7 +108,7 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-success mt-5" name="action" value="create_order" style="background-color: #00c200;">Update</button>
+                        <button type="submit" class="btn btn-success mt-5" name="action" value="create_order" style="background-color: #00c200;">Create</button>
                     </div>
                 </div>
             </div>

@@ -526,7 +526,8 @@ def site_visit(request):
                 sv_category = request.POST.get('sv_category'),
                 source = request.POST.get('source'),
                 booked_no = request.POST.get('booked_no'),
-                booked_sry_no = request.POST.get('booked_sry_no')
+                booked_sry_no = request.POST.get('booked_sry_no'),
+                sv_status = request.POST.get('sv_status'),      
             ).save()
         messages.success(request,'Successfully Saved')
     return render(request,'new_bookings/site_visit.html',{'customer':detail})
@@ -550,6 +551,7 @@ def update_site_visit(request,id):
         update.source = request.POST.get("source")
         update.booked_no = request.POST.get("booked_no")
         update.booked_sry_no = request.POST.get("booked_sry_no")
+        update.sv_status = request.POST.get('sv_status')
         update.save()
         return redirect('/members/view_site_visit')
     messages.success(request,'Updated Succesfully')
