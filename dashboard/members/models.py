@@ -131,6 +131,7 @@ class Site_visit(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
     status =  models.BooleanField(default=True)
+    sv_status = models.CharField(max_length=20,null=True)
 
 class Update_blocked(models.Model):
      project=models.CharField(max_length=50,null=True)

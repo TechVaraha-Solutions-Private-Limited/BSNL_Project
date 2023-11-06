@@ -1,0 +1,249 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+{% include 'common/bootstrap.html' %}
+<style>
+    a {
+        color: black;
+    }
+
+    .addproject {
+        text-align: center;
+        padding: 15px 15px;
+        font-size: 15px;
+        font-weight: bold;
+        background-color: #00c200;
+        color: white;
+        font-size: 19px;
+    }
+</style>
+<form class="pt-5" method="post">
+    {% csrf_token %} 
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="p-1">
+            <label class="p-1">Site Report</label>
+            <select class="form-control" id="reportType" name="reportType">
+                <option disabled selected hidden>Select Report</option>
+                <option value="date">SV Date Wise</option>
+                <option value="fupdatewise">FUP Date Wise</option>
+                <option value="project_head">Proj Head Wise</option>
+                <option value="executive">Executive Wise</option>
+                <option value="svstatus">SV Status Wise</option>
+                <option value="sourcewise">Source Wise</option>
+                <option value="svcategorywise">SV Category Wise</option>
+            </select>
+        </div>
+        <div id="dynamicDropdown" style="display: none;" class="p-1">
+        </div>
+    </div>
+
+</form>
+<br>
+<div>
+    <table class="table-responsive" class="emInfo responsive" >
+        <thead>
+            <tr><th>#</th>
+                <th>Date Of SV</th>
+                <th>Cust Name</th>
+                <th>Phone Number</th>
+                <th>SO Done by</th>
+                <th>SV Done by</th>
+                <th>Fup Date</th>
+                <th>Executive</th>
+                <th>Team Leader</th>
+                <th>Project Manager</th>
+                <th>Source</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for val in sitereport_filter %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{val.date_of_site_visit}}</td>
+                    <td>{{val.cust_name}}</td>
+                    <td>{{val.phone_no}}</td>
+                    <td>{{val.so_done_by}}</td>
+                    <td>{{val.sv_don_by}}</td>
+                    <td>need to get</td>
+                    <td>{{val.executive}}</td>
+                    <td>{{val.team_lead}}</td>
+                    <td>{{val.proj_head}}</td>
+                    <td>{{val.source}}</td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Select Date</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post" action="{% url 'site_report' %}">
+        {% csrf_token %}
+        <input type="hidden" name="date" value=date> 
+        <div class="modal-body">
+            <div class="form-group">
+                <label>From Date</label>
+                <input type="hidden" name="reportType" value=date > 
+                <input type="date" class="form-control" name="fromDate" value="" required="">
+            </div>
+            <div class="form-group">
+                <label>To Date</label>
+                
+                <input type="date" class="form-control" name="toDate" value="" required="">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="reset" class="btn btn-secondary">Reset</button>
+          <button type="submit" class="btn btn-primary">Apply</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade bd-example-modal-sm" id="fupdatewise" tabindex="-1" role="dialog" aria-labelledby="fupdatewiseLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="fupdatewiseLabel">Select Date</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form method="post" action="{% url 'site_report' %}">
+        {% csrf_token %}
+        <input type="hidden" name="date" value=date> 
+        <div class="modal-body">
+            <div class="form-group">
+                <label>From Date</label>
+                <input type="hidden" name="reportType" value=date > 
+                <input type="date" class="form-control" name="fromDate" value="" required="">
+            </div>
+            <div class="form-group">
+                <label>To Date</label>
+                
+                <input type="date" class="form-control" name="toDate" value="" required="">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="reset" class="btn btn-secondary">Reset</button>
+          <button type="submit" class="btn btn-primary">Apply</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script>
+    var reportTypeDropdown = document.getElementById('reportType');
+    var dynamicDropdown = document.getElementById('dynamicDropdown');
+
+    reportTypeDropdown.addEventListener('change', function () {
+        var selectedOption = reportTypeDropdown.value;
+
+        // 1st block
+        if (selectedOption === 'date') {
+            dynamicDropdown.innerHTML = `
+                <label class="p-1">SV Date Wise</label>
+                <input type="hidden" name="reportType" value='date'> 
+                    <div class="card-tools">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                              <i class="fas fa-filter"></i>Filter
+                            </button>
+                        </div>
+                
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 2nd block
+        } else if (selectedOption === 'fupdatewise') {
+            dynamicDropdown.innerHTML = `
+                <label class="p-1">Date Wise Options</label>
+                <input type="hidden" name="reportType" value=date> 
+                    <div class="card-tools">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fupdatewise">
+                              <i class="fas fa-filter"></i>Filter
+                            </button>
+                        </div>
+                
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 3rd block
+        } else if (selectedOption === 'project_head') {
+            dynamicDropdown.innerHTML = `
+            {% csrf_token %}
+            <label class="p-1">Proj Head Wise</label>
+            <input type="hidden" name="reportType" value ='project_head'> 
+                <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
+                    <option disabled selected hidden>Select Report Type</option>
+                    {% for mydata in sitereport %}
+                        <option value="{{ mydata.proj_head }}">{{ mydata.proj_head }}</option>
+                    {% endfor %}
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 4th block 
+        } else if (selectedOption === 'executive') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">Executive Wise</label>
+            <input type="hidden" name="reportType" value = 'executive'>
+                <select class="form-control" id="projectexe" name="sitereportoption" onchange="this.form.submit()">
+                    <option disabled selected hidden>Select Report Type</option>
+                    {% for mydata in sitereport %}
+                        <option value="{{ mydata.executive }}">{{ mydata.executive }}</option>
+                    {% endfor %}
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 5th block
+        } else if (selectedOption === 'svstatus') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">SV Status Wise</label>
+            <input type="hidden" name="reportType" value = 'svstatus'>
+                <select class="form-control" id="projectexe" name="sitereportoption">
+                    <option disabled selected hidden>Select Report Type</option>
+                    {% for mydata in sitereport %}
+                        <option value="{{ mydata.status }}">{{ mydata.status }}</option>
+                    {% endfor %}
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 6th block
+        } else if (selectedOption === 'sourcewise') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">Source Wise</label>
+            <input type="hidden" name="reportType" value = 'sourcewise'>
+                <select class="form-control" id="sourcewise" name="sitereportoption">
+                    <option disabled selected hidden>Select Report Type</option>
+                    {% for mydata in sitereport %}
+                        <option value="{{ mydata.source }}">{{ mydata.source }}</option>
+                    {% endfor %}
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+        } else if (selectedOption === 'svcategorywise') {
+            dynamicDropdown.innerHTML = `
+            <label class="p-1">SV Category Wise</label>
+            <input type="hidden" name="reportType" value = project_head>
+                <select class="form-control" id="projectexe" name="projectexe">
+                    <option disabled selected hidden>Select Report Type</option>
+                    {% for mydata in sitereport %}
+                        <option value="{{ mydata.sv_category }}">{{ mydata.sv_category }}</option>
+                    {% endfor %}
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+            // 7th block
+        }else {
+            dynamicDropdown.style.display = 'none';
+        }
+    });
+</script>
+
+{% endblock %}

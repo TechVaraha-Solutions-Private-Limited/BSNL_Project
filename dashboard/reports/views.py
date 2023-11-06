@@ -1,5 +1,5 @@
-from django.shortcuts import render,redirect
-from dashboard.members.models import Bookings,PaymentDetails
+from django.shortcuts import render,redirect,HttpResponse
+from dashboard.members.models import Bookings,PaymentDetails,Site_visit
 from dashboard.projects.models import Project
 from dashboard.userinfo.models import UserDetail
 from num2words import num2words
@@ -43,19 +43,18 @@ def print_recepit(request,id):
 def booking_report(request):
     view_report = PaymentDetails.objects.all()
     project = Project.objects.all()
-    book =Bookings.objects.all
+    book =Bookings.objects.all()
     for view in view_report:
         detail = UserDetail.objects .get(user_id = view.booking.user)
         view.userinfo = detail.alternate_no
         view.address = detail.address
-        #print(view.booking.land_details.project.projectname)
+
     if request.method == 'POST':
         value = request.POST.get('projectOption')
         select = request.POST.get('reportType')
         print(select)
         fromDate = request.POST.get('fromDate','')
-        
-        #filter(booking__land_details__project__projectname=value)
+
         if select == 'project':
             
             if value == 'all':
@@ -73,7 +72,6 @@ def booking_report(request):
             if toDate and fromDate:
                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
-                print(fromDate)
                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
                 toDate =  date_obj + timedelta(days=1)
                 bookings = Bookings.objects.filter(created_on__gte=date(fromDate.year, fromDate.month, fromDate.day),
@@ -83,16 +81,24 @@ def booking_report(request):
                     booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                     booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                     booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
-        else:
-            bookings = Bookings.objects.all()
-            
+                    
+        elif select == 'project_head':
+            bookings = Bookings.objects.filter(project_lead = value)
             for booking in bookings:
                 payments = booking.paymentdetails_set.all()
                 booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                 booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                 booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
-
-       
+            print(booking)
+            
+        elif select == 'executive':
+            bookings = Bookings.objects.filter(exective = value)
+            for booking in bookings:
+                payments = booking.paymentdetails_set.all()
+                booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
+                booking.address = UserDetail.objects.get(user_id = booking.user.id).address
+                booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
+        
         context={
         'view_report': view_report,
         'project':project,
@@ -102,7 +108,57 @@ def booking_report(request):
         return render(request, 'booking_report.html', context)
     content={
         'project':project,
-        'book':book
+        'book':book,  
         
     }
     return render(request, 'booking_report.html',content)
+
+                        #site visit report
+
+def site_report(request):
+    sitereport_all = Site_visit.objects.all()
+    print("Hello")
+    if request.method == 'POST':
+        value = request.POST.get('sitereportoption')
+        select = request.POST.get('reportType')
+        fromDate = request.POST.get('fromDate','')
+        print('select:',select)
+        print('value:',value)
+        if select == 'date':
+            fromDate = request.POST.get('fromDate','')
+            toDate = request.POST.get('toDate','')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate =  date_obj + timedelta(days=1)
+                sitereport = Site_visit.objects.filter(created_on__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   created_on__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                    
+        elif select == 'project_head':
+            sitereport = Site_visit.objects.filter(proj_head = value)
+           
+        elif select == 'executive':
+            sitereport = Site_visit.objects.filter(executive = value)
+            
+        elif select == 'svstatus':
+            sitereport = Site_visit.objects.filter(status = value)
+            
+        elif select == 'sourcewise':
+            sitereport = Site_visit.objects.filter(source = value)
+            
+        elif select == 'svcategorywise':
+            sitereport = Site_visit.objects.filter(sv_category = value)
+        
+        context={
+        'sitereport_filter':sitereport,
+        'sitereport': sitereport_all
+        }
+        return render(request, 'site_report.html', context)
+    content={
+        'sitereport_filter':sitereport_all,
+        'sitereport': sitereport_all
+        
+    }
+    return render(request, 'site_report.html', content)
+

@@ -26,7 +26,7 @@
                 <option value="" disabled selected hidden>Select Report</option>
                 <option value="project">Project Wise</option>
                 <option value="date">Date Wise</option>
-                <option value="projhead">Proj Head Wise</option>
+                <option value="project_head">Proj Head Wise</option>
                 <option value="executive">Executive Wise</option>
                 <option value="payment">Payment Type Wise</option>
                 <option value="paystatus">Pay Status Wise</option>
@@ -155,10 +155,12 @@
             `;
             dynamicDropdown.style.display = 'block';
             // 3rd block
-        } else if (selectedOption === 'projhead') {
+        } else if (selectedOption === 'project_head') {
             dynamicDropdown.innerHTML = `
             <label class="p-1">Proj Head Wise</label>
-                <select class="form-control" id="projecthead" name="projecthead">
+            <input type="hidden" name="reportType" value = project_head> 
+                <select class="form-control" id="projecthead" name="projectOption" onchange="this.form.submit()">
+                    
                     <option disabled selected hidden>Select Report Type</option>
                     {% for mydata in book %}
                         <option value="{{ mydata.project_lead }}">{{ mydata.project_lead }}</option>
@@ -173,7 +175,7 @@
                 <select class="form-control" id="projectexe" name="projectexe">
                     <option disabled selected hidden>Select Report Type</option>
                     {% for mydata in book %}
-                        <option value="{{ mydata.project_lead }}">{{ mydata.project_lead }}</option>
+                        <option value="{{ mydata.exective }}">{{ mydata.exective }}</option>
                     {% endfor %}
                 </select>
             `;
