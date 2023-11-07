@@ -8,14 +8,13 @@
         border-radius: 1%;
     }
 </style>
-<form class="space-y-5" method="POST" action="">
+<form class="space-y-5" method="POST" action="" autocomplete="off">
     {% csrf_token %}
     <div class="p-2" id="divbox">
         <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
             style="background-color: #00c200;color:white; width:100%; text-align: center;"><b>ADD USER</b></label>
         <div class="panel">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-
                 <div>
                     <label>First Name</label>
                     <input type="text" name="first_name" placeholder="First Name" class="form-input"required>
@@ -26,20 +25,52 @@
                 </div>
                 <div>
                     <label>User Role</label>
-                    <select class="form-control" name="role">
+                    <select  class="form-input" name="role" id="inputfield">
                         <option value="">Select Role</option>
                         <option value="Admin">Admin</option>
                         <option value="User">User</option>
                         <option value="Staff">Staff</option>
+                        <option value="Project_Lead">Project Lead</option>
+                        <option value="Sr_Team_lead">Sr Team Lead</option>
+                        <option value="Team_Lead">Team Lead</option>
+                        <option value="Executive">Executive</option>
                     </select>
                 </div>
+                <div id="project_lead" style="display: none;"> 
+                    <label>Project Lead</label>
+                    <select name="project_lead" id="project_lead" class="form-input">
+                        <option value="">Select </option>
+                        {% for data in sr_team_lead  %}
+                        <option value="{{data.id}}">{{data.first_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div id="sr_team_lead" style="display: none;">
+                    <label for="">Sr Team Lead</label>
+                    <select name="sr_team_lead" id="sr_team_lead" class="form-input">
+                        <option value="">Select</option>
+                        {% for data in team %}
+                        <option value="{{data.id}}">{{data.user.first_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div id="team_lead" style="display: none;">
+                    <label>Team Lead</label>
+                    <select name="team_lead" id="team_lead" class="form-input">
+                        <option value="">Select</option>
+                        {% for data in executive %}
+                        <option value="{{data.id}}">{{data.user.first_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
                 <div>
                     <label>Mobile No</label>
-                    <input type="text" name="mobile_no" placeholder="Mobile No" class="form-input">
+                    <input type="number" name="mobile_no" placeholder="Mobile No" class="form-input">
                 </div>
                 <div>
                     <label>Email</label>
-                    <input type="text" name="email" placeholder="Email" class="form-input"required>
+                    <input type="email" name="email" placeholder="Email" class="form-input"required>
                 </div>
                 <div>
                     <label>Employee ID</label>
@@ -60,6 +91,9 @@
             </div>
 
         </div>
+        <div>
+
+        </div>
         <div class="text-center">
             <center> <input type="submit" value="Add User"
                     class="btn btn-success mt-3 text-lg font-semibold dark:text-white-light"
@@ -67,4 +101,29 @@
         </div>
     </div>
 </form>
+<script>
+    const inputField = document.getElementById('inputfield');
+    const project_lead = document.getElementById('project_lead');
+    const team_lead = document.getElementById('team_lead');
+    const sr_team_lead = document.getElementById('sr_team_lead');
+    inputField.addEventListener('input', function () {
+        if (inputField.value === 'Sr_Team_lead') {
+            project_lead.style.display = 'table';// Show the table
+            team_lead.style.display = 'none';
+            sr_team_lead.style.display = 'none';
+        } else if (inputField.value === 'Team_Lead') {
+            project_lead.style.display = 'table';// Show the table
+            team_lead.style.display = 'none';
+            sr_team_lead.style.display = 'table';// Show the table
+        } else if (inputField.value === 'Executive') {
+            project_lead.style.display = 'table';// Show the table
+            team_lead.style.display = 'table';// Show the table
+            sr_team_lead.style.display = 'table';// Show the table
+        } else {
+            project_lead.style.display = 'none';
+            team_lead.style.display = 'none';
+            sr_team_lead.style.display = 'none';
+        }
+    });
+</script>
 {% endblock %}

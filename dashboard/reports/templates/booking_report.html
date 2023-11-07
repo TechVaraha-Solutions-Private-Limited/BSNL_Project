@@ -16,6 +16,7 @@
         color: white;
         font-size: 19px;
     }
+
 </style>
 <form class="pt-5" method="post">
     {% csrf_token %} 
@@ -24,6 +25,7 @@
             <label class="p-1">Booking Report</label>
             <select class="form-control" id="reportType" name="reportType">
                 <option value="" disabled selected hidden>Select Report</option>
+                <option value="all">All</option>
                 <option value="project">Project Wise</option>
                 <option value="date">Date Wise</option>
                 <option value="project_head">Proj Head Wise</option>
@@ -34,8 +36,12 @@
         </div>
         <div id="dynamicDropdown" style="display: none;" class="p-1">
         </div>
+        
     </div>
-
+    <div>
+        <button class="btn btn-success" type="submit" name="reportType" value="all" >All</button>
+        <button >Excel</button>
+    </div>
 </form>
 <br>
 <div>
@@ -125,9 +131,11 @@
 
     reportTypeDropdown.addEventListener('change', function () {
         var selectedOption = reportTypeDropdown.value;
-
+        if (selectedOption === 'all'){
+                location.reload();
+        }
         // 1st block
-        if (selectedOption === 'project') {
+        else if (selectedOption === 'project') {
             dynamicDropdown.innerHTML = `
             {% csrf_token %}
                 <label class="p-1">Project Wise Options</label>
@@ -184,9 +192,8 @@
         } else if (selectedOption === 'payment') {
             dynamicDropdown.innerHTML = `
             <label class="p-1">Payment Type Wise</label>
-                <select class="form-control" id="payment" name="payment">
+                <select class="form-control" id="payment" name="payment " onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
-                    <option value="paymentall">All</option>
                     <option value="down_payment">Down Payment</option>
                     <option value="first_install">First Installment</option>
                     <option value="second_install">Second Installment</option>

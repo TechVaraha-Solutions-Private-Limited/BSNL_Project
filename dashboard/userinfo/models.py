@@ -97,6 +97,16 @@ class UserFamilyDetails(models.Model):
     created_on = models.DateTimeField(auto_now_add=True, null=True)
     updated_on = models.DateTimeField(auto_now=True, null=True)
 
+class SeniorTeamLead(models.Model):
+    user = models.ForeignKey(User,  on_delete=models.DO_NOTHING, null=False)
+    project_head = models.ForeignKey(User, related_name="project_head", on_delete=models.DO_NOTHING, null=False)
 
+class TeamLead(models.Model):
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=False)
+    sr_team = models.ForeignKey(SeniorTeamLead, on_delete=models.DO_NOTHING, null=False)
+
+class Executive(models.Model):
+    user = models.ForeignKey(User,  on_delete=models.DO_NOTHING, null=False)
+    teamlead = models.ForeignKey(TeamLead, on_delete=models.DO_NOTHING, null=False)
 
 

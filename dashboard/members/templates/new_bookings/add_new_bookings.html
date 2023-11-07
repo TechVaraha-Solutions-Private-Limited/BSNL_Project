@@ -173,7 +173,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="p-1">
                 <label>Select Project</label><br>
-                <select class="form-control" id="projectname" name="projectname">
+                <select class="form-control" id="projectname" name="projectname" required>
                     <option value="">Select</option>
                     {% for project in projects %}
                     <option value="{{project.id}}">{{project.projectname}}</option>
@@ -182,7 +182,7 @@
             </div>
             <div class="p-1">
                 <label>Dimension</label><br>
-                <select class="form-control" id="selectDimension" name="selectDimension" disabled>
+                <select class="form-control" id="selectDimension" name="selectDimension" disabled required>
                     <option>Select</option>
                 </select>
             </div>
@@ -203,7 +203,7 @@
             </div>
             <div class="p-1">
                 <label class="p-1">Seniority No</label>
-                <input type="text" id="seniority" name="seniority_id" placeholder="Seniority No" class="form-input">
+                <input type="text" id="seniority" name="seniority_id" placeholder="Seniority No" class="form-input" required>
             </div>
         </div>
     </div>
@@ -214,7 +214,7 @@
             <div class="p-1">
                 <div>
                     <label>Select Payment Option</label>
-                    <select class="form-control" id="inputfield" name="payment_mode">
+                    <select class="form-control" id="inputfield" name="payment_mode" required>
                         <option>--select option--</option>
                         <option value="cheque">Cheque</option>
                         <option value="net_banking">Net Banking</option>
@@ -324,11 +324,9 @@
                     console.log(data.values[0]);
                     $('#total_site_value').val(data.values[0].total_amount)
                     $('#downpayment').val(data.values[0].installment_1)
-
                 }
             })
      });
-    
 
     $('#projectname').on('change', function (event) {
         event.preventDefault();

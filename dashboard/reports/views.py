@@ -5,6 +5,7 @@ from dashboard.userinfo.models import UserDetail
 from num2words import num2words
 from django.db.models import Sum
 from datetime import datetime, date, timedelta
+import csv
 # Create your views here.
 def confirmletter_view(request,id):
     book=Bookings.objects.get(id=id)
@@ -81,6 +82,10 @@ def booking_report(request):
                     booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                     booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                     booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
+        elif select == 'paystatus':
+            value = request.POST.get('payment')
+            if value =='down_payment':
+                down = Bookings.objects.all()
                     
         elif select == 'project_head':
             bookings = Bookings.objects.filter(project_lead = value)
@@ -98,17 +103,17 @@ def booking_report(request):
                 booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                 booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                 booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
-        
+
+       
         context={
         'view_report': view_report,
         'project':project,
         'bookings':bookings,
-        'book':book
         }
         return render(request, 'booking_report.html', context)
     content={
         'project':project,
-        'book':book,  
+        'book':book
         
     }
     return render(request, 'booking_report.html',content)
