@@ -63,7 +63,7 @@ class PaymentDetails(models.Model):
     ddno =models.CharField(max_length=20)
     dateofreceipt = models.CharField(max_length=20)
     paymentname = models.CharField(max_length=20,null=True)
-    state = models.CharField(max_length=2,default=0)
+    status = models.CharField(max_length=2,default=0)
     total_paid_amount = models.CharField(max_length=100,default=0)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
@@ -72,18 +72,18 @@ class PaymentDetails(models.Model):
 class Ugdg(models.Model):
      seniority_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)
 
-class Receipts(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	seniorityno=models.ForeignKey(Bookings, on_delete=models.CASCADE)
-	dimension=models.CharField(max_length=120)
-	amount=models.CharField(max_length=120)
-	modeofpay=models.CharField(max_length=120)
-	chequeno=models.CharField(max_length=120)
-	bank=models.CharField(max_length=120)
-	branch=models.CharField(max_length=120)
-	paydate=models.DateField(max_length=120)
-	paystatus=models.CharField(max_length=120)
-	dateofreceipt=models.DateField(max_length=120)
+# class Receipts(models.Model):
+# 	user = models.ForeignKey(User, on_delete=models.CASCADE)
+# 	seniorityno=models.ForeignKey(Bookings, on_delete=models.CASCADE)
+# 	dimension=models.CharField(max_length=120)
+# 	amount=models.CharField(max_length=120)
+# 	modeofpay=models.CharField(max_length=120)
+# 	chequeno=models.CharField(max_length=120)
+# 	bank=models.CharField(max_length=120)
+# 	branch=models.CharField(max_length=120)
+# 	paydate=models.DateField(max_length=120)
+# 	paystatus=models.CharField(max_length=120)
+# 	dateofreceipt=models.DateField(max_length=120)
      
 class Images(models.Model):
     images = models.ImageField(upload_to= settings.PROJECT_UPLOAD_PATH, null=True) 

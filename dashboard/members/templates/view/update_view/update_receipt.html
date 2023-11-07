@@ -37,7 +37,7 @@
                         class="form-input">
                 </div>
                 <div class="p-1">
-                    <label class="p-1">Pay Status</label>
+                    <label class="p-1">Pay Type</label>
                     <input type="text" name="paymentname" value="{{update_receipts.paymentname}}"
                         placeholder="Pay Status" class="form-input">
                 </div>
@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="p-1">
-                    <label class="p-1">Payment Type</label>
+                    <label class="p-1">Payment Mode</label>
                     <input type="text" name="payment_mode" value="{{update_receipts.payment_mode}}"
                         placeholder="Payment Type" class="form-input">
                 </div>
@@ -105,11 +105,25 @@
 
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="p-1 mt-2">
+                    <label>Select to Payment Option</label>
+                    <select class="form-control" id="inputfield" name="status">
+                        <option disabled selected hidden>--select option--</option>
+                        <option value="Not Received">Not Received</option>
+                        <option value="Submitted">Submitted</option>
+                        <option value="Sent for Clearance">Sent for Clearance</option>
+                        <option value="Cleared">Cleared</option>
+                        <option value="Cheque Bounce">Cheque Bounce</option>
+                        <option value="Customer Hold">Customer Hold</option>
+                        <option value="Receipt Cancelled">Receipt Cancelled</option>
+                    </select>
+                </div>
                 <div class="p-1">
                     <label class="p-1">Date Cleared</label>
                     <input type="date" name="date_cleared" value="{{update_receipts.date_cleared}}"
                         placeholder="Date Cleared" class="form-input">
                 </div>
+                
             </div>
             <div class="text-center p-3">
                 <input type="submit" value="Update"

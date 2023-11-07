@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, HttpResponse
 from django.http import JsonResponse
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee
-from .models import Bookings,PaymentDetails,Ugdg,Receipts,Images,Leadowner,Site_visit,Btmt,G_image
+from .models import Bookings,PaymentDetails,Ugdg,Images,Leadowner,Site_visit,Btmt,G_image
 from dashboard.projects.models import Project,PlotSize,LandDetails
 from django.forms.models import model_to_dict
 from django.contrib import messages
@@ -662,7 +662,8 @@ def update_receipts(request,id):
         update_receipts.amount = request.POST['amount']
         update_receipts.bank = request.POST['bank']
         update_receipts.payment_mode = request.POST['payment_mode']
-        update_receipts.date_cleared = request.POST['date_cleared']
+        update_receipts.payment_mode = request.POST['payment_mode']
+        update_receipts.status = request.POST['status']
         if update_receipts.payment_mode == 'cheque':
             update_receipts.cheque_no = request.POST['cheque_no']
         elif update_receipts.payment_mode == 'dd':
