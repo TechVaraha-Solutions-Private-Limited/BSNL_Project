@@ -30,7 +30,7 @@
                 <option value="date">Date Wise</option>
                 <option value="project_head">Proj Head Wise</option>
                 <option value="executive">Executive Wise</option>
-                <option value="payment">Payment Type Wise</option>
+                <option value="payment_type">Payment Type Wise</option>
                 <option value="paystatus">Pay Status Wise</option>
             </select>
         </div>
@@ -131,6 +131,7 @@
 
     reportTypeDropdown.addEventListener('change', function () {
         var selectedOption = reportTypeDropdown.value;
+        debugger
         if (selectedOption === 'all'){
                 location.reload();
         }
@@ -180,7 +181,9 @@
         } else if (selectedOption === 'executive') {
             dynamicDropdown.innerHTML = `
             <label class="p-1">Executive Wise</label>
+            
                 <select class="form-control" id="projectexe" name="projectexe">
+                    
                     <option disabled selected hidden>Select Report Type</option>
                     {% for mydata in book %}
                         <option value="{{ mydata.exective }}">{{ mydata.exective }}</option>
@@ -189,11 +192,13 @@
             `;
             dynamicDropdown.style.display = 'block';
             // 5th block
-        } else if (selectedOption === 'payment') {
+            
+        } else if (selectedOption === 'payment_type') {
             dynamicDropdown.innerHTML = `
             <label class="p-1">Payment Type Wise</label>
-                <select class="form-control" id="payment" name="payment " onchange="this.form.submit()">
-                    <option disabled selected hidden>Select Report Type</option>
+                
+                <select class="form-control" id="paymenttype" name="paymenttype" onchange="this.form.submit()">
+                    <option >Select Report Type</option>
                     <option value="down_payment">Down Payment</option>
                     <option value="first_install">First Installment</option>
                     <option value="second_install">Second Installment</option>

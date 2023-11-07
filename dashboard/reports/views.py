@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from dashboard.members.models import Bookings,PaymentDetails,Site_visit
 from dashboard.projects.models import Project
-from dashboard.userinfo.models import UserDetail
+from dashboard.userinfo.models import UserDetail,Executive
 from num2words import num2words
 from django.db.models import Sum
 from datetime import datetime, date, timedelta
@@ -44,20 +44,18 @@ def print_recepit(request,id):
 def booking_report(request):
     view_report = PaymentDetails.objects.all()
     project = Project.objects.all()
-    book =Bookings.objects.all()
+    bookings =Bookings.objects.all()
     for view in view_report:
         detail = UserDetail.objects .get(user_id = view.booking.user)
         view.userinfo = detail.alternate_no
         view.address = detail.address
 
     if request.method == 'POST':
+        data = request.POST.get('paymenttype')
         value = request.POST.get('projectOption')
         select = request.POST.get('reportType')
-        print(select)
-        fromDate = request.POST.get('fromDate','')
-
+        print(data)
         if select == 'project':
-            
             if value == 'all':
                 bookings = Bookings.objects.all()
             else:
@@ -81,12 +79,7 @@ def booking_report(request):
                     payments = booking.paymentdetails_set.all()
                     booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                     booking.address = UserDetail.objects.get(user_id = booking.user.id).address
-                    booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
-        elif select == 'paystatus':
-            value = request.POST.get('payment')
-            if value =='down_payment':
-                down = Bookings.objects.all()
-                    
+                    booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no           
         elif select == 'project_head':
             bookings = Bookings.objects.filter(project_lead = value)
             for booking in bookings:
@@ -94,7 +87,6 @@ def booking_report(request):
                 booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                 booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                 booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
-            print(booking)
             
         elif select == 'executive':
             bookings = Bookings.objects.filter(exective = value)
@@ -103,8 +95,23 @@ def booking_report(request):
                 booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                 booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                 booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
-
-       
+        elif select == 'payment_type':
+            bookings = Bookings.objects.filter()
+            for booking in bookings:
+                payment = PaymentDetails.objects.filter(booking_id = booking.id)
+                for pay in payment:
+                    booking.paymentname = pay.paymentname
+                    if data == 'FirstInstallment Half'or 'FirstInstallment':
+                        booking = PaymentDetails.objects.filter(paymentname = data) 
+                        print(booking)
+        else:
+            booking = Bookings.objects.all()
+            print(1821764)
+            for booking in bookings:
+                payments = booking.paymentdetails_set.all()
+                booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
+                booking.address = UserDetail.objects.get(user_id = booking.user.id).address
+                booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
         context={
         'view_report': view_report,
         'project':project,
@@ -113,7 +120,7 @@ def booking_report(request):
         return render(request, 'booking_report.html', context)
     content={
         'project':project,
-        'book':book
+        'bookings':bookings
         
     }
     return render(request, 'booking_report.html',content)
