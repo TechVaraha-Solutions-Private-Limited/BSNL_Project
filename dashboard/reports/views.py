@@ -129,13 +129,12 @@ def booking_report(request):
 
 def site_report(request):
     sitereport_all = Site_visit.objects.all()
-    print("Hello")
+
     if request.method == 'POST':
         value = request.POST.get('sitereportoption')
         select = request.POST.get('reportType')
         fromDate = request.POST.get('fromDate','')
-        print('select:',select)
-        print('value:',value)
+
         if select == 'date':
             fromDate = request.POST.get('fromDate','')
             toDate = request.POST.get('toDate','')
@@ -148,13 +147,14 @@ def site_report(request):
                                                    created_on__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
                     
         elif select == 'project_head':
+            print(value)
             sitereport = Site_visit.objects.filter(proj_head = value)
            
         elif select == 'executive':
             sitereport = Site_visit.objects.filter(executive = value)
             
         elif select == 'svstatus':
-            sitereport = Site_visit.objects.filter(status = value)
+            sitereport = Site_visit.objects.filter(sv_status = value)
             
         elif select == 'sourcewise':
             sitereport = Site_visit.objects.filter(source = value)
@@ -174,3 +174,19 @@ def site_report(request):
     }
     return render(request, 'site_report.html', content)
 
+def pdc_report(request):
+    return render(request, 'pdc_report.html')
+
+def ugdg_report(request):
+    return render(request, 'ugdg_report.html')
+
+def transfer_report(request):
+    return render(request, 'transfer_report.html')
+
+def cancel_report(request):				
+    return render(request, 'cancel_report.html')
+
+def receipt_details(request):
+    receipts_all = PaymentDetails.objects.all()
+    print(receipts_all)
+    return render(request, 'receipt_details.html',{'receipts_all':receipts_all})
