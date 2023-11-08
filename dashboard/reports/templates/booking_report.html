@@ -7,6 +7,34 @@
         color: black;
     }
 </style>
+<<<<<<< HEAD
+=======
+<form class="pt-5" method="post">
+    {% csrf_token %} 
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="p-1">
+            <label class="p-1">Booking Report</label>
+            <select class="form-control" id="reportType" name="reportType">
+                <option value="" disabled selected hidden>Select Report</option>
+                <option value="all">All</option>
+                <option value="project">Project Wise</option>
+                <option value="date">Date Wise</option>
+                <option value="project_head">Proj Head Wise</option>
+                <option value="executive">Executive Wise</option>
+                <option value="payment_type">Payment Type Wise</option>
+                <option value="paystatus">Pay Status Wise</option>
+            </select>
+        </div>
+        <div id="dynamicDropdown" style="display: none;" class="p-1">
+        </div>
+        
+    </div>
+    <div>
+        <button class="btn btn-success" type="submit" name="reportType" value="all" >All</button>
+        <button >Excel</button>
+    </div>
+</form>
+>>>>>>> 66adda6be707aa9944393473548976534bdf23fb
 <br>
 <div class=" p-1" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
     <form class="pt-5" method="post">
@@ -128,8 +156,14 @@
 
     reportTypeDropdown.addEventListener('change', function () {
         var selectedOption = reportTypeDropdown.value;
+<<<<<<< HEAD
         if (selectedOption === 'all') {
             location.reload();
+=======
+        debugger
+        if (selectedOption === 'all'){
+                location.reload();
+>>>>>>> 66adda6be707aa9944393473548976534bdf23fb
         }
         // 1st block
         else if (selectedOption === 'project') {
@@ -177,7 +211,9 @@
         } else if (selectedOption === 'executive') {
             dynamicDropdown.innerHTML = `
             <label class="p-1">Executive Wise</label>
+            
                 <select class="form-control" id="projectexe" name="projectexe">
+                    
                     <option disabled selected hidden>Select Report Type</option>
                     {% for mydata in book %}
                         <option value="{{ mydata.exective }}">{{ mydata.exective }}</option>
@@ -186,11 +222,13 @@
             `;
             dynamicDropdown.style.display = 'block';
             // 5th block
-        } else if (selectedOption === 'payment') {
+            
+        } else if (selectedOption === 'payment_type') {
             dynamicDropdown.innerHTML = `
             <label class="p-1">Payment Type Wise</label>
-                <select class="form-control" id="payment" name="payment " onchange="this.form.submit()">
-                    <option disabled selected hidden>Select Report Type</option>
+                
+                <select class="form-control" id="paymenttype" name="paymenttype" onchange="this.form.submit()">
+                    <option >Select Report Type</option>
                     <option value="down_payment">Down Payment</option>
                     <option value="first_install">First Installment</option>
                     <option value="second_install">Second Installment</option>
