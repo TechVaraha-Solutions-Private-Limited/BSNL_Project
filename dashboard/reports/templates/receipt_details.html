@@ -6,142 +6,137 @@
     a {
         color: black;
     }
-
-    .addproject {
-        text-align: center;
-        padding: 15px 15px;
-        font-size: 15px;
-        font-weight: bold;
-        background-color: #00c200;
-        color: white;
-        font-size: 19px;
-    }
 </style>
-<form class="pt-5" method="post">
-    {% csrf_token %}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div class="p-1">
-            <label class="p-1">Site Report</label>
-            <select class="form-control" id="reportType" name="reportType">
-                <option value="" disabled selected hidden>Select Report</option>
-                <option value="receipt_date">Receipt Date Wise</option>
-                <option value="date">Cleard Date Wise</option>
-                <option value="project_head">Proj Head Wise</option>
-                <option value="executive">Mod Of Pay Wise</option>
-                <option value="payment">Payment Status Wise</option>
-            </select>
-        </div>
-        <div id="dynamicDropdown" style="display: none;" class="p-1">
-        </div>
-    </div>
-
-</form>
 <br>
-<div>
-    <table class="table-responsive" class="emInfo responsive">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Receipt No</th>
-                <th>Date of Receipt</th>
-                <th>Type of Payment</th>
-                <th>Amount Paid</th>
-                <th>Mode of Payment</th>
-                <th>Cheque No</th>
-                <th>Payment Status</th>
-                <th>Date Credited</th>
-                <th>Credited to Bank</th>
-                <th>Project Head</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for val in receipts_all %}
-            <tr>
-                <td>{{forloop.counter}}</td>
-                <td>{{val.receipt_no}}</td>
-                <td>{{val.dateofreceipt}}</td>
-                <td>{{val.paymentname}}</td>
-                <td>{{val.total_paid_amount}}</td>
-                <td>{{val.payment_mode}}</td>
-                <td>{{val.cheque_no}}</td>
-                <td>{{val.status}}</td>
-                <td>{{val.}}</td>
-                <td>{{val.}}</td>
-                <td>{{val.}}</td>
-            </tr>
-            {%endfor%}
-        </tbody>
-    </table>
-</div>
-
-<div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Select Date</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<div class=" p-1" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+    <form class="pt-5" method="post">
+        <label class="text-lg dark:text-white-light p-2 font-weight-bold addproject"
+            style="background-color: #00c200;color:white; width:100%;">
+            <center><b>RECEIPT REPORT</b></center>
+        </label>
+        {% csrf_token %}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="p-1">
+                <select class="form-control" id="reportType" name="reportType">
+                    <option value="" disabled selected hidden>Select Report</option>
+                    <option value="receipt_date">Receipt Date Wise</option>
+                    <option value="Cleard_date">Cleard Date Wise</option>
+                    <option value="project_head">Proj Head Wise</option>
+                    <option value="mod_pay">Mod Of Pay Wise</option>
+                    <option value="pay_status">Payment Status Wise</option>
+                </select>
             </div>
-            <form method="post" action="{% url 'receipt_details' %}">
-                {% csrf_token %}
-                <input type="hidden" name="date" value=date>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>From Date</label>
-                        <input type="hidden" name="reportType" value=date>
-                        <input type="date" class="form-control" name="fromDate" value="" required="">
-                    </div>
-                    <div class="form-group">
-                        <label>To Date</label>
+            <div id="dynamicDropdown" style="display: none;" class="p-1">
+            </div>
+        </div>
 
-                        <input type="date" class="form-control" name="toDate" value="" required="">
+    </form>
+    <br>
+    <div>
+        <table class="table-responsive" class="emInfo responsive">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Receipt No</th>
+                    <th>Date of Receipt</th>
+                    <th>Type of Payment</th>
+                    <th>Amount Paid</th>
+                    <th>Mode of Payment</th>
+                    <th>Cheque No</th>
+                    <th>Payment Status</th>
+                    <th>Date Credited</th>
+                    <th>Credited to Bank</th>
+                    <th>Project Head</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for val in receiptreport_filter %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{val.receipt_no}}</td>
+                    <td>{{val.dateofreceipt}}</td>
+                    <td>{{val.paymentname}}</td>
+                    <td>{{val.total_paid_amount}}</td>
+                    <td>{{val.payment_mode}}</td>
+                    <td>{{val.cheque_no}}</td>
+                    <td>{{val.status}}</td>
+                    <td>{{val.}}</td>
+                    <td>{{val.}}</td>
+                    <td>{{val.}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select Date</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="{% url 'receipt_details' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="date" value=date>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <input type="hidden" name="reportType" value=date>
+                            <input type="date" class="form-control" name="fromDate" value="" required="">
+                        </div>
+                        <div class="form-group">
+                            <label>To Date</label>
+
+                            <input type="date" class="form-control" name="toDate" value="" required="">
+                        </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="submit" class="btn btn-primary">Apply</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-sm" id="fupdatewise" tabindex="-1" role="dialog"
+        aria-labelledby="fupdatewiseLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fupdatewiseLabel">Select Date</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-footer">
-                    <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="submit" class="btn btn-primary">Apply</button>
-                </div>
-            </form>
+                <form method="post" action="{% url 'receipt_details' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="date" value=date>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <input type="hidden" name="reportType" value=date>
+                            <input type="date" class="form-control" name="fromDate" value="" required="">
+                        </div>
+                        <div class="form-group">
+                            <label>To Date</label>
+
+                            <input type="date" class="form-control" name="toDate" value="" required="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="submit" class="btn btn-primary">Apply</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-
-<div class="modal fade bd-example-modal-sm" id="fupdatewise" tabindex="-1" role="dialog"
-    aria-labelledby="fupdatewiseLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="fupdatewiseLabel">Select Date</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="post" action="{% url 'receipt_details' %}">
-                {% csrf_token %}
-                <input type="hidden" name="date" value=date>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>From Date</label>
-                        <input type="hidden" name="reportType" value=date>
-                        <input type="date" class="form-control" name="fromDate" value="" required="">
-                    </div>
-                    <div class="form-group">
-                        <label>To Date</label>
-
-                        <input type="date" class="form-control" name="toDate" value="" required="">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="reset" class="btn btn-secondary">Reset</button>
-                    <button type="submit" class="btn btn-primary">Apply</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <script>
     var reportTypeDropdown = document.getElementById('reportType');
     var dynamicDropdown = document.getElementById('dynamicDropdown');
@@ -163,7 +158,7 @@
                         `;
             dynamicDropdown.style.display = 'block';
             // 2nd block
-        } else if (selectedOption === 'fupdatewise') {
+        } else if (selectedOption === 'Cleard_date') {
             dynamicDropdown.innerHTML = `
                             <label class="p-1">Date Wise Options</label>
                             <input type="hidden" name="reportType" value=date> 
@@ -181,68 +176,45 @@
                         {% csrf_token %}
                         <label class="p-1">Proj Head Wise</label>
                         <input type="hidden" name="reportType" value ='project_head'> 
-                            <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
+                            <select class="form-control" id="projecthead" name="receiptreportoption" onchange="this.form.submit()">
                                 <option disabled selected hidden>Select Report Type</option>
-                                {% for mydata in sitereport %}
+                                {% for mydata in receiptreport %}
                                     <option value="{{ mydata.proj_head }}">{{ mydata.proj_head }}</option>
                                 {% endfor %}
                             </select>
                         `;
             dynamicDropdown.style.display = 'block';
             // 4th block 
-        } else if (selectedOption === 'executive') {
+        } else if (selectedOption === 'mod_pay') {
             dynamicDropdown.innerHTML = `
-                        <label class="p-1">Executive Wise</label>
-                        <input type="hidden" name="reportType" value = 'executive'>
-                            <select class="form-control" id="projectexe" name="sitereportoption" onchange="this.form.submit()">
+                        <label class="p-1">Mode of pay</label>
+                        <input type="hidden" name="reportType" value = 'mod_pay'>
+                            <select class="form-control" id="projectexe" name="receiptreportoption" onchange="this.form.submit()">
                                 <option disabled selected hidden>Select Report Type</option>
-                                {% for mydata in sitereport %}
-                                    <option value="{{ mydata.executive }}">{{ mydata.executive }}</option>
-                                {% endfor %}
+                                <option value="Cheque">Cheque</option>
+                                <option value="Net Banking">Net Banking</option>
+                                <option value="DD">DD</option>
                             </select>
                         `;
             dynamicDropdown.style.display = 'block';
             // 5th block
-        } else if (selectedOption === 'svstatus') {
+        } else if (selectedOption === 'pay_status') {
             dynamicDropdown.innerHTML = `
-                        <label class="p-1">SV Status Wise</label>
-                        <input type="hidden" name="reportType" value = 'svstatus'>
-                            <select class="form-control" id="projectexe" name="sitereportoption" onchange="this.form.submit()">
+                        <label class="p-1">Payment Status Wise</label>
+                        <input type="hidden" name="reportType" value = 'pay_status'>
+                            <select class="form-control" id="projectexe" name="receiptreportoption" onchange="this.form.submit()">
                                 <option disabled selected hidden>Select Report Type</option>
-                                    <option value="Booked">Booked</option>
-                                    <option value="Not Interested">Not Interested</option>
+                                <option disabled selected hidden>--select option--</option>
+                                <option value="Not Received">Not Received</option>
+                                <option value="Submitted">Submitted</option>
+                                <option value="Sent for Clearance">Sent for Clearance</option>
+                                <option value="Cleared">Cleared</option>
+                                <option value="Cheque Bounce">Cheque Bounce</option>
+                                <option value="Customer Hold">Customer Hold</option>
+                                <option value="Receipt Cancelled">Receipt Cancelled</option>
                             </select>
                         `;
             dynamicDropdown.style.display = 'block';
-            // 6th block
-        } else if (selectedOption === 'sourcewise') {
-            dynamicDropdown.innerHTML = `
-                        <label class="p-1">Source Wise</label>
-                        <input type="hidden" name="reportType" value = 'sourcewise'>
-                            <select class="form-control" id="sourcewise" name="sitereportoption" onchange="this.form.submit()">
-                                <option disabled selected hidden>Select Report Type</option>
-                                <option value="SMS">SMS</option>
-                                        <option value="PAMPHLET">PAMPHLET</option>
-                                        <option value="REFERENCE">REFERENCE</option>
-                                        <option value="WALK-IN">WALK-IN</option>
-                            </select>
-                        `;
-            dynamicDropdown.style.display = 'block';
-        } else if (selectedOption === 'svcategorywise') {
-            dynamicDropdown.innerHTML = `
-                        <label class="p-1">SV Category Wise</label>
-                        <input type="hidden" name="reportType" value = 'svcategorywise'>
-                            <select class="form-control" id="svcategorywise" name="sitereportoption" onchange="this.form.submit()">
-                                <option disabled selected hidden>Select Report Type</option>
-                                <option value="BOTH">BOTH</option>
-                                        <option value="DSVD">DSVD</option>
-                                        <option value="SOD ONLY">SOD ONLY</option>
-                                        <option value="SVD ONLY">SVD ONLY</option>
-                                        <option value="EH">EH</option>
-                            </select>
-                        `;
-            dynamicDropdown.style.display = 'block';
-            // 7th block
         } else {
             dynamicDropdown.style.display = 'none';
         }

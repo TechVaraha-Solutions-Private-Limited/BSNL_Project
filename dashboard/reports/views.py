@@ -44,7 +44,7 @@ def print_recepit(request,id):
 def booking_report(request):
     view_report = PaymentDetails.objects.all()
     project = Project.objects.all()
-    book =Bookings.objects.all()
+    bookings =Bookings.objects.all()
     for view in view_report:
         detail = UserDetail.objects .get(user_id = view.booking.user)
         view.userinfo = detail.alternate_no
@@ -53,8 +53,7 @@ def booking_report(request):
     if request.method == 'POST':
         value = request.POST.get('projectOption')
         select = request.POST.get('reportType')
-        print(select)
-        fromDate = request.POST.get('fromDate','')
+
 
         if select == 'project':
             
@@ -113,7 +112,7 @@ def booking_report(request):
         return render(request, 'booking_report.html', context)
     content={
         'project':project,
-        'book':book
+        'bookings':bookings
         
     }
     return render(request, 'booking_report.html',content)
@@ -126,7 +125,6 @@ def site_report(request):
     if request.method == 'POST':
         value = request.POST.get('sitereportoption')
         select = request.POST.get('reportType')
-        fromDate = request.POST.get('fromDate','')
 
         if select == 'date':
             fromDate = request.POST.get('fromDate','')
@@ -136,11 +134,10 @@ def site_report(request):
                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
                 toDate =  date_obj + timedelta(days=1)
-                sitereport = Site_visit.objects.filter(created_on__gte=date(fromDate.year, fromDate.month, fromDate.day),
-                                                   created_on__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
                     
         elif select == 'project_head':
-            print(value)
             sitereport = Site_visit.objects.filter(proj_head = value)
            
         elif select == 'executive':
@@ -174,12 +171,87 @@ def ugdg_report(request):
     return render(request, 'ugdg_report.html')
 
 def transfer_report(request):
-    return render(request, 'transfer_report.html')
+    transreport_all = Bookings.objects.all()
+    project = Project.objects.all()
+
+    if request.method == 'POST':
+        value = request.POST.get('sitereportoption')
+        select = request.POST.get('reportType')
+        fromDate = request.POST.get('fromDate','')
+
+        if select == 'date':
+            fromDate = request.POST.get('fromDate','')
+            toDate = request.POST.get('toDate','')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate =  date_obj + timedelta(days=1)
+                transreport = Bookings.objects.filter(date_of_transfer__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   date_of_transfer__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                    
+        elif select == 'project_wise':
+            transreport = Bookings.objects.filter(land_details__project__projectname = value)
+           
+        elif select == 'project_head':
+            transreport = Bookings.objects.filter(project_wise = value)
+            
+        context={
+        'transreport_filter':transreport,
+        'transreport': transreport_all,
+        'project':project,
+        }
+        return render(request, 'transfer_report.html', context)
+    content={
+        'transreport_filter':transreport_all,
+        'transreport': transreport_all,
+        'project':project,
+        
+    }
+    return render(request, 'transfer_report.html', content)
 
 def cancel_report(request):				
     return render(request, 'cancel_report.html')
 
 def receipt_details(request):
     receipts_all = PaymentDetails.objects.all()
-    print(receipts_all)
-    return render(request, 'receipt_details.html',{'receipts_all':receipts_all})
+    if request.method == 'POST':
+        value = request.POST.get('receiptreportoption')
+        select = request.POST.get('reportType')
+        fromDate = request.POST.get('fromDate','')
+        
+
+        if select == 'date':
+            fromDate = request.POST.get('fromDate','')
+            toDate = request.POST.get('toDate','')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate =  date_obj + timedelta(days=1)
+                receiptreport = PaymentDetails.objects.filter(created_on__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   created_on__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                    
+        elif select == 'project_head':
+            print(value)
+            receiptreport = PaymentDetails.objects.filter(proj_head = value)
+           
+        elif select == 'mod_pay':
+            receiptreport = PaymentDetails.objects.filter(payment_mode = value)
+            print(receiptreport)
+            
+        elif select == 'pay_status':
+            receiptreport = PaymentDetails.objects.filter(status = value)
+
+        context={
+        'receiptreport_filter':receiptreport,
+        'receiptreport': receipts_all
+        }
+        return render(request, 'receipt_details.html', context)
+    content={
+        'receiptreport_filter':receipts_all,
+        'receiptreport': receipts_all
+        
+    }
+    
+    return render(request, 'receipt_details.html',content)

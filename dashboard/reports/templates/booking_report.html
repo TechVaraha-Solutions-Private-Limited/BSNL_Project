@@ -6,69 +6,64 @@
     a {
         color: black;
     }
-
-    .addproject {
-        text-align: center;
-        padding: 15px 15px;
-        font-size: 15px;
-        font-weight: bold;
-        background-color: #00c200;
-        color: white;
-        font-size: 19px;
-    }
-
 </style>
-<form class="pt-5" method="post">
-    {% csrf_token %} 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div class="p-1">
-            <label class="p-1">Booking Report</label>
-            <select class="form-control" id="reportType" name="reportType">
-                <option value="" disabled selected hidden>Select Report</option>
-                <option value="all">All</option>
-                <option value="project">Project Wise</option>
-                <option value="date">Date Wise</option>
-                <option value="project_head">Proj Head Wise</option>
-                <option value="executive">Executive Wise</option>
-                <option value="payment">Payment Type Wise</option>
-                <option value="paystatus">Pay Status Wise</option>
-            </select>
-        </div>
-        <div id="dynamicDropdown" style="display: none;" class="p-1">
-        </div>
-        
-    </div>
-    <div>
-        <button class="btn btn-success" type="submit" name="reportType" value="all" >All</button>
-        <button >Excel</button>
-    </div>
-</form>
 <br>
-<div>
-    <table class="table-responsive" class="emInfo responsive" >
-        <thead>
-            <tr><th>#</th>
-                <th>Seniority</th>
-                <th>Customer_Name</th>
-                <th>Date_of_Booking</th>
-                <th>Project</th>
-                <th>Dimension</th>
-                <th>AM_Number</th>
-                <th>Mobile_No</th>
-                <th>Alternate_No</th>
-                <th>Email_ID</th>
-                <th>Address</th>
-                <th>Tot_Value</th>
-                <th>DP_Value</th>
-                <th>Tot_Paid</th>
-                <th>Executive</th>
-                <th>Proj_Head</th>
-                <th>Pay_Status</th>
-                <th>Payment_Type</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for val in bookings %}
+<div class=" p-1" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+    <form class="pt-5" method="post">
+        <label class="text-lg dark:text-white-light p-2 font-weight-bold addproject"
+            style="background-color: #00c200;color:white; width:100%;">
+            <center><b>BOOKING REPORT</b></center>
+        </label>
+        {% csrf_token %}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="p-1">
+                <select class="form-control" id="reportType" name="reportType">
+                    <option value="" disabled selected hidden>Select Report</option>
+                    <option value="all">All</option>
+                    <option value="project">Project Wise</option>
+                    <option value="date">Date Wise</option>
+                    <option value="project_head">Proj Head Wise</option>
+                    <option value="executive">Executive Wise</option>
+                    <option value="payment">Payment Type Wise</option>
+                    <option value="paystatus">Pay Status Wise</option>
+                </select>
+            </div>
+            <div id="dynamicDropdown" style="display: none;" class="p-1">
+            </div>
+
+        </div>
+        <div>
+            <button class="btn btn-success" type="submit" name="reportType" value="all">All</button>
+            <button>Excel</button>
+        </div>
+    </form>
+    <br>
+    <div>
+        <table class="table-responsive" class="emInfo responsive">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Seniority</th>
+                    <th>Customer_Name</th>
+                    <th>Date_of_Booking</th>
+                    <th>Project</th>
+                    <th>Dimension</th>
+                    <th>AM_Number</th>
+                    <th>Mobile_No</th>
+                    <th>Alternate_No</th>
+                    <th>Email_ID</th>
+                    <th>Address</th>
+                    <th>Tot_Value</th>
+                    <th>DP_Value</th>
+                    <th>Tot_Paid</th>
+                    <th>Executive</th>
+                    <th>Proj_Head</th>
+                    <th>Pay_Status</th>
+                    <th>Payment_Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for val in bookings %}
                 <tr>
                     <td>{{forloop.counter}}</td>
                     <td>{{val.seniority_id}}</td>
@@ -89,50 +84,52 @@
                     <td></td>
                     <td>{{val.paymentdetails_set.last.paymentname}}</td>
                 </tr>
-            {%endfor%}
-        </tbody>
-    </table>
-</div>
-<div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Select Date</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form method="post" action="{% url 'booking_report' %}">
-        {% csrf_token %}
-        <input type="hidden" name="date" value=date> 
-        <div class="modal-body">
-            <div class="form-group">
-                <label>From Date</label>
-                <input type="hidden" name="reportType" value=date > 
-                <input type="date" class="form-control" name="fromDate" value="" required="">
-            </div>
-            <div class="form-group">
-                <label>To Date</label>
-                
-                <input type="date" class="form-control" name="toDate" value="" required="">
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="reset" class="btn btn-secondary">Reset</button>
-          <button type="submit" class="btn btn-primary">Apply</button>
-        </div>
-        </form>
-      </div>
+                {%endfor%}
+            </tbody>
+        </table>
     </div>
-  </div>
+    <div class="modal fade bd-example-modal-sm" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select Date</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="{% url 'booking_report' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="date" value=date>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <input type="hidden" name="reportType" value=date>
+                            <input type="date" class="form-control" name="fromDate" value="" required="">
+                        </div>
+                        <div class="form-group">
+                            <label>To Date</label>
+
+                            <input type="date" class="form-control" name="toDate" value="" required="">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <button type="submit" class="btn btn-primary">Apply</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     var reportTypeDropdown = document.getElementById('reportType');
     var dynamicDropdown = document.getElementById('dynamicDropdown');
 
     reportTypeDropdown.addEventListener('change', function () {
         var selectedOption = reportTypeDropdown.value;
-        if (selectedOption === 'all'){
-                location.reload();
+        if (selectedOption === 'all') {
+            location.reload();
         }
         // 1st block
         else if (selectedOption === 'project') {
