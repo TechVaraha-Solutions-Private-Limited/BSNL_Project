@@ -121,11 +121,11 @@
 									<td>{{ i.payment_mode }}
 									<td>{{i.bank}}</td>
 									<td>{{i.branch}}</td>
-									<td>{% if i.payment_mode == "cheque" %}
+									<td>{% if i.payment_mode == "Cheque" %}
 										{{ i.cheque_no }}
-										{% elif i.payment_mode == "dd"%}
+										{% elif i.payment_mode == "DD"%}
 										{{ i.ddno }}
-										{% elif i.payment_mode == "net_banking" %}
+										{% elif i.payment_mode == "Net Banking" %}
 										{{ i.transaction }}
 										{% endif %}
 									</td>
@@ -138,11 +138,11 @@
 									<td>{{ i.payment_mode }}
 									<td>{{i.bank}}</td>
 									<td>{{i.branch}}</td>
-									<td>{% if i.payment_mode == "cheque" %}
+									<td>{% if i.payment_mode == "Cheque" %}
 										{{ i.cheque_no }}
-										{% elif i.payment_mode == "dd"%}
+										{% elif i.payment_mode == "DD"%}
 										{{ i.ddno }}
-										{% elif i.payment_mode == "net_banking" %}
+										{% elif i.payment_mode == "Net Banking" %}
 										{{ i.transaction }}
 										{% endif %}
 									</td>

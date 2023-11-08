@@ -83,11 +83,11 @@
             <td>{{payment.paymentname}}</td>
             <td>{{payment.payment_mode}}</td>
             <td>{{payment.bank}}</td>
-            <td>{% if payment.payment_mode == 'cheque' %}
+            <td>{% if payment.payment_mode == 'Cheque' %}
                     {{ payment.cheque_no }}
-                {% elif payment.payment_mode == 'dd' %}
+                {% elif payment.payment_mode == 'DD' %}
                     {{ payment.ddno }}
-                {% elif payment.payment_mode == 'net_banking' %}
+                {% elif payment.payment_mode == 'Net Banking' %}
                     {{ payment.transaction }}
                 {% endif %}
             </td>
