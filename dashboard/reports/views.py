@@ -54,12 +54,6 @@ def booking_report(request):
         data = request.POST.get('paymenttype')
         value = request.POST.get('projectOption')
         select = request.POST.get('reportType')
-<<<<<<< HEAD
-
-
-=======
-        print(data)
->>>>>>> 66adda6be707aa9944393473548976534bdf23fb
         if select == 'project':
             if value == 'all':
                 bookings = Bookings.objects.all()
@@ -228,13 +222,12 @@ def cancel_report(request):
 
 def receipt_details(request):
     receipts_all = PaymentDetails.objects.all()
+    
     if request.method == 'POST':
         value = request.POST.get('receiptreportoption')
         select = request.POST.get('reportType')
         fromDate = request.POST.get('fromDate','')
-        
-
-        if select == 'date':
+        if select == 'receipt_date':
             fromDate = request.POST.get('fromDate','')
             toDate = request.POST.get('toDate','')
             if toDate and fromDate:
@@ -242,16 +235,14 @@ def receipt_details(request):
                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
                 toDate =  date_obj + timedelta(days=1)
-                receiptreport = PaymentDetails.objects.filter(created_on__gte=date(fromDate.year, fromDate.month, fromDate.day),
-                                                   created_on__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
-                    
+                receiptreport = PaymentDetails.objects.filter(dateofreceipt__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   dateofreceipt__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                return receiptreport
         elif select == 'project_head':
-            print(value)
             receiptreport = PaymentDetails.objects.filter(proj_head = value)
            
         elif select == 'mod_pay':
             receiptreport = PaymentDetails.objects.filter(payment_mode = value)
-            print(receiptreport)
             
         elif select == 'pay_status':
             receiptreport = PaymentDetails.objects.filter(status = value)
