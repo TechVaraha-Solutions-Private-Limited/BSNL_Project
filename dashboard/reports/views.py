@@ -133,7 +133,9 @@ def site_report(request):
         value = request.POST.get('sitereportoption')
         select = request.POST.get('reportType')
 
-        if select == 'date':
+        if select == 'all':
+            sitereport = Site_visit.objects.all()
+        elif select == 'date':
             fromDate = request.POST.get('fromDate','')
             toDate = request.POST.get('toDate','')
             if toDate and fromDate:
@@ -175,7 +177,8 @@ def pdc_report(request):
     return render(request, 'pdc_report.html')
 
 def ugdg_report(request):
-    return render(request, 'ugdg_report.html')
+    ugdgreport= Bookings.objects.all()
+    return render(request, 'ugdg_report.html',{'ugdgreport':ugdgreport})
 
 def transfer_report(request):
     transreport_all = Bookings.objects.all()
@@ -197,6 +200,9 @@ def transfer_report(request):
                 transreport = Bookings.objects.filter(date_of_transfer__gte=date(fromDate.year, fromDate.month, fromDate.day),
                                                    date_of_transfer__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
                     
+        elif select == 'all':
+            transreport = Bookings.objects.all()
+            
         elif select == 'project_wise':
             transreport = Bookings.objects.filter(land_details__project__projectname = value)
            
@@ -217,8 +223,59 @@ def transfer_report(request):
     }
     return render(request, 'transfer_report.html', content)
 
-def cancel_report(request):				
-    return render(request, 'cancel_report.html')
+def cancel_report(request):
+    cancelreport_all = Bookings.objects.all()
+    
+    if request.method == 'POST':
+        value = request.POST.get('cancelreportoption')
+        select = request.POST.get('reportType')
+        
+        fromDate = request.POST.get('fromDate','')
+        toDate = request.POST.get('toDate','')
+        if select == 'date':
+            fromDate = request.POST.get('fromDate','')
+            toDate = request.POST.get('toDate','')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate =  date_obj + timedelta(days=1)
+                cancelreport = Bookings.objects.filter(date_of_cancel__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   date_of_cancel__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+        elif select == 'refunddate':
+            fromDate = request.POST.get('fromDate','')
+            toDate = request.POST.get('toDate','')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate =  date_obj + timedelta(days=1)
+                cancelreport = Bookings.objects.filter(date_of_refund__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   date_of_refund__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+        elif select == 'all':
+            cancelreport = Bookings.objects.all() 
+                 
+        elif select == 'project_head':
+            cancelreport = Bookings.objects.filter(proj_head = value)
+           
+        elif select == 'mode_wise':
+            cancelreport = Bookings.objects.filter(mode_of_refund = value)
+            
+        elif select == 'type_wise':
+            cancelreport = Bookings.objects.filter(type_of_refund = value)
+
+        context={
+        'cancelreport_filter':cancelreport,
+        'cancelreport': cancelreport_all
+        }
+        return render(request, 'cancel_report.html', context)
+    content={
+        'cancelreport_filter':cancelreport_all,
+        'cancelreport': cancelreport_all
+        
+    }
+    
+    return render(request, 'cancel_report.html',content)
 
 def receipt_details(request):
     receipts_all = PaymentDetails.objects.all()
@@ -226,8 +283,10 @@ def receipt_details(request):
     if request.method == 'POST':
         value = request.POST.get('receiptreportoption')
         select = request.POST.get('reportType')
+        
         fromDate = request.POST.get('fromDate','')
-        if select == 'receipt_date':
+        toDate = request.POST.get('toDate','')
+        if select == 'date':
             fromDate = request.POST.get('fromDate','')
             toDate = request.POST.get('toDate','')
             if toDate and fromDate:
@@ -237,7 +296,19 @@ def receipt_details(request):
                 toDate =  date_obj + timedelta(days=1)
                 receiptreport = PaymentDetails.objects.filter(dateofreceipt__gte=date(fromDate.year, fromDate.month, fromDate.day),
                                                    dateofreceipt__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
-                return receiptreport
+        elif select == 'c_date':
+            fromDate = request.POST.get('fromDate','')
+            toDate = request.POST.get('toDate','')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate =  date_obj + timedelta(days=1)
+                receiptreport = PaymentDetails.objects.filter(date_cleared__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   date_cleared__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+        elif select == 'all':
+            receiptreport = PaymentDetails.objects.all() 
+                 
         elif select == 'project_head':
             receiptreport = PaymentDetails.objects.filter(proj_head = value)
            

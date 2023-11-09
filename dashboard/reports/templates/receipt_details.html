@@ -17,10 +17,11 @@
         {% csrf_token %}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div class="p-1">
+                <label class="p-1">Select Report Type</label>
                 <select class="form-control" id="reportType" name="reportType">
                     <option value="" disabled selected hidden>Select Report</option>
-                    <option value="receipt_date">Receipt Date Wise</option>
-                    <option value="Cleard_date">Cleard Date Wise</option>
+                    <option value="date">Receipt Date Wise</option>
+                    <option value="c_date">Cleard Date Wise</option>
                     <option value="project_head">Proj Head Wise</option>
                     <option value="mod_pay">Mod Of Pay Wise</option>
                     <option value="pay_status">Payment Status Wise</option>
@@ -29,7 +30,10 @@
             <div id="dynamicDropdown" style="display: none;" class="p-1">
             </div>
         </div>
-
+        <div>
+            <button class="btn btn-success" type="submit" name="reportType" value="all">All</button>
+            <button>Excel</button>
+        </div>
     </form>
     <br>
     <div>
@@ -60,8 +64,8 @@
                     <td>{{val.payment_mode}}</td>
                     <td>{{val.cheque_no}}</td>
                     <td>{{val.status}}</td>
-                    <td>{{val.}}</td>
-                    <td>{{val.}}</td>
+                    <td>{{val.date_cleared}}</td>
+                    <td>{{val.bank}}</td>
                     <td>{{val.}}</td>
                 </tr>
                 {%endfor%}
@@ -102,24 +106,24 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade bd-example-modal-sm" id="fupdatewise" tabindex="-1" role="dialog"
-        aria-labelledby="fupdatewiseLabel" aria-hidden="true">
+                           <!-- date Cleard -->
+    <div class="modal fade bd-example-modal-sm" id="datecleared" tabindex="-1" role="dialog"
+        aria-labelledby="dateclearedLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="fupdatewiseLabel">Select Date</h5>
+                    <h5 class="modal-title" id="dateclearedLabel">Select Date</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <form method="post" action="{% url 'receipt_details' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="date" value=date>
+                    <input type="hidden" name="c_date" value=c_date>
                     <div class="modal-body">
                         <div class="form-group">
                             <label>From Date</label>
-                            <input type="hidden" name="reportType" value=date>
+                            <input type="hidden" name="reportType" value= c_date>
                             <input type="date" class="form-control" name="fromDate" value="" required="">
                         </div>
                         <div class="form-group">
@@ -144,11 +148,13 @@
     reportTypeDropdown.addEventListener('change', function () {
         var selectedOption = reportTypeDropdown.value;
 
-        // 1st block
-        if (selectedOption === 'receipt_date') {
+        if (selectedOption === 'all'){
+                location.reload();
+
+        } else if (selectedOption === 'date') {
             dynamicDropdown.innerHTML = `
                             <label class="p-1">Select the Date</label>
-                            <input type="hidden" name="reportType" value='receipt_date'> 
+                            <input type="hidden" name="receiptreport" value='date'> 
                                 <div class="card-tools">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                           <i class="fas fa-filter"></i>Filter
@@ -158,12 +164,12 @@
                         `;
             dynamicDropdown.style.display = 'block';
             // 2nd block
-        } else if (selectedOption === 'Cleard_date') {
+        } else if (selectedOption === 'c_date') {
             dynamicDropdown.innerHTML = `
                             <label class="p-1">Date Wise Options</label>
-                            <input type="hidden" name="reportType" value=date> 
+                            <input type="hidden" name="receiptreport" value='c_date'> 
                                 <div class="card-tools">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fupdatewise">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#datecleared">
                                           <i class="fas fa-filter"></i>Filter
                                         </button>
                                     </div>

@@ -18,6 +18,7 @@
         {% csrf_token %}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div class="p-1">
+                <label class="p-1">Select Report Type</label>
                 <select class="form-control" id="reportType" name="reportType">
                     <option value="" disabled selected hidden>Select Report</option>
                     <option value="all">All</option>
@@ -25,7 +26,7 @@
                     <option value="date">Date Wise</option>
                     <option value="project_head">Proj Head Wise</option>
                     <option value="executive">Executive Wise</option>
-                    <option value="payment">Payment Type Wise</option>
+                    <option value="payment_type">Payment Type Wise</option>
                     <option value="paystatus">Pay Status Wise</option>
                 </select>
             </div>
@@ -129,14 +130,11 @@
 
     reportTypeDropdown.addEventListener('change', function () {
         var selectedOption = reportTypeDropdown.value;
-
-        debugger
+        
         if (selectedOption === 'all'){
                 location.reload();
 
-        }
-        // 1st block
-        else if (selectedOption === 'project') {
+        } else if (selectedOption === 'project') {
             dynamicDropdown.innerHTML = `
             {% csrf_token %}
                 <label class="p-1">Project Wise Options</label>
@@ -196,9 +194,8 @@
         } else if (selectedOption === 'payment_type') {
             dynamicDropdown.innerHTML = `
             <label class="p-1">Payment Type Wise</label>
-                
                 <select class="form-control" id="paymenttype" name="paymenttype" onchange="this.form.submit()">
-                    <option >Select Report Type</option>
+                    <option>Select Report Type</option>
                     <option value="DownPayment">Down Payment</option>
                     <option value="FirstInstallment">First Installment</option>
                     <option value="SecondInstallment">Second Installment</option>
@@ -222,6 +219,7 @@
             dynamicDropdown.style.display = 'none';
         }
     });
+
 </script>
 
 {% endblock %}

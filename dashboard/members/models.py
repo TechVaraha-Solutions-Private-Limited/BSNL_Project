@@ -67,7 +67,7 @@ class PaymentDetails(models.Model):
     total_paid_amount = models.CharField(max_length=100,default=0)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
-    date_cleared=models.CharField(max_length=50,null=True)
+    date_cleared=models.DateField(null=True)
 
 class Ugdg(models.Model):
      seniority_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)

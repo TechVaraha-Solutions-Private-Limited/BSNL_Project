@@ -17,6 +17,7 @@
         {% csrf_token %}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div class="p-1">
+                <label class="p-1">Select Report Type</label>
                 <select class="form-control" id="reportType" name="reportType">
                     <option disabled selected hidden>Select Report</option>
                     <option value="date">Booking Date Wise</option>
@@ -31,7 +32,10 @@
             <div id="dynamicDropdown" style="display: none;" class="p-1">
             </div>
         </div>
-
+        <div>
+            <button class="btn btn-success" type="submit" name="reportType" value="all">All</button>
+            <button>Excel</button>
+        </div>
     </form>
     <br>
     <div>

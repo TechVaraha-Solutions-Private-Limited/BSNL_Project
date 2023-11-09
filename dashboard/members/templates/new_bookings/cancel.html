@@ -69,7 +69,11 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Mode of Refund</label>
-                                    <input type="text" name="mode_of_refund" placeholder="Mode of Refund" class="form-input" >
+                                    <select class="form-control" name="mode_of_refund" required> 
+                                        <option disabled selected hidden>Select</option>
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="DD">DD</option>
+                                    </select>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Refund Cheque No</label>
@@ -85,7 +89,13 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Type of Refund</label>
-                                    <input type="text" name="sr_team_lead" placeholder="Type of Refund" class="form-input" >
+                                    <!-- <input type="text" name="sr_team_lead" placeholder="Type of Refund" class="form-input" > -->
+                                    <select class="form-control" name="type_of_refund" required>
+                                        <option disabled selected hidden>Select</option>
+                                        <option value="Part Refund">Part Refund</option>
+                                        <option value="Full Refund">Full Refund</option>
+                                        <option value="Zero Payments">Zero Payments</option>
+                                    </select>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Issued By</label>
