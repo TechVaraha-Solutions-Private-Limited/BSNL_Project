@@ -7,7 +7,8 @@ from num2words import num2words
 from django.db.models import Sum
 from datetime import datetime, date, timedelta
 import csv
-from django.views import View
+
+
 # Create your views here.
 def confirmletter_view(request,id):
     book=Bookings.objects.get(id=id)
@@ -130,61 +131,46 @@ def booking_report(request):
         'executivename':executivename
     }
     return render(request, 'booking_report.html',content)
-#site visit report
+                    #site visit report
 def site_report(request):
     sitereport_all = Site_visit.objects.all()
-    team_lead = User.objects.filter( role = "Project_Lead")
-    executivename = User.objects.filter( role = "Executive")
+
     if request.method == 'POST':
         value = request.POST.get('sitereportoption')
         select = request.POST.get('reportType')
 
-                        #site visit report
-
-def site_report(request):
-    sitereport_all = Site_visit.objects.all()
-
-#     if request.method == 'POST':
-#         value = request.POST.get('sitereportoption')
-#         select = request.POST.get('reportType')
-
         if select == 'all':
             sitereport = Site_visit.objects.all()
         elif select == 'date':
-            fromDate = request.POST.get('fromDate','')
-            toDate = request.POST.get('toDate','')
+            fromDate = request.POST.get('fromDate', '')
+            toDate = request.POST.get('toDate', '')
             if toDate and fromDate:
-                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
-                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
-                toDate =  date_obj + timedelta(days=1)
-                sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
-                                                   date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
-                    
+                toDate = datetime.strptime(toDate, '%Y-%m-%d') + timedelta(days=1)
+                sitereport = Site_visit.objects.filter(
+                    date_of_site_visit__gte=fromDate,
+                    date_of_site_visit__lte=toDate
+                ).all()
         elif select == 'project_head':
-            sitereport = Site_visit.objects.filter(proj_head = value)
-           
+            sitereport = Site_visit.objects.filter(proj_head=value)
         elif select == 'executive':
-            sitereport = Site_visit.objects.filter(executive = value)
-            
+            sitereport = Site_visit.objects.filter(executive=value)
         elif select == 'svstatus':
-            sitereport = Site_visit.objects.filter(sv_status = value)
-            
+            sitereport = Site_visit.objects.filter(sv_status=value)
         elif select == 'sourcewise':
-            sitereport = Site_visit.objects.filter(source = value)
-            
+            sitereport = Site_visit.objects.filter(source=value)
         elif select == 'svcategorywise':
-            sitereport = Site_visit.objects.filter(sv_category = value)
-        
-        context={
-        'sitereport_filter':sitereport,
-        'sitereport': sitereport_all
+            sitereport = Site_visit.objects.filter(sv_category=value)
+
+        context = {
+            'sitereport_filter': sitereport,
+            'sitereport': sitereport_all
         }
         return render(request, 'site_report.html', context)
-    content={
-        'sitereport_filter':sitereport_all,
+
+    content = {
+        'sitereport_filter': sitereport_all,
         'sitereport': sitereport_all
-        
     }
     return render(request, 'site_report.html', content)
 

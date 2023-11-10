@@ -32,11 +32,9 @@
             <div id="dynamicDropdown" style="display: none;" class="p-1">
             </div>
         </div>
-        <div >
+        <div>
             <a href="{{ export_link }}" style="float: right;" class="btn btn-primary">Export to CSV</a>
             <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
-            <!-- <a href="{% url 'site_report' %}" download><button class="btn btn-success" type="submit" name="reportType" value="all">Excel</button></a> -->
-            
         </div>
     </form>
     <br>
@@ -157,8 +155,8 @@
     reportTypeDropdown.addEventListener('change', function () {
         var selectedOption = reportTypeDropdown.value;
 
-        if (selectedOption === 'all'){
-                location.reload();
+        if (selectedOption === 'all') {
+            location.reload();
 
         } else if (selectedOption === 'date') {
             dynamicDropdown.innerHTML = `
