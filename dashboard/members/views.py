@@ -683,12 +683,6 @@ def get_team_owner(request):
     
 
 def site_visit(request):
-    get_execute = Executive.objects.get(user_id=6)
-    teamlead = get_execute.teamlead.user.id
-    senior_teamlead = get_execute.teamlead.sr_team.user.id
-    project_lead = get_execute.teamlead.sr_team.project_head.id
-    print(teamlead,senior_teamlead,project_lead)
-    
     exective = User.objects.filter(role = 'Executive')
     detail = {}
     if request.method == 'POST':
