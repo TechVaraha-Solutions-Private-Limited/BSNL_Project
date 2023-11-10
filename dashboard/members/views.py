@@ -87,6 +87,7 @@ def addcustomer(request):
     return render(request,'new_bookings/addcustomer.html')
 
 def site_visit_custmer(request,id):
+    site_visit = Site_visit.objects.filter(id=id)
     projects = Project.objects.all()
     landdetail = LandDetails.objects.all()
     if request.method=='POST':
@@ -247,7 +248,7 @@ def site_visit_custmer(request,id):
         messages.success(request,'Successfully Saved')
         # Vicky    
     
-    return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':landdetail,'projects':projects})
+    return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':landdetail,'projects':projects,'site_visit':site_visit})
 
 
 def add_new_bookings(request):

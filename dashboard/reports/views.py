@@ -88,7 +88,6 @@ def booking_report(request):
                     booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no           
         elif select == 'project_head':
             #bookings = Bookings.objects.filter(sitevist__executive__executive_set__last__teamlead__sr_team__project_head__first_name= teamlead)
-            
             bookings = Bookings.objects.filter(sitevist__executive__id__in=[6])
 
             for booking in bookings:
@@ -131,15 +130,23 @@ def booking_report(request):
         'executivename':executivename
     }
     return render(request, 'booking_report.html',content)
+#site visit report
+def site_report(request):
+    sitereport_all = Site_visit.objects.all()
+    team_lead = User.objects.filter( role = "Project_Lead")
+    executivename = User.objects.filter( role = "Executive")
+    if request.method == 'POST':
+        value = request.POST.get('sitereportoption')
+        select = request.POST.get('reportType')
 
                         #site visit report
 
 def site_report(request):
     sitereport_all = Site_visit.objects.all()
 
-    if request.method == 'POST':
-        value = request.POST.get('sitereportoption')
-        select = request.POST.get('reportType')
+#     if request.method == 'POST':
+#         value = request.POST.get('sitereportoption')
+#         select = request.POST.get('reportType')
 
         if select == 'all':
             sitereport = Site_visit.objects.all()

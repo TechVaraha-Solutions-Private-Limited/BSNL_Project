@@ -32,10 +32,11 @@
             <div id="dynamicDropdown" style="display: none;" class="p-1">
             </div>
         </div>
-        <div>
-            <button class="btn btn-success" type="submit" name="reportType" value="all">All</button>
+        <div >
+            <a href="{{ export_link }}" style="float: right;" class="btn btn-primary">Export to CSV</a>
+            <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
             <!-- <a href="{% url 'site_report' %}" download><button class="btn btn-success" type="submit" name="reportType" value="all">Excel</button></a> -->
-            <a href="{{ export_link }}" class="btn btn-primary">Export to CSV</a>
+            
         </div>
     </form>
     <br>
@@ -44,17 +45,17 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Date Of SV</th>
-                    <th>Cust Name</th>
-                    <th>Phone Number</th>
-                    <th>SO Done by</th>
-                    <th>SV Done by</th>
-                    <th>SV Status</th>
-                    <th>SV Category</th>
-                    <th>Fup Date</th>
+                    <th>Date_Of_SV</th>
+                    <th>Cust_Name</th>
+                    <th>Phone_Number</th>
+                    <th>SO_Done_by</th>
+                    <th>SV_Done_by</th>
+                    <th>SV_Status</th>
+                    <th>SV_Category</th>
+                    <th>Fup_Date</th>
                     <th>Executive</th>
-                    <th>Team Leader</th>
-                    <th>Project Manager</th>
+                    <th>Team_Leader</th>
+                    <th>Project_Manager</th>
                     <th>Source</th>
                 </tr>
             </thead>
@@ -62,7 +63,7 @@
                 {% for val in sitereport_filter %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td>{{val.date_of_site_visit}}</td>
+                    <td>{{val.date_of_site_visit|date:'d-m-y'}}</td>
                     <td>{{val.cust_name}}</td>
                     <td>{{val.phone_no}}</td>
                     <td>{{val.so_done_by}}</td>
@@ -70,9 +71,9 @@
                     <td>{{val.sv_status}}</td>
                     <td>{{val.sv_category}}</td>
                     <td>need to get</td>
-                    <td>{{val.executive}}</td>
-                    <td>{{val.team_lead}}</td>
-                    <td>{{val.proj_head}}</td>
+                    <td>{{val.executive.first_name}}</td>
+                    <td>{{val.team_lead.first_name}}</td>
+                    <td>{{val.proj_head.first_name}}</td>
                     <td>{{val.source}}</td>
                 </tr>
                 {%endfor%}
@@ -192,8 +193,8 @@
             <input type="hidden" name="reportType" value ='project_head'> 
                 <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
-                    {% for mydata in sitereport %}
-                        <option value="{{ mydata.proj_head }}">{{ mydata.proj_head }}</option>
+                    {% for mydata in team_lead %}
+                        <option value="{{ mydata.id }}">{{ mydata.first_name }}</option>
                     {% endfor %}
                 </select>
             `;
@@ -205,8 +206,8 @@
             <input type="hidden" name="reportType" value = 'executive'>
                 <select class="form-control" id="projectexe" name="sitereportoption" onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
-                    {% for mydata in sitereport %}
-                        <option value="{{ mydata.executive }}">{{ mydata.executive }}</option>
+                    {% for mydata in  executivename %}
+                        <option value="{{ mydata.id }}">{{ mydata.first_name }}</option>
                     {% endfor %}
                 </select>
             `;

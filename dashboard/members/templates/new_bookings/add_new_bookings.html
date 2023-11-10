@@ -36,10 +36,11 @@
     <h2 class="text-lg font-semibold dark:text-white-light"
         style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Member Particulars</b></h2>
     <div class="panel p-1">
+        {% for site in site_visit %}
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="p-1">
                 <label class="p-1">Member Name</label>
-                <input type="text" name="first_name" class="form-input" placeholder="Member Name" required >
+                <input type="text" name="first_name" class="form-input" value="{{site.cust_name}}" placeholder="Member Name" required >
             </div>
             <div class="p-1">
                 <label class="p-1">Father/Husband Name</label>
@@ -57,7 +58,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="p-1">
                 <label class="p-1">Moblie Number</label>
-                <input type="number" name="mobile_no" placeholder="Moblie Number" class="form-input" required>
+                <input type="number" name="mobile_no" placeholder="Moblie Number" value="{{site.phone_no}}" class="form-input" required>
             </div>
             <div class="p-1">
                 <label class="p-1">Alternate Number</label>
@@ -72,6 +73,7 @@
                 <input type="file" name="profile">
             </div>
         </div>
+        {%endfor%}
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
             <div class="p-1">
                 <label class="p-1">Residential Address</label>
