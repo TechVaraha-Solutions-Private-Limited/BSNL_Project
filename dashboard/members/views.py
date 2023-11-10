@@ -87,6 +87,7 @@ def addcustomer(request):
     return render(request,'new_bookings/addcustomer.html')
 
 def site_visit_custmer(request,id):
+    site_visit = Site_visit.objects.filter(id=id)
     projects = Project.objects.all()
     landdetail = LandDetails.objects.all()
     if request.method=='POST':
@@ -247,7 +248,7 @@ def site_visit_custmer(request,id):
         messages.success(request,'Successfully Saved')
         # Vicky    
     
-    return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':landdetail,'projects':projects})
+    return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':landdetail,'projects':projects,'site_visit':site_visit})
 
 
 def add_new_bookings(request):
@@ -683,12 +684,6 @@ def get_team_owner(request):
     
 
 def site_visit(request):
-    get_execute = Executive.objects.get(user_id=6)
-    teamlead = get_execute.teamlead.user.id
-    senior_teamlead = get_execute.teamlead.sr_team.user.id
-    project_lead = get_execute.teamlead.sr_team.project_head.id
-    print(teamlead,senior_teamlead,project_lead)
-    
     exective = User.objects.filter(role = 'Executive')
     detail = {}
     if request.method == 'POST':

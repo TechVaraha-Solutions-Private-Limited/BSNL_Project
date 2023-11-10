@@ -88,7 +88,6 @@ def booking_report(request):
                     booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no           
         elif select == 'project_head':
             #bookings = Bookings.objects.filter(sitevist__executive__executive_set__last__teamlead__sr_team__project_head__first_name= teamlead)
-            
             bookings = Bookings.objects.filter(sitevist__executive__id__in=[6])
 
             for booking in bookings:
@@ -131,55 +130,58 @@ def booking_report(request):
         'executivename':executivename
     }
     return render(request, 'booking_report.html',content)
+#site visit report
+def site_report(request):
+    sitereport_all = Site_visit.objects.all()
+    team_lead = User.objects.filter( role = "Project_Lead")
+    executivename = User.objects.filter( role = "Executive")
+    if request.method == 'POST':
+        value = request.POST.get('sitereportoption')
+        select = request.POST.get('reportType')
 
-                        #site visit report
-
-# def site_report(request):
-#     sitereport_all = Site_visit.objects.all()
-
-#     if request.method == 'POST':
-#         value = request.POST.get('sitereportoption')
-#         select = request.POST.get('reportType')
-
-#         if select == 'all':
-#             sitereport = Site_visit.objects.all()
-#         elif select == 'date':
-#             fromDate = request.POST.get('fromDate','')
-#             toDate = request.POST.get('toDate','')
-#             if toDate and fromDate:
-#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
-#                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
-#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
-#                 toDate =  date_obj + timedelta(days=1)
-#                 sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
-#                                                    date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+        if select == 'all':
+            sitereport = Site_visit.objects.all()
+        elif select == 'date':
+            fromDate = request.POST.get('fromDate','')
+            toDate = request.POST.get('toDate','')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate =  date_obj + timedelta(days=1)
+                sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
                     
-#         elif select == 'project_head':
-#             sitereport = Site_visit.objects.filter(proj_head = value)
+        elif select == 'project_head':
+            sitereport = Site_visit.objects.filter(proj_head = value)
            
-#         elif select == 'executive':
-#             sitereport = Site_visit.objects.filter(executive = value)
+        elif select == 'executive':
+            sitereport = Site_visit.objects.filter(executive = value)
             
-#         elif select == 'svstatus':
-#             sitereport = Site_visit.objects.filter(sv_status = value)
+        elif select == 'svstatus':
+            sitereport = Site_visit.objects.filter(sv_status = value)
             
-#         elif select == 'sourcewise':
-#             sitereport = Site_visit.objects.filter(source = value)
+        elif select == 'sourcewise':
+            sitereport = Site_visit.objects.filter(source = value)
             
-#         elif select == 'svcategorywise':
-#             sitereport = Site_visit.objects.filter(sv_category = value)
+        elif select == 'svcategorywise':
+            sitereport = Site_visit.objects.filter(sv_category = value)
         
-#         context={
-#         'sitereport_filter':sitereport,
-#         'sitereport': sitereport_all
-#         }
-#         return render(request, 'site_report.html', context)
-#     content={
-#         'sitereport_filter':sitereport_all,
-#         'sitereport': sitereport_all
+        context={
+        'sitereport_filter':sitereport,
+        'sitereport': sitereport_all,
+        'team_lead':team_lead,
+        'executivename':executivename
+        }
+        return render(request, 'site_report.html', context)
+    content={
+        'sitereport_filter':sitereport_all,
+        'sitereport': sitereport_all,
+        'team_lead':team_lead,
+        'executivename':executivename
         
-#     }
-#     return render(request, 'site_report.html', content)
+    }
+    return render(request, 'site_report.html', content)
 
 # def site_report(request):
 #     sitereport_all = Site_visit.objects.all()
@@ -233,60 +235,61 @@ def booking_report(request):
 #     return render(request, 'site_report.html', context)
 
 
-def site_report(request):
-    sitereport_all = Site_visit.objects.all()
-    value = None  # Initialize the value variable
+# def site_report(request):
+#     sitereport_all = Site_visit.objects.all()
+#     value = None  # Initialize the value variable
 
-    if request.method == 'POST':
-        value = request.POST.get('sitereportoption')
-        select = request.POST.get('reportType')
+#     if request.method == 'POST':
+#         value = request.POST.get('sitereportoption')
+#         select = request.POST.get('reportType')
 
-        if select == 'all':
-            sitereport = Site_visit.objects.all()
-        elif select == 'date':
-            fromDate = request.POST.get('fromDate', '')
-            toDate = request.POST.get('toDate', '')
-            if toDate and fromDate:
-                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
-                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
-                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
-                toDate = date_obj + timedelta(days=1)
-                sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
-                                                       date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
-        elif select == 'project_head':
-            sitereport = Site_visit.objects.filter(proj_head=value)
-        elif select == 'executive':
-            sitereport = Site_visit.objects.filter(executive=value)
-        elif select == 'svstatus':
-            sitereport = Site_visit.objects.filter(sv_status=value)
-        elif select == 'sourcewise':
-            sitereport = Site_visit.objects.filter(source=value)
-        elif select == 'svcategorywise':
-            sitereport = Site_visit.objects.filter(sv_category=value)
+#         if select == 'all':
+#             sitereport = Site_visit.objects.all()
+#         elif select == 'date':
+#             fromDate = request.POST.get('fromDate', '')
+#             toDate = request.POST.get('toDate', '')
+#             if toDate and fromDate:
+#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+#                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+#                 toDate = date_obj + timedelta(days=1)
+#                 sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
+#                                                        date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+#         elif select == 'project_head':
+#             sitereport = Site_visit.objects.filter(proj_head=value)
+#         elif select == 'executive':
+#             sitereport = Site_visit.objects.filter(executive=value)
+#         elif select == 'svstatus':
+#             sitereport = Site_visit.objects.filter(sv_status=value)
+#         elif select == 'sourcewise':
+#             sitereport = Site_visit.objects.filter(source=value)
+#         elif select == 'svcategorywise':
+#             sitereport = Site_visit.objects.filter(sv_category=value)
 
-        if 'export_csv' in request.POST:
-            # Export CSV functionality
-            response = HttpResponse(content_type='text/csv')
-            response['Content-Disposition'] = 'attachment; filename="site_report.csv"'
+#         if 'export_csv' in request.POST:
+#             # Export CSV functionality
+#             response = HttpResponse(content_type='text/csv')
+#             response['Content-Disposition'] = 'attachment; filename="site_report.csv"'
 
-            writer = csv.writer(response)
-            writer.writerow(['Date', 'Customer Name', 'Phone number', ...])  # Add your field names
+#             writer = csv.writer(response)
+#             writer.writerow(['Date', 'Customer Name', 'Phone number', ...])  # Add your field names
 
-            for row in sitereport:
-                # Adjust the following line based on your actual model fields
-                writer.writerow([row.date_of_site_visit, row.cust_name, row.phone_no, ...])
+#             for row in sitereport:
+#                 # Adjust the following line based on your actual model fields
+#                 writer.writerow([row.date_of_site_visit, row.cust_name, row.phone_no, ...])
 
-            return response
+#             return response
 
-    # Generate export link with current filter parameters
-    export_link = reverse('site_report') + f'?sitereportoption={value}&reportType={select}&fromDate={fromDate}&toDate={toDate}'
+#     # Generate export link with current filter parameters
+#     export_link = reverse('site_report') + f'?sitereportoption={value}&reportType={select}&fromDate={fromDate}&toDate={toDate}'
 
-    context = {
-        'sitereport_filter': sitereport,
-        'sitereport': sitereport_all,
-        'export_link': export_link,
-    }
-    return render(request, 'site_report.html', context)
+#     context = {
+#         'sitereport_filter': sitereport,
+#         'sitereport': sitereport_all,
+#         'export_link': export_link,
+#     }
+#     return render(request, 'site_report.html', context)
+
 def pdc_report(request):
     return render(request, 'pdc_report.html')
 

@@ -32,8 +32,8 @@
             </div>
         </div>
         <div>
-            <button class="btn btn-success" type="submit" name="reportType" value="all">All</button>
-            <button>Excel</button>
+            <a href="{{ export_link }}" style="float: right;" class="btn btn-primary">Export to CSV</a>
+            <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
     <br>
@@ -42,16 +42,16 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Date of Change</th>
-                    <th>Type of Change</th>
-                    <th>Existing Dim</th>
-                    <th>New Dim</th>
-                    <th>Refund Amount</th>
+                    <th>Date_of_Change</th>
+                    <th>Type_of_Change</th>
+                    <th>Existing_Dim</th>
+                    <th>New_Dim</th>
+                    <th>Refund_Amount</th>
                     <th>Executive</th>
-                    <th>Project Head</th>
-                    <th>Payment for UG</th>
-                    <th>Seniority No</th>
-                    <th>Customer Name</th>
+                    <th>Project_Head</th>
+                    <th>Payment_for_UG</th>
+                    <th>Seniority_No</th>
+                    <th>Customer_Name</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,11 +60,11 @@
                     <td>{{forloop.counter}}</td>
                     <td>{{val.date_of_change}}</td>
                     <td>{{val.type_of_change}}</td>
-                    <td>{{val.}}</td>
+                    <td>{{val.land_details.plotsize.plotsize}}</td>
                     <td>{{val.}}</td>
                     <td>{{val.refund_amount}}</td>
-                    <td>{{val.}}</td>
-                    <td>{{val.}}</td>
+                    <td>{{val.sitevist.executive.first_name|upper}}</td>
+                    <td>{{val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper}}</td>
                     <td>{{val.}}</td>
                     <td>{{val.seniority_id}}</td>
                     <td>{{val.user.first_name}}</td>
