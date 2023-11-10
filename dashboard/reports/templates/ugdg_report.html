@@ -23,9 +23,9 @@
                     <option value="date">Date Wise</option>
                     <option value="project_wise">Project Wise</option>
                     <option value="project_head">Proj Head Wise</option>
-                    <option value="project_head">Executive Wise</option>
-                    <option value="project_head">Type of Change</option>
-                    <option value="project_head">UG Payment Wise</option>
+                    <option value="ececutive_wise">Executive Wise</option>
+                    <option value="type_change">Type of Change</option>
+                    <option value="ugpayment_wise">UG Payment Wise</option>
                 </select>
             </div>
             <div id="dynamicDropdown" style="display: none;" class="p-1">
@@ -55,7 +55,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for val in ugdgreport %}
+                {% for val in ugdgreport_filter %}
                 <tr>
                     <td>{{forloop.counter}}</td>
                     <td>{{val.date_of_change}}</td>
@@ -84,7 +84,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form method="post" action="{% url 'transfer_report' %}">
+                <form method="post" action="{% url 'ugdg_report' %}">
                     {% csrf_token %}
                     <input type="hidden" name="date" value=date>
                     <div class="modal-body">
@@ -130,7 +130,7 @@
                 
             `;
             dynamicDropdown.style.display = 'block';
-            // 2nd block
+
         } else if (selectedOption === 'project_wise') {
             dynamicDropdown.innerHTML = `
             {% csrf_token %}
@@ -138,13 +138,13 @@
             <input type="hidden" name="reportType" value ='project_wise'> 
                 <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
-                    {% for mydata in project %}
-                        <option value="{{ mydata.projectname }}">{{ mydata.projectname }}</option>
+                    {% for mydata in ugdgreport %}
+                        <option value="{{ mydata.land_details.project.projectname }}">{{ mydata.land_details.project.projectname }}</option>
                     {% endfor %}
                 </select>
             `;
             dynamicDropdown.style.display = 'block';
-            // 4th block 
+
         } else if (selectedOption === 'project_head') {
             dynamicDropdown.innerHTML = `
             {% csrf_token %}
@@ -158,8 +158,49 @@
                 </select>
             `;
             dynamicDropdown.style.display = 'block';
+
+        } else if (selectedOption === 'ececutive_wise') {
+            dynamicDropdown.innerHTML = `
+            {% csrf_token %}
+            <label class="p-1">Proj Head Wise</label>
+            <input type="hidden" name="reportType" value ='ececutive_wise'> 
+                <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
+                    <option disabled selected hidden>Select Report Type</option>
+                    {% for mydata in sitereport %}
+                        <option value="{{ mydata.proj_head }}">{{ mydata.proj_head }}</option>
+                    {% endfor %}
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+
+        }else if (selectedOption === 'type_change') {
+            dynamicDropdown.innerHTML = `
+            {% csrf_token %}
+            <label class="p-1">Type of Change</label>
+            <input type="hidden" name="reportType" value ='type_change'> 
+                <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
+                    <option disabled selected hidden>select</option>
+                    <option value="Upgrade">Upgrade</option>
+                    <option value="Downgrade">Downgrade</option>
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
+
+        }else if (selectedOption === 'ugpayment_wise') {
+            dynamicDropdown.innerHTML = `
+            {% csrf_token %}
+            <label class="p-1">Proj Head Wise</label>
+            <input type="hidden" name="reportType" value ='ugpayment_wise'> 
+                <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
+                    <option disabled selected hidden>Select Report Type</option>
+                    {% for mydata in sitereport %}
+                        <option value="{{ mydata.proj_head }}">{{ mydata.proj_head }}</option>
+                    {% endfor %}
+                </select>
+            `;
+            dynamicDropdown.style.display = 'block';
             // 4th block 
-        } else {
+        }else {
             dynamicDropdown.style.display = 'none';
         }
     });

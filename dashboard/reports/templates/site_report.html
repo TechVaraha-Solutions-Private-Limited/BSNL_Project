@@ -34,7 +34,8 @@
         </div>
         <div>
             <button class="btn btn-success" type="submit" name="reportType" value="all">All</button>
-            <button>Excel</button>
+            <!-- <a href="{% url 'site_report' %}" download><button class="btn btn-success" type="submit" name="reportType" value="all">Excel</button></a> -->
+            <a href="{{ export_link }}" class="btn btn-primary">Export to CSV</a>
         </div>
     </form>
     <br>
