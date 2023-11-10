@@ -341,7 +341,6 @@
                                     <p>{{mydata.adhar_no}}</p>
                                 </div>
                             </td>
-                            {% for mydata in book %}
                             <td>
                                 <div>
                                     <p>{{mydata.nomie_name}}</p>
@@ -350,10 +349,18 @@
                                     <p>{{mydata.nomie_adrs}}</p>
                                 </div>
                             </td>
-                            <td>{{mydata.families.member_relation}}</td>
-                            
+                            <td>{% for data in mydata.user.userfamilydetails_set.all %}
+                                {{data.member_name}}
+                                {% endfor %}
+                            </td>
+                            <td>{% for data in mydata.user.userfamilydetails_set.all %}
+                                {{data.member_age}}
+                                {% endfor %}</td>
+                            <td>{% for data in mydata.user.userfamilydetails_set.all %}
+                                {{data.member_relation}}
+                                {% endfor %}</td>
+                            <!--  -->
                             <td><img src="{{ mydata.pro_img.url }}" alt="{{ mydata.pro_img.name }}"></td>
-                            {% endfor %}
                             <td>
                                 <div>
                                    <center><a href="update_personal/{{mydata.user.id}}" type="button"

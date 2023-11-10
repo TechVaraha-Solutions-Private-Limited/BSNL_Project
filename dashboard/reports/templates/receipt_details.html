@@ -31,7 +31,7 @@
             </div>
         </div>
         <div>
-            <a href="{{ export_link }}" style="float: right;" class="btn btn-primary">Export to CSV</a>
+            <a  id="receipt_detailsdownload" style="float: right;" class="btn btn-primary">Download CSV</a>
             <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
@@ -226,5 +226,37 @@
         }
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var receipt_detailsdownload = document.getElementById('receipt_detailsdownload');
+        receipt_detailsdownload.addEventListener('click', function () {
+            // Prepare data for CSV
+            var csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Receipt No,Date of Receipt,Type of Payment,Amount Paid,Mode of Payment,Cheque No,Payment Status,Date Credited,Credited to Bank,Project Head\n";
 
+            // Loop through the bookings data and append to CSV
+            {% for val in receiptreport_filter %}
+                csvContent += "{{forloop.counter}}," +
+                              "{{val.receipt_no}}," +
+                              "{{val.dateofreceipt}}," +
+                              "{{val.paymentname}}," +
+                              "{{val.total_paid_amount}}," +
+                              "{{val.payment_mode}}," +
+                              "{{val.cheque_no}}," +
+                              "{{val.status}}," +
+                              "{{val.date_cleared}}," +
+                              "{{val.bank}}," +
+                              "{{val.booking.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name}}\n";
+            {% endfor %}
+
+            // Create a data URI and trigger the download
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Recepit Details report.csv");
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+        });
+    });
+</script>
 {% endblock %}

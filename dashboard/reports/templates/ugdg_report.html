@@ -32,7 +32,7 @@
             </div>
         </div>
         <div>
-            <a href="{{ export_link }}" style="float: right;" class="btn btn-primary">Export to CSV</a>
+            <a  id="ugdglink" style="float: right;" class="btn btn-primary">Download CSV</a>
             <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
@@ -205,5 +205,37 @@
         }
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ugdglink = document.getElementById('ugdglink');
+        ugdglink.addEventListener('click', function () {
+            // Prepare data for CSV
+            var csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Date_of_Change,Type_of_Change,Existing_Dim,New_Dim,Refund_Amount,Executive,Project_Head,Payment_for_UG,Seniority_No,Customer_Name\n";
 
+            // Loop through the bookings data and append to CSV
+            {% for val in ugdgreport_filter %}
+                csvContent += "{{ val.date_of_change }}," +
+                              "{{ val.type_of_change }}," +
+                              "{{val.old_land_details.plotsize.plotsize}}," +
+                              "{{val.land_details.plotsize.plotsize}}" +
+                              "{{ val.land_details.plotsize.plotsize }}," +
+                              "{{val.refund_amount}}," +
+                              "{{val.sitevist.executive.first_name|upper}}," +
+                              "{{ val.alter }}," +
+                              "{{val.seniority_id}}," +
+                              "{{ val.address|upper }}," +
+                              "{{val.user.first_name}}\n";
+            {% endfor %}
+
+            // Create a data URI and trigger the download
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "ugdg report.csv");
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+        });
+    });
+</script>
 {% endblock %}

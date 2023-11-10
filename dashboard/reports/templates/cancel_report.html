@@ -31,7 +31,7 @@
             </div>
         </div>
         <div>
-            <a href="{{ export_link }}" style="float: right;" class="btn btn-primary">Export to CSV</a>
+            <a  id="cancelreportlink" style="float: right;" class="btn btn-primary">Download CSV</a>
             <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
@@ -222,5 +222,35 @@
         }
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var cancelreportlink = document.getElementById('cancelreportlink');
+        cancelreportlink.addEventListener('click', function () {
+            // Prepare data for CSV
+            var csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Date_of_Cancel,Date_of_Refund,Mode_of_Refund,Type_of_Refund,Refund_Cheque No,Refund_Amount,Issued_by,Executive Name,Proj Head Name,Dimension\n";
+            // Loop through the bookings data and append to CSV
+            {% for val in cancelreport_filter %}
+                csvContent += "{{ val.date_of_cancel }}," +
+                              "{{ val.date_of_refund }}," +
+                              "{{val.mode_of_refund}}," +
+                              "{{val.type_of_refund}}" +
+                              "{{ val.refund_cheque_no }}," +
+                              "{{val.refund_amount}}," +
+                              "{{val.issued_by}}," +
+                              "{{ val.sitevist.executive.first_name }}," +
+                              "{{val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name}}," +
+                              "{{ val.land_details.plotsize.plotsize }}\n";
+            {% endfor %}
 
+            // Create a data URI and trigger the download
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Cancel Report.csv");
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+        });
+    });
+</script>
 {% endblock %}
