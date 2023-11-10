@@ -36,7 +36,7 @@
 
         </div>
         <div>
-            <a href="{{ export_link }}" style="float: right;" class="btn btn-primary">Export to CSV</a>
+            <a href="#" id="downloadCsvLink" class="btn btn-primary">Download CSV</a>
             <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
@@ -171,7 +171,7 @@
                     
                     <option disabled selected hidden>Select Report Type</option>
                     {% for mydata in team_lead %}
-                        <option value="{{ mydata.first_name }}">{{ mydata.first_name }}</option>
+                        <option value="{{ mydata.id }}">{{ mydata.first_name }}</option>
                     {% endfor %}
                 </select>
             `;
@@ -180,9 +180,7 @@
         } else if (selectedOption === 'executive') {
             dynamicDropdown.innerHTML = `
             <label class="p-1">Executive Wise</label>
-
                 <select class="form-control" id="projectexecut" name="projectexecut" onchange="this.form.submit()">
-                    
                     <option disabled selected hidden>Select Report Type</option>
                     {% for mydata in  executivename %}
                         <option value="{{ mydata.id }}">{{ mydata.first_name }}</option>
@@ -222,5 +220,47 @@
     });
 
 </script>
+<!-- Add this script block at the end of your template -->
+<!-- Add this script at the end of your HTML file, just before the </body> tag -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var downloadCsvLink = document.getElementById('downloadCsvLink');
+        downloadCsvLink.addEventListener('click', function () {
+            // Prepare data for CSV
+            var csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Seniority,Customer Name,Date of Booking,Project,Dimension,AM Number,Mobile No,Alternate No,Email ID,Address,Tot Value,DP Value,Tot Paid,Executive,Proj Head,Pay Status,Payment Type\n";
+
+            // Loop through the bookings data and append to CSV
+            {% for val in bookings %}
+                csvContent += "{{ val.seniority_id }}," +
+                              "{{ val.user.first_name|upper }}," +
+                              "{{ val.created_on|date:'d-m-y' }}," +
+                              "{{ val.land_details.project.projectname }}," +
+                              "{{ val.land_details.plotsize.plotsize }}," +
+                              "{{ val.am_no }}," +
+                              "{{ val.user.mobile_no }}," +
+                              "{{ val.alter }}," +
+                              "{{ val.user.email }}," +
+                              "{{ val.address|upper }}," +
+                              "{{ val.land_details.total_amount }}," +
+                              "{{ val.land_details.down_payment }}," +
+                              "{{ val.total_amt }}," +
+                              "{{ val.sitevist.executive.first_name|upper }}," +
+                              "{{ val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper }}," +
+                              "," +  // Pay Status field is empty in your provided data
+                              "{{ val.paymentdetails_set.last.paymentname }}\n";
+            {% endfor %}
+
+            // Create a data URI and trigger the download
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "booking_report.csv");
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+        });
+    });
+</script>
+
 
 {% endblock %}

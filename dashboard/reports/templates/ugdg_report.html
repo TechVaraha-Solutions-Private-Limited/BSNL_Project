@@ -23,7 +23,7 @@
                     <option value="date">Date Wise</option>
                     <option value="project_wise">Project Wise</option>
                     <option value="project_head">Proj Head Wise</option>
-                    <option value="ececutive_wise">Executive Wise</option>
+                    <option value="executive_wise">Executive Wise</option>
                     <option value="type_change">Type of Change</option>
                     <option value="ugpayment_wise">UG Payment Wise</option>
                 </select>
@@ -60,8 +60,8 @@
                     <td>{{forloop.counter}}</td>
                     <td>{{val.date_of_change}}</td>
                     <td>{{val.type_of_change}}</td>
+                    <td>{{val.old_land_details.plotsize.plotsize}}</td>
                     <td>{{val.land_details.plotsize.plotsize}}</td>
-                    <td>{{val.}}</td>
                     <td>{{val.refund_amount}}</td>
                     <td>{{val.sitevist.executive.first_name|upper}}</td>
                     <td>{{val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper}}</td>
@@ -152,22 +152,22 @@
             <input type="hidden" name="reportType" value ='project_head'> 
                 <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
-                    {% for mydata in sitereport %}
-                        <option value="{{ mydata.proj_head }}">{{ mydata.proj_head }}</option>
+                    {% for mydata in team_lead %}
+                        <option value="{{ mydata.id }}">{{ mydata.first_name }}</option>
                     {% endfor %}
                 </select>
             `;
             dynamicDropdown.style.display = 'block';
 
-        } else if (selectedOption === 'ececutive_wise') {
+        } else if (selectedOption === 'executive_wise') {
             dynamicDropdown.innerHTML = `
             {% csrf_token %}
-            <label class="p-1">Proj Head Wise</label>
-            <input type="hidden" name="reportType" value ='ececutive_wise'> 
+            <label class="p-1">Executive Wise</label>
+
                 <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
-                    {% for mydata in sitereport %}
-                        <option value="{{ mydata.proj_head }}">{{ mydata.proj_head }}</option>
+                    {% for mydata in  executivename %}
+                        <option value="{{ mydata.id }}">{{ mydata.first_name }}</option>
                     {% endfor %}
                 </select>
             `;
