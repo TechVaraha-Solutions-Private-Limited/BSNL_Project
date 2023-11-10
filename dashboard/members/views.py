@@ -250,7 +250,6 @@ def site_visit_custmer(request,id):
     
     return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':landdetail,'projects':projects,'site_visit':site_visit})
 
-
 def add_new_bookings(request):
     projects = Project.objects.all()
     landdetail = LandDetails.objects.all()
@@ -509,6 +508,7 @@ def generate(request):
                         membership_fee.cheque_no = request.POST.get('cheque_no')
                         membership_fee.transaction = request.POST.get('transaction_id')
                         membership_fee.ddno=request.POST.get('dd_no')
+                        membership_fee.dateofreceipt = request.POST.get('dateofreceipt')
                         membership_fee.payment_data = request.POST.get('payment_data')
                         membership_fee.amount = 2260
                         membership_fee.paymentname = "Membership"
@@ -552,6 +552,7 @@ def generate(request):
                                 payments.transaction = request.POST.get('transaction_id')
                                 payments.ddno=request.POST.get('dd_no')
                                 payments.payment_data = request.POST.get('payment_data')
+                                payments.dateofreceipt = request.POST.get('dateofreceipt')
                                 payments.paymentname =paymentname+' '+payment_name
                                 payments.amount = paid_amount
                                 payments.receipt_no = get_number
@@ -570,6 +571,7 @@ def generate(request):
                                 payments.transaction = request.POST.get('transaction_id')
                                 payments.ddno=request.POST.get('dd_no')
                                 payments.payment_data = request.POST.get('payment_data')
+                                payments.dateofreceipt = request.POST.get('dateofreceipt')
                                 payments.paymentname =paymentname
                                 payments.amount = paid_amt_bal
                                 payments.receipt_no = get_number
@@ -578,10 +580,6 @@ def generate(request):
                                 book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount)
                                 book.save()
                                 paid_amount=int(paid_amount) -int(paid_amt_bal)
-
-
-                        
-
                     messages.success(request,'Successfully Saved')
             except Bookings.DoesNotExist:
                 messages.error(request,'Saved failed')
@@ -682,7 +680,6 @@ def get_team_owner(request):
         return JsonResponse({"values":list(teamlead),'shortcut':details.shortcode})
     return JsonResponse({})
     
-
 def site_visit(request):
     exective = User.objects.filter(role = 'Executive')
     detail = {}

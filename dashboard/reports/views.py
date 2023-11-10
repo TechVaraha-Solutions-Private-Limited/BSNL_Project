@@ -44,8 +44,8 @@ def print_recepit(request,id):
     }
     return render (request,'print_recepit.html',context)
 
-
 def booking_report(request):
+
     view_report = PaymentDetails.objects.all()
     project = Project.objects.all()
     bookings =Bookings.objects.all()
@@ -88,11 +88,13 @@ def booking_report(request):
                     booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                     booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no           
         elif select == 'project_head':
+            print(teamlead)
             #bookings = Bookings.objects.filter(sitevist__executive__executive_set__last__teamlead__sr_team__project_head__first_name= teamlead)
-            bookings = Bookings.objects.filter(sitevist__executive__id__in=[6])
+            sites = Site_visit.objects.filter(proj_head_id=teamlead)
+            bookings = Bookings.objects.filter(sitevist__id=1)
+            print(Bookings)
+            print(sites)
 
-            for booking in bookings:
-                print(booking)
         elif select == 'executive':
             bookings = Bookings.objects.filter(sitevist__executive = executtype)
         elif select == 'payment_type':
@@ -160,26 +162,78 @@ def site_report(request):
         elif select == 'sourcewise':
             sitereport = Site_visit.objects.filter(source=value)
         elif select == 'svcategorywise':
-            sitereport = Site_visit.objects.filter(sv_category=value)
-
-        context = {
-            'sitereport_filter': sitereport,
-            'sitereport': sitereport_all
+            sitereport = Site_visit.objects.filter(sv_category = value)
+        
+        context={
+        'sitereport_filter':sitereport,
+        'sitereport': sitereport_all,
+        'team_lead':team_lead,
+        'executivename':executivename
         }
         return render(request, 'site_report.html', context)
-
-    content = {
-        'sitereport_filter': sitereport_all,
+    content={
+        'sitereport_filter':sitereport_all,
         'sitereport': sitereport_all
+        
     }
     return render(request, 'site_report.html', content)
+
+                        #site visit report
+
+# def site_report(request):
+#     sitereport_all = Site_visit.objects.all()
+
+# #     if request.method == 'POST':
+# #         value = request.POST.get('sitereportoption')
+# #         select = request.POST.get('reportType')
+
+#         if select == 'all':
+#             sitereport = Site_visit.objects.all()
+#         elif select == 'date':
+#             fromDate = request.POST.get('fromDate','')
+#             toDate = request.POST.get('toDate','')
+#             if toDate and fromDate:
+#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+#                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+#                 toDate =  date_obj + timedelta(days=1)
+#                 sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
+#                                                    date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                    
+#         elif select == 'project_head':
+#             sitereport = Site_visit.objects.filter(proj_head = value)
+           
+#         elif select == 'executive':
+#             sitereport = Site_visit.objects.filter(executive = value)
+            
+#         elif select == 'svstatus':
+#             sitereport = Site_visit.objects.filter(sv_status = value)
+            
+#         elif select == 'sourcewise':
+#             sitereport = Site_visit.objects.filter(source = value)
+            
+#         elif select == 'svcategorywise':
+#             sitereport = Site_visit.objects.filter(sv_category = value)
+        
+#         context={
+#         'sitereport_filter':sitereport,
+#         'sitereport': sitereport_all
+#         }
+#         return render(request, 'site_report.html', context)
+#     content={
+#         'sitereport_filter':sitereport_all,
+#         'sitereport': sitereport_all
+        
+#     }
+#     return render(request, 'site_report.html', content)
 
 def pdc_report(request):
     return render(request, 'pdc_report.html')
 
 def ugdg_report(request):
     ugdgreport_all = Bookings.objects.all()
-
+    team_lead = User.objects.filter( role = "Project_Lead")
+    executivename = User.objects.filter( role = "Executive")
     if request.method == 'POST':
         value = request.POST.get('sitereportoption')
         select = request.POST.get('reportType')
@@ -201,11 +255,11 @@ def ugdg_report(request):
             ugdgreport = Bookings.objects.filter(land_details__project__projectname = value)
            
         elif select == 'project_head':
-            ugdgreport = Bookings.objects.filter(executive = value)
+            ugdgreport = Bookings.objects.filter(sitevist__proj_head =value)
             
-        elif select == 'ececutive_wise':
-            ugdgreport = Bookings.objects.filter(sv_status = value)
-            
+        elif select == 'executive_wise':
+            ugdgreport = Bookings.objects.filter(sitevist__executive = value)
+            print(ugdgreport)
         elif select == 'type_change':
             ugdgreport = Bookings.objects.filter(type_of_change = value)
             
@@ -214,12 +268,16 @@ def ugdg_report(request):
         
         context={
         'ugdgreport_filter':ugdgreport,
-        'ugdgreport': ugdgreport_all
+        'ugdgreport': ugdgreport_all,
+        'executivename':executivename,
+        'team_lead':team_lead
         }
         return render(request, 'ugdg_report.html', context)
     content={
         'ugdgreport_filter':ugdgreport_all,
-        'ugdgreport': ugdgreport_all
+        'ugdgreport': ugdgreport_all,
+        'executivename':executivename,
+        'team_lead':team_lead
         
     }
     return render(request, 'ugdg_report.html', content)
@@ -269,7 +327,7 @@ def transfer_report(request):
 
 def cancel_report(request):
     cancelreport_all = Bookings.objects.all()
-    
+    team_lead = User.objects.filter( role = "Project_Lead")
     if request.method == 'POST':
         value = request.POST.get('cancelreportoption')
         select = request.POST.get('reportType')
@@ -300,7 +358,7 @@ def cancel_report(request):
             cancelreport = Bookings.objects.all() 
                  
         elif select == 'project_head':
-            cancelreport = Bookings.objects.filter(proj_head = value)
+            cancelreport = Bookings.objects.filter(sitevist__proj_head = value)
            
         elif select == 'mode_wise':
             cancelreport = Bookings.objects.filter(mode_of_refund = value)
@@ -310,12 +368,14 @@ def cancel_report(request):
 
         context={
         'cancelreport_filter':cancelreport,
-        'cancelreport': cancelreport_all
+        'cancelreport': cancelreport_all,
+        'team_lead':team_lead
         }
         return render(request, 'cancel_report.html', context)
     content={
         'cancelreport_filter':cancelreport_all,
-        'cancelreport': cancelreport_all
+        'cancelreport': cancelreport_all,
+        'team_lead':team_lead
         
     }
     
@@ -323,7 +383,7 @@ def cancel_report(request):
 
 def receipt_details(request):
     receipts_all = PaymentDetails.objects.all()
-    
+    team_lead = User.objects.filter( role = "Project_Lead")
     if request.method == 'POST':
         value = request.POST.get('receiptreportoption')
         select = request.POST.get('reportType')
@@ -354,7 +414,7 @@ def receipt_details(request):
             receiptreport = PaymentDetails.objects.all() 
                  
         elif select == 'project_head':
-            receiptreport = PaymentDetails.objects.filter(proj_head = value)
+            receiptreport = Bookings.objects.filter(sitevist__proj_head = value)
            
         elif select == 'mod_pay':
             receiptreport = PaymentDetails.objects.filter(payment_mode = value)
@@ -364,12 +424,14 @@ def receipt_details(request):
 
         context={
         'receiptreport_filter':receiptreport,
-        'receiptreport': receipts_all
+        'receiptreport': receipts_all,
+        'team_lead':team_lead
         }
         return render(request, 'receipt_details.html', context)
     content={
         'receiptreport_filter':receipts_all,
-        'receiptreport': receipts_all
+        'receiptreport': receipts_all,
+        'team_lead':team_lead
         
     }
     

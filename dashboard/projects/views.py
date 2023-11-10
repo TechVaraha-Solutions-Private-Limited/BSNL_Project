@@ -29,6 +29,7 @@ def addplotsize(request):
 		None
 	data = PlotSize.objects.all()
 	return render(request,'add_plot_size.html',{'data':data})
+
 def updateplotsize(request,id):
 	updateproject=PlotSize.objects.get(id=id)
 	return render(request,'update_project_list.html',{'updateproject':updateproject})
@@ -87,6 +88,7 @@ def updatingprojectlist(request,id):
 	print(id)
 	return redirect(projectlist)
 	print(id)
+
 def deleteprojectlist(request,id):
 	deletingprojectlist=Project.objects.get(id=id)
 	deletingprojectlist.delete()

@@ -31,8 +31,8 @@
             </div>
         </div>
         <div>
-            <button class="btn btn-success" type="submit" name="reportType" value="all">All</button>
-            <button>Excel</button>
+            <a href="{{ export_link }}" style="float: right;" class="btn btn-primary">Export to CSV</a>
+            <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
     <br>
@@ -41,13 +41,13 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Date of Cancel</th>
-                    <th>Date of Refund</th>
-                    <th>Mode of Refund</th>
-                    <th>Type of Refund</th>
-                    <th>Refund Cheque No</th>
-                    <th>Refund Amount</th>
-                    <th>Issued by</th>
+                    <th>Date_of_Cancel</th>
+                    <th>Date_of_Refund</th>
+                    <th>Mode_of_Refund</th>
+                    <th>Type_of_Refund</th>
+                    <th>Refund_Cheque No</th>
+                    <th>Refund_Amount</th>
+                    <th>Issued_by</th>
                     <th>Executive Name</th>
                     <th>Proj Head Name</th>
                     <th>Dimension</th>
@@ -64,8 +64,8 @@
                     <td>{{val.refund_cheque_no}}</td>
                     <td>{{val.refund_amount}}</td>
                     <td>{{val.issued_by}}</td>
-                    <td>{{val.}}</td>
-                    <td>{{val.}}</td>
+                    <td>{{val.sitevist.executive.first_name}}</td>
+                    <td>{{val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name}}</td>
                     <td>{{val.land_details.plotsize.plotsize}}</td>
                 </tr>
                 {%endfor%}
@@ -185,8 +185,8 @@
             <input type="hidden" name="reportType" value ='project_head'> 
                 <select class="form-control" id="projecthead" name="cancelreportoption" onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
-                    {% for mydata in sitereport %}
-                        <option value="{{ mydata.proj_head }}">{{ mydata.proj_head }}</option>
+                    {% for mydata in team_lead %}
+                        <option value="{{ mydata.id }}">{{ mydata.first_name }}</option>
                     {% endfor %}
                 </select>
             `;

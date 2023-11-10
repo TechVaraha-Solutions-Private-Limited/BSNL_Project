@@ -31,8 +31,8 @@
             </div>
         </div>
         <div>
-            <button class="btn btn-success" type="submit" name="reportType" value="all">All</button>
-            <button>Excel</button>
+            <a href="{{ export_link }}" style="float: right;" class="btn btn-primary">Export to CSV</a>
+            <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
     <br>
@@ -66,7 +66,7 @@
                     <td>{{val.status}}</td>
                     <td>{{val.date_cleared}}</td>
                     <td>{{val.bank}}</td>
-                    <td>{{val.}}</td>
+                    <td>{{val.booking.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name}}</td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -90,12 +90,12 @@
                         <div class="form-group">
                             <label>From Date</label>
                             <input type="hidden" name="reportType" value=date>
-                            <input type="date" class="form-control" name="fromDate">
+                            <input type="date" class="form-control" name="fromDate" value="" required="">
                         </div>
                         <div class="form-group">
                             <label>To Date</label>
-
-                            <input type="date" class="form-c>
+    
+                            <input type="date" class="form-control" name="toDate" value="" required="">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -184,8 +184,8 @@
                         <input type="hidden" name="reportType" value ='project_head'> 
                             <select class="form-control" id="projecthead" name="receiptreportoption" onchange="this.form.submit()">
                                 <option disabled selected hidden>Select Report Type</option>
-                                {% for mydata in receiptreport %}
-                                    <option value="{{ mydata.proj_head }}">{{ mydata.proj_head }}</option>
+                                {% for mydata in team_lead %}
+                                    <option value="{{ mydata.id }}">{{ mydata.first_name }}</option>
                                 {% endfor %}
                             </select>
                         `;
