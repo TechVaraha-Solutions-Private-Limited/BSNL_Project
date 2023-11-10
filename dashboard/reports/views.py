@@ -2,10 +2,12 @@ from django.shortcuts import render,redirect,HttpResponse
 from dashboard.members.models import Bookings,PaymentDetails,Site_visit
 from dashboard.projects.models import Project
 from dashboard.userinfo.models import UserDetail,Executive,User
+from django.urls import reverse
 from num2words import num2words
 from django.db.models import Sum
 from datetime import datetime, date, timedelta
 import csv
+from django.views import View
 # Create your views here.
 def confirmletter_view(request,id):
     book=Bookings.objects.get(id=id)
@@ -132,14 +134,172 @@ def booking_report(request):
 
                         #site visit report
 
+# def site_report(request):
+#     sitereport_all = Site_visit.objects.all()
+
+#     if request.method == 'POST':
+#         value = request.POST.get('sitereportoption')
+#         select = request.POST.get('reportType')
+
+#         if select == 'all':
+#             sitereport = Site_visit.objects.all()
+#         elif select == 'date':
+#             fromDate = request.POST.get('fromDate','')
+#             toDate = request.POST.get('toDate','')
+#             if toDate and fromDate:
+#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+#                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+#                 toDate =  date_obj + timedelta(days=1)
+#                 sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
+#                                                    date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                    
+#         elif select == 'project_head':
+#             sitereport = Site_visit.objects.filter(proj_head = value)
+           
+#         elif select == 'executive':
+#             sitereport = Site_visit.objects.filter(executive = value)
+            
+#         elif select == 'svstatus':
+#             sitereport = Site_visit.objects.filter(sv_status = value)
+            
+#         elif select == 'sourcewise':
+#             sitereport = Site_visit.objects.filter(source = value)
+            
+#         elif select == 'svcategorywise':
+#             sitereport = Site_visit.objects.filter(sv_category = value)
+        
+#         context={
+#         'sitereport_filter':sitereport,
+#         'sitereport': sitereport_all
+#         }
+#         return render(request, 'site_report.html', context)
+#     content={
+#         'sitereport_filter':sitereport_all,
+#         'sitereport': sitereport_all
+        
+#     }
+#     return render(request, 'site_report.html', content)
+
+# def site_report(request):
+#     sitereport_all = Site_visit.objects.all()
+#     sitereport = sitereport_all  # Default to all data
+
+#     if request.method == 'POST':
+#         value = request.POST.get('sitereportoption')
+#         select = request.POST.get('reportType')
+
+#         if select == 'all':
+#             sitereport = Site_visit.objects.all()
+#         elif select == 'date':
+#             fromDate = request.POST.get('fromDate', '')
+#             toDate = request.POST.get('toDate', '')
+#             if toDate and fromDate:
+#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+#                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+#                 toDate = date_obj + timedelta(days=1)
+#                 sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
+#                                                        date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+#         elif select == 'project_head':
+#             sitereport = Site_visit.objects.filter(proj_head=value)
+#         elif select == 'executive':
+#             sitereport = Site_visit.objects.filter(executive=value)
+#         elif select == 'svstatus':
+#             sitereport = Site_visit.objects.filter(sv_status=value)
+#         elif select == 'sourcewise':
+#             sitereport = Site_visit.objects.filter(source=value)
+#         elif select == 'svcategorywise':
+#             sitereport = Site_visit.objects.filter(sv_category=value)
+
+#         if 'export_csv' in request.POST:
+#             # Export CSV functionality
+#             response = HttpResponse(content_type='text/csv')
+#             response['Content-Disposition'] = 'attachment; filename="site_report.csv"'
+
+#             writer = csv.writer(response)
+#             writer.writerow(['Date', 'Customer Name', 'Phone number', ...])  # Add your field names
+
+#             for row in sitereport:
+#                 # Adjust the following line based on your actual model fields
+#                 writer.writerow([row.date_of_site_visit, row.cust_name, row.phone_no, ...])
+
+#             return response
+
+#     context = {
+#         'sitereport_filter': sitereport,
+#         'sitereport': sitereport_all,
+#     }
+#     return render(request, 'site_report.html', context)
+
+
 def site_report(request):
     sitereport_all = Site_visit.objects.all()
+    value = None  # Initialize the value variable
 
     if request.method == 'POST':
         value = request.POST.get('sitereportoption')
         select = request.POST.get('reportType')
 
-        if select == 'date':
+        if select == 'all':
+            sitereport = Site_visit.objects.all()
+        elif select == 'date':
+            fromDate = request.POST.get('fromDate', '')
+            toDate = request.POST.get('toDate', '')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate = date_obj + timedelta(days=1)
+                sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                       date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+        elif select == 'project_head':
+            sitereport = Site_visit.objects.filter(proj_head=value)
+        elif select == 'executive':
+            sitereport = Site_visit.objects.filter(executive=value)
+        elif select == 'svstatus':
+            sitereport = Site_visit.objects.filter(sv_status=value)
+        elif select == 'sourcewise':
+            sitereport = Site_visit.objects.filter(source=value)
+        elif select == 'svcategorywise':
+            sitereport = Site_visit.objects.filter(sv_category=value)
+
+        if 'export_csv' in request.POST:
+            # Export CSV functionality
+            response = HttpResponse(content_type='text/csv')
+            response['Content-Disposition'] = 'attachment; filename="site_report.csv"'
+
+            writer = csv.writer(response)
+            writer.writerow(['Date', 'Customer Name', 'Phone number', ...])  # Add your field names
+
+            for row in sitereport:
+                # Adjust the following line based on your actual model fields
+                writer.writerow([row.date_of_site_visit, row.cust_name, row.phone_no, ...])
+
+            return response
+
+    # Generate export link with current filter parameters
+    export_link = reverse('site_report') + f'?sitereportoption={value}&reportType={select}&fromDate={fromDate}&toDate={toDate}'
+
+    context = {
+        'sitereport_filter': sitereport,
+        'sitereport': sitereport_all,
+        'export_link': export_link,
+    }
+    return render(request, 'site_report.html', context)
+def pdc_report(request):
+    return render(request, 'pdc_report.html')
+
+def ugdg_report(request):
+    ugdgreport_all = Bookings.objects.all()
+
+    if request.method == 'POST':
+        value = request.POST.get('sitereportoption')
+        select = request.POST.get('reportType')
+
+        if select == 'all':
+            ugdgreport = Bookings.objects.all()
+        elif select == 'date':
             fromDate = request.POST.get('fromDate','')
             toDate = request.POST.get('toDate','')
             if toDate and fromDate:
@@ -147,41 +307,35 @@ def site_report(request):
                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
                 toDate =  date_obj + timedelta(days=1)
-                sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
-                                                   date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                ugdgreport = Bookings.objects.filter(date_of_change__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   date_of_change__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
                     
-        elif select == 'project_head':
-            sitereport = Site_visit.objects.filter(proj_head = value)
+        elif select == 'project_wise':
+            ugdgreport = Bookings.objects.filter(land_details__project__projectname = value)
            
-        elif select == 'executive':
-            sitereport = Site_visit.objects.filter(executive = value)
+        elif select == 'project_head':
+            ugdgreport = Bookings.objects.filter(executive = value)
             
-        elif select == 'svstatus':
-            sitereport = Site_visit.objects.filter(sv_status = value)
+        elif select == 'ececutive_wise':
+            ugdgreport = Bookings.objects.filter(sv_status = value)
             
-        elif select == 'sourcewise':
-            sitereport = Site_visit.objects.filter(source = value)
+        elif select == 'type_change':
+            ugdgreport = Bookings.objects.filter(type_of_change = value)
             
-        elif select == 'svcategorywise':
-            sitereport = Site_visit.objects.filter(sv_category = value)
+        elif select == 'ugpayment_wise':
+            ugdgreport = Bookings.objects.filter(sv_category = value)
         
         context={
-        'sitereport_filter':sitereport,
-        'sitereport': sitereport_all
+        'ugdgreport_filter':ugdgreport,
+        'ugdgreport': ugdgreport_all
         }
-        return render(request, 'site_report.html', context)
+        return render(request, 'ugdg_report.html', context)
     content={
-        'sitereport_filter':sitereport_all,
-        'sitereport': sitereport_all
+        'ugdgreport_filter':ugdgreport_all,
+        'ugdgreport': ugdgreport_all
         
     }
-    return render(request, 'site_report.html', content)
-
-def pdc_report(request):
-    return render(request, 'pdc_report.html')
-
-def ugdg_report(request):
-    return render(request, 'ugdg_report.html')
+    return render(request, 'ugdg_report.html', content)
 
 def transfer_report(request):
     transreport_all = Bookings.objects.all()
@@ -203,6 +357,9 @@ def transfer_report(request):
                 transreport = Bookings.objects.filter(date_of_transfer__gte=date(fromDate.year, fromDate.month, fromDate.day),
                                                    date_of_transfer__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
                     
+        elif select == 'all':
+            transreport = Bookings.objects.all()
+            
         elif select == 'project_wise':
             transreport = Bookings.objects.filter(land_details__project__projectname = value)
            
@@ -223,8 +380,59 @@ def transfer_report(request):
     }
     return render(request, 'transfer_report.html', content)
 
-def cancel_report(request):				
-    return render(request, 'cancel_report.html')
+def cancel_report(request):
+    cancelreport_all = Bookings.objects.all()
+    
+    if request.method == 'POST':
+        value = request.POST.get('cancelreportoption')
+        select = request.POST.get('reportType')
+        
+        fromDate = request.POST.get('fromDate','')
+        toDate = request.POST.get('toDate','')
+        if select == 'date':
+            fromDate = request.POST.get('fromDate','')
+            toDate = request.POST.get('toDate','')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate =  date_obj + timedelta(days=1)
+                cancelreport = Bookings.objects.filter(date_of_cancel__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   date_of_cancel__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+        elif select == 'refunddate':
+            fromDate = request.POST.get('fromDate','')
+            toDate = request.POST.get('toDate','')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate =  date_obj + timedelta(days=1)
+                cancelreport = Bookings.objects.filter(date_of_refund__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   date_of_refund__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+        elif select == 'all':
+            cancelreport = Bookings.objects.all() 
+                 
+        elif select == 'project_head':
+            cancelreport = Bookings.objects.filter(proj_head = value)
+           
+        elif select == 'mode_wise':
+            cancelreport = Bookings.objects.filter(mode_of_refund = value)
+            
+        elif select == 'type_wise':
+            cancelreport = Bookings.objects.filter(type_of_refund = value)
+
+        context={
+        'cancelreport_filter':cancelreport,
+        'cancelreport': cancelreport_all
+        }
+        return render(request, 'cancel_report.html', context)
+    content={
+        'cancelreport_filter':cancelreport_all,
+        'cancelreport': cancelreport_all
+        
+    }
+    
+    return render(request, 'cancel_report.html',content)
 
 def receipt_details(request):
     receipts_all = PaymentDetails.objects.all()
@@ -232,8 +440,10 @@ def receipt_details(request):
     if request.method == 'POST':
         value = request.POST.get('receiptreportoption')
         select = request.POST.get('reportType')
+        
         fromDate = request.POST.get('fromDate','')
-        if select == 'receipt_date':
+        toDate = request.POST.get('toDate','')
+        if select == 'date':
             fromDate = request.POST.get('fromDate','')
             toDate = request.POST.get('toDate','')
             if toDate and fromDate:
@@ -243,7 +453,19 @@ def receipt_details(request):
                 toDate =  date_obj + timedelta(days=1)
                 receiptreport = PaymentDetails.objects.filter(dateofreceipt__gte=date(fromDate.year, fromDate.month, fromDate.day),
                                                    dateofreceipt__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
-                return receiptreport
+        elif select == 'c_date':
+            fromDate = request.POST.get('fromDate','')
+            toDate = request.POST.get('toDate','')
+            if toDate and fromDate:
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
+                date_obj = datetime.strptime(toDate, '%Y-%m-%d')
+                toDate =  date_obj + timedelta(days=1)
+                receiptreport = PaymentDetails.objects.filter(date_cleared__gte=date(fromDate.year, fromDate.month, fromDate.day),
+                                                   date_cleared__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+        elif select == 'all':
+            receiptreport = PaymentDetails.objects.all() 
+                 
         elif select == 'project_head':
             receiptreport = PaymentDetails.objects.filter(proj_head = value)
            
