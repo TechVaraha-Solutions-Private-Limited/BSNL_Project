@@ -33,7 +33,7 @@
             </div>
         </div>
         <div>
-            <a href="#" id="downloadCsvLink" class="btn btn-primary">Download CSV</a>
+            <a href="#" id="sitereportlink" style="float: right;" class="btn btn-primary">Download CSV</a>
             <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
@@ -68,7 +68,7 @@
                     <td>{{val.sv_don_by}}</td>
                     <td>{{val.sv_status}}</td>
                     <td>{{val.sv_category}}</td>
-                    <td>need to get</td>
+                    <td></td>
                     <td>{{val.executive.first_name}}</td>
                     <td>{{val.team_lead.first_name}}</td>
                     <td>{{val.proj_head.first_name}}</td>
@@ -260,15 +260,15 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var downloadCsvLink = document.getElementById('downloadCsvLink');
-        downloadCsvLink.addEventListener('click', function () {
+        var sitereportlink = document.getElementById('sitereportlink');
+        sitereportlink.addEventListener('click', function () {
             // Prepare data for CSV
             var csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Dateo Of SV,Customer Name,Phone Number,SO Done by,SV Done by,SV Status,SV Category,Fup Date,Executive,Team Leader,Project Manager,Source\n";
+            csvContent += "Date Of SV,Customer Name,Phone Number,SO Done by,SV Done by,SV Status,SV Category,Fup Date,Executive,Team Leader,Project Manager,Source\n";
 
             // Loop through the bookings data and append to CSV
             {% for val in sitereport_filter %}
-                csvContent += "{{ val.date_of_site_visit }}," +
+                csvContent += "{{val.date_of_site_visit|date:'d-m-y'}}," +
                               "{{ val.cust_name|upper }}," +
                               "{{ val.phone_no }}," +
                               "{{ val.so_done_by }}," +
@@ -276,9 +276,9 @@
                               "{{ val.sv_status }}," +
                               "{{ val.sv_category }}," +
                               "{{ val.alter }}," +
-                              "{{ val.address }}," +
-                              "{{ val.land_details.total_amount }}," +
-                              "{{ val.land_details.down_payment }}," +
+                              "{{val.executive.first_name}}," +
+                              "{{val.team_lead.first_name}}," +
+                              "{{val.proj_head.first_name}}," +
                               "{{ val.source }}\n";
             {% endfor %}
 
@@ -286,7 +286,7 @@
             var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "booking_report.csv");
+            link.setAttribute("download", "Site Report.csv");
             document.body.appendChild(link); // Required for Firefox
             link.click();
         });

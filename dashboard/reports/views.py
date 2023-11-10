@@ -134,9 +134,11 @@ def booking_report(request):
     }
     return render(request, 'booking_report.html',content)
                     #site visit report
+
 def site_report(request):
     sitereport_all = Site_visit.objects.all()
-
+    team_lead = User.objects.filter( role = "Project_Lead")
+    executivename = User.objects.filter( role = "Executive")
     if request.method == 'POST':
         value = request.POST.get('sitereportoption')
         select = request.POST.get('reportType')
