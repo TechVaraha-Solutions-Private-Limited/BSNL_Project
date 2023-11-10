@@ -4,6 +4,24 @@ from dashboard.projects.models import LandDetails,Project
 from dashboard.userinfo.models import User
 from dashboard.userinfo.models import UserDetail
 
+class Site_visit(models.Model):
+    date_of_site_visit = models.DateTimeField(max_length=20,null=True)
+    cust_name = models.CharField(max_length=20,null=True)
+    phone_no = models.CharField(max_length=20,null=True)
+    executive = models.ForeignKey(User, on_delete=models.CASCADE)
+    team_lead = models.ForeignKey(User,related_name='team_lead', on_delete=models.CASCADE)
+    proj_head = models.ForeignKey(User, related_name='proj_head',on_delete=models.CASCADE)
+    so_done_by = models.CharField(max_length=20,null=True)
+    sv_don_by = models.CharField(max_length=20,null=True)
+    sv_category = models.CharField(max_length=20,null=True)
+    source = models.CharField(max_length=20,null=True)
+    booked_no = models.DateTimeField(max_length=20,null=True)
+    booked_sry_no = models.CharField(max_length=20,null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    updated_on =  models.DateTimeField(auto_now=True)
+    status =  models.BooleanField(default=True)
+    sv_status = models.CharField(max_length=20,null=True)
+
 class Bookings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -46,6 +64,7 @@ class Bookings(models.Model):
     refund_amount = models.CharField(max_length=20,null=True)
     type_of_refund = models.CharField(max_length=20,null=True)
     issued_by = models.CharField(max_length=20,null=True) 
+    sitevist = models.ForeignKey(Site_visit, on_delete=models.CASCADE,null=True)
     # updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
@@ -115,23 +134,6 @@ class Leadowner(models.Model):
     exep_category = models.CharField(max_length=20,null=True)
     excep_reason = models.CharField(max_length=20,null=True)
 
-class Site_visit(models.Model):
-    date_of_site_visit = models.DateTimeField(max_length=20,null=True)
-    cust_name = models.CharField(max_length=20,null=True)
-    phone_no = models.CharField(max_length=20,null=True)
-    executive = models.CharField(max_length=20,null=True)
-    team_lead = models.CharField(max_length=20,null=True)
-    proj_head = models.CharField(max_length=20,null=True)
-    so_done_by = models.CharField(max_length=20,null=True)
-    sv_don_by = models.CharField(max_length=20,null=True)
-    sv_category = models.CharField(max_length=20,null=True)
-    source = models.CharField(max_length=20,null=True)
-    booked_no = models.DateTimeField(max_length=20,null=True)
-    booked_sry_no = models.CharField(max_length=20,null=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on =  models.DateTimeField(auto_now=True)
-    status =  models.BooleanField(default=True)
-    sv_status = models.CharField(max_length=20,null=True)
 
 class Update_blocked(models.Model):
      project=models.CharField(max_length=50,null=True)

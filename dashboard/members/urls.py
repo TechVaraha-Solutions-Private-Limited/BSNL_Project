@@ -52,4 +52,7 @@ urlpatterns = [
     path('update_block/<id>',update_block,name='update_block'),
     path('delete_block/<id>',delete_block,name='delete_block'),
     path('update_receipts/<id>',update_receipts,name='update_receipts'),
+    path('get-team-owner',get_team_owner,name="get_team_owner"),
+    #add new customer using site Visit
+    path('site_visit/<id>',site_visit_custmer,name='site_visit_custmer')
 ]

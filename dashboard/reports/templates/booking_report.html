@@ -18,14 +18,15 @@
         {% csrf_token %}
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <div class="p-1">
-                <select class="form-control" id="reportType" name="reportType">
+                <label class="p-1">Report</label>
+                <select class="form-control p-1" id="reportType" name="reportType">
                     <option value="" disabled selected hidden>Select Report</option>
                     <option value="all">All</option>
                     <option value="project">Project Wise</option>
                     <option value="date">Date Wise</option>
                     <option value="project_head">Proj Head Wise</option>
                     <option value="executive">Executive Wise</option>
-                    <option value="payment">Payment Type Wise</option>
+                    <option value="payment_type">Payment Type Wise</option>
                     <option value="paystatus">Pay Status Wise</option>
                 </select>
             </div>
@@ -34,8 +35,8 @@
 
         </div>
         <div>
-            <button class="btn btn-success" type="submit" name="reportType" value="all">All</button>
-            <button>Excel</button>
+            <button class="btn btn-success " style="float: right;">Excel</button>
+            <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
     <br>
@@ -80,8 +81,8 @@
                     <td>{{val.land_details.total_amount}}</td>
                     <td>{{val.land_details.down_payment}}</td>
                     <td>{{val.total_amt}}</td>
-                    <td>{{val.exective|upper}}</td>
-                    <td>{{val.project_lead|upper}}</td>
+                    <td>{{val.sitevist.executive.first_name|upper}}</td>
+                    <td>{{val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper}}</td>
                     <td></td>
                     <td>{{val.paymentdetails_set.last.paymentname}}</td>
                 </tr>
@@ -171,8 +172,8 @@
                 <select class="form-control" id="projecthead" name="projectOption" onchange="this.form.submit()">
                     
                     <option disabled selected hidden>Select Report Type</option>
-                    {% for mydata in book %}
-                        <option value="{{ mydata.project_lead }}">{{ mydata.project_lead }}</option>
+                    {% for mydata in team_lead %}
+                        <option value="{{ mydata.first_name }}">{{ mydata.first_name }}</option>
                     {% endfor %}
                 </select>
             `;
@@ -181,12 +182,12 @@
         } else if (selectedOption === 'executive') {
             dynamicDropdown.innerHTML = `
             <label class="p-1">Executive Wise</label>
-            
-                <select class="form-control" id="projectexe" name="projectexe">
+
+                <select class="form-control" id="projectexecut" name="projectexecut" onchange="this.form.submit()">
                     
                     <option disabled selected hidden>Select Report Type</option>
-                    {% for mydata in book %}
-                        <option value="{{ mydata.exective }}">{{ mydata.exective }}</option>
+                    {% for mydata in  executivename %}
+                        <option value="{{ mydata.id }}">{{ mydata.first_name }}</option>
                     {% endfor %}
                 </select>
             `;
