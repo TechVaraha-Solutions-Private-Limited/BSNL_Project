@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,HttpResponse
 from dashboard.members.models import Bookings,PaymentDetails,Site_visit
 from dashboard.projects.models import Project
-from dashboard.userinfo.models import UserDetail,Executive
+from dashboard.userinfo.models import UserDetail,Executive,User
 from django.urls import reverse
 from num2words import num2words
 from django.db.models import Sum
@@ -43,10 +43,13 @@ def print_recepit(request,id):
     }
     return render (request,'print_recepit.html',context)
 
+
 def booking_report(request):
     view_report = PaymentDetails.objects.all()
     project = Project.objects.all()
     bookings =Bookings.objects.all()
+    team_lead = User.objects.filter( role = "Project_Lead")
+    executivename = User.objects.filter( role = "Executive")     
     for view in view_report:
         detail = UserDetail.objects .get(user_id = view.booking.user)
         view.userinfo = detail.alternate_no
@@ -56,6 +59,8 @@ def booking_report(request):
         data = request.POST.get('paymenttype')
         value = request.POST.get('projectOption')
         select = request.POST.get('reportType')
+        teamlead = request.POST.get('projectOption')
+        executtype = request.POST.get('projectexecut')
         if select == 'project':
             if value == 'all':
                 bookings = Bookings.objects.all()
@@ -82,29 +87,27 @@ def booking_report(request):
                     booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                     booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no           
         elif select == 'project_head':
-            bookings = Bookings.objects.filter(project_lead = value)
-            for booking in bookings:
-                payments = booking.paymentdetails_set.all()
-                booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
-                booking.address = UserDetail.objects.get(user_id = booking.user.id).address
-                booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
+            #bookings = Bookings.objects.filter(sitevist__executive__executive_set__last__teamlead__sr_team__project_head__first_name= teamlead)
             
+            bookings = Bookings.objects.filter(sitevist__executive__id__in=[6])
+
+            for booking in bookings:
+                print(booking)
         elif select == 'executive':
-            bookings = Bookings.objects.filter(exective = value)
-            for booking in bookings:
-                payments = booking.paymentdetails_set.all()
-                booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
-                booking.address = UserDetail.objects.get(user_id = booking.user.id).address
-                booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
+            bookings = Bookings.objects.filter(sitevist__executive = executtype)
         elif select == 'payment_type':
-            bookings = Bookings.objects.filter()
-            for booking in bookings:
-                payment = PaymentDetails.objects.filter(booking_id = booking.id)
-                for pay in payment:
-                    booking.paymentname = pay.paymentname
-                    if data == 'FirstInstallment Half'or 'FirstInstallment':
-                        booking = PaymentDetails.objects.filter(paymentname = data) 
-                        print(booking)
+            if data == 'DownPayment':
+                print('DownPayment',data)
+                bookings = Bookings.objects.filter(payments_status__in=[1,4])
+            elif data == 'FirstInstallment':
+                bookings = Bookings.objects.filter(payments_status__in=[3,6])
+                print('1st',data)
+            elif data == 'SecondInstallment':
+                print('2nd',data)
+                bookings = Bookings.objects.filter(payments_status__in=[5,8])
+            elif data == 'ThridInstallment':
+                print('3rd',data)
+                bookings = Bookings.objects.filter(payments_status__in=[7,9])
         else:
             booking = Bookings.objects.all()
             print(1821764)
@@ -117,12 +120,15 @@ def booking_report(request):
         'view_report': view_report,
         'project':project,
         'bookings':bookings,
+        'team_lead':team_lead,
+        'executivename':executivename,
         }
         return render(request, 'booking_report.html', context)
     content={
         'project':project,
-        'bookings':bookings
-        
+        'bookings':bookings,
+        'team_lead':team_lead,
+        'executivename':executivename
     }
     return render(request, 'booking_report.html',content)
 

@@ -350,10 +350,8 @@
                                     <p>{{mydata.nomie_adrs}}</p>
                                 </div>
                             </td>
-
-                            <td>{{mydata.fam_name}}</td>
-                            <td>{{mydata.fam_age}}</td>
-                            <td>{{mydata.fam_rel}}</td>
+                            <td>{{mydata.families.member_relation}}</td>
+                            
                             <td><img src="{{ mydata.pro_img.url }}" alt="{{ mydata.pro_img.name }}"></td>
                             {% endfor %}
                             <td>

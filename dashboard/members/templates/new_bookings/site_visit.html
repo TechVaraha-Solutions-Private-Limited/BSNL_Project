@@ -49,16 +49,23 @@
                         </div>
                         <div class="p-1">
                             <label class="p-1">Executive</label>
-                            <input type="text" name="executive" placeholder="Executive" class="form-input" required>
+                            <select class="form-control" name="executive" id="executive">
+                                <option>Select</option>
+                                {% for data in exective%}
+                                <option value="{{data.id}}">{{data.first_name}}</option>
+                                {% endfor %}
+                            </select>
                         </div>
-                        <div class="p-1">
+                        <!-- <div class="p-1">
                             <label class="p-1">Team Lead</label>
-                            <input type="text" name="team_lead" placeholder="Team Lead" class="form-input" required>
+                            <select name="teamlead" id="teamlead" disabled>
+                                <option>Select</option>
+                            </select>
                         </div>
                         <div class="p-1">
                             <label class="p-1">Proj Head</label>
                             <input type="text" name="proj_lead" placeholder="Proj Head" class="form-input" required>
-                        </div>
+                        </div> -->
                         <div class="p-1">
                             <label class="p-1">SO Done by</label>
                             <input type="text" name="so_done_by" placeholder="So Done by" class="form-input" required>
@@ -67,7 +74,6 @@
                             <label class="p-1">SV Done By</label>
                             <input type="text" name="sv_done_by" placeholder="Sv Done By" class="form-input" required>
                         </div>
-
                         <div class="p-1">
                             <label class="p-1">SV Status</label>
                             <select class="form-control" name="sv_status" required> 
@@ -114,4 +120,34 @@
             </div>
         </div>
     </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $('#executive').on('change', function (event) {
+        event.preventDefault();
+        let id = this.value;
+        if (this.value != '') {
+            mydata = { id: id, csrfmiddlewaretoken: '{{ csrf_token }}' }
+            console.log(mydata)
+            $.ajax({
+                url: "{% url 'get_team_owner' %}",
+                method: "POST",
+                data: mydata,
+                success: function (data) {
+                    console.log('check',data);
+
+                  
+                }
+            })
+
+        }
+
+        else {
+            $("#teamlead").prop('disabled', 'disabled');
+            $("#teamlead option").remove();
+            $('#teamlead').append($('<option></option>').val("").html("Select"))
+        }
+    });
+
+    </script>
 {% endblock %}
