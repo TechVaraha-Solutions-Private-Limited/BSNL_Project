@@ -36,7 +36,7 @@
 
         </div>
         <div>
-            <a href="#" id="downloadCsvLink" class="btn btn-primary">Download CSV</a>
+            <a href="#" id="downloadCsvLink" style="float: right;" class="btn btn-primary">Download CSV</a>
             <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
@@ -142,7 +142,6 @@
                 <input type="hidden" name="reportType" value=project> 
                 <select class="form-control" id="projectOption" name="projectOption" onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
-                    <option value="all">All</option>
                     {% for data in project %}
                         <option value="{{ data.projectname }}">{{ data.projectname }}</option>
                     {% endfor %}
@@ -208,7 +207,6 @@
             <label class="p-1">Pay Status Wise</label>
                 <select class="form-control" id="pay_status" name="pay_status">
                     <option disabled selected hidden>Select Report Type</option>
-                    <option value="payall">All</option>
                     <option value="pay_part">Part</option>
                     <option value="pay_full">Full</option>
                 </select>

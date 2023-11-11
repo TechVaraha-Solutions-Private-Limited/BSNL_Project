@@ -56,19 +56,12 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Executive</label>
-                                    <input type="text" name="executive" placeholder="Executive" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Team Lead</label>
-                                    <input type="text" name="team_lead" placeholder="Team Lead" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">SR Team Lead</label>
-                                    <input type="text" name="sr_team_lead" placeholder="SR Team Lead" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Project Head</label>
-                                    <input type="text" name="project_head" placeholder="Project Head" class="form-input" >
+                                    <select class="form-control" name="executive" id="executive">
+                                        <option>Select</option>
+                                        {% for data in exective%}
+                                        <option value="{{data.id}}">{{data.first_name}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Type of Booking</label>

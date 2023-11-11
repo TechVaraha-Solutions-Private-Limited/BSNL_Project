@@ -589,6 +589,7 @@ def generate(request):
 def ugdg(request):
     customers = {}
     pltsizes = PlotSize.objects.all()
+    exective = User.objects.filter(role = 'Executive')
     if request.method == 'POST':
         action = request.POST.get('action')
         user_id = request.POST.get('user_id')
@@ -628,7 +629,8 @@ def ugdg(request):
             messages.error(request, 'Successfull Update')
     return render(request,'new_bookings/ugdg.html',{
             'pltsizes':pltsizes,
-            'customer': customers
+            'customer': customers,
+            'exective':exective
         })
 
 def transfer(request):
@@ -719,6 +721,7 @@ def view_site_visit(request):
 
 def update_site_visit(request,id):
     update = Site_visit.objects.get(id=id)
+    exective = User.objects.filter(role = 'Executive')
     if request.method =='POST':
         update.date_of_site_visit = request.POST.get("date_of_visit")
         update.cust_name = request.POST.get("cust_name")
@@ -735,10 +738,15 @@ def update_site_visit(request,id):
         update.sv_status = request.POST.get('sv_status')
         update.save()
         return redirect('/members/view_site_visit')
+    context ={
+        'update':update,
+        'exective':exective
+    }
     messages.success(request,'Updated Succesfully')
-    return render (request,'display/update_display/update_site_view.html',{'update':update})
+    return render (request,'display/update_display/update_site_view.html',context)
 
 def lead_owner(request):
+    exective = User.objects.filter(role = 'Executive')
     customers = {}
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -760,9 +768,6 @@ def lead_owner(request):
                 seniorityno_id = request.POST.get('seniority'),
                 user_id = user_instance,
                 executive = request.POST.get('executive'),
-                team_lead = request.POST.get('team_lead'),
-                sr_team_lead =request.POST.get('sr_team_lead'),
-                project_head = request.POST.get('project_head'),
                 type_of_booking = request.POST.get('type_of_booking'),
                 ref_exis_cust_sry = request.POST.get('ref_exis_cust_sry'),
                 ref_exis_cust_name = request.POST.get('ref_exis_cust_name'),
@@ -776,7 +781,11 @@ def lead_owner(request):
                 exep_category = request.POST.get('exep_category'),
                 excep_reason = request.POST.get('excep_reason')
             ).save()
-    return render(request,'new_bookings/lead_owner.html',{'customer':customers})
+    context = {
+        'customer':customers,
+        'exective':exective
+    }
+    return render(request,'new_bookings/lead_owner.html',context)
 
 def cancel(request):
     customers = {}

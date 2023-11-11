@@ -139,6 +139,7 @@ def site_report(request):
     sitereport_all = Site_visit.objects.all()
     team_lead = User.objects.filter( role = "Project_Lead")
     executivename = User.objects.filter( role = "Executive")
+    print(team_lead)
     if request.method == 'POST':
         value = request.POST.get('sitereportoption')
         select = request.POST.get('reportType')
@@ -175,59 +176,12 @@ def site_report(request):
         return render(request, 'site_report.html', context)
     content={
         'sitereport_filter':sitereport_all,
-        'sitereport': sitereport_all
+        'sitereport': sitereport_all,
+        'team_lead':team_lead,
+        'executivename':executivename
         
     }
     return render(request, 'site_report.html', content)
-
-                        #site visit report
-
-# def site_report(request):
-#     sitereport_all = Site_visit.objects.all()
-
-# #     if request.method == 'POST':
-# #         value = request.POST.get('sitereportoption')
-# #         select = request.POST.get('reportType')
-
-#         if select == 'all':
-#             sitereport = Site_visit.objects.all()
-#         elif select == 'date':
-#             fromDate = request.POST.get('fromDate','')
-#             toDate = request.POST.get('toDate','')
-#             if toDate and fromDate:
-#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
-#                 fromDate = datetime.strptime(fromDate, '%Y-%m-%d')
-#                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
-#                 toDate =  date_obj + timedelta(days=1)
-#                 sitereport = Site_visit.objects.filter(date_of_site_visit__gte=date(fromDate.year, fromDate.month, fromDate.day),
-#                                                    date_of_site_visit__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
-                    
-#         elif select == 'project_head':
-#             sitereport = Site_visit.objects.filter(proj_head = value)
-           
-#         elif select == 'executive':
-#             sitereport = Site_visit.objects.filter(executive = value)
-            
-#         elif select == 'svstatus':
-#             sitereport = Site_visit.objects.filter(sv_status = value)
-            
-#         elif select == 'sourcewise':
-#             sitereport = Site_visit.objects.filter(source = value)
-            
-#         elif select == 'svcategorywise':
-#             sitereport = Site_visit.objects.filter(sv_category = value)
-        
-#         context={
-#         'sitereport_filter':sitereport,
-#         'sitereport': sitereport_all
-#         }
-#         return render(request, 'site_report.html', context)
-#     content={
-#         'sitereport_filter':sitereport_all,
-#         'sitereport': sitereport_all
-        
-#     }
-#     return render(request, 'site_report.html', content)
 
 def pdc_report(request):
     return render(request, 'pdc_report.html')
@@ -287,6 +241,7 @@ def ugdg_report(request):
 def transfer_report(request):
     transreport_all = Bookings.objects.all()
     project = Project.objects.all()
+    team_lead = User.objects.filter( role = "Project_Lead")
 
     if request.method == 'POST':
         value = request.POST.get('sitereportoption')
@@ -311,19 +266,20 @@ def transfer_report(request):
             transreport = Bookings.objects.filter(land_details__project__projectname = value)
            
         elif select == 'project_head':
-            transreport = Bookings.objects.filter(project_wise = value)
+            transreport = Bookings.objects.filter(sitevist__proj_head = value)
             
         context={
         'transreport_filter':transreport,
         'transreport': transreport_all,
         'project':project,
+        'team_lead':team_lead,
         }
         return render(request, 'transfer_report.html', context)
     content={
         'transreport_filter':transreport_all,
         'transreport': transreport_all,
         'project':project,
-        
+        'team_lead':team_lead,
     }
     return render(request, 'transfer_report.html', content)
 
