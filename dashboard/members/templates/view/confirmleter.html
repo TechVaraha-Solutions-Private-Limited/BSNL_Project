@@ -53,7 +53,7 @@
                 <tbody>  
                         {% for data in user%}
                         <tr>
-                            <td>{{data.id}}</td>
+                            <td>{{forloop.counter}}</td>
                             <td>{{data.user.first_name}}</td>
                             <td>{{data.seniority_id}}</td>
                             <td>{{data.land_details.project.projectname}}</td>

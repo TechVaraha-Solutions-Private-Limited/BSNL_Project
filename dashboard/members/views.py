@@ -910,7 +910,12 @@ def activemember(request):
         us.nomie_rel = UserNominee.objects.get(user_id=us.user.id).nominee_relationship
         us.nomie_adrs = UserNominee.objects.get(user_id=us.user.id).address
         us.families = UserFamilyDetails.objects.filter(user_id=us.user.id)
-       
+        for family in us.families:
+            print(family.member_age)
+            print(family.member_relation)
+        # us.fam_age = UserFamilyDetails.objects.filter(user_id=us.user.id).member_age
+        # us.fam_rel = UserFamilyDetails.objects.filter(user_id=us.user.id).member_relation
+        print(us.pro_img.url)
     context={
         'user':user,
         'book':book,
@@ -960,7 +965,7 @@ def deleteactivememberlist(request,id):
 
 def update_personal(request,id):
     nomine =  UserNominee.objects.get(user_id=id)
-    family_details =  UserFamilyDetails.objects.get(user_id=id)
+    family_details =  UserFamilyDetails.objects.filter(user_id=id)
     card_details = UserDetail.objects.get(user_id=id)
     if request.method =='POST':
         card_details.aadhhaarno = request.POST.get('aadhhaarno')
@@ -974,11 +979,18 @@ def update_personal(request,id):
         nomine.nominee_relationship = request.POST.get('nominee_relationship')
         nomine.address = request.POST.get('address')
         nomine.save()
-        family_details.member_name = request.POST.get('member_name')
-        family_details.member_age = request.POST.get('member_age')
-        family_details.member_relation = request.POST.get('member_relation')
-        family_details.save()
+        check_input_no = 1
+        if check_input_no is not None:
+            for val in range(int(check_input_no)): 
+                    member_name_key = f'member_name{val+1}'        
+                    member_age_key = f'member_age{val+1}'
+                    member_relation_key = f'member_relation{val+1}'
 
+                    family = UserFamilyDetails()
+                    family.member_name = request.POST.get(member_name_key)
+                    family.member_age = request.POST.get(member_age_key)
+                    family.member_relation = request.POST.get(member_relation_key)
+                    family.save()
         return redirect('/members/activemember')
 
     context={
