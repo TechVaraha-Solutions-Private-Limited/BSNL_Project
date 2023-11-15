@@ -91,20 +91,13 @@
                                     <input type="text" name="diff" placeholder="diff" class="form-input" >
                                 </div>
                                 <div class="p-1">
-                                    <label class="p-1">Exective</label>
-                                    <input type="text" name="executive" placeholder="executive" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Team Lead</label>
-                                    <input type="text" name="team_lead" placeholder="team_lead" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">SR Team Lead</label>
-                                    <input type="text" name="sr_team_lead" placeholder="sr_team_lead" class="form-input" >
-                                </div>
-                                <div class="p-1">
-                                    <label class="p-1">Project Head</label>
-                                    <input type="text" name="project_lead" placeholder="project_lead" class="form-input" >
+                                    <label class="p-1">Executive</label>
+                                    <select class="form-control" name="executive" id="executive">
+                                        <option>Select</option>
+                                        {% for data in exective%}
+                                        <option value="{{data.id}}">{{data.first_name}}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Type of BKG</label>

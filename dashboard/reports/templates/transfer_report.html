@@ -29,7 +29,7 @@
             </div>
         </div>
         <div>
-            <a href="{{ export_link }}" style="float: right;" class="btn btn-primary">Export to CSV</a>
+            <a href="#" id="sitereportlink" style="float: right;" class="btn btn-primary">Download CSV</a>
             <button class="btn btn-success mr-1" style="float: right;" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
@@ -56,11 +56,11 @@
                     <td>{{val.date_of_transfer}}</td>
                     <td>{{val.type_of_transfer}}</td>
                     <td>{{val.transfer_to}}</td>
-                    <td>{{val.}}</td>
-                    <td>{{val.}}</td>
-                    <td>{{val.}}</td>
-                    <td>{{val.}}</td>
-                    <td>{{val.}}</td>
+                    <td>{{val.seniority_id}}</td>
+                    <td>{{val.land_details.project.projectname}}</td>
+                    <td>{{val.user.mobile_no}}</td>
+                    <td>{{val.user.email}}</td>
+                    <td>{{val.paymentdetails_set.last.total_paid_amount}}</td>
                 </tr>
                 {%endfor%}
             </tbody>
@@ -146,8 +146,8 @@
             <input type="hidden" name="reportType" value ='project_head'> 
                 <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
                     <option disabled selected hidden>Select Report Type</option>
-                    {% for mydata in sitereport %}
-                        <option value="{{ mydata.proj_head }}">{{ mydata.proj_head }}</option>
+                    {% for mydata in team_lead %}
+                        <option value="{{ mydata.id }}">{{ mydata.first_name }}</option>
                     {% endfor %}
                 </select>
             `;
@@ -156,6 +156,36 @@
         } else {
             dynamicDropdown.style.display = 'none';
         }
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var sitereportlink = document.getElementById('sitereportlink');
+        sitereportlink.addEventListener('click', function () {
+            // Prepare data for CSV
+            var csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Date of Transfer,Type of Transfer,Transferred to,New Mem Seniority,New Mem Project,New Mem Mobile No,New Mem Email,Amount Transferred\n";
+
+            // Loop through the bookings data and append to CSV
+            {% for val in transreport_filter %}
+                csvContent += "{{val.date_of_transfer}}," +
+                              "{{val.type_of_transfer}}," +
+                              "{{val.transfer_to}}," +
+                              "{{ val.seniority_id }}," +
+                              "{{ val.land_details.project.projectname }}," +
+                              "{{ val.user.mobile_no }}," +
+                              "{{ val.user.email }}," +
+                              "{{ val.paymentdetails_set.last.total_paid_amount }}\n";
+            {% endfor %}
+
+            // Create a data URI and trigger the download
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Site Report.csv");
+            document.body.appendChild(link); // Required for Firefox
+            link.click();
+        });
     });
 </script>
 

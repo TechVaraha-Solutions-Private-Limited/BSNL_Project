@@ -34,18 +34,12 @@
                     </div>
                     <div class="p-1">
                         <label class="p-1">Executive</label>
-                        <input type="text" name="executive" placeholder="Executive" class="form-input"
-                            value="{{update.executive}}" required>
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Team Lead</label>
-                        <input type="text" name="team_lead" placeholder="Team Lead" class="form-input"
-                            value="{{update.team_lead}}" required>
-                    </div>
-                    <div class="p-1">
-                        <label class="p-1">Proj Head</label>
-                        <input type="text" name="proj_lead" placeholder="Proj Head" class="form-input"
-                            value="{{update.proj_head}}" required>
+                        <select class="form-control" name="executive" id="executive">
+                            <option>Select</option>
+                            {% for data in exective%}
+                            <option value="{{data.id}}">{{data.first_name}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="p-1">
                         <label class="p-1">SO Done by</label>
