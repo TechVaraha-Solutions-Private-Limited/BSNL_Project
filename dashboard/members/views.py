@@ -727,8 +727,6 @@ def update_site_visit(request,id):
         update.cust_name = request.POST.get("cust_name")
         update.phone_no = request.POST.get("phone_no")
         update.executive = request.POST.get("executive")
-        update.team_lead = request.POST.get("team_lead")
-        update.proj_head = request.POST.get("proj_lead")
         update.so_done_by = request.POST.get("so_done_by")
         update.sv_don_by = request.POST.get("sv_done_by")
         update.sv_category = request.POST.get("sv_category")
@@ -774,7 +772,7 @@ def lead_owner(request):
                 date_of_sitevisit = request.POST.get('date_of_sitevisit'),
                 sv_done_cust = request.POST.get('sv_done_cust'),
                 source = request.POST.get('sv_done_cust'),
-                id_card_status = request.POST.get('id_card_status'),
+                id_card = request.POST.get('id_card'),
                 fup_category = request.POST.get('fup_category'),
                 install_fup_status = request.POST.get('install_fup_status'),
                 install_fup_date = request.POST.get('install_fup_date'),
@@ -900,22 +898,19 @@ def activemember(request):
     nomiee = UserNominee.objects.filter(user__is_active=1).all
     book = Bookings.objects.filter(user__is_active=1).all()
     for us in book:
-        userdetail = UserDetail.objects.get(user_id=us.user.id)      
+        userdetail = UserDetail.objects.filter(user_id=us.user.id)      
         us.cus_dob = userdetail.dob
         us.id_status = userdetail.id_card
         us.pan_no = userdetail.panno
         us.pro_img = userdetail.profile
         us.adhar_no = userdetail.aadhhaarno
-        us.last_n = Bookings.objects.get(user_id=us.user.id).user.last_name
+        # us.last_n = Bookings.objects.get(user_id=us.user.id).user.last_name
         us.nomie_name = UserNominee.objects.get(user_id=us.user.id).nominee_name
         us.nomie_age = UserNominee.objects.get(user_id=us.user.id).nominee_age
         us.nomie_rel = UserNominee.objects.get(user_id=us.user.id).nominee_relationship
         us.nomie_adrs = UserNominee.objects.get(user_id=us.user.id).address
         us.families = UserFamilyDetails.objects.filter(user_id=us.user.id)
-        print(us.families)
-        # us.fam_age = UserFamilyDetails.objects.filter(user_id=us.user.id).member_age
-        # us.fam_rel = UserFamilyDetails.objects.filter(user_id=us.user.id).member_relation
-        print(us.pro_img.url)
+       
     context={
         'user':user,
         'book':book,
@@ -1027,8 +1022,9 @@ def user_access(request,id):
     return render(request,'input/update_user/user_access.html',{'user_log':user_log})
 
 def view_user_access(request):
-    view_user=User.objects.filter(is_active=1)
-    return render(request,'input/update_user/view_user_access.html',{'view_user':view_user})
+    view_user = User.objects.filter(is_active=1).exclude(role='Customer')
+    return render(request, 'input/update_user/view_user_access.html', {'view_user': view_user})
+
 
 def delete_user_access(id):
     book = User.objects.get(id=id)

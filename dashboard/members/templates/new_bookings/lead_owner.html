@@ -3,13 +3,14 @@
 {% load static %}
 {% include 'common/bootstrap.html'%}
 <style>
-    a{
+    a {
         color: black;
         text-decoration: none;
     }
-    .addproject{
+
+    .addproject {
         text-align: center;
-        padding:15px 15px;
+        padding: 15px 15px;
         font-size: 15px;
         font-weight: bold;
         background-color: #00c200;
@@ -26,13 +27,15 @@
 <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
     <form method="POST" class="space-y-5" autocomplete="off">
         {% csrf_token %}
-        <div class="panel" >
+        <div class="panel">
             <label class="text-lg dark:text-white-light p-2 font-weight-bold addproject"
                 style="background-color: #00c200;color:white; width:100%;"><b>LEAD OWNER</b></label>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mt-4">
                 <label for="search_membername">Search your Customer:</label>
-                <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniority No" required>
-                <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
+                <input type="text" class="form-input" name="search_membername" id="search_membername"
+                    placeholder="Enter the Seniority No" required>
+                <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action"
+                    value="search_customer">Search Customer</button>
             </div>
         </div>
     </form>
@@ -42,17 +45,20 @@
         <ul>
             <li>
                 <div class="pt-2 mt-3">
-                    <div class="panel" id="container" >
+                    <div class="panel" id="container">
                         <div id="form" class="">
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-2" >
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
                                 <div class="p-1">
                                     <label class="p-1">Seniority No</label>
-                                    <input type="text" name="seniority" placeholder="Seniority No" class="form-input" value="{{ customer.seniority_id }}" readonly>
+                                    <input type="text" name="seniority" placeholder="Seniority No" class="form-input"
+                                        value="{{ customer.seniority_id }}" readonly>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Cust Name</label>
-                                    <input type="hidden" name="user_id" placeholder="Cust Name" class="form-input"  value="{{ customer.user.id }}" readonly>
-                                    <input type="text" name="user" placeholder="Cust Name" class="form-input"  value="{{ customer.user.first_name }}" readonly>
+                                    <input type="hidden" name="user_id" placeholder="Cust Name" class="form-input"
+                                        value="{{ customer.user.id }}" readonly>
+                                    <input type="text" name="user" placeholder="Cust Name" class="form-input"
+                                        value="{{ customer.user.first_name }}" readonly>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Executive</label>
@@ -65,55 +71,71 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Type of Booking</label>
-                                    <input type="text" name="type_of_booking" placeholder="Type of Booking" class="form-input" >
+                                    <input type="text" name="type_of_booking" placeholder="Type of Booking"
+                                        class="form-input">
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Ref Exis Cust SRY</label>
-                                    <input type="text" name="ref_exis_cust_sry" placeholder="Ref Exis Cust SRY" class="form-input" >
+                                    <input type="text" name="ref_exis_cust_sry" placeholder="Ref Exis Cust SRY"
+                                        class="form-input">
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Ref Exis Cust Name</label>
-                                    <input type="text" name="ref_exis_cust_name" placeholder="Ref Exis Cust Name" class="form-input" >
+                                    <input type="text" name="ref_exis_cust_name" placeholder="Ref Exis Cust Name"
+                                        class="form-input">
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Date of Sv</label>
-                                    <input type="date" name="date_of_sitevisit" placeholder="Date of Sv" class="form-input" >
+                                    <input type="date" name="date_of_sitevisit" placeholder="Date of Sv"
+                                        class="form-input">
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Sv Done Cust</label>
-                                    <input type="text" name="sv_done_cust" placeholder="Sv Done Cust" class="form-input" >
+                                    <input type="text" name="sv_done_cust" placeholder="Sv Done Cust"
+                                        class="form-input">
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Source</label>
-                                    <input type="text" name="source" placeholder="Source" class="form-input" >
+                                    <input type="text" name="source" placeholder="Source" class="form-input">
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">ID Card Status</label>
-                                    <input type="text" name="id_card_status" placeholder="ID Card Status" class="form-input" >
+                                    <select class="form-control" name="id_card" value="{{userdetail.id_card}}">
+                                        <option disabled>select options</option>
+                                        <option value="Pending">Pending</option>
+                                        <option value="Approved">Approved</option>
+                                        <option value="Handover">Handover</option>
+                                    </select>
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Fup Category</label>
-                                    <input type="text" name="fup_category" placeholder="Fup Category" class="form-input" >
+                                    <input type="text" name="fup_category" placeholder="Fup Category"
+                                        class="form-input">
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Install Fup Status</label>
-                                    <input type="text" name="install_fup_status" placeholder="Install Fup Status" class="form-input" >
+                                    <input type="text" name="install_fup_status" placeholder="Install Fup Status"
+                                        class="form-input">
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Install Fup Date</label>
-                                    <input type="text" name="install_fup_date" placeholder="Install Fup Date" class="form-input" >
+                                    <input type="text" name="install_fup_date" placeholder="Install Fup Date"
+                                        class="form-input">
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Excep Category</label>
-                                    <input type="text" name="exep_category" placeholder="Excep Category" class="form-input" >
+                                    <input type="text" name="exep_category" placeholder="Excep Category"
+                                        class="form-input">
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Excep Reason</label>
-                                    <input type="text" name="excep_reason" placeholder="Excep Reason" class="form-input" >
-                                </div>                    
+                                    <input type="text" name="excep_reason" placeholder="Excep Reason"
+                                        class="form-input">
+                                </div>
                             </div>
                             <div class="text-center p-2">
-                                <button type="submit" name="action" value="create_order" class="btn btn-success mt-3 p-2" style="background-color: #00c200;">Update</button>
+                                <button type="submit" name="action" value="create_order"
+                                    class="btn btn-success mt-3 p-2" style="background-color: #00c200;">Update</button>
                             </div>
                         </div>
                     </div>

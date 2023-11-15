@@ -480,13 +480,13 @@
         padding:7px;
         padding-left: 10px;
         padding-right: 10px;
-        background-color: #06c8c7; 
+        background-color: #4169e1; 
         border-radius:5px;    
     }
     #loginBtn:hover
     {
         color: white;
-        background-color: steelblue;
+        background-color: #4169e1;
     }
 }
 
@@ -518,14 +518,16 @@
     {
         /* height:20px ;
         width:90px; */
+        color: white;
         padding:7px;
-        background-color: #06c8c7; 
+        background-color: #4169e1; 
         border-radius:5px;    
     }
     #loginBtn:hover
     {
         color: white;
-        background-color: steelblue;
+        background-color: #4169e1; 
+        ;
     }
     
 }

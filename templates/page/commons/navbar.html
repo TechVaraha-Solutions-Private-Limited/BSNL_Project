@@ -1,36 +1,54 @@
 {% load static %}
 <style>
-    .user{
+    .user {
         border-radius: 25px;
         border-color: #00b98e;
     }
+
+    .additional-text {
+        display: block;
+        font-size: 12px;
+        color: #1f1e1e;
+    }
+
+    .housing-text {
+        display: block;
+        font-size: 12px;
+        color: #4169e1;
+    }
+
+    .text-royalblue {
+    color: #4169e1;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-<div class="container-fluid nav-bar bg-transparent" >
+<div class="container-fluid nav-bar bg-transparent">
     <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-        <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
+        <div class="navbar-brand d-flex align-items-center text-center">
             <div class="icon p-2 me-2">
-                <img class="img-fluid" src="{% static 'images/bsnllogo.png' %}" alt="Icon" style="width: 30px; height: 30px;">
+                <img class="img-fluid" src="{% static 'images/bsnllogo.png' %}" alt="Icon"
+                    style="width: 30px; height: 30px;">
             </div>
-            <h1 class="m-0 text-primary">BSNL</h1>
-        </a>
+            <h1  class="m-0 text-royalblue">BSNL <span class="housing-text"> Housing Society</span></h1>
+        </div>
         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto">
-                <a href=" /" class="nav-item nav-link">Home</a>
-                <a href="/page/project" class="nav-item nav-link">Projects</a>
-                <a href="/page/gallery" class="nav-item nav-link">Gallery</a>
-                <a href="/page/board" class="nav-item nav-link">Board Members</a>
-                <a href="/page/contact" class="nav-item nav-link">Career</a>
-                <a href="/page/contact" class="nav-item nav-link">privacy Policy</a>
-                <a href="/page/contact" class="nav-item nav-link">Contact</a>
+                <a href=" /" class="nav-item nav-link">Home<span class="additional-text">ಮನೆ</span></a>
+                <a href="/page/project" class="nav-item nav-link">Projects<span class="additional-text">ಪ್ರಾಜೆಕ್ಟ್</a></span>
+                <a href="/page/gallery" class="nav-item nav-link">Gallery<span class="additional-text">ಗ್ಯಾಲರಿ</span></a>
+                <a href="/page/gallery" class="nav-item nav-link">Board Members<span class="additional-text">ಮಂಡಳಿಯ ಸದಸ್ಯರು</span></a>
+                <a href="/page/contact" class="nav-item nav-link">Career <span class="additional-text">ವೃತ್ತಿ</span></a>
+                <a href="/page/contact" class="nav-item nav-link">privacy Policy <span class="additional-text">ಗೌಪ್ಯತಾ ನೀತಿ</span></a>
+                <a href="/page/contact" class="nav-item nav-link">Contact <span class="additional-text">ಸಂಪರ್ಕ</span></a>
                 {% if request.user.is_authenticated %}
 
                 <div class="dropdown navbar-collapse">
-                    <button type="button" class="btn25 btn27 dropdown-toggle user" style="background-color: #ffffff;" data-bs-toggle="dropdown" id="dropdownMenuButton">
+                    <button type="button" class="btn25 btn27 dropdown-toggle user" style="background-color: #ffffff;"
+                        data-bs-toggle="dropdown" id="dropdownMenuButton">
                         {{ request.user.first_name|title }}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -40,11 +58,11 @@
                     </div>
                 </div>
                 {% else %}
-                    <a href="/login/signin" class="nav-item nav-link" ><span id="loginBtn">Login</span></a>
+                <a href="/login/signin" class="nav-item nav-link" ><span id="loginBtn">Login</span></a>
                 {% endif %}
 
             </div>
-            
+
         </div>
     </nav>
 </div>
