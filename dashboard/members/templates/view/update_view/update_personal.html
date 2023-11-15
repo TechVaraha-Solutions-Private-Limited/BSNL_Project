@@ -34,6 +34,16 @@
                         value="{{card_details.aadhhaarno}}">
                 </div>
                 <div class="p-1">
+                    <label class="p-1">Profile Image</label>
+                    <input type="file" name="profile">
+                </div>            
+            </div><br>
+            <h2 class="text-lg font-semibold dark:text-white-light"
+            style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;">
+            <b>Nominee Details</b>
+        </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="p-1">
                     <label class="p-1">Nominee Name</label>
                     <input type="text" name="nominee_name" class="form-input" placeholder="Nominee Name"
                         value="{{nomine.nominee_name}}">
@@ -53,27 +63,28 @@
                     <input type="text" name="address" class="form-input" placeholder="Nomiee Address"
                         value="{{nomine.address}}">
                 </div>
-                <div class="p-1">
-                    <label class="p-1">Family Member Name</label>
-                    <input type="text" name="member_name" placeholder="Family Member Name" class="form-input"
-                        value="{{family_details.member_name}}">
+            </div>
+            <h2 class="text-lg font-semibold dark:text-white-light mt-2"
+                style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;">
+                <b>Family Details</b>
+            </h2>
+            <input type="hidden" name="check_input_no" id="check_input_no" value="1">
+            {% for details in family_details %}
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="family-form">
+                    <div class="p-1">
+                        <label class="p-1">Family-Member Name</label>
+                        <input type="text" name="member_name{{forloop.counter}}" placeholder="Family-Member Name" value="{{details.member_name}}" class="form-input">
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Family-Member Age</label>
+                        <input type="number" name="member_age{{forloop.counter}}" placeholder="Family-Member Age" value="{{details.member_age}}" class="form-input">
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Family-Member Relationship</label>
+                        <input type="text" name="member_relation{{forloop.counter}}" placeholder="Family-Member Relationship" value="{{details.member_relation}}" class="form-input">
+                    </div>
                 </div>
-                <div class="p-1">
-                    <label class="p-1">Family Memeber Age</label>
-                    <input type="number" name="member_age" placeholder="Family Memeber Age" class="form-input"
-                        value="{{family_details.member_age}}">
-                </div>
-            </div><br>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-                <div class="p-1">
-                    <label class="p-1">Family Member Relationship</label>
-                    <input type="text" name="member_relation" placeholder="Family Member Relationship"
-                        class="form-input" value="{{family_details.member_relation}}">
-                </div>
-                <div class="p-1">
-                    <label class="p-1">Profile Image</label>
-                    <input type="file" name="profile">
-                </div>
+                {% endfor %}
             </div>
         </div>
         <div class="text-center">
