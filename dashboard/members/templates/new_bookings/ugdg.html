@@ -31,8 +31,8 @@
     <form method="POST" class="space-y-5" autocomplete="off">
         {% csrf_token %}
         <div class="panel">
-            <label class="text-lg dark:text-white-light p-2 font-weight-bold addproject"
-                style="background-color: #00c200;color:white; width:100%;"><b>UGDG</b></label>
+            <label class="text-lg dark:text-white-light p-2 font-weight-bold"
+                style="background-color: #178EF0;color:white; width:100%;"><center><b>UGDG</b></center></label>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5 pt-4">
                 <label for="search_membername " class="pl-3">Search your Customer:</label>
                 <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniority no" required>
@@ -118,8 +118,7 @@
                                 
                             </div>
                             <div class="text-center mt-4">
-                                <button type="submit" name="action" value="create_order" class="btn btn-success" style="background-color: #00c200;">Update</button>
-                                <input type="reset" value="Clear" class="btn btn-info">
+                                <button type="submit" name="action" value="create_order" class="btn btn-primary" style="background-color: #178EF0;">Update</button>
                             </div>
                         </div>
                     </div>

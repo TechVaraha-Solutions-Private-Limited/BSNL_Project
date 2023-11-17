@@ -19,17 +19,6 @@
         width: 30%;
         float: right;
     }
-
-    .addproject {
-        text-align: center;
-        padding: 15px 15px;
-        font-size: 15px;
-        font-weight: bold;
-        background-color: #00c200;
-        color: white;
-        font-size: 19px;
-    }
-
     .search_size {
         border: 2px solid rgb(247, 243, 243);
         border-radius: 15px;
@@ -44,9 +33,9 @@
 <div class="p-2">
     <div class="panel" id="divbox">
 
-        <h2 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
-            style="background-color: #00c200;color:white; width:100%;">
-            <b>ACTIVE MEMBERS</b>
+        <h2 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4"
+            style="background-color: #178EF0;color:white; width:100%;">
+            <center><b>ACTIVE MEMBERS</b></center>
         </h2>
         <label class="p-2" for="browser">Choose your browser from the list:</label>
         <select class="plotsize p-1" id="inputfield">
@@ -359,7 +348,6 @@
                             <td>{% for data in mydata.user.userfamilydetails_set.all %}
                                 {{data.member_relation}}
                                 {% endfor %}</td>
-                            <!--  -->
                             <td><img src="{{ mydata.pro_img.url }}" alt="{{ mydata.pro_img.name }}"></td>
                             <td>
                                 <div>

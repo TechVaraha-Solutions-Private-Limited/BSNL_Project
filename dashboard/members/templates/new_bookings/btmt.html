@@ -8,7 +8,7 @@
         padding:15px 15px;
         font-size: 15px;
         font-weight: bold;
-        background-color: #00c200;
+        background-color: #178EF0;
         color: white;
         font-size: 19px;
     }
@@ -105,51 +105,9 @@
                 </div>                
             </div>
             <div class="text-center p-2">
-                <button type="submit" value="Submit Application" class="btn btn-success mt-3 p-2" style="background-color:#00c200;">Update</button>
+                <button type="submit" value="Submit Application" class="btn btn-primary mt-3 p-2" style="background-color:#178EF0;">Update</button>
             </div>
         </div>
     </form>
 </div>
-<!-- <script>
-    function selected(){
-        var selec = document.getElementById('select');
-        var btn = document.getElementById('button');
-        var form=document.getElementById('form');
-        console.log(selec.val);
-        debugger
-            if(selec.value ==''){
-                btn.style.display='none';
-                form.style.display='none'
-
-            }
-            else{
-                btn.style.display='block';
-            }
-    }
-    function upload(){
-        var sel = document.getElementById('select');
-        console.log(sel.value);
-        
-        if(sel.value ==''){
-        }
-        else{
-            var form=document.getElementById('form');
-            var btn = document.getElementById('button');
-            if(sel.value !=''){
-                sel.disabled;
-            }
-            if(form.style.display==='none')
-            {
-                form.style.display='block'
-                debugger
-                if (form.style.display ==="block"){
-                    btn.style.display='none'
-                }
-            }
-            else{
-            form.style.display='none'
-            }
-        }
-    }
-</script> -->
 {% endblock %}

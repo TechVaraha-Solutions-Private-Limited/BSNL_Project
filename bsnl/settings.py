@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-eg#o3r^n%^q36m6o#8+91(*kydod^q%6!7aq26bkpbd+qbm&)$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.172']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -150,7 +150,7 @@ STATICFILES_DIRS = [
 PROFILE_UPLOAD_PATH = 'profile/'
 AADHAR_UPLOAD_PATH = 'aadhar/'
 PAN_UPLOAD_PATH = 'pan/'
-PROJECT_UPLOAD_PATH = 'project'
+PROJECT_UPLOAD_PATH = 'project/'
 
 IMAGE_URL ='Images/'
 IMAGE=[os.path.join(BASE_DIR,'images/')]

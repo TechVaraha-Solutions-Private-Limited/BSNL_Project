@@ -3155,7 +3155,7 @@ body.dark {
     color: rgb(255 255 255/var(--tw-text-opacity))
 }
 
-.btn-success {
+.btn-primary {
     --tw-border-opacity: 1;
     border-color: rgb(0 171 85/var(--tw-border-opacity));
     --tw-bg-opacity: 1;

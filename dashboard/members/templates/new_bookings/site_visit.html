@@ -3,18 +3,9 @@
 {% load static %}
 {% include 'common/bootstrap.html'%}
 <style>
-    a{
+    a {
         color: black;
         text-decoration: none;
-    }
-    .addproject{
-        text-align: center;
-        padding:15px 15px;
-        font-size: 15px;
-        font-weight: bold;
-        background-color: #00c200;
-        color: white;
-        font-size: 19px;
     }
 </style>
 {% for message in messages %}
@@ -27,85 +18,87 @@
     {{ message }}
 </div>
 {% endfor %}
-    <form method="POST" action="" class="space-y-5" autocomplete="off" >
-        {% csrf_token %}
-        <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-            <div class="panel p" id="container" >
-                <label class="text-lg dark:text-white-light p-2 font-weight-bold addproject"
-                style="background-color: #00c200;color:white; width:100%;"><b>SITE VISIT</b></label>
-                <div id="form" class=" mt-3">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
-                        <div class="p-1">
-                            <label class="p-1">Date of SV</label>
-                            <input type="date" name="date_of_visit" placeholder="Date of Sv" class="form-input" required>
-                        </div>
-                        <div class="p-1">
-                            <label class="p-1">Cust Name</label>
-                            <input class="form-input" type="text" name="cust_name" placeholder="Cust Name" required>
-                        </div>
-                        <div class="p-1">
-                            <label class="p-1">Phone No</label>
-                            <input type="number" name="phone_no" placeholder="Phone No" class="form-input" required>
-                        </div>
-                        <div class="p-1">
-                            <label class="p-1">Executive</label>
-                            <select class="form-control" name="executive" id="executive">
-                                <option>Select</option>
-                                {% for data in exective%}
-                                <option value="{{data.id}}">{{data.first_name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="p-1">
-                            <label class="p-1">SO Done by</label>
-                            <input type="text" name="so_done_by" placeholder="So Done by" class="form-input" required>
-                        </div>
-                        <div class="p-1">
-                            <label class="p-1">SV Done By</label>
-                            <input type="text" name="sv_done_by" placeholder="Sv Done By" class="form-input" required>
-                        </div>
-                        <div class="p-1">
-                            <label class="p-1">SV Status</label>
-                            <select class="form-control" name="sv_status" required> 
-                                <option disabled selected hidden>Select</option>
-                                <option value="Booked">Booked</option>
-                                <option value="Not Interested">Not Interested</option>
-                            </select>
-                        </div>
-                        <div class="p-1">
-                            <label class="p-1">SV Category</label>
-                            <select class="form-control" name="sv_category" required> 
-                                <option disabled selected hidden>Select</option>
-                                <option value="BOTH">BOTH</option>
-                                <option value="DSVD">DSVD</option>
-                                <option value="SOD ONLY">SOD ONLY</option>
-                                <option value="SVD ONLY">SVD ONLY</option>
-                                <option value="EH">EH</option>
-                            </select>
-                            <!-- <input type="text" name="sv_category" placeholder="Sv Category" class="form-input" > -->
-                        </div>
-                        <div class="p-1">
-                            <label class="p-1">Source</label>
-                            <select class="form-control" name="source" required>
-                                <option disabled selected hidden>Select</option>
-                                <option value="SMS">SMS</option>
-                                <option value="PAMPHLET">PAMPHLET</option>
-                                <option value="REFERENCE">REFERENCE</option>
-                                <option value="WALK-IN">WALK-IN</option>
-                            </select>
-                        </div>
+<form method="POST" action="" class="space-y-5" autocomplete="off">
+    {% csrf_token %}
+    <div class="pt-2 mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+        <div class="panel p" id="container">
+            <label class="text-lg dark:text-white-light p-2 font-weight-bold"
+                style="background-color: #178EF0;color:white; width:100%;">
+                <center><b>SITE VISIT</b></center>
+            </label>
+            <div id="form" class=" mt-3">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                    <div class="p-1">
+                        <label class="p-1">Date of SV</label>
+                        <input type="date" name="date_of_visit" placeholder="Date of Sv" class="form-input" required>
                     </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-success mt-5" name="action" value="create_order" style="background-color: #00c200;">Create</button>
+                    <div class="p-1">
+                        <label class="p-1">Cust Name</label>
+                        <input class="form-input" type="text" name="cust_name" placeholder="Cust Name" required>
                     </div>
+                    <div class="p-1">
+                        <label class="p-1">Phone No</label>
+                        <input type="number" name="phone_no" placeholder="Phone No" class="form-input" required>
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Executive</label>
+                        <select class="form-control" name="executive" id="executive">
+                            <option>Select</option>
+                            {% for data in exective%}
+                            <option value="{{data.id}}">{{data.first_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">SO Done by</label>
+                        <input type="text" name="so_done_by" placeholder="So Done by" class="form-input" required>
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">SV Done By</label>
+                        <input type="text" name="sv_done_by" placeholder="Sv Done By" class="form-input" required>
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">SV Status</label>
+                        <select class="form-control" name="sv_status" required>
+                            <option disabled selected hidden>Select</option>
+                            <option value="Booked">Booked</option>
+                            <option value="Not Interested">Not Interested</option>
+                        </select>
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">SV Category</label>
+                        <select class="form-control" name="sv_category" required>
+                            <option disabled selected hidden>Select</option>
+                            <option value="BOTH">BOTH</option>
+                            <option value="DSVD">DSVD</option>
+                            <option value="SOD ONLY">SOD ONLY</option>
+                            <option value="SVD ONLY">SVD ONLY</option>
+                            <option value="EH">EH</option>
+                        </select>
+                    </div>
+                    <div class="p-1">
+                        <label class="p-1">Source</label>
+                        <select class="form-control" name="source" required>
+                            <option disabled selected hidden>Select</option>
+                            <option value="SMS">SMS</option>
+                            <option value="PAMPHLET">PAMPHLET</option>
+                            <option value="REFERENCE">REFERENCE</option>
+                            <option value="WALK-IN">WALK-IN</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary mt-5" name="action" value="create_order"
+                        style="background-color: #178EF0;">Create</button>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+</form>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $('#executive').on('change', function (event) {
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $('#executive').on('change', function (event) {
         event.preventDefault();
         let id = this.value;
         if (this.value != '') {
@@ -116,9 +109,9 @@
                 method: "POST",
                 data: mydata,
                 success: function (data) {
-                    console.log('check',data);
+                    console.log('check', data);
 
-                  
+
                 }
             })
 
@@ -131,5 +124,5 @@
         }
     });
 
-    </script>
+</script>
 {% endblock %}

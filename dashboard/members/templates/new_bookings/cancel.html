@@ -28,7 +28,7 @@
         {% csrf_token %}
         <div class="panel" >
             <label class="text-lg dark:text-white-light p-2 font-weight-bold addproject"
-            style="background-color: #00c200;color:white; width:100%;"><b>CANCELLATION</b></label>
+            style="background-color: #178EF0;color:white; width:100%;"><b>CANCELLATION</b></label>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mt-4">
                 <label for="search_membername">Search your Customer:</label>
                 <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniorityno" required>
@@ -89,7 +89,6 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Type of Refund</label>
-                                    <!-- <input type="text" name="sr_team_lead" placeholder="Type of Refund" class="form-input" > -->
                                     <select class="form-control" name="type_of_refund" required>
                                         <option disabled selected hidden>Select</option>
                                         <option value="Part Refund">Part Refund</option>
@@ -103,7 +102,7 @@
                                 </div>                    
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-success mt-5" name="action" value="create_order" style="background-color: #00c200;">Update</button>
+                                <button type="submit" class="btn btn-primary mt-5" name="action" value="create_order" style="background-color: #178EF0;">Update</button>
                             </div>
                         </div>
                     </div>

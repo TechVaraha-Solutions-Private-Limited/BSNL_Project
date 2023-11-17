@@ -7,16 +7,6 @@
         color: black;
         text-decoration: none;
     }
-    .addproject{
-        text-align: center;
-        padding:15px 15px;
-        font-size: 15px;
-        font-weight: bold;
-        background-color: #00c200;
-        color: white;
-        font-size: 19px;
-    }
-
 </style>
 {% for message in messages %}
 <div class="alert   {% if message.tags == 'error' %}
@@ -32,8 +22,8 @@
     <form method="POST" class="space-y-5" autocomplete="off">
         {% csrf_token %}
         <div class="panel" >
-            <label class="text-lg dark:text-white-light p-2 font-weight-bold addproject"
-                style="background-color: #00c200;color:white; width:100%;"><b>GENERATE RECEIPT</b></label>
+            <label class="text-lg dark:text-white-light p-2 font-weight-bold"
+                style="background-color: #178EF0;color:white; width:100%;"><center><b>GENERATE RECEIPT</b></center></label>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5 pt-4" >
                 <label for="search_membername">Search your Customer:</label>
                 <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniority No" required>
@@ -126,7 +116,7 @@
                                     <label></label>
                                 </div>
                                 <div class="p-1 mt-4">
-                                    <center><button type="submit" class="btn btn-success text-lg font-semibold dark:text-white-light" style="background-color: #00c200;" name="action" value="create_order">Create Receipt</button></center>
+                                    <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" style="background-color: #178EF0;" name="action" value="create_order">Create Receipt</button></center>
                                 </div>
                             </div>
                         </div>

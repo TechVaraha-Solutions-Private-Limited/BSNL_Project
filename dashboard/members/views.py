@@ -12,7 +12,7 @@ from dashboard.members.models import Update_blocked
 def banner_images(request):
     if request.method =='POST':
         Images(
-            images=request.POST['profile'],
+            images=request.FILES.get('profile', ''),
             place = "Banner"
         ).save()        
     return render(request,'image/banner.html')
@@ -20,7 +20,7 @@ def banner_images(request):
 def gallery_images(request):
     if request.method == 'POST':
         G_image(
-            gallery_image=request.POST['profile'],
+            gallery_image=request.FILES.get('profile', ''),
             g_place= "gallery"
         ).save()
     return render(request,'image/gallery.html')

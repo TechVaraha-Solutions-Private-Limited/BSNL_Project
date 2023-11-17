@@ -2229,28 +2229,28 @@ textarea.input-lg,select[multiple].input-lg {
     background-color: #fff
 }
 
-.btn-success {
+.btn-primary {
     color: #fff;
     background-color: #5cb85c;
     border-color: #4cae4c
 }
 
-.btn-success:hover,.btn-success:focus,.btn-success:active,.btn-success.active,.open .dropdown-toggle.btn-success {
+.btn-primary:hover,.btn-primary:focus,.btn-primary:active,.btn-primary.active,.open .dropdown-toggle.btn-primary {
     color: #fff;
     background-color: #47a447;
     border-color: #398439
 }
 
-.btn-success:active,.btn-success.active,.open .dropdown-toggle.btn-success {
+.btn-primary:active,.btn-primary.active,.open .dropdown-toggle.btn-primary {
     background-image: none
 }
 
-.btn-success.disabled,.btn-success[disabled],fieldset[disabled] .btn-success,.btn-success.disabled:hover,.btn-success[disabled]:hover,fieldset[disabled] .btn-success:hover,.btn-success.disabled:focus,.btn-success[disabled]:focus,fieldset[disabled] .btn-success:focus,.btn-success.disabled:active,.btn-success[disabled]:active,fieldset[disabled] .btn-success:active,.btn-success.disabled.active,.btn-success[disabled].active,fieldset[disabled] .btn-success.active {
+.btn-primary.disabled,.btn-primary[disabled],fieldset[disabled] .btn-primary,.btn-primary.disabled:hover,.btn-primary[disabled]:hover,fieldset[disabled] .btn-primary:hover,.btn-primary.disabled:focus,.btn-primary[disabled]:focus,fieldset[disabled] .btn-primary:focus,.btn-primary.disabled:active,.btn-primary[disabled]:active,fieldset[disabled] .btn-primary:active,.btn-primary.disabled.active,.btn-primary[disabled].active,fieldset[disabled] .btn-primary.active {
     background-color: #5cb85c;
     border-color: #4cae4c
 }
 
-.btn-success .badge {
+.btn-primary .badge {
     color: #5cb85c;
     background-color: #fff
 }

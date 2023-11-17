@@ -7,16 +7,6 @@
         color: black;
         text-decoration: none;
     }
-
-    .addproject {
-        text-align: center;
-        padding: 15px 15px;
-        font-size: 15px;
-        font-weight: bold;
-        background-color: #00c200;
-        color: white;
-        font-size: 19px;
-    }
 </style>
 {% for message in messages %}
 <div class="alert alert-success">
@@ -28,8 +18,8 @@
     <form method="POST" class="space-y-5" autocomplete="off">
         {% csrf_token %}
         <div class="panel">
-            <label class="text-lg dark:text-white-light p-2 font-weight-bold addproject"
-                style="background-color: #00c200;color:white; width:100%;"><b>LEAD OWNER</b></label>
+            <label class="text-lg dark:text-white-light p-2 font-weight-bold"
+                style="background-color: #178EF0;color:white; width:100%;"><center><b>LEAD OWNER</b></center></label>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mt-4">
                 <label for="search_membername">Search your Customer:</label>
                 <input type="text" class="form-input" name="search_membername" id="search_membername"
@@ -135,7 +125,7 @@
                             </div>
                             <div class="text-center p-2">
                                 <button type="submit" name="action" value="create_order"
-                                    class="btn btn-success mt-3 p-2" style="background-color: #00c200;">Update</button>
+                                    class="btn btn-primary mt-3 p-2">Update</button>
                             </div>
                         </div>
                     </div>
