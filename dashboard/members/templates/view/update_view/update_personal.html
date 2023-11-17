@@ -73,15 +73,15 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="family-form">
                     <div class="p-1">
                         <label class="p-1">Family-Member Name</label>
-                        <input type="text" name="member_name{{forloop.counter}}" placeholder="Family-Member Name" value="{{details.member_name}}" class="form-input">
+                        <input type="text" name="member_name{{details.id}}" placeholder="Family-Member Name" value="{{details.member_name}}" class="form-input">
                     </div>
                     <div class="p-1">
                         <label class="p-1">Family-Member Age</label>
-                        <input type="number" name="member_age{{forloop.counter}}" placeholder="Family-Member Age" value="{{details.member_age}}" class="form-input">
+                        <input type="number" name="member_age{{details.id}}" placeholder="Family-Member Age" value="{{details.member_age}}" class="form-input">
                     </div>
                     <div class="p-1">
                         <label class="p-1">Family-Member Relationship</label>
-                        <input type="text" name="member_relation{{forloop.counter}}" placeholder="Family-Member Relationship" value="{{details.member_relation}}" class="form-input">
+                        <input type="text" name="member_relation{{details.id}}" placeholder="Family-Member Relationship" value="{{details.member_relation}}" class="form-input">
                     </div>
                 </div>
                 {% endfor %}
