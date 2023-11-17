@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect, HttpResponse
 from dashboard.projects.models import LandDetails,Project
-from dashboard.members.models import Bookings
+from dashboard.members.models import Bookings,G_image
 from dashboard.userinfo.models import User
 from django.contrib.auth import authenticate,login as auth_login
 from django.contrib import messages
@@ -62,7 +62,8 @@ def services(request):
     return render(request, 'page/services.html')
 
 def gallery(request):
-    return render(request, 'page/gallery.html')
+    img_view = G_image.objects.all()
+    return render(request, 'page/gallery.html',{'img_view':img_view})
 
 def board(request):
     return render(request, 'page/board.html')
@@ -86,5 +87,3 @@ def product(request):
 #     if request.user.is_authenticated:
 #         logout(request)
 #         return redirect(signin)
-
-

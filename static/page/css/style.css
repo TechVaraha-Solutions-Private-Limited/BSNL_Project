@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-    --primary: #00B98E;
+    --primary: rgb(23, 142, 240);
     --secondary: #FF6922;
     --light: #EFFDF5;
     --dark: #0E2E50;
@@ -282,11 +282,11 @@
 }
 
 .property-item .border-top {
-    border-top: 1px dashed rgba(0, 185, 142, .3) !important;
+    border-top: 1px dashed #087af5 !important;
 }
 
 .property-item .border-end {
-    border-right: 1px dashed rgba(0, 185, 142, .3) !important;
+    border-right: 1px dashed #087af5 !important;
 }
 
 
@@ -465,7 +465,7 @@
         padding-top: 0px !important;
         padding-bottom: 0px !important;
         letter-spacing: -1px !important;
-        text-shadow: 1px 1px 2px rgb(2, 246, 87);
+        
     }
     #bsnlhead{
         font-size: 12px;
@@ -480,13 +480,14 @@
         padding:7px;
         padding-left: 10px;
         padding-right: 10px;
-        background-color: #4169e1; 
-        border-radius:5px;    
+        background-color: #087af5; 
+        border-radius:5px; 
+        color: white;   
     }
     #loginBtn:hover
     {
         color: white;
-        background-color: #4169e1;
+        background-color: #56adf5;
     }
 }
 
@@ -496,7 +497,7 @@
         top:40%;
     }
     #para{
-        text-shadow: 1px 1px 2px rgb(2, 246, 87);
+        text-shadow: 1px 1px 2px;
         margin-bottom: 10%;
         font-size: 4vh;
     }
@@ -520,13 +521,13 @@
         width:90px; */
         color: white;
         padding:7px;
-        background-color: #4169e1; 
+        background-color: #178EF0; 
         border-radius:5px;    
     }
     #loginBtn:hover
     {
         color: white;
-        background-color: #4169e1; 
+        background-color: #56adf5 ; 
         ;
     }
     

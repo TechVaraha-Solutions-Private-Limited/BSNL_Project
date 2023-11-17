@@ -1,13 +1,20 @@
 {% extends 'page/commons/base.html' %}
 {% block content %}
 {% load static%}
-<!-- Category Start -->
+<style>
+    .additionl-text {
+        display: block;
+        font-size: 20px;
+        color: #ffffff;
+    }
+</style>
 <div class="carousel-caption d-none d-md-block">
     <!-- <h1 class="mb-3 h2" id="bsnlhead">BSNL</h1> -->
 
     <img src="/static/images/Logo2.png" alt="BSNL Logo" class="mb-3 h2">
 
-    <p class="p-3 " id="para">Welcome to BSNL Housing Society</p>
+    <p class="p-3 " id="para">Welcome to BSNL Housing Society<span class="additionl-text">BSNL ಹೌಸಿಂಗ್ ಸೊಸೈಟಿಗೆ
+            ಸುಸ್ವಾಗತ</span></p>
     <p class="p-3">
     <div>
         <div class="row">
@@ -110,13 +117,13 @@
                 <p class="mb-4" style="line-height: 1.85714285714286">The official website of "BSNL Housing Society" for
                     buying "BSNL Society Plots" near International Airport, Devanahalli, Bangalore. The BSNL Housing
                     Society is registered under the co-operative society's act with the Registration Number
-                    HSG-2/12/hhs/46469/2014-15.</p>
+                    HSG-2/12/HHS/46469/2014-15.</p>
                 <p style="line-height: 1.85714285714286">BSNL Housing Society’s Layout is formed strictly under adhering
                     to the rules and regulations of the Registered Co-Operative Society (RCS) and Bangalore
                     International Airport Area Planning Authority (BIAAPA) norms and specifications, hence every detail
                     of the society will be monitored by the Authorised Departments.</p>
                 <p style="font-size: large;"><i class="fa fa-check text-primary me-3"></i><b>Registration Number:</b>
-                    HSG-2/12/hhs/46469/2014-15</p>
+                    HSG-2/12/HHS/46469/2014-15</p>
                 <a class="btn btn-primary py-3 px-5 mt-3" href="about">Read More</a>
             </div>
         </div>
@@ -153,7 +160,7 @@
                                     For Sale
                                     {% endif %}</div>
                                 <div
-                                    class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    class="bg-white rounded-top text-plots position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
                                     Plots</div>
                             </div>
                             <div class="p-4 pb-0">
@@ -166,7 +173,7 @@
                                         Plan</a></small>
                                 <small class="flex-fill text-center border-end py-2 "><a data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop"><i
-                                            class="fa fa-ruler-combined"></i>Location</a></small>
+                                            class="fa fa-ruler-combined text-primary me-2"></i>Location</a></small>
 
                                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
                                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
@@ -240,18 +247,6 @@
                                                             <th scope="col">First Installment</th>
                                                             <th scope="col">Second Installment</th>
                                                             <th scope="col">Thrid Installment</th>
-                                                            <!-- {% if i in  mydata.landdetails_set.first %}
-                                                                <th scope="col">{% if  i.installment_4 != null%}
-                                                                    Fourth Installment
-                                                                     {% else %}
-
-                                                                     {% endif %}</th>
-                                                                <th scope="col">{% if  i.installment_5 != null%}
-                                                                    Fifth Installment
-                                                                     {% else %}
-                                                                        
-                                                                     {% endif %}</th>
-                                                                {% endif %} -->
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -274,24 +269,10 @@
                                                                 {% else %}
                                                                 -----
                                                                 {% endif %}</td>
-                                                            <!-- <td>{% if  i.installment_4 != '' %}
-                                                                    ₹{{i.installment_4}}
-                                                                    {% else %}
-                                                                    ----
-                                                                    {% endif %}</td>
-                                                                <td>₹{% if  i.installment_5 != ''%}
-                                                                    {{i.installment_5}}
-                                                                     {% else %}
-                                                                     ----
-                                                                     {% endif %}</td> -->
                                                         </tr>
                                                         {% endfor %}
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
@@ -451,10 +432,6 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -469,10 +446,11 @@
         </div>
     </div>
 </div>
-<!--list end-->
-<!-- Team Start -->
-<!-- Team End -->
-<!-- Testimonial Start -->
+
+<iframe id="ytplayer" width="100%" height="315" src="https://www.youtube.com/embed/op1PGRTPtM0?autoplay=1" frameborder="0" allowfullscreen></iframe>
+
+
+
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
@@ -499,5 +477,6 @@
         </div>
     </div>
 </div>
+
 <!-- Testimonial End -->
 {% endblock %}

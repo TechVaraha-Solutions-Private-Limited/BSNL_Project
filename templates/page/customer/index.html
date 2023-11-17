@@ -58,8 +58,6 @@
             </template>
         </div>
 
-       
-
         <div class="main-container min-h-screen text-black dark:text-white-dark" :class="[$store.app.navbar]">
             <!-- start sidebar section -->
            
@@ -82,6 +80,12 @@
                     <!-- end footer section -->
                 </div>
             </div>
+        </div>
+
+        <div class="fixed-phone">
+            <a role="button" class="btn btn-primary" href="tel:Number">
+                <i class="fas fa-phone"></i> Number
+            </a>
         </div>
 
         <script src="{% static 'site2/assets/js/alpine-collaspe.min.js' %}"></script>
