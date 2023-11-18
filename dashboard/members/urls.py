@@ -30,7 +30,6 @@ urlpatterns = [
     path('view_update_sales_staff',view_update_sales_staff,name='view_update_sales_staff'),
     path('blocked_seniority',blocked_seniority,name='blocked_seniority'),
     path('view_blocked_seniority',view_blocked_seniority,name='view_blocked_seniority'),
-    path('update_pdc',update_pdc,name='update_pdc'),
     path('view_update_pdc',view_update_pdc,name='view_update_pdc'),
     path('cr_code',cr_code,name='cr_code'),
     path('view_site_visit',view_site_visit,name='view_site_visit'),
@@ -40,18 +39,19 @@ urlpatterns = [
     path('update_personal/<id>',update_personal,name='update_personal'),
     path('update_site_visit/<id>',update_site_visit,name='update_site_visit'),
     path('update_inactive/<id>',update_inactive,name='update_inactive'),
+    path('update_pdc',update_pdc,name='update_pdc'),
+    path('update_block/<id>',update_block,name='update_block'),
+    path('update_receipts/<id>',update_receipts,name='update_receipts'),
     # delete function
     path('deleteactivememberlist/<id>',deleteactivememberlist,name='deleteactivememberlist'),
+    path('delete_block/<id>',delete_block,name='delete_block'),
+    path('delete_user_access/<id>',delete_user_access,name='delete_user_access'),
     # images
     path('banner_images',banner_images,name='banner_images'),
     path('gallery_images',gallery_images,name='gallery_images'),
     #add Customer
     path('addcustomer',addcustomer,name='addcustomer'),
     path('user_access/<id>',user_access,name='user_access'),
-    path('delete_user_access/<id>',delete_user_access,name='delete_user_access'),
-    path('update_block/<id>',update_block,name='update_block'),
-    path('delete_block/<id>',delete_block,name='delete_block'),
-    path('update_receipts/<id>',update_receipts,name='update_receipts'),
     path('get-team-owner',get_team_owner,name="get_team_owner"),
     #add new customer using site Visit
     path('site_visit/<id>',site_visit_custmer,name='site_visit_custmer')

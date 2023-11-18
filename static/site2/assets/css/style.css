@@ -3157,12 +3157,11 @@ body.dark {
 
 .btn-primary {
     --tw-border-opacity: 1;
-    border-color: rgb(0 171 85/var(--tw-border-opacity));
+
     --tw-bg-opacity: 1;
-    background-color: rgb(0 171 85/var(--tw-bg-opacity));
+   
     --tw-text-opacity: 1;
-    color: rgb(255 255 255/var(--tw-text-opacity));
-    --tw-shadow-color: #00ab5599;
+    
     --tw-shadow: var(--tw-shadow-colored)
 }
 
