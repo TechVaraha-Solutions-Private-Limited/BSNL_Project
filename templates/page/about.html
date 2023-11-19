@@ -1,94 +1,119 @@
 {% extends 'page/commons/base.html' %}
-
+{% load static %}
 {% block content %}
-<div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white1"
-     style="background-image: url('static/page/img/p4.jpg'); height: 350px;">
-    <h1 class="mb-3 h2">BSNL</h1>
 
-    <p>
-        Contact
-    </p>
-</div>
-<!-- Contact Start -->
-<div class="container-xxl py-5">
+<style>
+    .text-align {
+        text-align: justify;
+    }
+</style>
+<style>
+    /* Style for the container of each section */
+    .section-container {
+        background-color: #c9fdfd;
+        /* Set background color to pure white */
+        padding: 20px;
+        /* Add some padding for better spacing */
+        margin-bottom: 20px;
+        /* Add margin at the bottom to separate sections */
+        
+        /* Add a border for a clean look */
+        border-radius: 5px;
+        /* Optional: Add border-radius for rounded corners */
+    }
+
+    /* Style for the heading (h3) within each section */
+    .section-container h3 {
+        color: #178EF0;
+        margin-bottom: 10px;
+    }
+
+    .section-container p {
+        color: #050505;
+        text-align: justify;
+        margin-bottom: 0;
+
+    }
+
+    .section-cont p {
+        color: #666;
+        text-align: justify;
+        margin-bottom: 0;
+
+    }
+
+    .left-section {
+        float: left;
+        width: 30%;
+        margin-right: 5%;
+        text-align: justify;
+
+    }
+
+    .center-section {
+        display: inline-block;
+        width: 30%;
+        text-align: justify;
+        margin-top: 6%;
+    }
+
+    .right-section {
+
+        float: right;
+        /* display: inline-block; */
+        width: 30%;
+        margin-left: 5%;
+        text-align: justify;
+        margin-top: 12%;
+        margin-bottom: 10;
+    }
+</style>
+
+<!-- <div class="container-xxl py-3">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-            <h1 class="mb-3">Contact Us</h1>
-            <p></p>
-        </div>
-        <div class="row g-4">
-            <div class="col-12">
-                <div class="row gy-4">
-                    <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.1s">
-                        <div class="bg-light rounded p-3">
-                            <div class="d-flex align-items-center bg-white rounded p-3" style="border: 1px dashed rgb(23, 142, 240)">
-                                <div class="icon me-3" style="width: 45px; height: 45px;">
-                                    <i class="fa fa-map-marker-alt text-primary"></i>
-                                </div>
-                                <span>123 Street, India</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.3s">
-                        <div class="bg-light rounded p-3">
-                            <div class="d-flex align-items-center bg-white rounded p-3" style="border: 1px dashed rgb(23, 142, 240)">
-                                <div class="icon me-3" style="width: 45px; height: 45px;">
-                                    <i class="fa fa-envelope-open text-primary"></i>
-                                </div>
-                                <span>info@example.com</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.5s">
-                        <div class="bg-light rounded p-3">
-                            <div class="d-flex align-items-center bg-white rounded p-3" style="border: 1px dashed rgb(23, 142, 240)">
-                                <div class="icon me-3" style="width: 45px; height: 45px;">
-                                    <i class="fa fa-phone-alt text-primary"></i>
-                                </div>
-                                <span>+012 345 6789</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="wow fadeInUp" data-wow-delay="0.5s">
-                    <p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax & PHP in a few minutes. Just copy and paste the files, add a little code and you're done. <a href="https://htmlcodex.com/contact-form">Download Now</a>.</p>
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="name" placeholder="Your Name">
-                                    <label for="name">Your Name</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="Your Email">
-                                    <label for="email">Your Email</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="subject" placeholder="Subject">
-                                    <label for="subject">Subject</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px"></textarea>
-                                    <label for="message">Message</label>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            <h1 class="mb-3">About Us</h1>
         </div>
     </div>
+</div> -->
+<div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white1"
+    style="background-image: url('{% static 'page/img/p1.jpg' %}'); height: 350px">
+    <h1 class="p-5 wow fadeInUp">About</h1>
 </div>
+<div>
+    <div class="container  wow fadeInUp" style="margin-bottom: 15%;">
+        <div class="section-container left-section">
+            <h3 class="wow fadeInUp">Our Vision</h3>
+            <p>&nbsp;&nbsp;The BSNL Housing Society is a registered and reputed cooperative institution that was
+                promoted in 1973
+                with a vision "Commited to provide clear and well-laid out plot at an affordable cost through
+                professional practice".</p>
+        </div>
+
+        <div class="section-container center-section">
+            <h3 class="wow fadeInUp">Our Promise</h3>
+            <p>&nbsp;&nbsp;BSNL Housing Society’s Layout is formed strictly under adhering to the rules and regulations
+                of
+                Registered
+                Co-Operative Society (RCS) and Bangalore International Airport Area Planning Authority (BIAAPA)
+                norms
+                and specifications, hence every detail of the society will be monitored by the Authorized Departments.
+            </p>
+        </div>
+
+        <div class="section-container right-section">
+            <h3 class="wow fadeInUp">Assured Return on Investment</h3>
+            <p>&nbsp;&nbsp;&nbsp;The Completed and On-going projects of society are at north Bengaluru and near to the
+                International
+                Airport,
+                Comparing to the other parts of the Bengaluru from the past decade, we can address that north Bengaluru
+                as a rapid development, and hence the investment value for money with good returns and there is a
+                GUARANTEED and FASTER development within a decade.
+            </p>
+        </div>
+    </div>
+
+</div>
+
 <!-- Contact End -->
 {% endblock %}
