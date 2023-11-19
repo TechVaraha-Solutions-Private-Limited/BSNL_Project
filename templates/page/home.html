@@ -7,6 +7,63 @@
         font-size: 20px;
         color: #ffffff;
     }
+
+/* Default styles for larger screens */
+.elementor-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.elementor-column {
+    flex-basis: calc(33.33% - 10px);
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.elementor-icon-box-wrapper {
+    text-align: center;
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 0px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.elementor-icon-box-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.elementor-icon-box-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #da332e;
+}
+
+.elementor-icon-box-description {
+    font-size: 14px;
+    color: #0c0c0c;
+}
+
+/* Media query for mobile devices */
+@media screen and (max-width: 767px) {
+    .elementor-container {
+        justify-content: center; /* Center items on smaller screens */
+    }
+
+    .elementor-column {
+        flex-basis: 100%; /* Make columns full width on smaller screens */
+    }
+
+    .elementor-icon-box-wrapper {
+        height: auto; /* Allow the height to adjust based on content */
+    }
+}
+
 </style>
 <div class="carousel-caption d-none d-md-block">
     <!-- <h1 class="mb-3 h2" id="bsnlhead">BSNL</h1> -->
@@ -14,10 +71,14 @@
     <img src="/static/images/Logo2.png" alt="BSNL Logo" class="mb-3 h2">
 
     <div>
-        <div class="p-1"><p style="font-size: 24px; background-color: #178ef0; margin-right: -8%; margin-left: -8%;;"><b>WELCOME TO BSNL EMPLOYEES AND CITIZENS HOUSE BUILDING CO-OPERATIVE SOCIETY LTD </b></p><span
-                class="additionl-text" style="font-size: 20px;">ಸುಸ್ವಾಗತ ಬಿಎಸ್‌ಎನ್‌ಎಲ್ ಎಂಪ್ಲಾಯೀಸ್ ಅಂಡ್ ಸಿಟಿಜನ್ಸ್ ಹೌಸ್ ಬಿಲ್ಡಿಂಗ್ ಕೋ-ಆಪರೇಟಿವ್
+        <div class="p-1">
+            <p style="font-size: 24px; background-color: #178ef0; margin-right: -8%; margin-left: -8%;;"><b>WELCOME TO
+                    BSNL EMPLOYEES AND CITIZENS HOUSE BUILDING CO-OPERATIVE SOCIETY LTD </b></p><span
+                class="additionl-text" style="font-size: 20px;">ಸುಸ್ವಾಗತ ಬಿಎಸ್‌ಎನ್‌ಎಲ್ ಎಂಪ್ಲಾಯೀಸ್ ಅಂಡ್ ಸಿಟಿಜನ್ಸ್ ಹೌಸ್
+                ಬಿಲ್ಡಿಂಗ್ ಕೋ-ಆಪರೇಟಿವ್
                 ಸೊಸೈಟಿ
-                ಲಿ</span></div>
+                ಲಿ</span>
+        </div>
     </div>
     <p class="p-3">
     <div>
@@ -142,8 +203,7 @@
             <div class="col-lg-6">
                 <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
                     <h1 class="mb-3">Property Listing</h1>
-                    <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit
-                        eirmod sit diam justo sed rebum.</p>
+                    <p></p>
                 </div>
             </div>
         </div>
@@ -303,8 +363,7 @@
             <div class="col-lg-6">
                 <div class="text-start mx-auto mb-5 wow slideInLeft" data-wow-delay="0.1s">
                     <h1 class="mb-3">Completed Project Listing</h1>
-                    <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit
-                        eirmod sit diam justo sed rebum.</p>
+                    <p></p>
                 </div>
             </div>
         </div>
@@ -461,8 +520,7 @@
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
             <h1 class="mb-3">Our Clients Say!</h1>
-            <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod
-                sit. Ipsum diam justo sed rebum vero dolor duo.</p>
+            <p></p>
         </div>
         <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
             {% for myvalue in value%}
@@ -483,6 +541,161 @@
         </div>
     </div>
 </div>
+<div class="p-5 m-5">
+    <div>
+        <h2 style="color: #0c0c0c;">Six Reasons For People Choosing Us</h2>
+    </div>
 
+
+    <div class="elementor-container elementor-column-gap-no">
+        <div class="elementor-column elementor-element-377b71b" data-id="377b71b" data-element_type="column"
+            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+            <div class="elementor-element elementor-element-b2c8bb1 elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box"
+                data-id="b2c8bb1" data-element_type="widget" data-widget_type="icon-box.default">
+                <div class="elementor-widget-container">
+                    <div class="elementor-icon-box-wrapper">
+                        <div class="elementor-icon-box-icon">
+                            <span class="elementor-icon elementor-animation-">
+                                <i aria-hidden="true" class="fas fa-award"></i> </span>
+                        </div>
+                        <div class="elementor-icon-box-content">
+                            <h6 class="elementor-icon-box-title">
+                                <span>
+                                    Committed </span>
+                            </h6>
+                            <p class="elementor-icon-box-description">
+                                The biggest commitment we keep is our commitment to ourself to deliver the projects
+                                on-time </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="elementor-column elementor-element-ba4a7c6" data-id="ba4a7c6" data-element_type="column"
+            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+            <div class="elementor-element elementor-element-4b5299a elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box"
+                data-id="4b5299a" data-element_type="widget" data-widget_type="icon-box.default">
+                <div class="elementor-widget-container">
+                    <div class="elementor-icon-box-wrapper">
+                        <div class="elementor-icon-box-icon">
+                            <span class="elementor-icon elementor-animation-">
+                                <i aria-hidden="true" class="far fa-check-circle"></i> </span>
+                        </div>
+                        <div class="elementor-icon-box-content">
+                            <h6 class="elementor-icon-box-title">
+                                <span>
+                                    Trustworthy </span>
+                            </h6>
+                            <p class="elementor-icon-box-description">
+                                We believe that the Trust is the highest form of human motivation. It brings out the
+                                very best in people. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="elementor-column" data-id="1e3bdab" data-element_type="column"
+            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+            <div class="elementor-element elementor-element-506e9b5 elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box"
+                data-id="506e9b5" data-element_type="widget" data-widget_type="icon-box.default">
+                <div class="elementor-widget-container">
+                    <div class="elementor-icon-box-wrapper">
+                        <div class="elementor-icon-box-icon">
+                            <span class="elementor-icon elementor-animation-">
+                                <i aria-hidden="true" class="far fa-user"></i> </span>
+                        </div>
+                        <div class="elementor-icon-box-content">
+                            <h6 class="elementor-icon-box-title">
+                                <span>
+                                    Trained Workers </span>
+                            </h6>
+                            <p class="elementor-icon-box-description">
+                                We believe that The way our employees feel is the way our customers will feel. And
+                                if
+                                our employees don’t feel valued, neither will our customers </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="elementor-container elementor-column-gap-no">
+        <div class="elementor-column elementor-element-deb70ec" data-id="deb70ec" data-element_type="column"
+            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+            <div class="elementor-element elementor-element-890cea2 elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box elementor-icon-box-description"
+                data-id="890cea2" data-element_type="widget" data-widget_type="icon-box.default">
+                <div class="elementor-widget-container">
+                    <div class="elementor-icon-box-wrapper">
+                        <div class="elementor-icon-box-icon">
+                            <span class="elementor-icon elementor-animation-">
+                                <i aria-hidden="true" class="far fa-clock"></i> </span>
+                        </div>
+                        <div class="elementor-icon-box-content">
+                            <h6 class="elementor-icon-box-title">
+                                <span>
+                                    Values &amp; Ethics </span>
+                            </h6>
+                            <p class="elementor-icon-box-description">
+                                We believe that It is easy to dodge our responsibilities, but we cannot dodge the
+                                consequences of dodging our responsibilities. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="elementor-column elementor-element-de407ae" data-id="de407ae" data-element_type="column"
+            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+            <div class="elementor-element elementor-element-3cfda96 elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box"
+                data-id="3cfda96" data-element_type="widget" data-widget_type="icon-box.default">
+                <div class="elementor-widget-container">
+                    <div class="elementor-icon-box-wrapper">
+                        <div class="elementor-icon-box-icon">
+                            <span class="elementor-icon elementor-animation-">
+                                <i aria-hidden="true" class="fas fa-phone-volume"></i> </span>
+                        </div>
+                        <div class="elementor-icon-box-content">
+                            <h6 class="elementor-icon-box-title">
+                                <span>
+                                    Quick Response </span>
+                            </h6>
+                            <p class="elementor-icon-box-description">
+                                We believe that Quick and positive response makes businesses to run smoother and
+                                gain
+                                trust </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="elementor-column elementor-element-6ce642d" data-id="6ce642d" data-element_type="column"
+            data-settings="{&quot;background_background&quot;:&quot;classic&quot;}">
+            <div>
+                <div class="elementor-element elementor-element-bb38fd6 elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box"
+                    data-id="bb38fd6" data-element_type="widget" data-widget_type="icon-box.default">
+                    <div class="elementor-widget-container">
+                        <div class="elementor-icon-box-wrapper">
+                            <div class="elementor-icon-box-icon">
+                                <span class="elementor-icon elementor-animation-">
+                                    <i aria-hidden="true" class="fas fa-certificate"></i> </span>
+                            </div>
+                            <div class="elementor-icon-box-content">
+                                <h6 class="elementor-icon-box-title">
+                                    <span>
+                                        Customer Satisfaction </span>
+                                </h6>
+                                <p class="elementor-icon-box-description">
+                                    We put our customers' expectations at the heart of our business. Customer
+                                    satisfaction
+                                    and loyalty are our main indicators. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Testimonial End -->
 {% endblock %}
