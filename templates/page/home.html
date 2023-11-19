@@ -49,95 +49,137 @@
     color: #0c0c0c;
 }
 
-/* Media query for mobile devices */
 @media screen and (max-width: 767px) {
     .elementor-container {
-        justify-content: center; /* Center items on smaller screens */
+        justify-content: center;
     }
 
     .elementor-column {
-        flex-basis: 100%; /* Make columns full width on smaller screens */
+        flex-basis: 100%;
     }
 
     .elementor-icon-box-wrapper {
-        height: auto; /* Allow the height to adjust based on content */
+        height: auto;
+    }
+    /* p{
+
+    } */
+}
+
+@media (max-width: 767px) {
+    .carousel-inner {
+        margin-right: 0;
+    }
+
+    .carousel-item {
+        width: 100%;
+    }
+
+    .carousel-caption {
+        right: 10%;
+        bottom: 10%;
+        top: 5%;
+        left: 10%;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 10%;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    .carousel-indicators {
+        margin-right: 10%;
+        margin-left: 10%;
+    }
+    #imglogo{
+        height: 40px;
+        width: 45px;
     }
 }
 
 </style>
-<div class="carousel-caption d-none d-md-block">
-    <!-- <h1 class="mb-3 h2" id="bsnlhead">BSNL</h1> -->
-
-    <img src="/static/images/Logo2.png" alt="BSNL Logo" class="mb-3 h2">
-
-    <div>
-        <div class="p-1">
-            <p style="font-size: 24px; background-color: #178ef0; margin-right: -8%; margin-left: -8%;;"><b>WELCOME TO
-                    BSNL EMPLOYEES AND CITIZENS HOUSE BUILDING CO-OPERATIVE SOCIETY LTD </b></p><span
-                class="additionl-text" style="font-size: 20px;">ಸುಸ್ವಾಗತ ಬಿಎಸ್‌ಎನ್‌ಎಲ್ ಎಂಪ್ಲಾಯೀಸ್ ಅಂಡ್ ಸಿಟಿಜನ್ಸ್ ಹೌಸ್
-                ಬಿಲ್ಡಿಂಗ್ ಕೋ-ಆಪರೇಟಿವ್
-                ಸೊಸೈಟಿ
-                ಲಿ</span>
-        </div>
-    </div>
-    <p class="p-3">
-    <div>
-        <div class="row">
-            <div class="col-md-24 col-xs-12 percent-blocks m-main" data-waypoint-scroll="true">
-                <div class="row align-items-right " style="margin-left: 10px;margin-right: -250px;">
-                    <div class="col-sm-3 col-xs-6">
-                        <div class="count-item">
-                            <!--<div class="count-item-circle">
-                                    <span class="pe-7s-users"></span>
-                                </div>-->
-                            <div class="chart" data-percent="5000">
-                                <h2 class="percent" id="counter">{{count}}</h2>
-                                <h5 id="h5font">HAPPY CUSTOMER </h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <div class="count-item">
-                            <!--<div class="count-item-circle">
-                                    <span class="pe-7s-home"></span>
-                                </div>-->
-                            <div class="chart" data-percent="10">
-                                <h2 class="percent" id="counter1">{{data.count}}</h2>
-                                <h5 id="h5font">PROPERTIES IN STOCK</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 col-xs-6">
-                        <div class="count-item">
-                            <!--<div class="count-item-circle">
-                                    <span class="pe-7s-flag"></span>
-                                </div>-->
-                            <div class="chart" data-percent="5">
-                                <h2 class="percent" id="counter2">10</h2>
-                                <h5 id="h5font">CITY REGISTERED</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="col-sm-3 col-xs-6">
-                            <div class="count-item">
-                                <div class="count-item-circle">
-                                    <span class="pe-7s-graph2"></span>
-                                </div>-->
-                    <!--<div class="chart" data-percent="12">
-                                    <h2 class="percent" id="counter3">12</h2>
-                                    <h5 id="h5font">DEALER BRANCHES</h5>
-                                </div>
-                            </div>
-
-                        </div> -->
-                </div>
-            </div>
-        </div>
-    </div>
-    </p>
-</div>
 
 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+
+        <!-- Slide 1 -->
+        <div class="carousel-item active" data-bs-interval="10000" style="object-fit: cover;">
+            <img src="static/page/img/carousel-22.jpg" class="d-block w-100" alt="...">
+
+            <!-- Additional content for Slide 1 -->
+            <div class="carousel-caption">
+                <img src="/static/images/Logo2.png" id="imglogo" alt="BSNL Logo" class="mb-3 h2">
+                <p>WELCOME TO BSNL EMPLOYEES AND CITIZENS HOUSE BUILDING CO-OPERATIVE SOCIETY LTD</p>
+                <p>ಸುಸ್ವಾಗತ ಬಿಎಸ್‌ಎನ್‌ಎಲ್ ಎಂಪ್ಲಾಯೀಸ್ ಅಂಡ್ ಸಿಟಿಜನ್ಸ್ ಹೌಸ್ ಬಿಲ್ಡಿಂಗ್ ಕೋ-ಆಪರೇಟಿವ್ ಸೊಸೈಟಿ ಲಿ</p>
+
+                <div class="input-group" style="align-items: center;">
+                    <div class="chart">
+                        <h2 class="percent" id="counter">{{count}}</h2>
+                        <h5 id="h5font">HAPPY CUSTOMER </h5>
+                    </div>
+                    <div class="chart">
+                        <h2 class="percent" id="counter1">{{data.count}}</h2>
+                        <h5 id="h5font">PROPERTIES IN STOCK</h5>
+                    </div>
+                    <div class="chart">
+                        <h2 class="percent" id="counter2">10</h2>
+                        <h5 id="h5font">CITY REGISTERED</h5>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item" data-bs-interval="2000" style="object-fit: cover;">
+            <img src="static/page/img/carousel-11.jpg" class="d-block w-100" alt="...">
+
+            <!-- Additional content for Slide 2 -->
+            <div class="carousel-caption">
+                <!-- Your content for Slide 2 here -->
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item" style="object-fit: cover;">
+            <img src="static/page/img/carousel-22.jpg" class="d-block w-100" alt="...">
+
+            <!-- Additional content for Slide 3 -->
+            <div class="carousel-caption">
+                <!-- Your content for Slide 3 here -->
+            </div>
+        </div>
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+<!-- The End -->
+
+
+
+<!-- START -->
+<!-- <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
             aria-current="true" aria-label="Slide 1"></button>
@@ -166,7 +208,11 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
     </button>
-</div>
+</div> -->
+<!-- END -->
+
+
+
 <!-- Category End -->
 <!-- About Start -->
 <div class="container-xxl py-5" id="about">
@@ -354,8 +400,6 @@
     </div>
 </div>
 <!-- Property List End -->
-<!-- Call to Action Start -->
-<!-- Call to Action End -->
 <!--Completed project list-->
 <div class="container-xxl py-5">
     <div class="container">
@@ -513,9 +557,6 @@
 
 <iframe id="ytplayer" width="100%" height="315" src="https://www.youtube.com/embed/op1PGRTPtM0?autoplay=1"
     frameborder="0" allowfullscreen></iframe>
-
-
-
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
