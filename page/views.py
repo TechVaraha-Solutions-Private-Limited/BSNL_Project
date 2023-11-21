@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect, HttpResponse
 from dashboard.projects.models import LandDetails,Project
-from dashboard.members.models import Bookings,G_image
+from dashboard.members.models import Bookings,G_image,Images
 from dashboard.userinfo.models import User
 from django.contrib.auth import authenticate,login as auth_login
 from django.contrib import messages
@@ -65,9 +65,18 @@ def gallery(request):
     img_view = G_image.objects.all()
     return render(request, 'page/gallery.html',{'img_view':img_view})
 
+def banner(request):
+    banner_view = Images.objects.all()
+    return render(request, 'page/home.html',{'banner_view':banner_view})
+
 def board(request):
     return render(request, 'page/board.html')
 
+def services(request):
+    return render(request, 'page/services.html')
+
+def privacy(request):
+    return render(request, 'page/privacy.html')
 
 def about(request):
     return render(request,'page/about.html  ')

@@ -215,7 +215,6 @@
     justify-content: center;
     background: #FFFFFF !important;
     border-radius: 50px;
-    border: 1px dashed var(--primary) !important;
 }
 
 
@@ -469,8 +468,6 @@
         letter-spacing: -1px !important;
 
     }
-
-    .para {}
 
     #bsnlhead {
         font-size: 12px;

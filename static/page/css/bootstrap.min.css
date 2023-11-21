@@ -12551,13 +12551,6 @@ fieldset:disabled .btn {
     }
 }
 
-.phone_number {
-    position: fixed;
-    bottom: 30px;
-    left: 10px;
-    z-index: 1000;
-}
-
 .elementor-container {
     display: flex;
     flex-wrap: wrap;
@@ -12608,4 +12601,11 @@ fieldset:disabled .btn {
     /* Adjust the font size of the description as needed */
     color: #666;
     /* Adjust the color as needed */
+}
+
+.phone_number {
+    position: fixed;
+    bottom: 100px;
+    right: 10px;
+    z-index: 1000;
 }

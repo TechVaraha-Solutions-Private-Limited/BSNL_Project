@@ -9,6 +9,7 @@ urlpatterns = [
    path('page/project',views.project),
    path('page/gallery',views.gallery),
    path('page/board',views.board),
+   path('page/privacy',views.privacy),
    path('page/services',views.services, name='services'),
    # path('signin',views.signin,name='signin'),
    path('page/about',views.about),
