@@ -19,6 +19,7 @@ class Project(models.Model):
 	created_on = models.DateTimeField(auto_now_add=True)
 	updated_on =  models.DateTimeField(auto_now=True)
 	gmap = models.CharField(max_length=1000,null=True)
+	pdf_file = models.FileField(upload_to= settings.PDF_UPLOAD_PATH,null=True)
 
 class PlotSize(models.Model):
 	plotsize = models.CharField(max_length=10,unique=False)

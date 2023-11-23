@@ -1,3 +1,4 @@
+{% load static %}
 <style>
     /* Custom Styles for Footer */
     .footer {
@@ -58,17 +59,17 @@
     <div class="container py-3">
         <div class="row g-3">
             <div class="col-lg-4 col-md-12">
-                <h3 class="text-white mb-2">
+                <h3 class="mb-2" style="color: rgb(250, 250, 250);">
                     Attention Members :</h3>
                 <!-- <div class="elementor-post__meta-data"> <span class="elementor-post-date">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25/03/2023 </span> <span class="elementor-post-avatar"> 2,105 Comments
                     </span> </div> -->
-                <justify><p>&nbsp;&nbsp;Kindly contact your Project Director <br>for all your queries via email mail to
+                <justify><p style="color: rgb(250, 250, 250);">&nbsp;&nbsp;Kindly contact your Project Director <br>for all your queries via email mail to
                     <br>keep track of all communication.</p></justify>
-                <justify><p> &nbsp;&nbsp;For payment emails please mail to "finance@kstewd.org" in subject <br>mention
+                <justify><p style="color: rgb(250, 250, 250);"> &nbsp;&nbsp;For payment emails please mail to "finance@kstewd.org" in subject <br>mention
                     your member ID and attach <br>all relevant payment screenshots <br>and docs for us
                     to update the payment.</p></justify>
-                <p>&nbsp;&nbsp;Finance email is only for payment related <br>for all other queries please
+                <p style="color: rgb(250, 250, 250);">&nbsp;&nbsp;Finance email is only for payment related <br>for all other queries please
                     contact your <br>Project Director.</p>
                 <br>
                 <br>
@@ -76,12 +77,12 @@
 
             </div>
             <div class="col-lg-3 col-md-12">
-                <h5 class="text-white mb-2">Quick Links</h5>
-                <a class="btn btn-link text-white-50" href="about">About Us</a>
-                <a class="btn btn-link text-white-50" href="contact">Contact Us</a>
-                <a class="btn btn-link text-white-50" href="services">Our Services</a>
-                <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
-                <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
+                <h5 class="mb-2" style="color: rgb(250, 250, 250);">Quick Links</h5>
+                <a class="btn btn-link text-white" href="/page/about">About Us</a>
+                <a class="btn btn-link text-white" href="/page/contact">Contact Us</a>
+                <a class="btn btn-link text-white" href="/page/services">Careers</a>
+                <a class="btn btn-link text-white" href="/page/privacy">Privacy Policy</a>
+                <a class="btn btn-link text-white" href="/page/terms">Terms & Condition</a>
                 <!-- <div>
                     <h5 class="text-white mb-2">Get In Touch</h5>
                     <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Bangalore</p>
@@ -94,6 +95,10 @@
                         <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div> -->
+                <br>
+                <div>
+                    <img src="{% static 'page/img/qr.png'%}" width="120px">
+                </div>
             </div>
             <div class="col-lg-5 col-md-12">
                 <iframe class="position-relative rounded w-10 h-5"

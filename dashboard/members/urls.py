@@ -34,6 +34,8 @@ urlpatterns = [
     path('cr_code',cr_code,name='cr_code'),
     path('view_site_visit',view_site_visit,name='view_site_visit'),
     path('view_receipt/<id>',view_receipt,name='view_receipt'),
+    path('view_call_request',view_call_request,name='view_call_request'),
+    
     # update function
     path('updateactivememberlist/<id>',updateactivememberlist,name='updateactivememberlist'),
     path('update_personal/<id>',update_personal,name='update_personal'),

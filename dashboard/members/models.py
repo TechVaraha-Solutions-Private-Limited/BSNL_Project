@@ -142,3 +142,8 @@ class Btmt(models.Model):
     seniority_no = models.CharField(max_length=50,null=True)
     amt_remark = models.CharField(max_length=50,null=True)
     project = models.CharField(max_length=40,null=True)
+    
+class Request_call(models.Model):
+    cust_name = models.CharField(max_length=50,null=True)
+    cust_number = models.IntegerField(null=True)
+    time_of_request = models.DateTimeField(auto_now=True)

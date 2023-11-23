@@ -71,6 +71,18 @@
                 <input type="text" name="pincode" class="form-control" placeholder="Pin-Code"
                     value="{{updateproject.pincode}}" required>
             </div>
+            <div>
+                <label>Status</label>
+                <select name="status" id="" class="form-control">
+                    <option value="" disabled selected hidden>{{ updateproject.status|yesno:"Active,Complete" }}</option>
+                    <option value="1">Active</option>
+                    <option value="0">Completed</option>
+                </select>
+            </div>
+            <!-- <div>
+                <label>Upload Layout Plane Pdf</label>
+                <input name="pdf_file" type="file" accept=".pdf" required>
+            </div> -->
             <!-- <div>
             <label>First Installment</label>
             <input type="number" name="firstinstallment" class="form-control" placeholder="Enter First Installment" value="{{updateproject.first_install}}" required>

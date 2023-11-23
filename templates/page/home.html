@@ -49,225 +49,154 @@
         color: #0c0c0c;
     }
 
-@media screen and (max-width: 767px) {
-    .elementor-container {
-        justify-content: center;
+    @media screen and (max-width: 767px) {
+        .elementor-container {
+            justify-content: center;
+        }
+
+        .elementor-column {
+            flex-basis: 100%;
+        }
+
+        .elementor-icon-box-wrapper {
+            height: auto;
+        }
     }
 
-    .elementor-column {
-        flex-basis: 100%;
+    @media (max-width: 767px) {
+        .carousel-inner {
+            margin-right: 0;
+        }
+
+        .carousel-item {
+            width: 100%;
+        }
+
+        .carousel-caption {
+            right: 10%;
+            bottom: 10%;
+            top: 5%;
+            left: 10%;
+
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 10%;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        .carousel-indicators {
+            margin-right: 10%;
+            margin-left: 10%;
+        }
+
+        #imglogo {
+            height: 40px;
+            width: 45px;
+        }
     }
 
-    .elementor-icon-box-wrapper {
-        height: auto;
-    }
-    /* p{
-
-    } */
-}
-
-@media (max-width: 767px) {
-    .carousel-inner {
-        margin-right: 0;
-    }
-
-    .carousel-item {
+    #slider-container {
         width: 100%;
+        overflow: hidden;
+        position: relative;
     }
 
-    .carousel-caption {
-        right: 10%;
-        bottom: 10%;
-        top: 5%;
-        left: 10%;
-        
+    #image-slider {
+        display: flex;
     }
 
-    .carousel-control-prev,
-    .carousel-control-next {
-        width: 10%;
+    .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+        overflow: hidden;
     }
 
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-        width: 1.5rem;
-        height: 1.5rem;
+    #prev,
+    #next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        cursor: pointer;
+        padding: 10px;
+        background-color: transparent;
+        color: #fff;
+        border: none;
+        outline: none;
     }
 
-    .carousel-indicators {
-        margin-right: 10%;
-        margin-left: 10%;
+    #prev {
+        left: 10px;
     }
-    #imglogo{
-        height: 40px;
-        width: 45px;
-    }
-}
 
+    #next {
+        right: 10px;
+    }
+
+    .content {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        right: -10%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        font-size: 24px;
+        z-index: 1;
+        /* Ensure the content is on top of the background */
+    }
 </style>
 
-<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
-            aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+<div id="slider-container">
+
+    <div id="image-slider">
+        <div class="slide"><img src="static/page/img/p4.jpg" alt="Image 1" width="1400" height="540"></div>
+        <div class="slide"><img src="static/page/img/carousel-11.jpg" width="1400" height="540"></div>
+        <div class="slide"><img src="static/page/img/carousel-22.jpg" alt="Image 3" width="1400" height="540"></div>
     </div>
-    <div class="carousel-inner">
 
-        <!-- Slide 1 -->
-        <div class="carousel-item active" data-bs-interval="10000" style="object-fit: cover;">
-            <img src="static/page/img/carousel-22.jpg" class="d-block w-100" alt="...">
+    <div class="content">
 
-            <!-- Additional content for Slide 1 -->
-            <div class="carousel-caption" style="margin-top: -12%;">
-                
-                <p style="font-size: 200%;">WELCOME TO BSNL EMPLOYEES AND CITIZENS HOUSE BUILDING CO-OPERATIVE SOCIETY LTD</p>
-                <p>ಸುಸ್ವಾಗತ ಬಿಎಸ್‌ಎನ್‌ಎಲ್ ಎಂಪ್ಲಾಯೀಸ್ ಅಂಡ್ ಸಿಟಿಜನ್ಸ್ ಹೌಸ್ ಬಿಲ್ಡಿಂಗ್ ಕೋ-ಆಪರೇಟಿವ್ ಸೊಸೈಟಿ ಲಿ</p>
 
-                <div class="input-group" style="align-items: center; margin-left: 1%; margin-top: 10%;">
-                    <div class="chart" style="margin-right: 5%;">
-                        <h2 class="percent" id="counter">{{count}}</h2>
-                        <h5 id="h5font">HAPPY CUSTOMER </h5>
-                    </div>
-                    <div class="chart"  style="margin-right: 5%;">
-                        <h2 class="percent" id="counter1">{{data.count}}</h2>
-                        <h5 id="h5font">PROPERTIES IN STOCK</h5>
-                    </div>
-                    <div class="chart" style="margin-right: 5%;">
-                        <h2 class="percent" id="counter2">10</h2>
-                        <h5 id="h5font">CITY REGISTERED</h5>
-                    </div>
-                    <div class="chart" style="margin-right: 3   %;">
-                        <h2 class="percent" id="counter2">10</h2>
-                        <h5 id="h5font">CITY REGISTERED</h5>
-                    </div>
-                </div>
-                
+        <p style="font-size: 140%; margin-left: -20%;margin-right: -25%;">WELCOME TO BSNL EMPLOYEES AND CITIZENS HOUSE
+            <br>BUILDING CO-OPERATIVE SOCIETY
+            LTD
+        </p>
+        <p style="font-size: 73%;">ಸುಸ್ವಾಗತ ಬಿಎಸ್‌ಎನ್‌ಎಲ್ ಎಂಪ್ಲಾಯೀಸ್ ಅಂಡ್ ಸಿಟಿಜನ್ಸ್ ಹೌಸ್ ಬಿಲ್ಡಿಂಗ್ ಕೋ-ಆಪರೇಟಿವ್ ಸೊಸೈಟಿ ಲಿ
+        </p>
+
+        <div class="input-group" style=" margin-left: 5%; margin-top: 10%;margin-right: -25%;">
+            <div class="chart" style="margin-right: 5%;">
+                <h2 class="percent" id="counter">10+</h2>
+                <h5 id="h5font">Years In Business</h5>
+            </div>
+            <div class="chart" style="margin-right: 5%;">
+                <h2 class="percent" id="counter1">1k+</h2>
+                <h5 id="h5font">Happy Clients</h5>
+            </div>
+            <div class="chart" style="margin-right: 5%;">
+                <h2 class="percent" id="counter2">5+</h2>
+                <h5 id="h5font">On-going Projects</h5>
+            </div>
+            <div class="chart">
+                <h2 class="percent" id="counter2">1</h2>
+                <h5 id="h5font">Project Completed</h5>
             </div>
         </div>
-
-        <!-- Slide 2 -->
-        <div class="carousel-item" data-bs-interval="2000" style="object-fit: cover;">
-            <img src="static/page/img/carousel-11.jpg" class="d-block w-100" alt="...">
-
-            <!-- Additional content for Slide 2 -->
-            <div class="carousel-caption" style="margin-top: -12%;">
-                
-                <p style="font-size: 200%;">WELCOME TO BSNL EMPLOYEES AND CITIZENS HOUSE BUILDING CO-OPERATIVE SOCIETY LTD</p>
-                <p>ಸುಸ್ವಾಗತ ಬಿಎಸ್‌ಎನ್‌ಎಲ್ ಎಂಪ್ಲಾಯೀಸ್ ಅಂಡ್ ಸಿಟಿಜನ್ಸ್ ಹೌಸ್ ಬಿಲ್ಡಿಂಗ್ ಕೋ-ಆಪರೇಟಿವ್ ಸೊಸೈಟಿ ಲಿ</p>
-
-                <div class="input-group" style="align-items: center; margin-left: 1%; margin-top: 10%;">
-                    <div class="chart" style="margin-right: 5%;">
-                        <h2 class="percent" id="counter">{{count}}</h2>
-                        <h5 id="h5font">HAPPY CUSTOMER </h5>
-                    </div>
-                    <div class="chart"  style="margin-right: 5%;">
-                        <h2 class="percent" id="counter1">{{data.count}}</h2>
-                        <h5 id="h5font">PROPERTIES IN STOCK</h5>
-                    </div>
-                    <div class="chart" style="margin-right: 5%;">
-                        <h2 class="percent" id="counter2">10</h2>
-                        <h5 id="h5font">CITY REGISTERED</h5>
-                    </div>
-                    <div class="chart" style="margin-right: 3   %;">
-                        <h2 class="percent" id="counter2">10</h2>
-                        <h5 id="h5font">CITY REGISTERED</h5>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-
-        <!-- Slide 3 -->
-        <div class="carousel-item" style="object-fit: cover;">
-            <img src="static/page/img/carousel-22.jpg" class="d-block w-100" alt="...">
-
-            <!-- Additional content for Slide 3 -->
-            <div class="carousel-caption" style="margin-top: -12%;">
-                
-                <p style="font-size: 200%;">WELCOME TO BSNL EMPLOYEES AND CITIZENS HOUSE BUILDING CO-OPERATIVE SOCIETY LTD</p>
-                <p>ಸುಸ್ವಾಗತ ಬಿಎಸ್‌ಎನ್‌ಎಲ್ ಎಂಪ್ಲಾಯೀಸ್ ಅಂಡ್ ಸಿಟಿಜನ್ಸ್ ಹೌಸ್ ಬಿಲ್ಡಿಂಗ್ ಕೋ-ಆಪರೇಟಿವ್ ಸೊಸೈಟಿ ಲಿ</p>
-
-                <div class="input-group" style="align-items: center; margin-left: 1%; margin-top: 10%;">
-                    <div class="chart" style="margin-right: 5%;">
-                        <h2 class="percent" id="counter">{{count}}</h2>
-                        <h5 id="h5font">HAPPY CUSTOMER </h5>
-                    </div>
-                    <div class="chart"  style="margin-right: 5%;">
-                        <h2 class="percent" id="counter1">{{data.count}}</h2>
-                        <h5 id="h5font">PROPERTIES IN STOCK</h5>
-                    </div>
-                    <div class="chart" style="margin-right: 5%;">
-                        <h2 class="percent" id="counter2">10</h2>
-                        <h5 id="h5font">CITY REGISTERED</h5>
-                    </div>
-                    <div class="chart" style="margin-right: 3   %;">
-                        <h2 class="percent" id="counter2">10</h2>
-                        <h5 id="h5font">CITY REGISTERED</h5>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
+
+    <button id="prev" onclick="changeSlide(-1)">❮</button>
+    <button id="next" onclick="changeSlide(1)">❯</button>
 </div>
 
-
 <!-- The End -->
-
-
-
-<!-- START -->
-<!-- <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
-            aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-        <div class="col-lg-12 col-md-15">
-            {% for img in banner_view %}
-            <img width="350px" height="350px" style="padding: 5px;" src="{{img.gallery_image.url}}" alt="ghg">
-            {% endfor %}
-        </div>
-        <div class="carousel-item active" data-bs-interval="10000" style="object-fit: cover;">
-            <img src="static/page/img/carousel-22.jpg" class="d-block w-100" alt="...">
-        </div>
-
-        <div class="carousel-item" data-bs-interval="2000" style="object-fit: cover;">
-            <img src="static/page/img/carousel-11.jpg" class="d-block w-100" alt="...">
-        </div>
-
-        <div class="carousel-item" style="object-fit: cover;">
-            <img src="static/page/img/carousel-22.jpg" class="d-block w-100" alt="...">
-        </div>
-
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div> -->
-<!-- END -->
-
-
-
-<!-- Category End -->
 <!-- About Start -->
 <div class="container-xxl py-5" id="about">
     <div class="container">
@@ -297,7 +226,7 @@
 </div>
 <!-- About End -->
 <!-- Property List Start -->
-<div class="container-xxl py-5" id="property">
+<div class="container-xxl py-2" id="property">
     <div class="container">
         <div class="row g-0 gx-5 align-items-end">
             <div class="col-lg-6">
@@ -313,7 +242,7 @@
 
                 <div class="row g-4">
                     {% for mydata in projects %}
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="col-lg-4 col-md-6 wow fadeInUp mb-4" data-wow-delay="0.1s">
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="{{mydata.images.url}}" alt=""></a>
@@ -328,19 +257,21 @@
                                     class="bg-white rounded-top text-plots position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
                                     Plots</div>
                             </div>
-                            <div class="p-4 pb-0">
+                            <div class="p-4 pb-0" >
                                 <a class="d-block h5 mb-2" href="">{{mydata.projectname}}</a>
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{mydata.address}}</p>
                             </div>
+
                             <div class="d-flex border-top">
-                                <!-- <small class="flex-fill text-center border-end py-2"><a href="static/page/1.pdf"><i
-                                            class="fa fa-eye text-primary me-2" aria-hidden="true"></i>Layouts
-                                        Plan</a></small> -->
+                                <small class="flex-fill text-center border-end py-2">
+
+                                    <a href=""><i class="fa fa-eye text-primary me-2" aria-hidden="true"></i>Layouts
+                                        Plan</a></small>
                                 <small class="flex-fill text-center border-end py-2 "><a data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop"><i
+                                        data-bs-target="#staticBackdrop{{mydata.id}}"><i
                                             class="fa fa-ruler-combined text-primary me-2"></i>Location</a></small>
 
-                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                <div class="modal fade" id="staticBackdrop{{mydata.id}}" data-bs-backdrop="static"
                                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
                                     aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered model-xl">
@@ -356,10 +287,11 @@
                                                 </div>
                                                 <div class="col-md-12 ">
                                                     <div class="mapouter">
-                                                        <div class="gmap_canvas"><iframe class="gmap_iframe"
-                                                                frameborder="0" scrolling="no" marginheight="0"
-                                                                marginwidth="0"
-                                                                src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=techvaraha&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                                                        <div class="gmap_canvas">
+                                                            
+                                                                <iframe class="gmap_iframe" frameborder="0" scrolling="no"
+                                                                    marginheight="0" marginwidth="0"
+                                                                    src="{{ mydata.gmap }}"></iframe> 
                                                         </div>
                                                         <style>
                                                             .mapouter {
@@ -455,7 +387,7 @@
 </div>
 <!-- Property List End -->
 <!--Completed project list-->
-<div class="container-xxl py-5">
+<div class="container-xxl py-2">
     <div class="container">
         <div class="row g-0 gx-5 align-items-end">
             <div class="col-lg-6">
@@ -471,7 +403,7 @@
 
                 <div class="row g-4">
                     {% for mydata in complete %}
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <!-- <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
                                 <a href=""><img class="img-fluid" src="{{mydata.images.url}}" alt=""></a>
@@ -492,12 +424,12 @@
                                 <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{mydata.address}}</p>
                             </div>
                             <div class="d-flex border-top">
-                                <!-- <small class="flex-fill text-center border-end py-2"><a href="static/page/1.pdf"><i
+                                <small class="flex-fill text-center border-end py-2"><a href="static/page/1.pdf"><i
                                             class="fa fa-eye text-primary me-2" aria-hidden="true"></i>Layouts
                                         Plan</a></small>
                                 <small class="flex-fill text-center border-end py-2 "><a data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop"><i
-                                            class="fa fa-ruler-combined"></i>Location</a></small> -->
+                                            class="fa fa-ruler-combined"></i>Location</a>
 
                                 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
                                     data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
@@ -514,7 +446,8 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="col-md-12 ">
-                                                    {{mydata.gmap.url}}
+                                                    <iframe width="600" height="450" frameborder="0" style="border:0"
+                                                        src="{{mydata.gmap}}" allowfullscreen></iframe>
                                                 </div>
                                             </div>
                                         </div>
@@ -599,6 +532,141 @@
                                 </div>
                             </div>
                         </div>
+                    </div> -->
+                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="property-item rounded overflow-hidden">
+                            <div class="position-relative overflow-hidden">
+                                <a href=""><img class="img-fluid" src="{{mydata.images.url}}" alt=""></a>
+                                <div
+                                    class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
+                                    {%if mydata.status == 0 %}
+                                    Completed
+                                    {% else %}
+                                    For Sale
+                                    {% endif %}</div>
+                                <div
+                                    class="bg-white rounded-top text-plots position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
+                                    Plots</div>
+                            </div>
+                            <div class="p-4 pb-0">
+                                <a class="d-block h5 mb-2" href="">{{mydata.projectname}}</a>
+                                <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{mydata.address}}</p>
+                            </div>
+
+                            <div class="d-flex border-top">
+                                <small class="flex-fill text-center border-end py-2">
+
+                                    <a href=""><i class="fa fa-eye text-primary me-2" aria-hidden="true"></i>Layouts
+                                        Plan</a></small>
+                                <small class="flex-fill text-center border-end py-2 "><a data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop{{mydata.id}}"><i
+                                            class="fa fa-ruler-combined text-primary me-2"></i>Location</a></small>
+
+                                <div class="modal fade" id="staticBackdrop{{mydata.id}}" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered model-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="modal-header">
+
+                                                </div>
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Location</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="col-md-12 ">
+                                                    <div class="mapouter">
+                                                        <div class="gmap_canvas">
+                                                                <iframe class="gmap_iframe" frameborder="0" scrolling="no"
+                                                                    marginheight="0" marginwidth="0"
+                                                                    src="{{ mydata.gmap }}"></iframe>  
+                                                            
+                                                        </div>
+                                                        <style>
+                                                            .mapouter {
+                                                                position: relative;
+                                                                text-align: left;
+                                                                width: 60px;
+                                                                height: 400px;
+                                                            }
+
+                                                            .gmap_canvas {
+                                                                overflow: hidden;
+                                                                background: none !important;
+                                                                width: 600px;
+                                                                height: 400px;
+                                                            }
+
+                                                            .gmap_iframe {
+                                                                width: 450px !important;
+                                                                height: 400px !important;
+                                                            }
+                                                        </style>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <small class="flex-fill text-center py-2 "><a data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop1{{mydata.id}}"><i
+                                            class="fa fa-tags  text-primary me-2"></i>Price</a></small>
+
+                                <div class="modal fade" id="staticBackdrop1{{mydata.id}}" data-bs-backdrop="static"
+                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-xl ">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel1">Price Tags</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Plotsize</th>
+                                                            <th scope="col">Total Amount</th>
+                                                            <th scope="col">First Installment</th>
+                                                            <th scope="col">Second Installment</th>
+                                                            <th scope="col">Thrid Installment</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for i in mydata.landdetails_set.all %}
+                                                        <tr>
+                                                            <th scope="row">{{i.plotsize.plotsize}}</th>
+                                                            <td>₹{{i.total_amount}}</td>
+                                                            <td>{% if i.installment_1 != '' %}
+                                                                ₹{{ i.installment_1}}
+                                                                {% else %}
+                                                                -----
+                                                                {% endif %}</td>
+                                                            <td>{% if i.installment_2 != '' %}
+                                                                ₹{{ i.installment_2}}
+                                                                {% else %}
+                                                                -----
+                                                                {% endif %}</td>
+                                                            <td>{% if i.installment_3 != '' %}
+                                                                ₹{{ i.installment_3}}
+                                                                {% else %}
+                                                                -----
+                                                                {% endif %}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     {%endfor%}
                 </div>
@@ -608,7 +676,7 @@
         </div>
     </div>
 </div>
-
+<br>
 <iframe id="ytplayer" width="100%" height="315" src="https://www.youtube.com/embed/op1PGRTPtM0?autoplay=1"
     frameborder="0" allowfullscreen></iframe>
 <div class="container-xxl py-5">
@@ -636,11 +704,13 @@
         </div>
     </div>
 </div>
-<div class="p-5 m-5">
-    <div>
-        <h2 style="color: #0c0c0c;">Six Reasons For People Choosing Us</h2>
+<div class="p-5 py-1">
+    <div class="p-4">
+        <h3 style="color: #da332e;">Why Choose Us?</h3>
+        <center>
+            <h2 style="color: #0c0c0c;">Six Reasons For People Choosing Us</h2>
+        </center>
     </div>
-
 
     <div class="elementor-container elementor-column-gap-no">
         <div class="elementor-column elementor-element-377b71b" data-id="377b71b" data-element_type="column"
@@ -792,5 +862,37 @@
         </div>
     </div>
 </div>
+
+<script>
+    let currentSlide = 0;
+    const totalSlides = document.querySelectorAll('.slide').length;
+    const slideDuration = 4000; // 4 seconds
+    let autoPlayInterval;
+
+    function showSlide(index) {
+        const slider = document.getElementById('image-slider');
+        currentSlide = (index + totalSlides) % totalSlides;
+        const translateValue = -currentSlide * 100 + '%';
+        slider.style.transform = 'translateX(' + translateValue + ')';
+    }
+
+    function changeSlide(direction) {
+        showSlide(currentSlide + direction);
+        resetAutoPlay();
+    }
+
+    function startAutoPlay() {
+        autoPlayInterval = setInterval(() => {
+            changeSlide(1);
+        }, slideDuration);
+    }
+
+    function resetAutoPlay() {
+        clearInterval(autoPlayInterval);
+        startAutoPlay();
+    }
+
+    startAutoPlay();
+</script>
 <!-- Testimonial End -->
 {% endblock %}

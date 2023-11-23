@@ -13,6 +13,7 @@ def addproject(request):
 	        images = request.FILES['imageupload'],
 	        address = request.POST['address'],
 			gmap = request.POST['gmaplink'],
+			# pdf_file = request.POST['pdf_file'],
 	        updated_by = request.user
             ).save()
 		messages.error(request,'Successfully Saved')
@@ -83,11 +84,9 @@ def updatingprojectlist(request,id):
 	updatingprojectlist.state = request.POST['state']
 	updatingprojectlist.city = request.POST['city']
 	updatingprojectlist.pincode = request.POST['pincode']
-	#updated_by = request.user
+	updatingprojectlist.status = request.POST['status']
 	updatingprojectlist.save()
-	print(id)
 	return redirect(projectlist)
-	print(id)
 
 def deleteprojectlist(request,id):
 	deletingprojectlist=Project.objects.get(id=id)
@@ -109,8 +108,7 @@ def updatinglandrecords(request,id):
 	updatinglandrecords.down_payment=request.POST['downamount']
 	updatinglandrecords.installment_1=request.POST['firstinstallment']
 	updatinglandrecords.installment_2=request.POST['secondinstallment']
-	updatinglandrecords.installment_3=request.POST['thirdinstallment']        
-	#updated_by = request.user
+	updatinglandrecords.installment_3=request.POST['thirdinstallment']
 	updatinglandrecords.save()
 	return redirect(landrecords)
 

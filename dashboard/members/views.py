@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, HttpResponse
 from django.http import JsonResponse
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee,TeamLead,Executive,SeniorTeamLead
-from .models import Bookings,PaymentDetails,Ugdg,Images,Leadowner,Site_visit,Btmt,G_image
+from .models import Bookings,PaymentDetails,Ugdg,Images,Leadowner,Site_visit,Btmt,G_image,Request_call
 from dashboard.projects.models import Project,PlotSize,LandDetails
 from django.forms.models import model_to_dict
 from django.contrib import messages
@@ -1094,6 +1094,10 @@ def delete_block(id):
 
 def update_pdc(request):
     return render(request,'input/pdc/update_pdc.html')
+
+def view_call_request(request):
+    view_call_request = Request_call.objects.all()
+    return render(request,'image/callrequest.html',{"view_call_request":view_call_request})
 
 def view_update_pdc(request):
     return render(request,'input/pdc/view_update_pdc.html')

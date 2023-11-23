@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect, HttpResponse
 from dashboard.projects.models import LandDetails,Project
-from dashboard.members.models import Bookings,G_image,Images
+from dashboard.members.models import Bookings,G_image,Images,Request_call
 from dashboard.userinfo.models import User
 from django.contrib.auth import authenticate,login as auth_login
 from django.contrib import messages
@@ -69,11 +69,23 @@ def banner(request):
     banner_view = Images.objects.all()
     return render(request, 'page/home.html',{'banner_view':banner_view})
 
+def g_map(request, id):
+    g_map = Project.objects.get(pk=id)
+    return render(request, 'page/home.html',{'g_map':g_map})
+
+def project_map(request, project_id):
+    projects = Project.objects.get(pk = project_id)
+    print("GMap: {project.gmap}")
+    return render(request, 'page/home.html', {'projects': projects})
+
 def board(request):
     return render(request, 'page/board.html')
 
 def services(request):
     return render(request, 'page/services.html')
+
+def terms(request):
+    return render(request, 'page/terms.html')
 
 def privacy(request):
     return render(request, 'page/privacy.html')
@@ -96,3 +108,11 @@ def product(request):
 #     if request.user.is_authenticated:
 #         logout(request)
 #         return redirect(signin)
+
+def call_request(request):
+    if request.method == "POST":
+        Request_call(
+        cust_name = request.POST.get('cust_name'),
+        cust_number = request.POST.get('cust_number'),
+        ).save()
+    return redirect("/")

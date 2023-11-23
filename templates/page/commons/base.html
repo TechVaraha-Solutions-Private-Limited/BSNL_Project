@@ -57,25 +57,26 @@
             animation: slideIn 0.4s ease-in-out;
         }
 
-        .num_box{
+        .num_box {
             color: #fff;
-            background-color:#178EF0;
+            background-color: #178EF0;
             border-radius: 45px;
-            padding: 5px;  
+            padding: 5px;
             padding-right: 20px;
         }
 
         @keyframes slideIn {
             from {
-                right:  5%;
+                right: 5%;
                 opacity: 0;
             }
 
-           
+
         }
 
         @media screen and (min-width: 320px) {
-    /* Adjust styles for screens with a minimum width of 768 pixels */
+
+            /* Adjust styles for screens with a minimum width of 768 pixels */
             #icon-container {
                 bottom: 100px;
                 right: 50px;
@@ -85,7 +86,58 @@
                 bottom: 90px;
                 right: 80px;
             }
-            
+
+        }
+
+        .request-callback-btn {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            font-family: Mulish;
+            background: #178EF0;
+            border-color: #178EF0;
+
+            z-index: 200;
+            transform: rotate(-90deg) translateY(70px);
+        }
+
+        .tooltip-content {
+            display: none;
+            position: fixed;
+            right: 20px;
+            top: 27%;
+            background-color: #eb373c;
+            border: 1px solid #cccccc;
+            border-radius: 5%;
+            padding: 10px;
+            z-index: 100;
+            width: 25%;
+        }
+
+        .request-callback-btn:hover+.tooltip-content,
+        .tooltip-content:hover {
+            display: block;
+        }
+
+        .input_box {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            width: 310px;
+            font-style: Arial;
+        }
+
+        .button_style{
+            float: right;
+            color: #0f0f0f;
+            border-radius: 100px;
+            border-color: white;
+
+        }
+
+        .text_of{
+            color: #fff;
+            font-size: small;
+            padding: 5px;
         }
     </style>
     <div class="container-xxl bg-white p-0">
@@ -97,17 +149,35 @@
         {% block content %}
         {% endblock %}
 
-
-        <!-- <div class="phone_number">
-            <a class="btn btn-primary" href="tel:080-23550419">
-                <i class="fa fa-phone-alt me-3"> 080-23550419
-            </a>
-        </div> -->
-
         <div id="icon-container" onclick="toggleText()" class="btn btn-primary"><i class="fa fa-phone"></i></div>
         <div id="text-container">
-            <a href="tel:08023550419"><p class="num_box">080-23550419</p></a>
+            <a href="tel:08023550419">
+                <p class="num_box">080-23550419</p>
+            </a>
         </div>
+        <div>
+            <button type="button" data-id="Request_callback"
+                class="btn btn-success request-callback-btn request-callback tooltip-wrapper" data-toggle="tooltip"
+                name="button"><i class="fa fa-phone" style="transform: rotate(180deg); color:white;"></i>
+                <span class="p-2" style="color: white;">Request Callback</span></button>
+
+            <form method="POST" action="{% url 'call_request' %}" autocomplete="off">
+                {% csrf_token %}
+                <div class="tooltip-content" id="contents">
+                    <button id="close-btn" class="button_style">X</button> <br>
+                    <p class="text_of">Please submit the form below, our customer care will reach you on given
+                        number to get more details</p>
+
+                    <label class="text_of">Enter Your Name:</label> <br>
+                    <input type="text" class="input_box" name="cust_name" required class="form-input" placeholder="Enter the name"> <br>
+                    <label class="text_of">Enter Your Number:</label> <br>
+                    <input type="number" class="input_box" name="cust_number" required class="form-input " placeholder="Enter the number">
+                    <br><br>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+
 
         <!-- Footer Start -->
         {% include 'page/commons/footer.html' %}
@@ -116,6 +186,40 @@
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var closeButton = document.querySelector('#close-btn');
+            var tooltipContent = document.querySelector('.tooltip-content');
+            var callbackBtn = document.querySelector('.request-callback-btn');
+
+            var isCloseButtonClicked = false;
+
+            closeButton.addEventListener('click', function (event) {
+                event.stopPropagation();
+                tooltipContent.style.display = 'none';
+                isCloseButtonClicked = true;
+            });
+
+            callbackBtn.addEventListener('mouseenter', function () {
+                tooltipContent.style.display = 'block';
+            });
+
+            tooltipContent.addEventListener('mouseenter', function () {
+                tooltipContent.style.display = 'block';
+            });
+
+            callbackBtn.addEventListener('mouseleave', function () {
+                if (!isCloseButtonClicked) {
+                    tooltipContent.style.display = 'none';
+                }
+            });
+
+            tooltipContent.addEventListener('mouseenter', function () {
+                isCloseButtonClicked = false;
+            });
+        });
+
+    </script>
     <script>
         function toggleText() {
             var textContainer = document.getElementById("text-container");

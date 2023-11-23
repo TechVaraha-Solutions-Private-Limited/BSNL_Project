@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+{% block content %}
+{% load static %}
+{% include 'common/bootstrap.html'%}
+<style>
+    a {
+        color: black;
+        text-decoration: none;
+    }
+</style>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <br>
+    <div class="p-2" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+        <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
+            style="background-color: #178EF0;color:white; width:100%;">
+            <center><b>CUSTOMERS CALL REQUEST</b></center>
+        </label>
+        <!-- <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Customer Name</th>
+                    <th>Customer Name</th>
+                    <th>Date of request</th>
+                    <th>Time of request</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mydata in view_call_request %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{mydata.cust_name}}</td>
+                    <td>{{mydata.cust_number}}</td>
+                    <td>{{mydata.time_of_request|date:"d-m-y"}}</td>
+                    <td>{{mydata.time_of_request|time:"h:i A"}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table> -->
+
+        <table class="table table-bordered bg-white text-center">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Customer Name</th>
+                    <th>Customer Number</th>
+                    <th>Date of Request</th>
+                    <th>Time of Request</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mydata in view_call_request %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ mydata.cust_name }}</td>
+                    <td>{{ mydata.cust_number }}</td>
+                    <td>{{ mydata.time_of_request|date:"d-m-y" }}</td>
+                    <td>{{ mydata.time_of_request|time:"h:i A" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center;">No Requested Calls</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+
+        {% endblock %}
