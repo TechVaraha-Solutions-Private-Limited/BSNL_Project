@@ -141,10 +141,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
 STATIC_URL = 'static/'
+IMAGE_URL ='Images/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static/')
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static/')]
+IMAGE=[os.path.join(BASE_DIR,'images/')]
+
+# used for live server
+# STATICFILES_DIRS='/home/techvara/public_html/static'
+# IMAGE_URL='/home/techvara/public_html/media'
 
 PROFILE_UPLOAD_PATH = 'profile/'
 AADHAR_UPLOAD_PATH = 'aadhar/'
@@ -152,8 +156,7 @@ PAN_UPLOAD_PATH = 'pan/'
 PROJECT_UPLOAD_PATH = 'project/'
 PDF_UPLOAD_PATH = 'pdf/'
 
-IMAGE_URL ='Images/'
-IMAGE=[os.path.join(BASE_DIR,'images/')]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
