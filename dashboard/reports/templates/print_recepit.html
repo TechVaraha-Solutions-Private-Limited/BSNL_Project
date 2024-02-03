@@ -112,42 +112,42 @@
 								<th>Cheque / <br/>Transaction ID / DD No.</th>
 								<th>Amount</th>
 							</tr>
-							{% for i in payment %}
-								{% if payment_count == 1 %}			
+							{% for paysts in payment %}
+											
 								<tr>
-									<td>{{i.paymentname}}</td> 
+									<td>{{paysts.paymentname}}</td> 
 									<td>{{user.land_details.plotsize.plotsize}}</td>
-									<td>{{ i.payment_mode }}
-									<td>{{i.bank}}</td>
-									<td>{{i.branch}}</td>
-									<td>{% if i.payment_mode == "Cheque" %}
-										{{ i.cheque_no }}
-										{% elif i.payment_mode == "DD"%}
-										{{ i.ddno }}
-										{% elif i.payment_mode == "Net Banking" %}
-										{{ i.transaction }}
+									<td>{{ paysts.payment_mode }}
+									<td>{{paysts.bank}}</td>
+									<td>{{paysts.branch}}</td>
+									<td>{% if paysts.payment_mode == "Cheque" %}
+										{{ paysts.cheque_no }}
+										{% elif paysts.payment_mode == "DD"%}
+										{{ paysts.ddno }}
+										{% elif paysts.payment_mode == "Net Banking" %}
+										{{ paysts.transaction }}
 										{% endif %}
 									</td>
-									<td>{{i.amount}}</td>
+									<td>{{paysts.amount}}</td>
 								</tr>
-								{% elif i.paymentname != "Membership" %}
+<!-- 								
 									<tr>
-									<td>{{i.paymentname}}</td> 
+									<td>{{paysts.paymentname}}</td> 
 									<td>{{user.land_details.plotsize.plotsize}}</td>
-									<td>{{ i.payment_mode }}
-									<td>{{i.bank}}</td>
-									<td>{{i.branch}}</td>
-									<td>{% if i.payment_mode == "Cheque" %}
-										{{ i.cheque_no }}
-										{% elif i.payment_mode == "DD"%}
-										{{ i.ddno }}
-										{% elif i.payment_mode == "Net Banking" %}
-										{{ i.transaction }}
+									<td>{{ paysts.payment_mode }}
+									<td>{{paysts.bank}}</td>
+									<td>{{paysts.branch}}</td>
+									<td>{% if paysts.payment_mode == "Cheque" %}
+										{{ paysts.cheque_no }}
+										{% elif paysts.payment_mode == "DD"%}
+										{{ paysts.ddno }}
+										{% elif paysts.payment_mode == "Net Banking" %}
+										{{ paysts.transaction }}
 										{% endif %}
 									</td>
-									<td>{{i.amount}}</td>
+									<td>{{paysts.amount}}</td>
 								</tr>
-								{% endif %}
+								 -->
 							{% endfor %}
 						</table>
 					</div>
@@ -165,10 +165,10 @@
 							
 											<tr>
 								<td>
-													<span style="float:left; width:50px;">1.</span> Share 
+													<span style="float:left; width:50px;">1.</span> Application Fee 
 								<span class="tab-dot"></span></td>
 								<td></td>
-								<td style="text-align:right;">0 
+								<td style="text-align:right;"> 200
 								</td>
 								<td>
 								</td>
@@ -176,10 +176,10 @@
 							</tr>
 							<tr>
 								<td>
-								<span style="float:left; width:50px;">2.</span> Application Fee 
+								<span style="float:left; width:50px;">2.</span> Admission Fee 
 								<span class="tab-dot"></span></td>
 								<td></td>
-								<td style="text-align:right;">0 
+								<td style="text-align:right;">200 
 								</td>
 								<td>
 								</td>
@@ -187,10 +187,10 @@
 							</tr>
 							<tr>
 								<td>
-													<span style="float:left; width:50px;">3.</span> Admission Fee 
+													<span style="float:left; width:50px;">3.</span> Share Fee 
 								<span class="tab-dot"></span></td>
 								<td></td>
-								<td style="text-align:right;">0 
+								<td style="text-align:right;">200 
 								</td>
 								<td>
 													</td>
@@ -198,10 +198,10 @@
 							</tr>
 							<tr>
 								<td>
-													<span style="float:left; width:50px;">4.</span> Share Fee 
+													<span style="float:left; width:50px;">4.</span> Share Amount (Min 2 Shares)
 								<span class="tab-dot"></span></td>
 								<td></td>
-								<td style="text-align:right;">0 
+								<td style="text-align:right;">2000 
 								</td>
 								<td>
 													</td>
@@ -232,7 +232,7 @@
 										
 															<tr >
 								<td>
-												<span style="float:left; width:50px;margin-bottom:0px;">7.</span>DOWNPAYMENT					<span class="tab-dot"></span>
+												<span style="float:left; width:50px;margin-bottom:0px;">7.</span>PART DOWN PAYMENT					<span class="tab-dot"></span>
 								</td>
 								<td></td>
 								<td style="text-align:right;">
@@ -259,7 +259,7 @@
 							<td></td>
 							
 							<td style="text-align:right;font-size: 22px;font-weight: bold;">
-							{{value}}</td>
+							{{amont}} </td>
 							<td>
 							
 							</td>

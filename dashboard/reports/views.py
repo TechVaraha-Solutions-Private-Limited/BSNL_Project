@@ -33,7 +33,8 @@ def print_recepit(request,id):
     no = float(value)
     word1 = num2words(no, lang='en_IN')
     word = word1.replace(',','')
-    print("132545",word)   
+    amountfees = 200
+    amont = int(value)+2260
     context ={
         'user':user,
         'userdetail':userdetail,
@@ -41,6 +42,8 @@ def print_recepit(request,id):
         'payment_count':payment_count,
         'word':word,
         'value':value,
+        'amountfees':amountfees,
+        'amont':amont,
     }
     return render (request,'print_recepit.html',context)
 
@@ -379,17 +382,19 @@ def receipt_details(request):
             
         elif select == 'pay_status':
             receiptreport = PaymentDetails.objects.filter(status = value)
+        elif select == 'customername':
+            receiptreport = Site_visit.objects.filter(cust_name = value)
 
         context={
         'receiptreport_filter':receiptreport,
         'receiptreport': receipts_all,
-        'team_lead':team_lead
+        'team_lead':team_lead,
         }
         return render(request, 'receipt_details.html', context)
     content={
         'receiptreport_filter':receipts_all,
         'receiptreport': receipts_all,
-        'team_lead':team_lead
+        'team_lead':team_lead,
         
     }
     

@@ -1,422 +1,682 @@
-{% extends 'index.html' %}
-{% block content %}
-{% load static %}
-{% include 'common/bootstrap.html'%}
+{% extends 'index.html' %} {% block content %} {% load static %} {% include 'common/bootstrap.html' %}
 <style>
-    a {
-        color: black;
-        text-decoration: none;
-    }
-    .addproject{
-        text-align: center;
-        padding:15px 15px;
-        font-size: 15px;
-        font-weight: bold;
-        background-color: #00c200;
-        color: white;
-        font-size: 19px;
-    }
-
+  a {
+    color: black;
+    text-decoration: none;
+  }
+  .addproject {
+    text-align: center;
+    padding: 15px 15px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #00c200;
+    color: white;
+    font-size: 19px;
+  }
 </style>
-<form class="space-y-5 " method="POST" action="" autocomplete="off">
-{% for message in messages %}
-<div class="alert   {% if message.tags == 'error' %}
-                        alert-danger
-                    {% elif message.tags == 'success' %}
-                        alert-success
-                    {% endif %}">
+<form class="space-y-5" method="POST" action="" autocomplete="off">
+  {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+  >
     <a class="close" href="#" data-dismiss="alert">×</a>
     {{ message }}
-</div>
-{% endfor %}
-{% csrf_token %}
-<div class="p-2" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
-    <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
-        style="background-color: #178EF0;color:white; width:100%;"><b>ADD CREDENTIALS - New Booking</b></label>
-    <h2 class="text-lg font-semibold dark:text-white-light"
-        style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Member Particulars</b></h2>
+  </div>
+  {% endfor %} {% csrf_token %}
+  <div class="p-2" style="box-shadow: 0px 0px 5px #007bff; border-radius: 10px">
+    <label
+      class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
+      style="background-color: #178ef0; color: white; width: 100%"
+      ><b>ADD CREDENTIALS - New Booking</b></label
+    >
+    <h2
+      class="text-lg font-semibold dark:text-white-light"
+      style="
+        background-color: #daeff2;
+        color: #1ca7dd;
+        width: 100%;
+        padding-left: 40%;
+        padding-top: 1%;
+        padding-bottom: 1%;
+      "
+    >
+      <b>Member Particulars</b>
+    </h2>
     <div class="panel p-1">
-        {% for site in site_visit %}
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div class="p-1">
-                <label class="p-1">Member Name</label>
-                <input type="text" name="first_name" class="form-input" value="{{site.cust_name}}" placeholder="Member Name" required >
-            </div>
-            <div class="p-1">
-                <label class="p-1">Father/Husband Name</label>
-                <input type="text" name="last_name" class="form-input" placeholder="Surname Name">
-            </div>
-            <div class="p-1">
-                <label class="p-1">Date of Brith</label>
-                <input type="date" name="dob" class="form-input" placeholder="DOB">
-            </div>
-            <div class="p-1">
-                <label class="p-1">Age</label>
-                <input type="number" name="age" class="form-input" placeholder="Age">
-            </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="p-1">
+          <label class="p-1">Member Name</label>
+          <input
+            type="text"
+            name="first_name"
+            class="form-input"
+            value="{{site.cust_name}}"
+            placeholder="Member Name"
+            required
+          />
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div class="p-1">
-                <label class="p-1">Moblie Number</label>
-                <input type="number" name="mobile_no" placeholder="Moblie Number" value="{{site.phone_no}}" class="form-input" required>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Alternate Number</label>
-                <input type="number" name="alternate_no" placeholder="Alternate Number" class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1">Email ID</label>
-                <input type="email" name="email" placeholder="E-Mail Id" class="form-input" required>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Profile</label>
-                <input type="file" name="profile">
-            </div>
+        <div class="p-1">
+          <label class="p-1">Father/Husband Name</label>
+          <input
+            type="text"
+            name="last_name"
+            class="form-input"
+            placeholder="Surname Name"
+          />
         </div>
-        {%endfor%}
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div class="p-1">
-                <label class="p-1">Residential Address</label>
-                <textarea class="form-input" name="address" placeholder="Residential Address" rows="3"></textarea>
-            </div>
-            <div class="p-1">
-                <label class="p-1">City</label>
-                <input type="text" name="city" placeholder="City" class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1">State</label>
-                <input type="text" name="state" placeholder="State" class="form-input">
-            </div>
-            <div>
-                <label class="p-1">Password</label>
-                <input type="password" name="password" placeholder="password" class="form-input" required>
-            </div>
+        <div class="p-1">
+          <label class="p-1">Date of Brith</label>
+          <input type="date" name="dob" class="form-input" placeholder="DOB" />
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div class="p-1">
-                <label class="p-1">Pan Number</label>
-                <input type="text" name="panno" placeholder="Pan Number" class="form-input" required>
-            </div>
-            <div class="custom-file-container p-7">
-                <label></label>
-                <input type="file" name="pan_proof">
-            </div>
+        <div class="p-1">
+          <label class="p-1">Age</label>
+          <input
+            type="number"
+            name="age"
+            class="form-input"
+            placeholder="Age"
+          />
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5" required>
-            <div class="p-1">
-                <label class="p-1">Aadhhar Number</label>
-                <input type="number" name="aadhhaarno" placeholder="Aadhhar Number" class="form-input">
-            </div>
-            <div class="p-7">
-                <label></label>
-                <input type="file" name="aadhar_proof">
-            </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="p-1">
+          <label class="p-1">Moblie Number</label>
+          <input
+            type="number"
+            name="mobile_no"
+            placeholder="Moblie Number"
+            value="{{site.phone_no}}"
+            class="form-input"
+            required
+          />
         </div>
+        <div class="p-1">
+          <label class="p-1">Alternate Number</label>
+          <input
+            type="number"
+            name="alternate_no"
+            placeholder="Alternate Number"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1">Email ID</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="E-Mail Id"
+            class="form-input"
+            required
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1">Profile</label>
+          <input type="file" name="profile" />
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="p-1">
+          <label class="p-1">Residential Address</label>
+          <textarea
+            class="form-input"
+            name="address"
+            placeholder="Residential Address"
+            rows="3"
+          ></textarea>
+        </div>
+        <div class="p-1">
+          <label class="p-1">City</label>
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1">State</label>
+          <input
+            type="text"
+            name="state"
+            placeholder="State"
+            class="form-input"
+          />
+        </div>
+        <div>
+          <label class="p-1">Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            class="form-input"
+            required
+          />
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="p-1">
+          <label class="p-1">Pan Number</label>
+          <input
+            type="text"
+            name="panno"
+            placeholder="Pan Number"
+            class="form-input"
+            required
+          />
+        </div>
+        <div class="custom-file-container p-7">
+          <label></label>
+          <input type="file" name="pan_proof" />
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5" required>
+        <div class="p-1">
+          <label class="p-1">Aadhhar Number</label>
+          <input
+            type="number"
+            name="aadhhaarno"
+            placeholder="Aadhhar Number"
+            class="form-input"
+          />
+        </div>
+        <div class="p-7">
+          <label></label>
+          <input type="file" name="aadhar_proof" />
+        </div>
+      </div>
     </div>
     <div class="panel p-1">
-        <h1 class="text-lg font-semibold dark:text-white-light"
-            style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Nominee Particulars</b></h1>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div class="p-1">
-                <label class="p-1">Nominee Name</label>
-                <input type="text" name="nominee_name" placeholder="Nominee Name" class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1">Nominee Age</label>
-                <input type="number" name="nominee_age" placeholder="Nominee Age" class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1">Nominee Relationship</label>
-                <input type="text" name="nominee_relationship" placeholder="Nominee Relationship"
-                    class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1">Nominee Address</label>
-                <input type="text" name="address1" placeholder="Nominee Address" class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1">City</label>
-                <input type="text" name="city1" placeholder="City" class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1">State</label>
-                <input type="text" name="state1" placeholder="State" class="form-input">
-            </div>
+      <h1
+        class="text-lg font-semibold dark:text-white-light"
+        style="
+          background-color: #daeff2;
+          color: #1ca7dd;
+          width: 100%;
+          padding-left: 40%;
+          padding-top: 1%;
+          padding-bottom: 1%;
+        "
+      >
+        <b>Nominee Particulars</b>
+      </h1>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="p-1">
+          <label class="p-1">Nominee Name</label>
+          <input
+            type="text"
+            name="nominee_name"
+            placeholder="Nominee Name"
+            class="form-input"
+          />
         </div>
+        <div class="p-1">
+          <label class="p-1">Nominee Age</label>
+          <input
+            type="number"
+            name="nominee_age"
+            placeholder="Nominee Age"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1">Nominee Relationship</label>
+          <input
+            type="text"
+            name="nominee_relationship"
+            placeholder="Nominee Relationship"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1">Nominee Address</label>
+          <input
+            type="text"
+            name="address1"
+            placeholder="Nominee Address"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1">City</label>
+          <input
+            type="text"
+            name="city1"
+            placeholder="City"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1">State</label>
+          <input
+            type="text"
+            name="state1"
+            placeholder="State"
+            class="form-input"
+          />
+        </div>
+      </div>
     </div>
-    <input type="hidden" name="check_input_no" id="check_input_no" value="1">
-    <div class="panel p-1" id="container" >
-        <h1 class="text-lg font-semibold dark:text-white-light"
-            style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Family Details</b></h1>
-            <div></div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5" id="family-form">
-            <div class="p-1">
-                <label class="p-1">Family-Member Name</label>
-                <input type="text" name="member_name1" placeholder="Family-Member Name" class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1">Family-Member Age</label>
-                <input type="number" name="member_age1" placeholder="Family-Member Age" class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1">Family-Member Relationship</label>
-                <input type="text" name="member_relation1" placeholder="Family-Member Relationship" class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1"></label>
-                <button id="hello1" class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light" style="background-color: #178EF0;" type="button"
-                    onclick="add_more_field()">Add More</button>
-            </div>
+    <input type="hidden" name="check_input_no" id="check_input_no" value="1" />
+    <div class="panel p-1" id="container">
+      <h1
+        class="text-lg font-semibold dark:text-white-light"
+        style="
+          background-color: #daeff2;
+          color: #1ca7dd;
+          width: 100%;
+          padding-left: 40%;
+          padding-top: 1%;
+          padding-bottom: 1%;
+        "
+      >
+        <b>Family Details</b>
+      </h1>
+      <div></div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5" id="family-form">
+        <div class="p-1">
+          <label class="p-1">Family-Member Name</label>
+          <input
+            type="text"
+            name="member_name1"
+            placeholder="Family-Member Name"
+            class="form-input"
+          />
         </div>
+        <div class="p-1">
+          <label class="p-1">Family-Member Age</label>
+          <input
+            type="number"
+            name="member_age1"
+            placeholder="Family-Member Age"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1">Family-Member Relationship</label>
+          <input
+            type="text"
+            name="member_relation1"
+            placeholder="Family-Member Relationship"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1"></label>
+          <button
+            id="hello1"
+            class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light"
+            style="background-color: #178ef0"
+            type="button"
+            onclick="add_more_field()"
+          >
+            Add More
+          </button>
+        </div>
+      </div>
     </div>
     <div class="panel p-1">
-        <h1 class="text-lg font-semibold dark:text-white-ligh"
-            style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Site Details</b></h1>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div class="p-1">
-                <label>Select Project</label><br>
-                <select class="form-control" id="projectname" name="projectname" required>
-                    <option value="">Select</option>
-                    {% for project in projects %}
-                    <option value="{{project.id}}">{{project.projectname}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="p-1">
-                <label>Dimension</label><br>
-                <select class="form-control" id="selectDimension" name="selectDimension" disabled required>
-                    <option>Select</option>
-                </select>
-            </div>
-            <input type="hidden" name="project_id" id="" value="">
-            <div class="p-1">
-                <label class="p-1">Total Site Value</label> 
-                <input type="text" name="total_site_value" id="total_site_value" placeholder="Total Site Value" value="" class="form-input" readonly>
-            </div>
-            <div class="p-1">
-                <label class="p-1">Down Payment value</label>
-                <input type="text" name="downpayment" id="downpayment" placeholder="Down Payment value" class="form-input" readonly>
-            </div>
+      <h1
+        class="text-lg font-semibold dark:text-white-ligh"
+        style="
+          background-color: #daeff2;
+          color: #1ca7dd;
+          width: 100%;
+          padding-left: 40%;
+          padding-top: 1%;
+          padding-bottom: 1%;
+        "
+      >
+        <b>Site Details</b>
+      </h1>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="p-1">
+          <label>Select Project</label><br />
+          <select
+            class="form-control"
+            id="projectname"
+            name="projectname"
+            required
+          >
+            <option value="">Select</option>
+            {% for project in projects %}
+            <option value="{{project.id}}">{{project.projectname}}</option>
+            {% endfor %}
+          </select>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-            <div class="p-1">
-                <label class="p-1">Site Reference</label>
-                <input type="text" name="site_refer" placeholder="Site Reference" class="form-input">
-            </div>
-            <div class="p-1">
-                <label class="p-1">Seniority No</label>
-                <input type="text" id="seniority" name="seniority_id" placeholder="Seniority No" class="form-input" required>
-            </div>
+        <div class="p-1">
+          <label>Dimension</label><br />
+          <select
+            class="form-control"
+            id="selectDimension"
+            name="selectDimension"
+            disabled
+            required
+          >
+            <option>Select</option>
+          </select>
         </div>
+        <input type="hidden" name="project_id" id="" value="" />
+        <div class="p-1">
+          <label class="p-1">Total Site Value</label>
+          <input
+            type="text"
+            name="total_site_value"
+            id="total_site_value"
+            placeholder="Total Site Value"
+            value=""
+            class="form-input"
+            readonly
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1">Down Payment value</label>
+          <input
+            type="text"
+            name="downpayment"
+            id="downpayment"
+            placeholder="Down Payment value"
+            class="form-input"
+            readonly
+          />
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+        <div class="p-1">
+          <label class="p-1">Site Reference</label>
+          <input
+            type="text"
+            name="site_refer"
+            placeholder="Site Reference"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1">
+          <label class="p-1">Seniority No</label>
+          <input
+            type="text"
+            id="seniority"
+            name="seniority_id"
+            placeholder="Seniority No"
+            class="form-input"
+            required
+          />
+        </div>
+      </div>
     </div>
     <div class="panel p-1">
-        <h2 class="text-lg font-semibold dark:text-white-light"
-            style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Payment Details</b></h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div class="p-1">
-                <div>
-                    <label>Select Payment Option</label>
-                    <select class="form-control" id="inputfield" name="payment_mode" required>
-                        <option>--select option--</option>
-                        <option value="Cheque">Cheque</option>
-                        <option value="Net Banking">Net Banking</option>
-                        <option value="DD">DD</option>
-                    </select>
-                </div>
-            </div>
-            <div class="p-1" id="mytable" style="display :none;">
-                <label class="p-1">Bank</label>
-                <input type="text" name="bank" placeholder="Bank" class="form-input">
-            </div>
-            <div class="p-1" id="project" style="display :none;">
-                <label class="p-1">Branch</label>
-                <input type="text" name="branch" placeholder="Branch" class="form-input">
-            </div>
-            <div class="p-1" id="table3" style="display :none;">
-                <label class="p-1">Cheque No</label>
-                <input type="text" name="cheque_no" placeholder="Cheque No" class="form-input">
-            </div>
-            <div class="p-1" id="table4" style="display :none;">
-                <label class="p-1">Pay Date</label>
-                <input type="date" name="payment_data" placeholder="Pay Date" class="form-input">
-            </div>
-            <div class="p-1" id="table5" style="display :none;">
-                <label>Amount</label>
-                <input type="text" name="amount" placeholder="Amount" class="form-input">
-            </div>
-            <div class="p-1" id="table6" style="display:none;">
-                <label>Transaction Id</label>
-                <input type="text" name="transaction_id" placeholder="Transaction Id" class="form-input">
-            </div>
-            <div class="p-1" id="table7" style="display:none;">
-                <label>DD No</label>
-                <input type="text" name="dd_no" placeholder="Amount" class="form-input">
-            </div>
+      <h2
+        class="text-lg font-semibold dark:text-white-light"
+        style="
+          background-color: #daeff2;
+          color: #1ca7dd;
+          width: 100%;
+          padding-left: 40%;
+          padding-top: 1%;
+          padding-bottom: 1%;
+        "
+      >
+        <b>Payment Details</b>
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="p-1">
+          <div>
+            <label>Select Payment Option</label>
+            <select
+              class="form-control"
+              id="inputfield"
+              name="payment_mode"
+              required
+            >
+              <option>--select option--</option>
+              <option value="Cheque">Cheque</option>
+              <option value="Net Banking">Net Banking</option>
+              <option value="DD">DD</option>
+            </select>
+          </div>
         </div>
+        <div class="p-1" id="mytable" style="display: none">
+          <label class="p-1">Bank</label>
+          <input
+            type="text"
+            name="bank"
+            placeholder="Bank"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1" id="project" style="display: none">
+          <label class="p-1">Branch</label>
+          <input
+            type="text"
+            name="branch"
+            placeholder="Branch"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1" id="table3" style="display: none">
+          <label class="p-1">Cheque No</label>
+          <input
+            type="text"
+            name="cheque_no"
+            placeholder="Cheque No"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1" id="table4" style="display: none">
+          <label class="p-1">Pay Date</label>
+          <input
+            type="date"
+            name="payment_data"
+            placeholder="Pay Date"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1" id="table5" style="display: none">
+          <label>Amount</label>
+          <input
+            type="text"
+            name="amount"
+            placeholder="Amount"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1" id="table6" style="display: none">
+          <label>Transaction Id</label>
+          <input
+            type="text"
+            name="transaction_id"
+            placeholder="Transaction Id"
+            class="form-input"
+          />
+        </div>
+        <div class="p-1" id="table7" style="display: none">
+          <label>DD No</label>
+          <input
+            type="text"
+            name="dd_no"
+            placeholder="Amount"
+            class="form-input"
+          />
+        </div>
+      </div>
     </div>
     <div class="text-center">
-        <input type="submit" value="Submit Application" class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light" style="background-color: #178EF0;">
+      <input
+        type="submit"
+        value="Submit Application"
+        class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light"
+        style="background-color: #178ef0"
+      />
     </div>
-</div>
-</form>       
+  </div>
+</form>
 <script>
-    function remove_field(button) {
-        var row = button.parentNode;
-        row.parentNode.removeChild(row);
-
+  function remove_field(button) {
+    var row = button.parentNode;
+    row.parentNode.removeChild(row);
+  }
+  const inputField = document.getElementById("inputfield");
+  const myTable = document.getElementById("mytable");
+  const Project = document.getElementById("project");
+  const Table3 = document.getElementById("table3");
+  const Table4 = document.getElementById("table4");
+  const Table5 = document.getElementById("table5");
+  const Table6 = document.getElementById("table6");
+  const Table7 = document.getElementById("table7");
+  inputField.addEventListener("input", function () {
+    if (inputField.value === "Cheque") {
+      myTable.style.display = "table"; // Show the table
+      Project.style.display = "table";
+      Table3.style.display = "table";
+      Table4.style.display = "table";
+      Table5.style.display = "table";
+      Table6.style.display = "none";
+      Table7.style.display = "none";
+    } else if (inputField.value === "Net Banking") {
+      Project.style.display = "table";
+      myTable.style.display = "table"; // Show the table
+      Table3.style.display = "none";
+      Table4.style.display = "table";
+      Table5.style.display = "table";
+      Table6.style.display = "table";
+      Table7.style.display = "none";
+    } else if (inputField.value === "DD") {
+      myTable.style.display = "table"; // Show the table
+      Project.style.display = "table";
+      Table3.style.display = "none";
+      Table4.style.display = "table";
+      Table5.style.display = "table";
+      Table6.style.display = "none";
+      Table7.style.display = "table";
+    } else {
+      myTable.style.display = "none";
+      Project.style.display = "none";
+      Table3.style.display = "none";
+      Table4.style.display = "none";
+      Table5.style.display = "none";
+      Table6.style.display = "none";
+      Table7.style.display = "none";
     }
-    const inputField = document.getElementById('inputfield');
-    const myTable = document.getElementById('mytable');
-    const Project = document.getElementById('project');
-    const Table3 = document.getElementById('table3');
-    const Table4 = document.getElementById('table4');
-    const Table5 = document.getElementById('table5');
-    const Table6 = document.getElementById('table6');
-    const Table7 = document.getElementById('table7');
-    inputField.addEventListener('input', function () {
-        if (inputField.value === 'Cheque') {
-            myTable.style.display = 'table';// Show the table
-            Project.style.display = 'table';
-            Table3.style.display = 'table';
-            Table4.style.display = 'table';
-            Table5.style.display = 'table';
-            Table6.style.display = 'none';
-            Table7.style.display = "none";
-        } else if (inputField.value === 'Net Banking') {
-            Project.style.display = 'table';
-            myTable.style.display = 'table';// Show the table
-            Table3.style.display = 'none';
-            Table4.style.display = 'table';
-            Table5.style.display = 'table';
-            Table6.style.display = 'table';
-            Table7.style.display = "none";
-        } else if (inputField.value === 'DD') {
-            myTable.style.display = 'table';// Show the table
-            Project.style.display = 'table';
-            Table3.style.display = 'none';
-            Table4.style.display = 'table';
-            Table5.style.display = 'table';
-            Table6.style.display = 'none';
-            Table7.style.display = "table";
-        } else {
-            myTable.style.display = 'none';
-            Project.style.display = 'none';
-            Table3.style.display = 'none';
-            Table4.style.display = 'none';
-            Table5.style.display = 'none';
-            Table6.style.display = 'none';
-            Table7.style.display = 'none';
-        }
-    });
+  });
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script>
-     $('#selectDimension').on('change', function (event){
-        let project_id = $('#projectname option:selected').val();
-        let plot_id = this.value;
-        mydata = { project_id: project_id, plot_id:plot_id,csrfmiddlewaretoken: '{{ csrf_token }}' }
-            $.ajax({
-                url: "{% url 'get_project_value' %}",
-                method: "POST",
-                data: mydata,
-                success: function (data) {
-                    console.log(data.values[0]);
-                    $('#total_site_value').val(data.values[0].total_amount)
-                    $('#downpayment').val(data.values[0].installment_1)
-                }
-            })
-     });
-
-    $('#projectname').on('change', function (event) {
-        event.preventDefault();
-        let id = this.value;
-        if (this.value != '') {
-            mydata = { id: id, csrfmiddlewaretoken: '{{ csrf_token }}' }
-            $.ajax({
-                url: "{% url 'get_dimension' %}",
-                method: "POST",
-                data: mydata,
-                success: function (data) {
-                    console.log('check',data);
-
-                    $("#seniority").val(data.shortcut);
-                    $("#selectDimension").removeAttr("disabled");
-                    $("#selectDimension option").remove();
-                    $('#selectDimension').append($('<option></option>').val("").html("Select"))
-                    $.each(data.values, function (i, p) {
-                        $('#selectDimension').append($('<option></option>').val(p.id).html(p.plotsize));
-                    });
-                }
-            })
-
-        }
-
-        else {
-            $("#selectDimension").prop('disabled', 'disabled');
-            $("#selectDimension option").remove();
-            $('#selectDimension').append($('<option></option>').val("").html("Select"))
-        }
+  $("#selectDimension").on("change", function (event) {
+    let project_id = $("#projectname option:selected").val();
+    let plot_id = this.value;
+    mydata = {
+      project_id: project_id,
+      plot_id: plot_id,
+      csrfmiddlewaretoken: "{{ csrf_token }}",
+    };
+    $.ajax({
+      url: "{% url 'get_project_value' %}",
+      method: "POST",
+      data: mydata,
+      success: function (data) {
+        console.log(data.values[0]);
+        $("#total_site_value").val(data.values[0].total_amount);
+        $("#downpayment").val(data.values[0].installment_1);
+      },
     });
+  });
+
+  $("#projectname").on("change", function (event) {
+    event.preventDefault();
+    let id = this.value;
+    if (this.value != "") {
+      mydata = { id: id, csrfmiddlewaretoken: "{{ csrf_token }}" };
+      $.ajax({
+        url: "{% url 'get_dimension' %}",
+        method: "POST",
+        data: mydata,
+        success: function (data) {
+          console.log("check", data);
+
+          $("#seniority").val(data.shortcut);
+          $("#selectDimension").removeAttr("disabled");
+          $("#selectDimension option").remove();
+          $("#selectDimension").append(
+            $("<option></option>").val("").html("Select")
+          );
+          $.each(data.values, function (i, p) {
+            $("#selectDimension").append(
+              $("<option></option>").val(p.id).html(p.plotsize)
+            );
+          });
+        },
+      });
+    } else {
+      $("#selectDimension").prop("disabled", "disabled");
+      $("#selectDimension option").remove();
+      $("#selectDimension").append(
+        $("<option></option>").val("").html("Select")
+      );
+    }
+  });
 </script>
 <script>
-    var i=2;
-        function add_more_field(button) {
-            document.getElementById("hello1").style.display = "none";
-        var container = document.getElementById("container");
-        var newRow = document.createElement("div");
-        newRow.innerHTML = `
+  var i = 2;
+  function add_more_field(button) {
+    document.getElementById("hello1").style.display = "none";
+    var container = document.getElementById("container");
+    var newRow = document.createElement("div");
+    newRow.innerHTML =
+      `
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5 p-1">
             <div class="p-1"> 
                 
-               <input type="text" name="member_name`+i+`" placeholder="Family-Member Name" class="form-input">
+               <input type="text" name="member_name` +
+      i +
+      `" placeholder="Family-Member Name" class="form-input">
             </div>
             <div class="p-1">
-                <input type="age" name="member_age`+i+`" placeholder="Family-Member Age" class="form-input">
+                <input type="age" name="member_age` +
+      i +
+      `" placeholder="Family-Member Age" class="form-input">
             </div>
             <div class="p-1">
-                <input type="text" name="member_relation`+i+`" placeholder="Family-Member Relationship" class="form-input">
+                <input type="text" name="member_relation` +
+      i +
+      `" placeholder="Family-Member Relationship" class="form-input">
             </div>
-            <button id="hello`+i+`" class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light" style="background-color: #178EF0;" type="button"
+            <button id="hello` +
+      i +
+      `" class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light" style="background-color: #178EF0;" type="button"
                      onclick="add_more_field(this)"x>Add More</button>
-            <button id="btn`+i+`" class="btn btn-danger text-lg font-semibold dark:text-white-light"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Remove</button>
+            <button id="btn` +
+      i +
+      `" class="btn btn-danger text-lg font-semibold dark:text-white-light"style="padding: 10px 24px;" type="button" onclick="remove_field(this)">Remove</button>
         </div>
         `;
-        container.appendChild(newRow);
-        var x = i-1;
-        // $(`"#btn`+x+`"`).hide();
-        document.getElementById("check_input_no").value = i;
-        if (x > 1){
-            document.getElementById("hello" + x).style.display = "none";
-            document.getElementById("btn" + x).style.display = "none";
-            
-        }
-      
-        // 
-        i++;
-        
-        
-    }
-    function remove_field(button) {
-        id  = button.id;
-        let result = id.replace("btn","");
-        var current = result-1;
-        
-        var row = button.parentNode.parentNode; // Traverse two levels up to remove the entire set of fields
-        row.parentNode.removeChild(row);
-  
-        if (current > 1){
-            document.getElementById("btn"+current).style.display = "block";
-            document.getElementById("hello" + current).style.display = "block";
-        }
-        
-        else {
-            document.getElementById("hello"+current).style.display = "block";
-        }
-        i--;
-        document.getElementById("check_input_no").value = current;
+    container.appendChild(newRow);
+    var x = i - 1;
+    // $(`"#btn`+x+`"`).hide();
+    document.getElementById("check_input_no").value = i;
+    if (x > 1) {
+      document.getElementById("hello" + x).style.display = "none";
+      document.getElementById("btn" + x).style.display = "none";
     }
 
+    //
+    i++;
+  }
+  function remove_field(button) {
+    id = button.id;
+    let result = id.replace("btn", "");
+    var current = result - 1;
+
+    var row = button.parentNode.parentNode; // Traverse two levels up to remove the entire set of fields
+    row.parentNode.removeChild(row);
+
+    if (current > 1) {
+      document.getElementById("btn" + current).style.display = "block";
+      document.getElementById("hello" + current).style.display = "block";
+    } else {
+      document.getElementById("hello" + current).style.display = "block";
+    }
+    i--;
+    document.getElementById("check_input_no").value = current;
+  }
 </script>
-  
 
 {% endblock %}
