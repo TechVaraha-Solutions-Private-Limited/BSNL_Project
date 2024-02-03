@@ -260,7 +260,7 @@ def add_new_bookings(request):
         seniority_id = request.POST.get('seniority_id')
         
         user=User()
-        user.first_name=first_name
+        user.first_name = first_name
         user.last_name=request.POST.get('last_name')
         user.mobile_no = mobile_no
         user.email = email
@@ -272,7 +272,7 @@ def add_new_bookings(request):
         details.dob = request.POST.get('dob')
         details.age = request.POST.get('age')
         details.alternate_no = request.POST.get('alternate_no')
-        details.aadhhaarno = request.POST.get('aadhhaarno')
+        details.aadhhaarno = request.POST.get('aadharno')
         details.aadhar_proof = request.POST.get('aadhar_proof')
         details.panno = request.POST.get('panno')
         details.pan_proof = request.POST.get('pan_proof')
@@ -314,13 +314,12 @@ def add_new_bookings(request):
         land_detail = LandDetails.objects.get(project_id=project_id,plotsize_id=dimension_id)
         book = Bookings()
         book.user = user
-        book.membership_id = request.POST.get('seniority_id')
+        book.membership_id = request.POST.get('member_id')
         book.seniority_id = request.POST.get('seniority_id')
         book.land_details = land_detail
         book.total_site_value = request.POST.get('total_site_value')
         book.downpayment = request.POST.get('downpayment')
         book.site_refer = request.POST.get('site_refer')
-        book.sitevist = id
         book.am_no = auto_genrate
         book.save()
         #vicky
@@ -498,8 +497,8 @@ def generate(request):
                 # Need to resolve
                 payment_amount = int(paid_amount)-int(difference)
                 if paid_amount:
-                    if int(payment_total) < 2260: 
-                        payment_amount = int(paid_amount) -2260
+                    if int(payment_total) < 2600: 
+                        payment_amount = int(paid_amount) -2600
                         membership_fee = PaymentDetails()
                         membership_fee.booking=book
                         membership_fee.payment_mode = request.POST.get('payment_mode')
@@ -510,7 +509,7 @@ def generate(request):
                         membership_fee.ddno=request.POST.get('dd_no')
                         membership_fee.dateofreceipt = request.POST.get('dateofreceipt')
                         membership_fee.payment_data = request.POST.get('payment_data')
-                        membership_fee.amount = 2260
+                        membership_fee.amount = 2600
                         membership_fee.paymentname = "Membership"
                         membership_fee.receipt_no = get_number
                         membership_fee.save()
@@ -755,7 +754,7 @@ def lead_owner(request):
         elif action == 'create_order':
             user_id = request.POST.get('user_id')
             user_instance = User.objects.get(id=user_id)
-            print('muthu')
+            print('sugu')
             Leadowner(
                 seniorityno_id = request.POST.get('seniority'),
                 user_id = user_instance,
@@ -792,7 +791,7 @@ def cancel(request):
                     messages.error(request, 'Profile details updated.')
             except:
                 customers = {}
-                print('Muthu')
+                print('gopi')
         elif action == 'create_order': 
             user_id=user_id
             seniority = request.POST.get('seniority')
@@ -826,6 +825,8 @@ def receipts(request):
         
         mydata.total_amount = total_amount
         mydata.sum_val = sum_val
+
+    # booking = PaymentDetails.objects.all()
    
     return render(request,'view/receipts.html',{'booking':booking}) 
 
