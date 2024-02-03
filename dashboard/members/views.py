@@ -810,23 +810,14 @@ def cancel(request):
     return render(request,'new_bookings/cancel.html',{'customer':customers})
 
 def receipts(request):
-    booking = Bookings.objects.all()
-    for mydata in booking:
-        total_amount = 0
-        print(mydata.id)
-        sum_val=0
-        for payment in mydata.paymentdetails_set.all():
+    booking = PaymentDetails.objects.all()
+    # for mydata in booking:
+    #     total_amount = 0
+    #     print(mydata.id)
+    #     sum_val=0
+    #     for payment in mydata.paymentdetails_set.all():
+    #         payment.
 
-            sum_val += float(payment.amount)
-            try:
-                amount = int(payment.amount)
-                total_amount += amount
-            except ValueError:                
-                pass
-        
-        mydata.total_amount = total_amount
-        mydata.sum_val = sum_val
-   
     return render(request,'view/receipts.html',{'booking':booking}) 
 
 def update_receipts(request,id):
@@ -895,7 +886,7 @@ def activemember(request):
         us.cus_dob = userdetail.dob
         us.id_status = userdetail.id_card
         us.pan_no = userdetail.panno
-        us.pro_img = userdetail.profile
+        us.pro_img = UserDetail.objects.get(user_id=us.user.id).profile
         us.adhar_no = userdetail.aadhhaarno
         us.last_n = Bookings.objects.get(user_id=us.user.id).user.last_name
         us.nomie_name = UserNominee.objects.get(user_id=us.user.id).nominee_name
@@ -908,7 +899,7 @@ def activemember(request):
             print(family.member_relation)
         # us.fam_age = UserFamilyDetails.objects.filter(user_id=us.user.id).member_age
         # us.fam_rel = UserFamilyDetails.objects.filter(user_id=us.user.id).member_relation
-        print(us.pro_img.url)
+        
     context={
         'user':user,
         'book':book,

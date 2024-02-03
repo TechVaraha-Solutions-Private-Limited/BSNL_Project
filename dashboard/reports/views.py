@@ -17,7 +17,7 @@ def confirmletter_view(request,id):
     return render(request,'confirmletter_view.html',{'user':book,'userdetail':userdetail,'payment':payment})
 
 def print_recepit(request,id):
-    user=Bookings.objects.get(id=id)
+    user=Bookings.objects.get(user_id=id)
     userdetail = UserDetail.objects.get(user=user.user)
     payments = PaymentDetails.objects.filter(booking_id=user.id)
     payment_count = PaymentDetails.objects.filter(booking_id=user.id).values('receipt_no').distinct().count()

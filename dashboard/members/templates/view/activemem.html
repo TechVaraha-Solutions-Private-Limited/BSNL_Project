@@ -116,7 +116,7 @@
                             </td>
                             <td>{{mydata.land_details.project.projectname}}</td>
                             <td>{{mydata.downpayment}}</td>
-                            <td>{{mydata.downpayment}}</td>
+                            <td></td>
                             <td>{{mydata.id_status}}</td>
                             <td><center>
                                 <div>
@@ -348,7 +348,7 @@
                             <td>{% for data in mydata.user.userfamilydetails_set.all %}
                                 {{data.member_relation}}
                                 {% endfor %}</td>
-                            <td><img src="{{ mydata.pro_img.url }}" alt="{{ mydata.pro_img.name }}"></td>
+                            <!--  -->
                             <td>
                                 <div>
                                    <center><a href="update_personal/{{mydata.user.id}}" type="button"
