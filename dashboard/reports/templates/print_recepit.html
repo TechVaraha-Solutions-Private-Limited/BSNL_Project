@@ -113,7 +113,7 @@
 								<th>Amount</th>
 							</tr>
 							{% for paysts in payment %}
-											
+								{% if forloop.last %}			
 								<tr>
 									<td>{{paysts.paymentname}}</td> 
 									<td>{{user.land_details.plotsize.plotsize}}</td>
@@ -130,24 +130,7 @@
 									</td>
 									<td>{{paysts.amount}}</td>
 								</tr>
-<!-- 								
-									<tr>
-									<td>{{paysts.paymentname}}</td> 
-									<td>{{user.land_details.plotsize.plotsize}}</td>
-									<td>{{ paysts.payment_mode }}
-									<td>{{paysts.bank}}</td>
-									<td>{{paysts.branch}}</td>
-									<td>{% if paysts.payment_mode == "Cheque" %}
-										{{ paysts.cheque_no }}
-										{% elif paysts.payment_mode == "DD"%}
-										{{ paysts.ddno }}
-										{% elif paysts.payment_mode == "Net Banking" %}
-										{{ paysts.transaction }}
-										{% endif %}
-									</td>
-									<td>{{paysts.amount}}</td>
-								</tr>
-								 -->
+								 {% endif %}
 							{% endfor %}
 						</table>
 					</div>

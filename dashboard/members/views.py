@@ -719,12 +719,16 @@ def view_site_visit(request):
 def update_site_visit(request,id):
     update = Site_visit.objects.get(id=id)
     if request.method =='POST':
+        exective = request.POST.get('executive')
+        value = User.objects.get(id = exective)
+        get_execute = Executive.objects.get(user_id=value.id)
+        teamlead = get_execute.teamlead.user.id
+        senior_teamlead = get_execute.teamlead.sr_team.user.id
+        project_lead = get_execute.teamlead.sr_team.project_head.id
         update.date_of_site_visit = request.POST.get("date_of_visit")
         update.cust_name = request.POST.get("cust_name")
         update.phone_no = request.POST.get("phone_no")
-        update.executive = request.POST.get("executive")
-        update.team_lead = request.POST.get("team_lead")
-        update.proj_head = request.POST.get("proj_lead")
+        update.executive = value
         update.so_done_by = request.POST.get("so_done_by")
         update.sv_don_by = request.POST.get("sv_done_by")
         update.sv_category = request.POST.get("sv_category")
@@ -912,7 +916,7 @@ def updateactivememberlist(request,id):
     user =  User.objects.get(id=id)
     book = Bookings.objects.get(user=user)
     userdetail = UserDetail.objects.get(user=user)
-    print("id:",userdetail)
+    
     if request.method =='POST':
         user.first_name=request.POST.get("first_name")
         user.mobile_no = request.POST.get('mobile_no')
@@ -939,14 +943,15 @@ def updateactivememberlist(request,id):
     return render(request,'view/update_view/update_acmember.html',context)
 
 def deleteactivememberlist(request,id):
-    book = Bookings.objects.get(id=id)
+    book = Bookings.objects.get(user_id=id)
     if book.user.is_active == True:
         book.user.is_active=False
         book.user.save()
     context={
         'user':book,
     }
-    return redirect('/members/activemember',context)
+    
+    return redirect('/members/activemember')
 
 def update_personal(request,id):
     nomine =  UserNominee.objects.get(user_id=id)
@@ -1021,11 +1026,14 @@ def view_user_access(request):
     view_user=User.objects.filter(is_active=1)
     return render(request,'input/update_user/view_user_access.html',{'view_user':view_user})
 
-def delete_user_access(id):
+def delete_user_access(request, id):
+    print(id)
     book = User.objects.get(id=id)
+    print(book)
     if book.is_active == True:
         book.is_active=False
         book.save()
+
     context={
         'book':book,
     }

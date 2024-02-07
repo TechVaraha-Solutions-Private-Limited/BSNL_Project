@@ -348,7 +348,11 @@
                             <td>{% for data in mydata.user.userfamilydetails_set.all %}
                                 {{data.member_relation}}
                                 {% endfor %}</td>
-                            <!--  -->
+                            <td>
+                                {% for data in user %}
+                                {{data.profile}}
+                                {% endfor %}
+                            </td>
                             <td>
                                 <div>
                                    <center><a href="update_personal/{{mydata.user.id}}" type="button"

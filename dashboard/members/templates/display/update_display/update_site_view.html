@@ -35,10 +35,8 @@
                     <div class="p-1">
                         <label class="p-1">Executive</label>
                         <select class="form-control" name="executive" id="executive">
-                            <option>Select</option>
-                            {% for data in exective%}
-                            <option value="{{data.id}}">{{data.first_name}}</option>
-                            {% endfor %}
+                            <option value="{{update.executive.id}}">{{update.executive.first_name}}</option>
+                           
                         </select>
                     </div>
                     <div class="p-1">
