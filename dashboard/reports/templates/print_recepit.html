@@ -1,4 +1,6 @@
+
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +67,7 @@
 					<p>
 						{% for i in payment %}
 							{% if forloop.last %}
-								<span class="logo-cnt2"><span style="font-weight:normal;">No.</span>{{i.receipt_no}}</span> 
+								<span class="logo-cnt2"><span style="font-weight:normal;">No.</span>{{id}}</span> 
 								<span class="logo-cnt4">RECEIPT</span> 
 								<span class="logo-cnt3">Date :
 									<span class="date-dot">{{i.created_on.date|date:'d-m-y'}}</span>
@@ -111,9 +113,9 @@
 								<th>Branch</th>
 								<th>Cheque / <br/>Transaction ID / DD No.</th>
 								<th>Amount</th>
+								
 							</tr>
-							{% for paysts in payment %}
-								{% if forloop.last %}			
+							{% for paysts in check_payment %}			
 								<tr>
 									<td>{{paysts.paymentname}}</td> 
 									<td>{{user.land_details.plotsize.plotsize}}</td>
@@ -130,7 +132,6 @@
 									</td>
 									<td>{{paysts.amount}}</td>
 								</tr>
-								 {% endif %}
 							{% endfor %}
 						</table>
 					</div>
@@ -151,29 +152,47 @@
 													<span style="float:left; width:50px;">1.</span> Application Fee 
 								<span class="tab-dot"></span></td>
 								<td></td>
-								<td style="text-align:right;"> 200
+								
+								<td style="text-align:right;"> 
+									{% if total == "Membership" %}
+										200
+									{% else %}
+										0
+									{% endif %}
+							
 								</td>
 								<td>
 								</td>
 								</tr>
 							</tr>
+							
 							<tr>
 								<td>
 								<span style="float:left; width:50px;">2.</span> Admission Fee 
 								<span class="tab-dot"></span></td>
 								<td></td>
-								<td style="text-align:right;">200 
+								<td style="text-align:right;">
+								{% if total == "Membership" %}
+									200
+								{% else %}
+									0
+								{% endif %}
 								</td>
-								<td>
-								</td>
-								</tr>
+								<td></td>
+							</tr>
+							
 							</tr>
 							<tr>
 								<td>
 													<span style="float:left; width:50px;">3.</span> Share Fee 
 								<span class="tab-dot"></span></td>
 								<td></td>
-								<td style="text-align:right;">200 
+								<td style="text-align:right;">
+								{% if total == "Membership" %}
+									200
+								{% else %}
+									0
+								{% endif %}
 								</td>
 								<td>
 													</td>
@@ -184,7 +203,12 @@
 													<span style="float:left; width:50px;">4.</span> Share Amount (Min 2 Shares)
 								<span class="tab-dot"></span></td>
 								<td></td>
-								<td style="text-align:right;">2000 
+								<td style="text-align:right;">
+								{% if total == "Membership" %}
+									2000
+								{% else %}
+									0
+								{% endif %}
 								</td>
 								<td>
 													</td>
@@ -219,7 +243,11 @@
 								</td>
 								<td></td>
 								<td style="text-align:right;">
-									{{value}}</td>
+									{% for i in check_payment %}
+										{% if forloop.last %}
+											{{i.amount}}</td>
+										{% endif %}
+									{%endfor%}
 								<td>
 													</td>
 							</tr>
@@ -242,7 +270,19 @@
 							<td></td>
 							
 							<td style="text-align:right;font-size: 22px;font-weight: bold;">
-							{{amont}} </td>
+							{% if total == "Membership" %}
+								{% for i in check_payment %}
+									{% if forloop.last %}
+									{{ i.amount|add:2600 }}
+									{% endif %}
+								{%endfor%}
+							{% else %}
+								{% for i in check_payment %}
+									{% if forloop.last %}
+										{{i.amount}}
+									{% endif %}
+								{%endfor%}
+							{% endif %}</td>
 							<td>
 							
 							</td>

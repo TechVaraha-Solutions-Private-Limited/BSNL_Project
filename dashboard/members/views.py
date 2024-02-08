@@ -341,7 +341,7 @@ def add_new_bookings(request):
             membership_fee.user = user
             membership_fee.payment_data = request.POST.get('payment_data')
             
-            membership_fee.amount = 2260
+            membership_fee.amount = 2600
             membership_fee.paymentname = "Membership"
             get_number = PaymentDetails.objects.all().order_by('-id')[:1]
             if get_number:

@@ -6,7 +6,7 @@ from django.urls import reverse
 from num2words import num2words
 from django.db.models import Sum
 from datetime import datetime, date, timedelta
-import csv
+from django import template
 
 
 # Create your views here.
@@ -17,11 +17,16 @@ def confirmletter_view(request,id):
     return render(request,'confirmletter_view.html',{'user':book,'userdetail':userdetail,'payment':payment})
 
 def print_recepit(request,id):
-    user=Bookings.objects.get(user_id=id)
+    paymentInfo = PaymentDetails.objects.get(receipt_no=id)
+
+    check_payments = PaymentDetails.objects.filter(cheque_no=paymentInfo.cheque_no)
+
+    user=Bookings.objects.get(user_id=paymentInfo.booking.user_id)
     userdetail = UserDetail.objects.get(user=user.user)
     payments = PaymentDetails.objects.filter(booking_id=user.id)
     payment_count = PaymentDetails.objects.filter(booking_id=user.id).values('receipt_no').distinct().count()
     print(payment_count)
+    id=id
     for payment in payments:
         last_payment = payment.amount
         if last_payment:
@@ -34,8 +39,18 @@ def print_recepit(request,id):
     word1 = num2words(no, lang='en_IN')
     word = word1.replace(',','')
     amountfees = 200
-    amont = int(value)+2260
+    id=id
+    amont = int(value)+2600
+    for pay in check_payments:
+        total = pay.paymentname
+        if total == "Membership":
+            fees=200
+            break
+        else:
+            fees=0
+        print(fees)
     context ={
+        'id':id,
         'user':user,
         'userdetail':userdetail,
         'payment':payments,
@@ -44,9 +59,16 @@ def print_recepit(request,id):
         'value':value,
         'amountfees':amountfees,
         'amont':amont,
+        'total':total,
+        'fees':fees,
+        'check_payment':check_payments
     }
     return render (request,'print_recepit.html',context)
+register = template.Library()
 
+@register.filter
+def add_amount(value):
+    return int(value) + 2600
 def booking_report(request):
 
     view_report = PaymentDetails.objects.all()
