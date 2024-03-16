@@ -14,7 +14,7 @@ def addproject(request):
 	        address = request.POST['address'],
 			gmap = request.POST['gmaplink'],
 			# pdf_file = request.POST['pdf_file'],
-	        updated_by = request.user
+	        # updated_by = request.user
             ).save()
 		messages.error(request,'Successfully Saved')
 	return render(request, 'add_project.html')
@@ -60,7 +60,7 @@ def addlandinfo(request):
             installment_1=request.POST['firstinstallment'],
             installment_2=request.POST['secondinstallment'],
             installment_3=request.POST['thirdinstallment'],
-            updated_by=request.user
+            # updated_by=request.user
         )
 			
         return redirect('addlandinfo')
@@ -68,7 +68,7 @@ def addlandinfo(request):
     return render(request, 'add_land_info.html', {'projects': projects, 'pltsizes': pltsizes})
 
 def projectlist(request):
-	projectslists=Project.objects.all()
+	projectslists=Project.objects.order_by('-created_on').all()
 	return render(request,'project_list.html',{'projectslists':projectslists})
 
 def updateprojectlist(request,id):
@@ -94,7 +94,7 @@ def deleteprojectlist(request,id):
 	return redirect(projectlist)
 
 def landrecords(request):
-	landdetails=LandDetails.objects.all()
+	landdetails=LandDetails.objects.order_by('-created_on').all()
 	return render(request,'land_records.html',{'landdetails':landdetails})
 
 def updatelandrecords(request,id):

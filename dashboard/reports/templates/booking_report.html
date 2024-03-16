@@ -78,13 +78,13 @@
                     <td>{{val.user.mobile_no}}</td>
                     <td>{{val.alter}}</td>
                     <td>{{val.user.email}}</td>
-                    <td>{{val.address|upper}}</td>
+                    <td>{{val.address}}</td>
                     <td>{{val.land_details.total_amount}}</td>
                     <td>{{val.land_details.down_payment}}</td>
                     <td>{{val.total_amt}}</td>
-                    <td>{{val.sitevist.executive.first_name|upper}}</td>
-                    <td>{{val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper}}</td>
-                    <td></td>
+                    <td>{{ val.exective_name }}</td>
+                    <td>{{ val.team_lead }}</td>
+                    <td>{{ val.mydata.status }}</td>
                     <td>{{val.paymentdetails_set.last.paymentname}}</td>
                 </tr>
                 {%endfor%}
@@ -235,15 +235,14 @@
                               "{{ val.land_details.plotsize.plotsize }}," +
                               "{{ val.am_no }}," +
                               "{{ val.user.mobile_no }}," +
-                              "{{ val.alter }}," +
+                              "{{ val.user.alter }}," +
                               "{{ val.user.email }}," +
-                              "{{ val.address|upper }}," +
+                              "{{ val.user.address|upper }}," +
                               "{{ val.land_details.total_amount }}," +
                               "{{ val.land_details.down_payment }}," +
                               "{{ val.total_amt }}," +
                               "{{ val.sitevist.executive.first_name|upper }}," +
-                              "{{ val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper }}," +
-                              "," +  // Pay Status field is empty in your provided data
+                              "{{ val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper }}," +  // Pay Status field is empty in your provided data
                               "{{ val.paymentdetails_set.last.paymentname }}\n";
             {% endfor %}
 

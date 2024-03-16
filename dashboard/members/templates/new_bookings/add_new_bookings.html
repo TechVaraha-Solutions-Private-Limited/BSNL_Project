@@ -23,6 +23,7 @@
     {{ message }}
   </div>
   {% endfor %} {% csrf_token %}
+
   <div class="p-2" style="box-shadow: 0px 0px 5px #007bff; border-radius: 10px">
     <label
       class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
@@ -50,6 +51,7 @@
             type="text"
             name="first_name"
             class="form-input"
+            id="name"
             value="{{site.cust_name}}"
             placeholder="Member Name"
             required
@@ -104,6 +106,7 @@
           <input
             type="email"
             name="email"
+            id="email"
             placeholder="E-Mail Id"
             class="form-input"
             required
@@ -120,6 +123,7 @@
           <textarea
             class="form-input"
             name="address"
+            id="message"
             placeholder="Residential Address"
             rows="3"
           ></textarea>
@@ -502,6 +506,7 @@
     <div class="text-center">
       <input
         type="submit"
+       
         value="Submit Application"
         class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light"
         style="background-color: #178ef0"
@@ -509,7 +514,10 @@
     </div>
   </div>
 </form>
-<script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  
+  
+  <script>
   function remove_field(button) {
     var row = button.parentNode;
     row.parentNode.removeChild(row);
@@ -557,10 +565,7 @@
       Table7.style.display = "none";
     }
   });
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-  $("#selectDimension").on("change", function (event) {
+   $("#selectDimension").on("change", function (event) {
     let project_id = $("#projectname option:selected").val();
     let plot_id = this.value;
     mydata = {
@@ -613,8 +618,7 @@
       );
     }
   });
-</script>
-<script>
+
   var i = 2;
   function add_more_field(button) {
     document.getElementById("hello1").style.display = "none";
@@ -623,8 +627,8 @@
     newRow.innerHTML =
       `
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5 p-1">
-            <div class="p-1"> 
-                
+            <div class="p-1">
+
                <input type="text" name="member_name` +
       i +
       `" placeholder="Family-Member Name" class="form-input">
@@ -678,5 +682,7 @@
     document.getElementById("check_input_no").value = current;
   }
 </script>
+
+
 
 {% endblock %}

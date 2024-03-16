@@ -68,7 +68,7 @@
                     <td>{{val.sv_don_by}}</td>
                     <td>{{val.sv_status}}</td>
                     <td>{{val.sv_category}}</td>
-                    <td></td>
+                    <td>{{val.Fup_Date}}</td>
                     <td>{{val.executive.first_name}}</td>
                     <td>{{val.team_lead.first_name}}</td>
                     <td>{{val.proj_head.first_name}}</td>
@@ -124,7 +124,6 @@
                     </button>
                 </div>
                 <form method="post" action="{% url 'site_report' %}">
-                    {% csrf_token %}
                     <input type="hidden" name="date" value=date>
                     <div class="modal-body">
                         <div class="form-group">
@@ -186,7 +185,6 @@
             // 3rd block
         } else if (selectedOption === 'project_head') {
             dynamicDropdown.innerHTML = `
-            {% csrf_token %}
             <label class="p-1">Proj Head Wise</label>
             <input type="hidden" name="reportType" value ='project_head'> 
                 <select class="form-control" id="projecthead" name="sitereportoption" onchange="this.form.submit()">
@@ -268,18 +266,20 @@
 
             // Loop through the bookings data and append to CSV
             {% for val in sitereport_filter %}
+            
+
                 csvContent += "{{val.date_of_site_visit|date:'d-m-y'}}," +
-                              "{{ val.cust_name|upper }}," +
-                              "{{ val.phone_no }}," +
-                              "{{ val.so_done_by }}," +
-                              "{{ val.sv_don_by }}," +
-                              "{{ val.sv_status }}," +
-                              "{{ val.sv_category }}," +
-                              "{{ val.alter }}," +
+                              "{{val.cust_name|upper}}," +
+                              "{{val.phone_no}}," +
+                              "{{val.so_done_by}}," +
+                              "{{val.sv_don_by}}," +
+                              "{{val.sv_status}}," +
+                              "{{val.sv_category}}," +
+                              "{{val.Fup_Date}}," +
                               "{{val.executive.first_name}}," +
                               "{{val.team_lead.first_name}}," +
                               "{{val.proj_head.first_name}}," +
-                              "{{ val.source }}\n";
+                              "{{val.source}}\n";
             {% endfor %}
 
             // Create a data URI and trigger the download

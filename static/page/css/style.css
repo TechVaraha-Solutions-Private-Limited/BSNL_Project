@@ -5,7 +5,9 @@
     --light: #EFFDF5;
     --dark: #0E2E50;
 }
-
+.pannel{
+    height: 236px;
+}
 .back-to-top {
     position: fixed;
     display: none;

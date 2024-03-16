@@ -69,9 +69,9 @@
 							{% if forloop.last %}
 								<span class="logo-cnt2"><span style="font-weight:normal;">No.</span>{{id}}</span> 
 								<span class="logo-cnt4">RECEIPT</span> 
-								<span class="logo-cnt3">Date :
-									<span class="date-dot">{{i.created_on.date|date:'d-m-y'}}</span>
-								</span>
+								<span class="logo-cnt3">Date :<b>{{i.created_on.date|date:'d-m-y'}}</b></span>
+									<!-- <span class="date-dot">{{i.created_on.date|date:'d-m-y'}}</span>
+								</span> -->
 							{% endif %}
 						{% endfor %}
 					</p>
@@ -104,35 +104,80 @@
 								{{user.land_details.project.projectname}} (Seniority ID: {{user.seniority_id}}) (Membership ID:{{user.am_no}}) 				</span>
 						</p>
 						<div class="pay_details">
+						
 						<table class="payment_details">
-							<tr>
-								<th>Payment Type</th> 
-								<th>Dimension</th>
-								<th>Payment Mode</th>
-								<th>Bank</th>
-								<th>Branch</th>
-								<th>Cheque / <br/>Transaction ID / DD No.</th>
-								<th>Amount</th>
-								
-							</tr>
-							{% for paysts in check_payment %}			
+							<thead>
 								<tr>
-									<td>{{paysts.paymentname}}</td> 
-									<td>{{user.land_details.plotsize.plotsize}}</td>
-									<td>{{ paysts.payment_mode }}
-									<td>{{paysts.bank}}</td>
-									<td>{{paysts.branch}}</td>
-									<td>{% if paysts.payment_mode == "Cheque" %}
-										{{ paysts.cheque_no }}
-										{% elif paysts.payment_mode == "DD"%}
-										{{ paysts.ddno }}
-										{% elif paysts.payment_mode == "Net Banking" %}
-										{{ paysts.transaction }}
-										{% endif %}
-									</td>
-									<td>{{paysts.amount}}</td>
+									<th>Payment Name</th>
+									<th>Plot Size</th>
+									<th>Payment Mode</th>
+									<th>Bank</th>
+									<th>Branch</th>
+									<th>Transaction ID</th>
+									<th>Amount</th>
 								</tr>
-							{% endfor %}
+							</thead>
+							<tbody>
+								{% for paysts in Value %}
+									{% if paysts.paymentname == "DownPayment" %}
+										<tr>
+											<td>Membership</td>
+											<td>{{ user.land_details.plotsize.plotsize}}</td>
+											<td>{{ paysts.payment_mode }}</td>
+											<td>{{ paysts.bank }}</td>
+											<td>{{ paysts.branch }}</td>
+											<td>{% if paysts.payment_mode == "Cheque" %}
+													{{ paysts.cheque_no }}
+												{% elif paysts.payment_mode == "DD" %}
+													{{ paysts.ddno }}
+												{% elif paysts.payment_mode == "Net Banking" %}
+													{{ paysts.transaction }}
+												{% endif %}
+											</td>
+											<td>2600</td>
+										</tr>
+										<tr>
+											<td>{{ paysts.paymentname }}</td> 
+											<td>{{ user.land_details.plotsize.plotsize }}</td>
+											<td>{{ paysts.payment_mode }}</td>
+											<td>{{ paysts.bank }}</td>
+											<td>{{ paysts.branch }}</td>
+											<td>
+												{% if paysts.payment_mode == "Cheque" %}
+													{{ paysts.cheque_no }}
+												{% elif paysts.payment_mode == "DD" %}
+													{{ paysts.ddno }}
+												{% elif paysts.payment_mode == "Net Banking" %}
+													{{ paysts.transaction }}
+												{% else %}
+													No transaction info available
+												{% endif %}
+											</td>
+											<td>{{ paysts.amount }}</td>
+										</tr>
+									{% else %}
+									<tr>
+										<td>{{ paysts.paymentname }}</td> 
+										<td>{{ user.land_details.plotsize.plotsize }}</td>
+										<td>{{ paysts.payment_mode }}</td>
+										<td>{{ paysts.bank }}</td>
+										<td>{{ paysts.branch }}</td>
+										<td>
+											{% if paysts.payment_mode == "Cheque" %}
+												{{ paysts.cheque_no }}
+											{% elif paysts.payment_mode == "DD" %}
+												{{ paysts.ddno }}
+											{% elif paysts.payment_mode == "Net Banking" %}
+												{{ paysts.transaction }}
+											{% else %}
+												No transaction info available
+											{% endif %}
+										</td>
+										<td>{{ paysts.amount }}</td>
+									</tr>
+									{% endif %}
+								{% endfor %}
+							</tbody>
 						</table>
 					</div>
 					</div>
@@ -154,11 +199,13 @@
 								<td></td>
 								
 								<td style="text-align:right;"> 
-									{% if total == "Membership" %}
-										200
-									{% else %}
-										0
-									{% endif %}
+									{% for i in Value %}
+										{% if i.paymentname == "DownPayment" %}
+											200
+										{% else %}
+											0
+										{% endif %}
+									{% endfor %}
 							
 								</td>
 								<td>
@@ -172,11 +219,13 @@
 								<span class="tab-dot"></span></td>
 								<td></td>
 								<td style="text-align:right;">
-								{% if total == "Membership" %}
-									200
-								{% else %}
-									0
-								{% endif %}
+									{% for i in Value %}
+										{% if i.paymentname == "DownPayment" %}
+											200
+										{% else %}
+											0
+										{% endif %}
+									{% endfor %}
 								</td>
 								<td></td>
 							</tr>
@@ -188,11 +237,13 @@
 								<span class="tab-dot"></span></td>
 								<td></td>
 								<td style="text-align:right;">
-								{% if total == "Membership" %}
-									200
-								{% else %}
-									0
-								{% endif %}
+									{% for i in Value %}
+										{% if i.paymentname == "DownPayment" %}
+											200
+										{% else %}
+											0
+										{% endif %}
+									{% endfor %}
 								</td>
 								<td>
 													</td>
@@ -204,11 +255,13 @@
 								<span class="tab-dot"></span></td>
 								<td></td>
 								<td style="text-align:right;">
-								{% if total == "Membership" %}
-									2000
-								{% else %}
-									0
-								{% endif %}
+									{% for i in Value %}
+										{% if i.paymentname == "DownPayment" %}
+											2000
+										{% else %}
+											0
+										{% endif %}
+									{% endfor %}
 								</td>
 								<td>
 													</td>
@@ -239,11 +292,17 @@
 										
 															<tr >
 								<td>
-												<span style="float:left; width:50px;margin-bottom:0px;">7.</span>PART DOWN PAYMENT					<span class="tab-dot"></span>
+								<span style="float:left; width:50px;margin-bottom:0px;">7.
+								</span>{% for i in detail %}
+											{% if forloop.last %}
+												{{i.paymentname}}</td>
+											{% endif %}
+										{%endfor%}					
+								<span class="tab-dot"></span>
 								</td>
 								<td></td>
 								<td style="text-align:right;">
-									{% for i in check_payment %}
+									{% for i in detail %}
 										{% if forloop.last %}
 											{{i.amount}}</td>
 										{% endif %}
@@ -270,19 +329,23 @@
 							<td></td>
 							
 							<td style="text-align:right;font-size: 22px;font-weight: bold;">
-							{% if total == "Membership" %}
-								{% for i in check_payment %}
-									{% if forloop.last %}
-									{{ i.amount|add:2600 }}
+								{% for i in Value %}
+									{% if i.paymentname == "DownPayment" %}
+									{% for i in detail %}
+										{% if forloop.last %}
+											{{i.amount|floatformat:0|add:2600}}
+										{% endif %}
+									{%endfor%}
+									{% else %}
+									{% for i in detail %}
+										{% if forloop.last %}
+											{{i.amount}}
+										{% endif %}
+									{%endfor%}
 									{% endif %}
-								{%endfor%}
-							{% else %}
-								{% for i in check_payment %}
-									{% if forloop.last %}
-										{{i.amount}}
-									{% endif %}
-								{%endfor%}
-							{% endif %}</td>
+								{% endfor %}
+								
+								</td>
 							<td>
 							
 							</td>

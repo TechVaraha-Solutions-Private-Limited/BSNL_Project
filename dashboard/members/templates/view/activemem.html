@@ -116,7 +116,8 @@
                             </td>
                             <td>{{mydata.land_details.project.projectname}}</td>
                             <td>{{mydata.downpayment}}</td>
-                            <td></td>
+                           <td>{{different}}</td>
+
                             <td>{{mydata.id_status}}</td>
                             <td><center>
                                 <div>
@@ -266,7 +267,7 @@
                 <b>Personal Details</b>
             </h2>
             <div class="relative search mt-2">
-                <input type="text" placeholder="Search Details..." class="form-input search_size" />
+                <input type="text"  id="searchinput" placeholder="Search Details..." class="form-input search_size" />
                 <button type="button"
                     class="btn absolute ltr:right-1 rtl:left-1 inset-y-0 m-auto rounded-full w-9 h-9 p-0 flex items-center justify-center"
                     style="border-color:white">
@@ -464,4 +465,78 @@
         }
     });
 </script>
+
+<script>
+    // Initialize variables
+    var currentPage = 1;
+    var rowsPerPage = 5; // Number of rows per page
+
+    // Function to show/hide rows based on the current page
+    function updateTable() {
+        var tableRows = document.querySelectorAll(".emInfo tbody tr");
+        var start = (currentPage - 1) * rowsPerPage;
+        var end = start + rowsPerPage;
+
+        for (var i = 0; i < tableRows.length; i++) {
+            if (i >= start && i < end) {
+                tableRows[i].style.display = "table-row";
+            } else {
+                tableRows[i].style.display = "none";
+            }
+        }
+
+        // Update the "Page X" indicator
+        document.getElementById("currentPage").textContent = currentPage;
+    }
+
+    // Handle the "Next" button click
+    document.getElementById("nextPage").addEventListener("click", function () {
+        var tableRows = document.querySelectorAll(".emInfo tbody tr");
+        var maxPage = Math.ceil(tableRows.length / rowsPerPage);
+        if (currentPage < maxPage) {
+            currentPage++;
+            updateTable();
+        }
+    });
+
+    // Handle the "Previous" button click
+    document.getElementById("prevPage").addEventListener("click", function () {
+        if (currentPage > 1) {
+            currentPage--;
+            updateTable();
+        }
+    });
+
+    // Initial table update
+    updateTable();
+</script>
+<script>
+    // Function to handle search filtering
+    function filterTable() {
+        var input, filter, table, tr, tdId, tdSeniority, i, txtValueId, txtValueSeniority;
+        input = document.getElementById("searchinput");
+        filter = input.value.toUpperCase();
+        table = document.getElementsByClassName("emInfo1")[0]; // Assuming only one table with class 'emInfo1'
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those that don't match the search query
+        for (i = 0; i < tr.length; i++) {
+            tdId = tr[i].getElementsByTagName("td")[1]; // Assuming ID is in the second column
+            tdSeniority = tr[i].getElementsByTagName("td")[1]; // Assuming Seniority is in the same column as ID
+            if (tdId && tdSeniority) {
+                txtValueId = tdId.textContent || tdId.innerText;
+                txtValueSeniority = tdSeniority.textContent || tdSeniority.innerText;
+                if (txtValueId.toUpperCase().indexOf(filter) > -1 || txtValueSeniority.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    // Add event listener to the search input
+    document.getElementById("searchinput").addEventListener("keyup", filterTable);
+</script>
+
 {% endblock %}

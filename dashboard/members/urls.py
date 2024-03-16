@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import *
 
+
 urlpatterns = [
     path('home',home,name='home'),
     path('newbooking', add_new_bookings, name='newbooking'),
@@ -56,5 +57,7 @@ urlpatterns = [
     path('user_access/<id>',user_access,name='user_access'),
     path('get-team-owner',get_team_owner,name="get_team_owner"),
     #add new customer using site Visit
-    path('site_visit/<id>',site_visit_custmer,name='site_visit_custmer')
+    path('site_visit/<id>',site_visit_custmer,name='site_visit_custmer'),
+
+    
 ]

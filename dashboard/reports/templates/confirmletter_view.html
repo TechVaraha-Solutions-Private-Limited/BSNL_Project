@@ -63,15 +63,23 @@
 			</div>						
 		</div> -->
 		<div class="wrapper p4">
-		<p>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		
+		<p >
 			<span class="logo-cnt4" >SITE BOOKING CONFIRMATION</span> 
 		</p>
 		</div>
 		
 		<div class="wrapper p4">
 			<p class="logo-cnt1"><span style="float:left;margin-right:10px;font-weight:normal;line-height: 28px; text-align: justify;   font-size: 18px;">
-				This is to confirm that <b>{{user.user.first_name}}</b> Residing in <b>#{{userdetail.address}},{{userdetail.state}},{{userdetail.city}} - 583277</b>,
-				Have booked a site of measuring <b>{{user.land_details.plotsize.plotsize}}</b> in the <b>{{user.land_details.project.projectname}}</b> Located at {{user.land_details.project.address}}, {{user.land_details.project.city}} Taluk, {{user.land_details.project.state}} {{user.land_details.project.pincode}} from BSNL Employees and Citizens House Building Co-Operative Society Ltd. on <b>{{user.land_details.project.created_on.date}}</b>.
+				This is to confirm that <b>{{user.user.first_name}}</b> Residing in <b>#{{userdetail.address}},{{userdetail.city}},{{userdetail.state}} - 583277</b>,
+				Have booked a site of measuring <b>{{user.land_details.plotsize.plotsize}}</b> in the <b>{{user.land_details.project.projectname}}</b> Located at {{user.land_details.project.address}}, {{user.land_details.project.city}} Taluk, {{user.land_details.project.state}} {{user.land_details.project.pincode}} from BSNL Employees and Citizens House Building Co-Operative Society Ltd. on <b>{{user.land_details.project.created_on.date|date:"d-m-Y"}}</b>.
 				You have booked your site by paying an initial amount of                             											
 				<b>Rs. {{user.downpayment}}/-</b> by Ref No. :<b>324359028125</b> 
                 Drawn at <b>STATE BANK OF INDIA</b> Bank <b>BANGALORE</b> Branch.<b> Membership Id: {{user.am_no}}. Seniority ID: {{user.seniority_id}}</b><br/><br/></p>
@@ -91,7 +99,7 @@
 									Price of <b>Rs. {{user.land_details.per_square_feet_amount}} </b> perSqft will be charged, Registration fee is additional.
 								</li>
 							    <li>  The decision of the board is the final during the allotment and registration of the sites.</li>
-								<li>  Corner/Commercial plots will be charged extra. <br/>
+								 
 								<li>  Any issues arise in the process of completion of the project should be resolved by mutual 
 										discussions.  </li>
 								<li> Refund will be given after One Year from the booking date.  </li>
@@ -110,7 +118,7 @@
 		<div class="wrapper">
 		<div class="receipt-border1" >
 			<p class="mtop1" style="margin-top:0px;">
-				<span class=" logo-cnt2" style="text-align:center;font-weight:normal;font-size:18px;"><img  style="width: 142px;" src="assets/images/sign_president.jpg" alt=""/><br/>President<br/>(S Dilip Kumar)</span> 
+				<span class=" logo-cnt2" style="text-align:center;font-weight:normal;font-size:18px;margin-top:-21px;"><img  style="width: 142px;" src="assets/images/sign_president.jpg" alt=""/><br/>President<br/>(S Dilip Kumar)</span> 
 				<!-- <span class="fright logo-cnt3" style="text-align:center;width:230px;font-size:18px;"><img src="images/sign_vpresident.png" alt=""/><br/>Vice -President<br/>()</span> -->
 			</p>
 		</div>

@@ -7,6 +7,8 @@ from num2words import num2words
 from django.db.models import Sum
 from datetime import datetime, date, timedelta
 from django import template
+from django.core.exceptions import ObjectDoesNotExist
+
 
 
 # Create your views here.
@@ -14,56 +16,87 @@ def confirmletter_view(request,id):
     book=Bookings.objects.get(id=id)
     userdetail = UserDetail.objects.get(user=book.user)
     payment = PaymentDetails.objects.filter(booking=book)
-    return render(request,'confirmletter_view.html',{'user':book,'userdetail':userdetail,'payment':payment})
+    project = Project.objects.filter(landdetails=book.land_details)
+    for i in payment:
+        bank = i.bank
+        return render(request ,'confirmletter_view.html',{'book1':bank})
+    print(payment)
+    return render(request,'confirmletter_view.html',{'user':book,'userdetail':userdetail,'payment':payment,'project':project})
 
-def print_recepit(request,id):
-    paymentInfo = PaymentDetails.objects.get(receipt_no=id)
 
-    check_payments = PaymentDetails.objects.filter(cheque_no=paymentInfo.cheque_no)
+def print_recepit(request, id):
+    try:
+        paymentInfos = PaymentDetails.objects.get(receipt_no=id)
+        data = PaymentDetails.objects.filter()
+        # Assuming you want to filter PaymentDetails with the same cheque_no
+   
+        check_payments = PaymentDetails.objects.filter(dateofreceipt=paymentInfos.dateofreceipt , booking_id=paymentInfos.booking_id)
+        details = PaymentDetails.objects.filter(receipt_no = paymentInfos.receipt_no, booking_id=paymentInfos.booking_id)
+        # Use filter() instead of get() to handle multiple Bookings
 
-    user=Bookings.objects.get(user_id=paymentInfo.booking.user_id)
-    userdetail = UserDetail.objects.get(user=user.user)
-    payments = PaymentDetails.objects.filter(booking_id=user.id)
-    payment_count = PaymentDetails.objects.filter(booking_id=user.id).values('receipt_no').distinct().count()
-    print(payment_count)
-    id=id
-    for payment in payments:
-        last_payment = payment.amount
-        if last_payment:
-            no = float(last_payment)
-            receipt_no = num2words(no)
-            print(receipt_no)
-    get_last = PaymentDetails.objects.filter(booking_id=user.id).last()
-    value = get_last.amount
-    no = float(value)
-    word1 = num2words(no, lang='en_IN')
-    word = word1.replace(',','')
-    amountfees = 200
-    id=id
-    amont = int(value)+2600
-    for pay in check_payments:
-        total = pay.paymentname
-        if total == "Membership":
-            fees=200
-            break
-        else:
-            fees=0
-        print(fees)
-    context ={
-        'id':id,
-        'user':user,
-        'userdetail':userdetail,
-        'payment':payments,
-        'payment_count':payment_count,
-        'word':word,
-        'value':value,
-        'amountfees':amountfees,
-        'amont':amont,
-        'total':total,
-        'fees':fees,
-        'check_payment':check_payments
-    }
-    return render (request,'print_recepit.html',context)
+        for i in check_payments:
+            print(i)
+            if i.paymentname == "DownPayment":
+                Value = PaymentDetails.objects.filter(dateofreceipt=paymentInfos.dateofreceipt , booking_id=paymentInfos.booking_id)
+            else:
+                Value = PaymentDetails.objects.filter(receipt_no = paymentInfos.receipt_no, booking_id=paymentInfos.booking_id)
+
+
+        user = Bookings.objects.filter(user_id=paymentInfos.booking.user_id).first()
+        if not user:
+            return HttpResponse("No booking found for receipt number: {}".format(id))
+
+        userdetail = UserDetail.objects.get(user=user.user)
+        payments = PaymentDetails.objects.filter(booking_id=user.id)
+        payment_count = payments.values('receipt_no').distinct().count()
+
+        total_membership = 0
+        total_downpayment = 0
+        total_first_installment = 0
+        total_second_installment = 0
+        total_third_installment = 0
+
+        for payment in payments:
+            amount = float(payment.amount)  # Convert amount to float
+            if payment.paymentname == "Membership":
+                total_membership += amount
+            elif payment.paymentname == "DownPayment":
+                total_downpayment += amount
+            elif payment.paymentname == "FirstInstallment":
+                total_first_installment += amount
+            elif payment.paymentname == "SecondInstallment":
+                total_second_installment += amount
+            elif payment.paymentname == "ThirdInstallment":
+                total_third_installment += amount
+
+        total_all = (
+            total_membership +
+            total_downpayment +
+            total_first_installment +
+            total_second_installment +
+            total_third_installment
+        )
+
+        context = {
+            'id': id,
+            'user': user,
+            'detail':details,
+            'Value':Value,
+            'userdetail': userdetail,
+            'payment': payments,
+            'payment_count': payment_count,
+            'total_membership': total_membership,
+            'total_downpayment': total_downpayment,
+            'total_first_installment': total_first_installment,
+            'total_second_installment': total_second_installment,
+            'total_third_installment': total_third_installment,
+            'total_all': check_payments.aggregate(Sum('amount'))['amount__sum'],
+            'check_payment': check_payments
+        }
+        return render(request, 'print_recepit.html', context)
+    except Exception as e:
+        return HttpResponse("An error occurred: {}".format(e))
+    
 register = template.Library()
 
 @register.filter
@@ -111,7 +144,10 @@ def booking_report(request):
                     payments = booking.paymentdetails_set.all()
                     booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                     booking.address = UserDetail.objects.get(user_id = booking.user.id).address
-                    booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no           
+                    booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no     
+                    booking.exective =executivename(user_id = booking.user.id).first_name
+                    booking.team_lead = team_lead(user_id = booking.user.id).frist_name
+            
         elif select == 'project_head':
             print(teamlead)
             #bookings = Bookings.objects.filter(sitevist__executive__executive_set__last__teamlead__sr_team__project_head__first_name= teamlead)
@@ -143,6 +179,7 @@ def booking_report(request):
                 booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                 booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                 booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
+                booking.exective_name=User.objects.get(id=7).first_name
         context={
         'view_report': view_report,
         'project':project,

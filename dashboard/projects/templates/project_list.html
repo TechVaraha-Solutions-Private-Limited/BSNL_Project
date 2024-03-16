@@ -50,7 +50,7 @@
     <tbody>
         {% for projectslist in projectslists %}
         <tr>
-            <td>{{projectslist.id}}</td>
+            <td>{{ forloop.counter }}</td>
             <td>{{projectslist.projectname}}</td>
             <td>{{projectslist.shortcode}}</td>
             <td>{{projectslist.address}},{{projectslist.city}},{{projectslist.state}}</td>

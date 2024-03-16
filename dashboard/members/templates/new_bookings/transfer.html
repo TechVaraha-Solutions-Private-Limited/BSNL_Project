@@ -27,11 +27,11 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mt-4">
                 <div>
                     <label for="search_membername">Search your Customer:</label>
-                    <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniority No" required>
+                    <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniority No" value="{{ customer.seniority_id }}"required>
                 </div>
                 <div >
                     <label for="user_id">Search New Customer Id:</label>
-                    <input type="text" class="form-input" name="user_id" id="user_id" placeholder="Enter the Customer Id" required>
+                    <input type="text" class="form-input" name="user_id" id="user_id" placeholder="Enter the Customer Id" value="{{ customer.user.id }}" required>
                 </div>
                 <div class="mt-4">
                     <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" style="width: 100%;" name="action" value="search_customer">Search Customer</button>

@@ -115,6 +115,7 @@ class Leadowner(models.Model):
     sv_done_cust = models.CharField(max_length=20,null=True)
     source = models.CharField(max_length=20,null=True)
     fup_category = models.CharField(max_length=20,null=True)
+    id_card_status = models.CharField(max_length=100)
     install_fup_status = models.CharField(max_length=20,null=True)
     install_fup_date = models.CharField(max_length=20,null=True)
     exep_category = models.CharField(max_length=20,null=True)
@@ -128,6 +129,7 @@ class Update_blocked(models.Model):
      executive=models.CharField(max_length=50,null=True)
      customer_name=models.CharField(max_length=50,null=True)
      is_active = models.BooleanField(default=True)
+     
 
 class Btmt(models.Model):
     date_of_credit = models.CharField(max_length=50,null=True)

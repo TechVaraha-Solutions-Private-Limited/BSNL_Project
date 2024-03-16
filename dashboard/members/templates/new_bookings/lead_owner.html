@@ -54,7 +54,7 @@
                                     <label class="p-1">Executive</label>
                                     <select class="form-control" name="executive" id="executive">
                                         <option>Select</option>
-                                        {% for data in exective%}
+                                        {% for data in exective %}
                                         <option value="{{data.id}}">{{data.first_name}}</option>
                                         {% endfor %}
                                     </select>
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">ID Card Status</label>
-                                    <select class="form-control" name="id_card" value="{{userdetail.id_card}}">
+                                    <select class="form-control" name="id_card_status" value="{{userdetail.id_card_status}}">
                                         <option disabled>select options</option>
                                         <option value="Pending">Pending</option>
                                         <option value="Approved">Approved</option>
