@@ -55,6 +55,7 @@
             </thead>
             <tbody>
                 {% for val in cancelreport_filter %}
+                {% if val.date_of_cancel %}
                 <tr>
                     <td>{{forloop.counter}}</td>
                     <td>{{val.date_of_cancel}}</td>
@@ -68,6 +69,8 @@
                     <td>{{val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name}}</td>
                     <td>{{val.land_details.plotsize.plotsize}}</td>
                 </tr>
+                {% endif %}
+
                 {%endfor%}
             </tbody>
         </table>
@@ -231,6 +234,7 @@
             csvContent += "Date_of_Cancel,Date_of_Refund,Mode_of_Refund,Type_of_Refund,Refund_Cheque No,Refund_Amount,Issued_by,Executive Name,Proj Head Name,Dimension\n";
             // Loop through the bookings data and append to CSV
             {% for val in cancelreport_filter %}
+            {% if val.date_of_cancel %}
                 csvContent += "{{ val.date_of_cancel }}," +
                               "{{ val.date_of_refund }}," +
                               "{{val.mode_of_refund}}," +
@@ -241,6 +245,7 @@
                               "{{ val.sitevist.executive.first_name }}," +
                               "{{val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name}}," +
                               "{{ val.land_details.plotsize.plotsize }}\n";
+            {% endif %}                  
             {% endfor %}
 
             // Create a data URI and trigger the download

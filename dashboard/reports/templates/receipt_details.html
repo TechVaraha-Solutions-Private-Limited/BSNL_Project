@@ -52,12 +52,16 @@
     <table class="table-responsive" class="emInfo responsive">
       <thead>
         <tr>
-          <th>#</th>
+          <th>S.No</th>
+          <th>Customer Name</th>
           <th>Receipt No</th>
+          <th>Email</th>
           <th>Date of Receipt</th>
           <th>Type of Payment</th>
-          <th>Amount Paid</th>
+          <th>Amount </th>
           <th>Mode of Payment</th>
+          <th>DD No</th>
+          <th>Project Name</th>
           <th>Cheque No</th>
           <th>Payment Status</th>
           <th>Date Credited</th>
@@ -67,21 +71,27 @@
       </thead>
       <tbody>
         {% for val in receiptreport_filter %}
+        {% if val.paymentname != "Membership" %}
         <tr>
           <td>{{forloop.counter}}</td>
+          <td>{{val.booking.user.first_name}}</td>
           <td>{{val.receipt_no}}</td>
+          <td>{{val.booking.user.email}}</td>
           <td>{{val.dateofreceipt}}</td>
           <td>{{val.paymentname}}</td>
-          <td>{{val.total_paid_amount}}</td>
+          <td>{{val.amount}}</td>
           <td>{{val.payment_mode}}</td>
+          <td>{{val.ddno}}</td>
+          <td>{{val.booking.land_details.project.projectname}}</td>
           <td>{{val.cheque_no}}</td>
           <td>{{val.status}}</td>
           <td>{{val.date_cleared}}</td>
           <td>{{val.bank}}</td>
           <td>
-            {{val.booking.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name}}
+            {{val.sitevist__proj_head}}
           </td>
         </tr>
+        {% endif %}
         {%endfor%}
       </tbody>
     </table>
@@ -279,24 +289,45 @@
       receipt_detailsdownload.addEventListener('click', function () {
           // Prepare data for CSV
           var csvContent = "data:text/csv;charset=utf-8,";
-          csvContent += "No,Customer Name,Phone No,Receipt No,Date of Receipt,Type of Payment,Amount Paid,Mode of Payment,Cheque No,Payment Status,Date Credited,Bank Name,Project Head\n";
+          csvContent += "No,Customer Name,Phone No,Receipt No,Gmail,Date of Receipt,Type of Payment,Amount Paid,Mode of Payment,DD No,Project Name,Cheque No,Payment Status,Date Credited,Bank Name,Project Head\n";
 
           // Loop through the bookings data and append to CSV
           {% for val in receiptreport_filter %}
+         
               csvContent += "{{forloop.counter}}," +
                             "{{val.booking.user.first_name}}," +
-                            "{{val.booking.user.mobile_no}}," +
-                            "{{val.receipt_no}}," +
-                            "{{val.dateofreceipt}}," +
-                            "{{val.paymentname}}," +
-                            "{{val.total_paid_amount}}," +
-                            "{{val.payment_mode}}," +
-                            "{{val.cheque_no}}," +
-                            "{{val.status}}," +
-                            "{{val.date_cleared}}," +
-                            "{{val.bank}}," +
+                            "{{val.booking.user.mobile_no}},"+
+                            "{{val.receipt_no}},"+
+                            "{{val.booking.user.email}},"+
+                            "{{val.dateofreceipt}},"+
+                            "{{val.paymentname}},"+
+                            "{{val.amount}},"+
+                            "{{val.payment_mode}},"+
+                            "{{val.ddno}},"+
+                            "{{val.booking.land_details.project.projectname}},"+
+                            "{{val.cheque_no}},"+
+                            "{{val.status}},"+
+                            "{{val.date_cleared}},"+
+                            "{{val.bank}},"+
                             "{{val.booking.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name}}\n";
-          {% endfor %}
+                            // "{{val.booking.user.first_name}}," +
+                            // "{{val.booking.user.mobile_no}}," +
+                            // "{{val.receipt_no}}," +
+                            // "{{val.dateofreceipt}}," +
+                            // "{{val.paymentname}}," +
+                            // "{{val.amount}}," +
+                            // "{{val.total_paid_amount}}," +
+                            // "{{val.payment_mode}}," +
+                            // "{{val.ddno}}," +
+                            // "{{val.booking.land_details.project.projectname}}," +
+                            // "{{val.cheque_no}}," +
+                            // "{{val.status}}," +
+                            // "{{val.date_cleared}}," +
+                            // "{{val.bank}}," +
+                            // "{{val.booking.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name}}\n";
+         
+                           
+                            {% endfor %}
 
           // Create a data URI and trigger the download
           var encodedUri = encodeURI(csvContent);

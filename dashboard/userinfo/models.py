@@ -66,6 +66,7 @@ class UserDetail(models.Model):
     address = models.CharField(max_length=300,null=True)
     city =  models.CharField(max_length=300,null=True)
     state =  models.CharField(max_length=300,null=True)
+    pincode = models.CharField(max_length=20,null=True)
     panno = models.CharField(max_length=20,null=True)
     aadhhaarno = models.CharField(max_length=20,null=True)
     profile = models.ImageField(upload_to= settings.PROFILE_UPLOAD_PATH, null=True)    
@@ -108,5 +109,3 @@ class TeamLead(models.Model):
 class Executive(models.Model):
     user = models.ForeignKey(User,  on_delete=models.DO_NOTHING, null=False)
     teamlead = models.ForeignKey(TeamLead, on_delete=models.DO_NOTHING, null=False)
-
-

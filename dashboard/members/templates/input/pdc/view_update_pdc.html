@@ -25,7 +25,7 @@
         <table>
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>S.No</th>
                     <th>Seniority No</th>
                     <th>Customer Name</th>
                     <th>Cheque No</th>
@@ -36,20 +36,24 @@
                     <th>Fup Date</th>
                     <th>Cheque Status</th>
                     <th>Date of Cheque Moved</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
+                {% for val in view_update_pdc %}
                 <tr>
+
                     <td>{{forloop.counter}}</td>
-                    <td>{{.customer_name}}</td>
-                    <td>{{mydata.paydate}}</td>
-                    <td>{{mydata.amount}}</td>
-                    <td>{{mydata.modeofpay}}</td>
-                    <td>{{mydata.paystatus}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{val.Seniority_No}}</td>
+                    <td>{{val.customer_name}}</td>
+                    <td>{{val.Cheque}}</td>
+                    <td>{{val.Bank}}</td>
+                    <td>{{val.Branch}}</td>
+                    <td>{{val.Amount}}</td>
+                    <td>{{val.modeofpay}}</td>
+                    <td>{{val.Fup}}</td>
+                    <td>{{val.Cheque_moved}}</td>
+                    <td>{{val.Cheque_status}}</td>
                     <td>
                         <div class="text-center">
                             <a href="" type="button" style="border:solid;border-color: rgba(240, 248, 255, 0);"
@@ -83,7 +87,7 @@
                         </div>
                     </td>
                 </tr>
-
+                {% endfor %}
             </tbody>
         </table>
     </div>

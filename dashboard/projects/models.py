@@ -7,7 +7,7 @@ from bsnl import settings
 
 #Project
 class Project(models.Model):
-	projectname=models.CharField(max_length=100)
+	projectname = models.CharField(max_length=100)
 	shortcode = models.CharField(max_length=100)
 	state = models.CharField(max_length=100)
 	city = models.CharField(max_length=100)

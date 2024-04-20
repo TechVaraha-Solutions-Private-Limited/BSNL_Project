@@ -1,6 +1,6 @@
 
 {% load static %}
-
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +69,7 @@
 							{% if forloop.last %}
 								<span class="logo-cnt2"><span style="font-weight:normal;">No.</span>{{id}}</span> 
 								<span class="logo-cnt4">RECEIPT</span> 
-								<span class="logo-cnt3">Date :<b>{{i.created_on.date|date:'d-m-y'}}</b></span>
+								<span class="logo-cnt3">Date :<b>{{i.created_on.date|date:'d-m-Y'}}</b></span>
 									<!-- <span class="date-dot">{{i.created_on.date|date:'d-m-y'}}</span>
 								</span> -->
 							{% endif %}
@@ -95,13 +95,29 @@
 					<div class="receipt-border2 p0">
 					<div class="wrapper">
 									<p class="logo-cnt1 p3">Rupees  :
-							<span class="date-dot2">{{ word|upper }} ONLY</span>
+							<span class="date-dot2">
+								
+								
+								  {% for i in Value %}
+								  {% if i.paymentname == "DownPayment" %}
+								  {{round_off|upper}}
+								  {% elif i.paymentname == "Membership" %}
+									  
+								  {% else %}
+								  {{downpayment|upper}}
+								  {% endif %}
+							  {% endfor %}
+
+								  
+								 
+
+								 ONLY</span>
 						</p>
 						<!-- Membership code -->
 												<p class="logo-cnt1 p3">For  :
 							<span class="date-dot2">
 
-								{{user.land_details.project.projectname}} (Seniority ID: {{user.seniority_id}}) (Membership ID:{{user.am_no}}) 				</span>
+								{{user.land_details.project.projectname}} (Seniority ID: {{user.seniority_id}}) (Membership ID:{{user.am_no}}) </span>
 						</p>
 						<div class="pay_details">
 						
@@ -120,7 +136,7 @@
 							<tbody>
 								{% for paysts in Value %}
 									{% if paysts.paymentname == "DownPayment" %}
-										<tr>
+										<!-- <tr>
 											<td>Membership</td>
 											<td>{{ user.land_details.plotsize.plotsize}}</td>
 											<td>{{ paysts.payment_mode }}</td>
@@ -135,7 +151,7 @@
 												{% endif %}
 											</td>
 											<td>2600</td>
-										</tr>
+										</tr> -->
 										<tr>
 											<td>{{ paysts.paymentname }}</td> 
 											<td>{{ user.land_details.plotsize.plotsize }}</td>
@@ -161,7 +177,7 @@
 										<td>{{ user.land_details.plotsize.plotsize }}</td>
 										<td>{{ paysts.payment_mode }}</td>
 										<td>{{ paysts.bank }}</td>
-										<td>{{ paysts.branch }}</td>
+										<td>{{ paysts.branch }}</td>       
 										<td>
 											{% if paysts.payment_mode == "Cheque" %}
 												{{ paysts.cheque_no }}
@@ -198,18 +214,18 @@
 								<span class="tab-dot"></span></td>
 								<td></td>
 								
-								<td style="text-align:right;"> 
+								<td style="text-align:right;" > 
 									{% for i in Value %}
-										{% if i.paymentname == "DownPayment" %}
-											200
-										{% else %}
-											0
-										{% endif %}
-									{% endfor %}
-							
+    {% if i.paymentname == "DownPayment" %}
+        200
+    {% elif i.paymentname == "Membership" %}
+        
+    {% else %}
+        0
+    {% endif %}
+{% endfor %}
 								</td>
-								<td>
-								</td>
+								<td></td>
 								</tr>
 							</tr>
 							
@@ -218,14 +234,16 @@
 								<span style="float:left; width:50px;">2.</span> Admission Fee 
 								<span class="tab-dot"></span></td>
 								<td></td>
-								<td style="text-align:right;">
+								<td style="text-align:right;" >
 									{% for i in Value %}
-										{% if i.paymentname == "DownPayment" %}
-											200
-										{% else %}
-											0
-										{% endif %}
-									{% endfor %}
+									{% if i.paymentname == "DownPayment" %}
+										200
+									{% elif i.paymentname == "Membership" %}
+										
+									{% else %}
+										0
+									{% endif %}
+								{% endfor %}
 								</td>
 								<td></td>
 							</tr>
@@ -238,12 +256,14 @@
 								<td></td>
 								<td style="text-align:right;">
 									{% for i in Value %}
-										{% if i.paymentname == "DownPayment" %}
-											200
-										{% else %}
-											0
-										{% endif %}
-									{% endfor %}
+    {% if i.paymentname == "DownPayment" %}
+        200
+    {% elif i.paymentname == "Membership" %}
+        
+    {% else %}
+        0
+    {% endif %}
+{% endfor %}
 								</td>
 								<td>
 													</td>
@@ -255,13 +275,16 @@
 								<span class="tab-dot"></span></td>
 								<td></td>
 								<td style="text-align:right;">
+									
 									{% for i in Value %}
-										{% if i.paymentname == "DownPayment" %}
-											2000
-										{% else %}
-											0
-										{% endif %}
-									{% endfor %}
+									{% if i.paymentname == "DownPayment" %}
+										2000
+									{% elif i.paymentname == "Membership" %}
+										
+									{% else %}
+										0
+									{% endif %}
+								{% endfor %}
 								</td>
 								<td>
 													</td>
@@ -305,8 +328,10 @@
 									{% for i in detail %}
 										{% if forloop.last %}
 											{{i.amount}}</td>
+											
 										{% endif %}
 									{%endfor%}
+									
 								<td>
 													</td>
 							</tr>
@@ -329,7 +354,7 @@
 							<td></td>
 							
 							<td style="text-align:right;font-size: 22px;font-weight: bold;">
-								{% for i in Value %}
+								<!-- {% for i in Value %}
 									{% if i.paymentname == "DownPayment" %}
 									{% for i in detail %}
 										{% if forloop.last %}
@@ -343,7 +368,17 @@
 										{% endif %}
 									{%endfor%}
 									{% endif %}
-								{% endfor %}
+								{% endfor %} -->
+								{% for i in Value %}
+								{% if i.paymentname == "DownPayment" %}
+								{{i.amount|floatformat:0|add:2600}}
+								{% elif i.paymentname == "Membership" %}
+									
+								{% else %}
+								{{i.amount}}
+								{% endif %}
+							{% endfor %}
+								
 								
 								</td>
 							<td>
@@ -358,7 +393,7 @@
 						<div class="wrapper">
 					<div class="receipt-border1" style="padding: 20px 20px 0px 20px;">
 						<p class="mtop1" style="margin-top:0px;">
-											<span class=" logo-cnt2" style="text-align:center;font-weight:normal;font-size:18px;"><img style="width: 142px;" src="assets/images/sign_president.jpg" alt=""/><br/>President<br/>(S Dilip Kumar)</span> 
+											<span class=" logo-cnt2" style="text-align:center;font-weight:normal;font-size:18px;"><img style="width: 142px;" src="/static/images/president.jpg" alt=""/><br/>President<br/>(S Dilip Kumar)</span> 
 
 							<!--<span class=" logo-cnt2" style="text-align:center;font-weight:normal;font-size:18px;"><img  style="width: 142px;"  src="images/Psign.jpg" alt=""/><br/>President<br/>()</span> -->
 							<!--<span class="fright logo-cnt3" style="text-align:center;width:230px;font-size:18px;"><img src="images/sign_vpresident.png" alt=""/><br/>Vice -President<br/>()</span>-->
@@ -407,4 +442,26 @@
 	}
 	window.onload = setActive;
 	</script>
+
+<script>
+    // Define function to check if "DownPayment" exists
+    function checkDownPaymentExists() {
+        var downpaymentExists = false;
+        // {% for i in Value %}
+        //     if ("{{ i.paymentname }}" === "DownPayment") {
+        //         downpaymentExists = true;
+        //         break;
+        //     }
+        // {% endfor %}
+        return downpaymentExists;
+    }
+
+    // Output the value in the specified <td> elements
+    var downpaymentValue = checkDownPaymentExists() ? '200' : '0';
+    document.getElementById('downpayment-value').textContent = downpaymentValue;
+    document.getElementById('admission-fee-value').textContent = downpaymentValue;
+    document.getElementById('share-fee-value').textContent = downpaymentValue;
+    document.getElementById('share-amount-value').textContent = checkDownPaymentExists() ? '2000' : '0';
+</script>
+	
 </html>

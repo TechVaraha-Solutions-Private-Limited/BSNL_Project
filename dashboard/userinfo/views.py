@@ -5,6 +5,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from .models import User,SeniorTeamLead,TeamLead,Executive
 from django.contrib.auth.hashers import make_password
+from django.contrib import messages
+
 
 def admin_login(request):
     if request.method == 'POST':
@@ -20,72 +22,63 @@ def admin_login(request):
 # @check_permission('user', 'add')
 def add_user(request):
     sr_team = User.objects.filter(role='Project_Lead')
-    team = SeniorTeamLead.objects.filter()
-    execut = TeamLead.objects.filter()
+    team = SeniorTeamLead.objects.all()
+    execut = TeamLead.objects.all()
+    
     if request.method == 'POST':
+        first_name = request.POST.get('first_name', '').strip()
+        last_name = request.POST.get('last_name', '').strip()
+        role = request.POST.get('role')
+        mobile_no = request.POST.get('mobile_no', '').strip()
+        email = request.POST.get('email', '').strip()
+        password = make_password(request.POST.get('password1', '').strip())
+        employee_id = request.POST.get('employee_id', '').strip()
+        date_joined = request.POST.get('date_joined', '').strip()
+
+         # Check if email or mobile number already exists
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already exists.')
+            return render(request, 'users/add_user.html', {'sr_team_lead': sr_team, 'team': team, 'executive': execut})
+        
+        if User.objects.filter(mobile_no=mobile_no).exists():
+            messages.error(request, 'Mobile number already exists.')
+            return render(request, 'users/add_user.html', {'sr_team_lead': sr_team, 'team': team, 'executive': execut})
+
+        user = User(
+            first_name=first_name,
+            last_name=last_name,
+            role=role,
+            mobile_no=mobile_no,
+            email=email,
+            password=password,
+            employee_id=employee_id,
+            date_joined=date_joined
+        )
+        user.save()
+
         value = request.POST.get('role')
         if value == 'Sr_Team_lead':
-            user = User()
-            user.first_name = request.POST.get('first_name','').strip()
-            user.last_name = request.POST.get('last_name','').strip()
-            user.role = request.POST.get('role')
-            user.mobile_no = request.POST.get('mobile_no','').strip()
-            user.email = request.POST.get('email','').strip()
-            user.password = make_password(request.POST.get('password1','').strip())
-            user.employee_id=request.POST.get('employee_id','').strip()
-            user.date_joined=request.POST.get('date_joined','').strip()
-            user.save()
             sr_team_lead = SeniorTeamLead()
             sr_team_lead.user = user
             sr_team_lead.project_head_id = request.POST.get('project_lead')
             sr_team_lead.save()
         elif value == 'Team_Lead':
-            user = User()
-            user.first_name = request.POST.get('first_name','').strip()
-            user.last_name = request.POST.get('last_name','').strip()
-            user.role = request.POST.get('role')
-            user.mobile_no = request.POST.get('mobile_no','').strip()
-            user.email = request.POST.get('email','').strip()
-            user.password = make_password(request.POST.get('password1','').strip())
-            user.employee_id=request.POST.get('employee_id','').strip()
-            user.date_joined=request.POST.get('date_joined','').strip()
-            user.save()
             team_lead = TeamLead()
-            team_lead.user=user
+            team_lead.user = user
             team_lead.sr_team_id = request.POST.get('sr_team_lead')
             team_lead.save()
-        elif value =='Executive':
-            user = User()
-            user.first_name = request.POST.get('first_name','').strip()
-            user.last_name = request.POST.get('last_name','').strip()
-            user.role = request.POST.get('role')
-            user.mobile_no = request.POST.get('mobile_no','').strip()
-            user.email = request.POST.get('email','').strip()
-            user.password = make_password(request.POST.get('password1','').strip())
-            user.employee_id=request.POST.get('employee_id','').strip()
-            user.date_joined=request.POST.get('date_joined','').strip()
-            user.save()
+        elif value == 'Executive':
             executive = Executive()
-            executive.user=user
+            executive.user = user
             executive.teamlead_id = request.POST.get('team_lead')
             executive.save()
-        else:
-            user = User()
-            user.first_name = request.POST.get('first_name','').strip()
-            user.last_name = request.POST.get('last_name','').strip()
-            user.role = request.POST.get('role')
-            user.mobile_no = request.POST.get('mobile_no','').strip()
-            user.email = request.POST.get('email','').strip()
-            user.password = make_password(request.POST.get('password1','').strip())
-            user.employee_id=request.POST.get('employee_id','').strip()
-            user.date_joined=request.POST.get('date_joined','').strip()
-            user.save()
+
     context = {
-        'sr_team_lead':sr_team,
-        'team':team,
-        'executive':execut
+        'sr_team_lead': sr_team,
+        'team': team,
+        'executive': execut
     }
-    return render(request, 'users/add_user.html',context)
+    return render(request, 'users/add_user.html', context)
 def signin(request):
     if request.method == 'POST':
         mobile_no = request.POST.get('mobile_no')

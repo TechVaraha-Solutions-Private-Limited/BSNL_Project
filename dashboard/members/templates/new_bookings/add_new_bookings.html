@@ -13,6 +13,23 @@
     color: white;
     font-size: 19px;
   }
+
+  .messages {
+    margin: 15px;
+    padding: 7px;
+    border: 1px solid #721c24;
+    background-color: #f8d7da;
+    width: 43%;
+    margin-left: 30%;
+}
+
+/* Style for the close icon */
+.close-icon {
+    cursor: pointer;
+    float: right;
+    margin-left: 10px;
+    color: #888;
+}
 </style>
 <form class="space-y-5" method="POST" action="" autocomplete="off">
   {% for message in messages %}
@@ -30,6 +47,7 @@
       style="background-color: #178ef0; color: white; width: 100%"
       ><b>ADD CREDENTIALS - New Booking</b></label
     >
+   
     <h2
       class="text-lg font-semibold dark:text-white-light"
       style="
@@ -146,6 +164,18 @@
             class="form-input"
           />
         </div>
+        <div class="p-1">
+          <label class="p-1">PIN Code</label>
+          <input
+            type="number"
+            name="pincode"
+            placeholder="PIN Code"
+            class="form-input"
+          />
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+
         <div>
           <label class="p-1">Password</label>
           <input
@@ -156,8 +186,6 @@
             required
           />
         </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
           <label class="p-1">Pan Number</label>
           <input
@@ -518,6 +546,7 @@
   
   
   <script>
+    
   function remove_field(button) {
     var row = button.parentNode;
     row.parentNode.removeChild(row);

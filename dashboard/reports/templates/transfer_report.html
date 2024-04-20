@@ -51,6 +51,7 @@
             </thead>
             <tbody>
                 {% for val in transreport_filter %}
+                {% if val.date_of_transfer %}
                 <tr>
                     <td>{{forloop.counter}}</td>
                     <td>{{val.date_of_transfer}}</td>
@@ -62,6 +63,7 @@
                     <td>{{val.user.email}}</td>
                     <td>{{val.paymentdetails_set.last.total_paid_amount}}</td>
                 </tr>
+                {%endif%}
                 {%endfor%}
             </tbody>
         </table>
@@ -168,6 +170,7 @@
 
             // Loop through the bookings data and append to CSV
             {% for val in transreport_filter %}
+            {% if val.date_of_transfer %}
                 csvContent += "{{val.date_of_transfer}}," +
                               "{{val.type_of_transfer}}," +
                               "{{val.transfer_to}}," +
@@ -176,6 +179,7 @@
                               "{{ val.user.mobile_no }}," +
                               "{{ val.user.email }}," +
                               "{{ val.paymentdetails_set.last.total_paid_amount }}\n";
+             {%endif%}                  
             {% endfor %}
 
             // Create a data URI and trigger the download

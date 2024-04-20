@@ -29,7 +29,7 @@
                 </div>
                 <div class="p-1">
                     <label class="p-1">Date of Booking</label>
-                    <input type="date" name="created_on" class="form-input" placeholder="DOB" value="{{updateactivemember.created_on.date}}">
+                    <input type="date" name="created_on" class="form-input" placeholder="DOB" value="{{book.date_of_booking|date:'d-m-Y'}}">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Am No</label>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="p-1">
                     <label class="p-1">Alternate Number</label>
-                    <input type="number" name="alternate_no" placeholder="Alternate Number" class="form-input" value="{{userdetail.aadhhaarno}}">
+                    <input type="number" name="alternate_no" placeholder="Alternate Number" class="form-input" value="{{userdetail.alternate_no}}">
                 </div>
                 <div class="p-1">
                     <label class="p-1">Email ID</label>
@@ -64,8 +64,12 @@
                     <input type="text" name="state" placeholder="State" class="form-input" value="{{userdetail.state}}">
                 </div>
                 <div class="p-1">
+                    <label class="p-1">PIN Code</label>
+                    <input type="text" name="pincode" placeholder="PIN Code" class="form-input" value="{{userdetail.pincode}}">
+                </div>
+                <div class="p-1">
                     <label class="p-1">Site Preference</label>
-                    <input type="text" name="site" placeholder="Site Preference" class="form-input" readonly>
+                    <input type="text" name="site" placeholder="Site Preference" class="form-input" value="{{book.sitevist}}"  >
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">

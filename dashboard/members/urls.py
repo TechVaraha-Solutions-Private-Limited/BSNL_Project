@@ -47,6 +47,7 @@ urlpatterns = [
     path('update_receipts/<id>',update_receipts,name='update_receipts'),
     # delete function
     path('deleteactivememberlist/<id>',deleteactivememberlist,name='deleteactivememberlist'),
+    path('delete_site_visit/<id>',delete_site_visit,name='delete_site_visit'),
     path('delete_block/<id>',delete_block,name='delete_block'),
     path('delete_user_access/<id>',delete_user_access,name='delete_user_access'),
     # images

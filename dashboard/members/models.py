@@ -21,6 +21,7 @@ class Site_visit(models.Model):
     updated_on =  models.DateTimeField(auto_now=True)
     status =  models.BooleanField(default=True)
     sv_status = models.CharField(max_length=20,null=True)
+    PMname = models.CharField(max_length=20,null=True)
 
 class Bookings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -64,6 +65,7 @@ class Bookings(models.Model):
     type_of_refund = models.CharField(max_length=20,null=True)
     issued_by = models.CharField(max_length=20,null=True) 
     sitevist = models.ForeignKey(Site_visit, on_delete=models.CASCADE,null=True)
+    date_of_booking = models.DateField(auto_now_add=True)
     # updated_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on =  models.DateTimeField(auto_now=True)
@@ -78,8 +80,9 @@ class PaymentDetails(models.Model):
     payment_data = models.CharField(max_length=50,null=True)
     amount = models.CharField(max_length=20,null=True)
     transaction = models.CharField(max_length=20)
-    ddno =models.CharField(max_length=20)
+    ddno = models.CharField(max_length=20)
     dateofreceipt = models.CharField(max_length=20)
+    paymenttype = models.CharField(max_length= 20,null=True)
     paymentname = models.CharField(max_length=20,null=True)
     status = models.CharField(max_length=2,default=0)
     total_paid_amount = models.CharField(max_length=100,default=0)
@@ -149,3 +152,16 @@ class Request_call(models.Model):
     cust_name = models.CharField(max_length=50,null=True)
     cust_number = models.IntegerField(null=True)
     time_of_request = models.DateTimeField(auto_now=True)
+    
+
+class pdc_update(models.Model):
+    Seniority_No = models.CharField(max_length=50,null=True)
+    customer_name = models.CharField(max_length=50,null=True)
+    Cheque = models.CharField(max_length=50,null=True)
+    Bank = models.CharField(max_length=20,null=True)
+    Branch = models.CharField(max_length=200,null=True)
+    Amount = models.CharField(max_length=20,null=True)
+    modeofpay = models.CharField(max_length=20)
+    Fup =  models.CharField(max_length=20)
+    Cheque_moved =  models.CharField(max_length=20)
+    Cheque_status = models.CharField(max_length=20,null=True)

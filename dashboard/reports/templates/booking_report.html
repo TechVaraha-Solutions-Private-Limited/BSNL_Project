@@ -46,14 +46,13 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Seniority</th>
                     <th>Customer_Name</th>
+                    <th>Seniority</th>
                     <th>Date_of_Booking</th>
                     <th>Project</th>
                     <th>Dimension</th>
                     <th>AM_Number</th>
                     <th>Mobile_No</th>
-                    <th>Alternate_No</th>
                     <th>Email_ID</th>
                     <th>Address</th>
                     <th>Tot_Value</th>
@@ -69,22 +68,30 @@
                 {% for val in bookings %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td>{{val.seniority_id}}</td>
                     <td>{{val.user.first_name|upper}}</td>
+                    <td>{{val.seniority_id}}</td>
                     <td>{{val.created_on|date:'d-m-y'}}</td>
                     <td>{{val.land_details.project.projectname}}</td>
                     <td>{{val.land_details.plotsize.plotsize}}</td>
                     <td>{{val.am_no}}</td>
                     <td>{{val.user.mobile_no}}</td>
-                    <td>{{val.alter}}</td>
                     <td>{{val.user.email}}</td>
                     <td>{{val.address}}</td>
                     <td>{{val.land_details.total_amount}}</td>
                     <td>{{val.land_details.down_payment}}</td>
-                    <td>{{val.total_amt}}</td>
-                    <td>{{ val.exective_name }}</td>
-                    <td>{{ val.team_lead }}</td>
-                    <td>{{ val.mydata.status }}</td>
+                    <td>{{val.tl_paid}}</td>
+                    <td>{{val.exective_name}}</td>
+                    <td>{{val.project_lead}}</td>
+                    <td>
+                        {% if val.payments_status == "0" %}
+                            Pending
+                        {% elif val.payments_status == "1" %}
+                            Completed
+                        {% else %}
+                            <!-- Handle other cases if needed -->
+                            Unknown
+                        {% endif %}
+                    </td>
                     <td>{{val.paymentdetails_set.last.paymentname}}</td>
                 </tr>
                 {%endfor%}
@@ -224,7 +231,7 @@
         downloadCsvLink.addEventListener('click', function () {
             // Prepare data for CSV
             var csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Seniority,Customer Name,Date of Booking,Project,Dimension,AM Number,Mobile No,Alternate No,Email ID,Address,Tot Value,DP Value,Tot Paid,Executive,Proj Head,Pay Status,Payment Type\n";
+            csvContent += "Seniority,Customer Name,Date of Booking,Project,Dimension,AM Number,Mobile No,Email ID,Address,Tot Value,DP Value,Tot Paid,Executive,Proj Head,Pay Status,Payment Type\n";
 
             // Loop through the bookings data and append to CSV
             {% for val in bookings %}
@@ -235,14 +242,20 @@
                               "{{ val.land_details.plotsize.plotsize }}," +
                               "{{ val.am_no }}," +
                               "{{ val.user.mobile_no }}," +
-                              "{{ val.user.alter }}," +
                               "{{ val.user.email }}," +
-                              "{{ val.user.address|upper }}," +
+                              "{{ val.address|upper }}," +
                               "{{ val.land_details.total_amount }}," +
                               "{{ val.land_details.down_payment }}," +
                               "{{ val.total_amt }}," +
-                              "{{ val.sitevist.executive.first_name|upper }}," +
-                              "{{ val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper }}," +  // Pay Status field is empty in your provided data
+                              "{{ val.exective_name|upper }}," +
+                              "{{ val.project_lead|upper }}," +  
+                              "{% if val.payments_status == '0' %}" +
+                      "Pending," +
+                  "{% elif val.payments_status == '1' %}" +
+                      "Completed," +
+                  "{% else %}" +
+                      "Unknown," +
+                  "{% endif %}" +  // Pay Status field is empty in your provided data
                               "{{ val.paymentdetails_set.last.paymentname }}\n";
             {% endfor %}
 

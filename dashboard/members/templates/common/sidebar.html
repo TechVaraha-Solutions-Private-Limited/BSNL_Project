@@ -221,7 +221,7 @@
                     </ul>
                 </li>
                 <!--3-->
-                <li class="menu nav-item">
+                <!-- <li class="menu nav-item">
                     <button type="button"
                             class="nav-link group bord"
                             :class="{'active' : activeDropdown === 'communication'}"
@@ -262,7 +262,7 @@
                             <a href="apps-invoice-add.html" style="text-decoration: none">Payment Reminder</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <!--5-->
                 <li class="menu nav-item">
                     <button type="button"
@@ -325,7 +325,7 @@
                             </ul>
                         </li>
                         <li x-data="{subActive:null}">
-                            <button type="button" class="before:h-[5px] bord before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900" @click="subActive === 'error' ? subActive = null : subActive = 'error'">
+                            <!-- <button type="button" class="before:h-[5px] bord before:w-[5px] before:rounded before:bg-gray-300 hover:bg-gray-100 ltr:before:mr-2 rtl:before:ml-2 dark:text-[#888ea8] dark:hover:bg-gray-900" @click="subActive === 'error' ? subActive = null : subActive = 'error'">
                                 Update PDC
                                 <div class="ltr:ml-auto rtl:mr-auto rtl:rotate-180" :class="{'!rotate-90' : subActive === 'error'}">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -336,18 +336,18 @@
                                               stroke-linejoin="round" />
                                     </svg>
                                 </div>
-                            </button>
+                            </button> -->
                             <ul class="sub-menu text-gray-500 ltr:ml-2 rtl:mr-2" x-show="subActive === 'error'" x-collapse="" style="height: 0px; overflow: hidden; display: none;" hidden="">
                                 <li>
-                                    <a href="/members/update_pdc" style="text-decoration: none">Update PDC</a>
+                                    <!-- <a href="/members/update_pdc" style="text-decoration: none">Update PDC</a> -->
                                 </li>
                                 <li>
-                                    <a href="/members/view_update_pdc" style="text-decoration: none">Updated PDC list</a>
+                                    <!-- <a href="/members/view_update_pdc" style="text-decoration: none">Updated PDC list</a> -->
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="/members/cr_code" style="text-decoration: none">Update CR/DR Code</a>
+                            <!-- <a href="/members/cr_code" style="text-decoration: none">Update CR/DR Code</a> -->
                         </li>
                     </ul>
                 </li>
@@ -394,9 +394,9 @@
                         <li>
                             <a href="/reports/sitereport" style="text-decoration: none">Site Visit Report</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="/reports/pdcreport" style="text-decoration: none">PDC Report</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="/reports/ugdgreport" style="text-decoration: none">UGDG Report</a>
                         </li>

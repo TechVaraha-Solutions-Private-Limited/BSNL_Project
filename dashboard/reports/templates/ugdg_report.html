@@ -55,7 +55,9 @@
                 </tr>
             </thead>
             <tbody>
+                
                 {% for val in ugdgreport_filter %}
+                {% if val.date_of_change %}
                 <tr>
                     <td>{{forloop.counter}}</td>
                     <td>{{val.date_of_change}}</td>
@@ -63,13 +65,14 @@
                     <td>{{val.old_land_details.plotsize.plotsize}}</td>
                     <td>{{val.land_details.plotsize.plotsize}}</td>
                     <td>{{val.refund_amount}}</td>
-                    <td>{{val.sitevist.executive.first_name|upper}}</td>
-                    <td>{{val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper}}</td>
+                    <td>{{val.sitevist.Executive.first_name|upper}}</td>
+                    <td>{{val.view.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper}}</td>
                     <td>{{val.Payment_for_UG}}</td>
                     <td>{{val.seniority_id}}</td>
                     <td>{{val.user.first_name}}</td>
                 </tr>
-                {%endfor%}
+                {% endif %}
+        {% endfor %}
             </tbody>
         </table>
     </div>
@@ -215,6 +218,7 @@
 
             // Loop through the bookings data and append to CSV
             {% for val in ugdgreport_filter %}
+            {% if val.date_of_change %}
                 csvContent += "{{ val.date_of_change }}," +
                               "{{ val.type_of_change }}," +
                               "{{val.old_land_details.plotsize.plotsize}}," +
@@ -222,10 +226,11 @@
                               "{{ val.land_details.plotsize.plotsize }}," +
                               "{{val.refund_amount}}," +
                               "{{val.sitevist.executive.first_name|upper}}," +
-                              "{{ val.alter }}," +
+                              "{{val.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name|upper}}"+
+                              "{{val.Payment_for_UG}},"+
                               "{{val.seniority_id}}," +
-                              "{{ val.address|upper }}," +
                               "{{val.user.first_name}}\n";
+             {% endif %}                 
             {% endfor %}
 
             // Create a data URI and trigger the download

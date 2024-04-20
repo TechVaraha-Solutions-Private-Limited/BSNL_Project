@@ -8,7 +8,9 @@ from django.contrib import messages
 from django.db.models import Q,Sum
 from django.contrib.auth.hashers import make_password
 from dashboard.members.models import Update_blocked
-from datetime import date
+from datetime import date,datetime
+from .models import pdc_update
+
 #this mail
 # from django.core.mail import send_mail
 # from django.http import HttpResponse
@@ -271,6 +273,14 @@ def add_new_bookings(request):
         email = request.POST.get('email')
         mobile_no = request.POST.get('mobile_no')
         seniority_id = request.POST.get('seniority_id')
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already exists. Please use a different email.')
+            return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
+
+        if User.objects.filter(mobile_no=mobile_no).exists():
+            messages.error(request, 'Mobile number already exists. Please use a different mobile number.')
+            return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
+
 
         user = User()
         user.first_name = first_name
@@ -279,6 +289,7 @@ def add_new_bookings(request):
         user.email = email
         user.password = make_password(request.POST.get('password', '').strip())
         user.role = "Customer"
+        seniority_id=seniority_id
         user.save()
 
         details = UserDetail()
@@ -294,6 +305,7 @@ def add_new_bookings(request):
         details.address = request.POST.get('address')
         details.city = request.POST.get('city')
         details.state = request.POST.get('state')
+        details.pincode = request.POST.get('pincode')
         details.save()
 
         nominee = UserNominee()
@@ -525,6 +537,7 @@ def generate(request):
                         membership_fee.ddno=request.POST.get('dd_no')
                         membership_fee.dateofreceipt = request.POST.get('dateofreceipt')
                         membership_fee.payment_data = request.POST.get('payment_data')
+                        membership_fee.paymenttype = request.POST.get('paymenttype')
                         membership_fee.amount = 2600
                         membership_fee.paymentname = "Membership"
                         membership_fee.receipt_no = get_number
@@ -635,7 +648,7 @@ def ugdg(request):
             book.date_of_change = request.POST.get('date_of_change')
             book.type_of_change = request.POST.get('type_of_change')
             book.diff = request.POST.get('diff')
-            book.exective = request.POST.get('exective')
+            book.executive = request.POST.get('executive')
             book.team_lead = request.POST.get('team_lead')
             book.sr_team_lead = request.POST.get('sr_team_lead')
             book.project_lead  = request.POST.get('project_lead')
@@ -643,6 +656,7 @@ def ugdg(request):
             book.indvl_paid =request.POST.get('indvl_paid')
             book.tl_paid =request.POST.get('tl_paid')
             book.stl_paid = request.POST.get('stl_paid')
+            book.PMname = request.POST.get('PMname')
             book.old_land_details = old_land_detail
             book.land_details = land_detail
             book.save()
@@ -729,7 +743,9 @@ def site_visit(request):
                 source = request.POST.get('source'),
                 booked_no = request.POST.get('booked_no'),
                 booked_sry_no = request.POST.get('booked_sry_no'),
-                sv_status = request.POST.get('sv_status'),      
+                sv_status = request.POST.get('sv_status'), 
+                PMname = request.POST.get('PMname')   ,
+
             ).save()
 
         messages.success(request,'Successfully Saved')
@@ -737,11 +753,26 @@ def site_visit(request):
 
 def view_site_visit(request):
     view = Site_visit.objects.all()
+    if request.method =='POST':
+        view.date_of_site_visit = request.POST.get('date_of_visit')
+        view.cust_name = request.POST.get('cust_name')
+        view.phone_no = request.POST.get('phone_no')
+        view.executive = request.POST.get('executive')
+        view.so_done_by = request.POST.get('so_done_by')   
+        view.sv_don_by = request.POST.get('sv_done_by')
+        view.sv_category = request.POST.get('sv_category')
+        view.source = request.POST.get('source')
+        view.booked_no = request.POST.get('booked_no')
+        view.booked_sry_no = request.POST.get('booked_sry_no')
+        view.sv_status = request.POST.get('sv_status')
+        view.PMname = request.POST.get('PMname')
+        view.save()
     return render (request,'display/view_site_visit.html',{'view':view})
 
 def update_site_visit(request,id):
     update = Site_visit.objects.get(id=id)
     if request.method =='POST':
+
         exective = request.POST.get('executive')
         value = User.objects.get(id = exective)
         get_execute = Executive.objects.get(user_id=value.id)
@@ -751,7 +782,7 @@ def update_site_visit(request,id):
         update.date_of_site_visit = request.POST.get("date_of_visit")
         update.cust_name = request.POST.get("cust_name")
         update.phone_no = request.POST.get("phone_no")
-        update.executive = value
+        update.executive = request.POST.get("executive")
         update.so_done_by = request.POST.get("so_done_by")
         update.sv_don_by = request.POST.get("sv_done_by")
         update.sv_category = request.POST.get("sv_category")
@@ -761,8 +792,23 @@ def update_site_visit(request,id):
         update.sv_status = request.POST.get('sv_status')
         update.save()
         return redirect('/members/view_site_visit')
-    messages.success(request,'Updated Succesfully')
+    
     return render (request,'display/update_display/update_site_view.html',{'update':update})
+def delete_site_visit(request,id):
+    deletesitevisit=Site_visit.objects.get(id=id)
+    deletesitevisit.delete()
+    # if delete.user-id.is_active == True:
+    #     delete.user_id.is_active=False
+    #     delete.user_id.save()  # Save the changes to the user object
+        
+    #     # Delete the site visit
+    #     delete.delete()
+    # context={
+    #     'delete':delete,
+    # }
+    
+    return redirect('/members/view_site_visit')
+
 
 def lead_owner(request):
     exective = User.objects.filter(role = 'Executive')
@@ -801,7 +847,8 @@ def lead_owner(request):
                 install_fup_status = request.POST.get('install_fup_status'),
                 install_fup_date = request.POST.get('install_fup_date'),
                 exep_category = request.POST.get('exep_category'),
-                excep_reason = request.POST.get('excep_reason')
+                excep_reason = request.POST.get('excep_reason'),
+              
             ).save()
     return render(request,'new_bookings/lead_owner.html',{'customer':customers,'exective':exective})
 
@@ -838,6 +885,7 @@ def cancel(request):
 
 def receipts(request):
     booking = PaymentDetails.objects.order_by('-created_on').all()
+    counter = 1
 
     # for mydata in booking:
     #     total_amount = 0
@@ -848,7 +896,7 @@ def receipts(request):
 
     # booking = PaymentDetails.objects.all()
 
-    return render(request,'view/receipts.html',{'booking':booking}) 
+    return render(request,'view/receipts.html',{'booking':booking,'counter':counter}) 
 
 def update_receipts(request,id):
     update_receipts=PaymentDetails.objects.filter(booking=id).last()
@@ -968,7 +1016,9 @@ def updateactivememberlist(request,id):
     user =  User.objects.get(id=id)
     book = Bookings.objects.get(user=user)
     userdetail = UserDetail.objects.get(user=user)
-    
+    formatted_date = book.date_of_booking.strftime("%d-%m-%Y")
+    print("pdc", formatted_date)
+    # print("pdc",book.date_of_booking|date:"d-m-Y")
     if request.method =='POST':
         user.first_name=request.POST.get("first_name")
         user.mobile_no = request.POST.get('mobile_no')
@@ -980,6 +1030,7 @@ def updateactivememberlist(request,id):
         userdetail.alternate_no = request.POST.get('alternate_no')
         userdetail.address = request.POST.get('address')
         userdetail.city = request.POST.get('city')
+        userdetail.pincode = request.POST.get('pincode')
         userdetail.state = request.POST.get('state')
         userdetail.id_card=request.POST.get('id_card')
         userdetail.save()
@@ -989,6 +1040,7 @@ def updateactivememberlist(request,id):
     context={
         'user':user,
         'book':book,
+        'formatted_date':formatted_date,
         'userdetail':userdetail
     }
     
@@ -1075,7 +1127,7 @@ def user_access(request,id):
     return render(request,'input/update_user/user_access.html',{'user_log':user_log})
 
 def view_user_access(request):
-    view_user=User.objects.filter(is_active=1)
+    view_user=User.objects.filter(is_active=1).order_by('-date_joined')
     return render(request,'input/update_user/view_user_access.html',{'view_user':view_user})
 
 def delete_user_access(request, id):
@@ -1150,7 +1202,8 @@ def view_call_request(request):
     return render(request,'image/callrequest.html',{"view_call_request":view_call_request})
 
 def view_update_pdc(request):
-    return render(request,'input/pdc/view_update_pdc.html')
+    view_update_pdc = pdc_update.objects.all()
+    return render(request,'input/pdc/view_update_pdc.html',{"view_update_pdc":view_update_pdc})
 
 def cr_code(request):
      return render(request,'input/cr_code/update_cr_code.html')

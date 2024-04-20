@@ -2,18 +2,48 @@
 {% block content %}
 {% load static %}
 
+
 <style>
     #divbox {
         box-shadow: 0px 0px 5px #007bff;
         border-radius: 1%;
     }
+
+    .messages {
+    margin: 15px;
+    padding: 7px;
+    border: 1px solid #721c24;
+    background-color: #f8d7da;
+    width: 43%;
+    margin-left: 30%;
+}
+
+/* Style for the close icon */
+.close-icon {
+    cursor: pointer;
+    float: right;
+    margin-left: 10px;
+    color: #888;
+}
 </style>
+
+
 <form class="space-y-5" method="POST" action="" autocomplete="off">
+
     {% csrf_token %}
     <div class="p-2" id="divbox">
         <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
             style="background-color: #178EF0;color:white; width:100%; text-align: center;"><b>ADD USER</b></label>
-        <div class="panel">
+            {% if messages %}
+            <div class="messages">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }} <span class="close-icon">×</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            <div class="panel">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
                     <label>First Name</label>
@@ -127,4 +157,85 @@
         }
     });
 </script>
+<script>
+    // Function to handle form submission
+    function handleSubmit(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Get form data
+        var formData = new FormData(document.getElementById("userForm"));
+
+        // Send form data via AJAX
+        fetch(document.getElementById("userForm").action, {
+            method: "POST",
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => {
+            // Check if response is OK
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            // Return response text
+            return response.text();
+        })
+        .then(data => {
+            // Display success message or handle response data
+            console.log(data); // Log response data
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        // Remove error messages
+        removeErrorMessages();
+    }
+
+    // Event listener for form submission
+    document.getElementById("userForm").addEventListener("submit", handleSubmit);
+
+    // Function to remove error messages
+    function removeErrorMessages() {
+        var messages = document.querySelectorAll('.messages');
+        messages.forEach(function(message) {
+            message.remove();
+        });
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to remove a message when its close icon is clicked
+        function removeMessage(event) {
+            console.log('Close icon clicked'); // For debugging
+
+            // Find the closest message container (parent <li>)
+            var messageItem = event.target.closest('li');
+
+            if (messageItem) {
+                // Remove the message container from the DOM
+                messageItem.remove();
+                console.log('Message removed'); // For debugging
+
+                // Check if there are any remaining messages
+                var messages = document.querySelectorAll('.messages li');
+                if (messages.length === 0) {
+                    // If no remaining messages, remove the entire messages container
+                    var messagesContainer = document.querySelector('.messages');
+                    messagesContainer.remove();
+                    console.log('Messages container removed'); // For debugging
+                }
+            }
+        }
+
+        // Add event listeners to all close icons
+        var closeIcons = document.querySelectorAll('.close-icon');
+        closeIcons.forEach(function(icon) {
+            icon.addEventListener('click', removeMessage);
+        });
+    });
+</script>
+
+
 {% endblock %}
