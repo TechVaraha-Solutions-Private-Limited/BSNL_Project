@@ -45,9 +45,9 @@
 <div class="re-container">
 
 <div class="wrapper p9">
-<div class="receipt-border" id="printer_ticket">
+<div  id="printer_ticket">
 <!-- <div style="position:absolute;width:99%;opacity: 55%;margin-top:170px;"><img src="assets/images/watermark.jpg" width="100%" alt=""/></div> -->
-<div class="inner-box ">
+<div >
 <div ></div> 
 	<div class="receipt-border1">
         <!-- <div class="wrapper p3 bod" style="padding-bottom:15px;marign-bottom:30px;">
@@ -78,11 +78,26 @@
 		
 		<div class="wrapper p4">
 			<p class="logo-cnt1"><span style="float:left;margin-right:10px;font-weight:normal;line-height: 28px; text-align: justify;   font-size: 18px;">
-				This is to confirm that <b>{{user.first_name}}{{user.last_name}}</b> Residing in <b>#{{userdetail.address}},{{userdetail.state}},{{userdetail.city}} - 583277</b>,
-				Have booked a site of measuring <b>{{book.land_details.plotsize.plotsize}}</b> in the <b>{{book.land_details.project.projectname}}</b> Located at {{book.land_details.project.address}}, {{book.land_details.project.city}} Taluk, {{book.land_details.project.state}} {{book.land_details.project.pincode}} from BSNL Employees and Citizens House Building Co-Operative Society Ltd. on <b>{{book.land_details.project.created_on.date|date:"d/m/Y"}}</b>.
-				You have booked your site by paying an initial amount of                             											
-				<b>Rs. {{book.total_paid_amount}}/-</b> by Ref No. :<b>324359028125</b> 
-                Drawn at <b>{{bank}}</b> Bank <b>{{branch}}</b> Branch.<b> Membership Id: {{book.am_no}}. Seniority ID: {{book.seniority_id}}</b><br/><br/></p>
+				This is to confirm that <b>{{user.first_name}}{{user.last_name}}</b> Residing in <b>#{{userdetail.address}},{{userdetail.state}},{{userdetail.city}} - {{userdetail.pincode}}</b>,
+				Have booked a site of measuring <b>{{book.land_details.plotsize.plotsize}}</b> in the <b>{{book.land_details.project.projectname}}</b> Located at {{book.land_details.project.address}}, {{book.land_details.project.city}} , {{book.land_details.project.state}} {{book.land_details.project.pincode}} from BSNL Employees and Citizens House Building Co-Operative Society Ltd. on <b>{{book.land_details.project.created_on.date|date:"d/m/Y"}}</b>.
+				
+					You have booked your site by paying an initial amount of <b>Rs. {{amount}}/-</b> 
+					{% if cheque_no %}
+        Cheque Number: <b>{{ cheque_no }}</b>
+    {% endif %}
+    {% if dd_no %}
+        DD Number: <b>{{ dd_no }}</b>
+    {% endif %}
+    {% if netbanking %}
+	Transaction Id:<b> {{ netbanking }}</b>
+    {% endif %}
+    {% if not cheque_no and not dd_no and not netbanking %}
+        Cash
+    {% endif %}
+					Drawn at <b>{{ bank }}</b> Bank <b>{{ branch }}</b> Branch.
+					<b>Membership Id: {{ book.am_no }}</b>. <b>Seniority ID: {{ book.seniority_id }}</b>.
+				</p> &nbsp;
+			 
 					<p class="logo-cnt1"><span style="float:left;margin-right:10px;font-weight:normal;font-size: 18px;">
 						<b>The site is booked under the following conditions.</b><br/><br/>
 							<ol class="list" style="float:left;margin-right:10px;font-weight:normal;font-family: 'HelveticaLTStdRoman_0';    font-size: 18px;    line-height:24px;width:100%;">

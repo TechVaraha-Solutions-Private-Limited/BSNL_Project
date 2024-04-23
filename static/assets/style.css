@@ -312,7 +312,7 @@ color:#525252; text-align:center;}
 .re-container { width:864px; margin:0 auto;}
 .rtop{margin-top:20px;}
 .receipt-bg { float:left; width:858px; position:relative;}
-.receipt-border { float:left;width: 862px; border:#000 solid 2px;}
+.receipt-border { float:left;width: 862px; border:#000 solid 0px;}
 .receipt-border1 { float:left; width:860px; padding:20px 20px 0px 20px;}
 .receipt-border2 { float:left; width:860px; padding:0 20px;}
 .re-logo { float:left; width:128px;margin-left:0px;}.re-logo img{width:100%;}

@@ -17,31 +17,60 @@ def confirmletter_view(request,id):
     userdetail = UserDetail.objects.get(user=book.user)
     payment = PaymentDetails.objects.filter(booking=book)
     project = Project.objects.filter(landdetails=book.land_details)
-    # print('payment:',book.projectname)
-   
+    
+      
 
     for i in payment:
         bank=i.bank
         branch=i.branch
+        amount=i.amount
+        print(amount)
+
+
+
+
+    cheque_no=''
+    dd_no=''
+    netbanking=''
+    
+
+    for payment in payment:
+        if payment.payment_mode == 'Cheque':
+            cheque_no = payment.cheque_no
+        elif payment.payment_mode == 'DD':
+            dd_no = payment.ddno
+        elif payment.payment_mode == 'Net Banking':
+            netbanking = payment.transaction
+    
+    print(cheque_no)
+    print(dd_no)
+    print(netbanking)
+    
+
     # for i in payment:
     #     bank = i.bank
     #     return render(request ,'confirmletter_view.html',{'book1':bank})
-    print("Muthu")
+    # print("Muthu")
     return render(request,'confirmletter_view.html',{'user':user,
                                                      'book':book,
+                                                     'amount':amount,
                                                      'bank':bank  if 'bank' in locals() else None,
                                                      'branch':branch  if 'branch' in locals() else None,
                                                      'userdetail':userdetail,
-                                                     'payment':payment,                                                    
+                                                     'payment':payment,
+                                                     'netbanking':netbanking,
+                                                     'dd_no':dd_no,
+                                                     'cheque_no':cheque_no,
                                                      'project':project})
-
+ 
 
 def print_recepit(request, id):
     try:
-        paymentInfos = PaymentDetails.objects.get(receipt_no=id)
+        paymentInfos = PaymentDetails.objects.filter(receipt_no=id).first()
         data = PaymentDetails.objects.filter()
+        
        
-   
+      
         check_payments = PaymentDetails.objects.filter(dateofreceipt=paymentInfos.dateofreceipt , booking_id=paymentInfos.booking_id)
         details = PaymentDetails.objects.filter(receipt_no = paymentInfos.receipt_no, booking_id=paymentInfos.booking_id)
        
@@ -64,7 +93,7 @@ def print_recepit(request, id):
         print(payment_count)
         id=id
         for payment in payments:
-
+ 
             last_payment = payment.amount
         if last_payment:
             no = float(last_payment)
@@ -72,12 +101,13 @@ def print_recepit(request, id):
             print(receipt_no)
         get_last = PaymentDetails.objects.filter(booking_id=user.id).last()
         value = get_last.amount
-        no = float(value)
-        amont = float(value)+2600
+        no = float(value) 
+        amont = float(value)+2600  
         word1 = num2words(amont, lang='en_IN')
         word = word1.replace(',','')
-        
-        id=id
+        print(no)
+        print(amont)
+        id=id 
         round_off = ''
         downpayment = ''
 
@@ -85,7 +115,6 @@ def print_recepit(request, id):
             if i.paymentname == 'Membership':
                 word2 = float(value) + 2600
                 word2 = num2words(word2, lang='en_IN')
-                
                 round_off = word2.replace(',','')
             else:
                amont = float(value)
@@ -157,12 +186,7 @@ def booking_report(request):
     bookings =Bookings.objects.all().order_by('-created_on')
     team_lead = User.objects.filter( role = "Project_Lead")
     executivename = User.objects.filter( role = "Executive")     
-    for view in view_report:
-        detail = UserDetail.objects .get(user_id = view.booking.user)
-        view.userinfo = detail.alternate_no
-        view.address = detail.address
-        
-
+    
     if request.method == 'POST':
         data = request.POST.get('paymenttype')
         value = request.POST.get('projectOption')
@@ -172,6 +196,7 @@ def booking_report(request):
         if select == 'project':
             if value == 'all':
                 bookings = Bookings.objects.all()
+                print("All", bookings)
             else:
                 bookings = Bookings.objects.filter(land_details__project__projectname = value)
             for booking in bookings:
@@ -196,15 +221,12 @@ def booking_report(request):
                     booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no     
                     booking.exective =executivename(user_id = booking.user.id).first_name
                     booking.team_lead = team_lead(user_id = booking.user.id).frist_name
-                    
-            
+  
         elif select == 'project_head':
-            print(teamlead)
+            
             #bookings = Bookings.objects.filter(sitevist__executive__executive_set__last__teamlead__sr_team__project_head__first_name= teamlead)
             sites = Site_visit.objects.filter(proj_head_id=teamlead)
             bookings = Bookings.objects.filter(sitevist__id=1)
-            print(Bookings)
-            print(sites)
 
         elif select == 'executive':
             bookings = Bookings.objects.filter(sitevist__executive = executtype)
@@ -224,7 +246,7 @@ def booking_report(request):
         else:
             booking = Bookings.objects.all()
             executive_id = SeniorTeamLead.objects.all()
-            print(executive_id)
+            print(booking)
             for i in executive_id:
                 print("id",i.user)
             for booking in bookings:
@@ -234,7 +256,7 @@ def booking_report(request):
                 booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
                 booking.exective_name=User.objects.get(id=1).first_name
                 booking.project_lead = User.objects.get(id=2).first_name
-                print(booking.address)
+                
         context={
         'view_report': view_report,
         'project':project,

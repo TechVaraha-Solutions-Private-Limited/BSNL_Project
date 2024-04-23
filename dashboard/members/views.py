@@ -885,7 +885,7 @@ def cancel(request):
 
 def receipts(request):
     booking = PaymentDetails.objects.order_by('-created_on').all()
-    counter = 1
+    
 
     # for mydata in booking:
     #     total_amount = 0
@@ -896,7 +896,7 @@ def receipts(request):
 
     # booking = PaymentDetails.objects.all()
 
-    return render(request,'view/receipts.html',{'booking':booking,'counter':counter}) 
+    return render(request,'view/receipts.html',{'booking':booking}) 
 
 def update_receipts(request,id):
     update_receipts=PaymentDetails.objects.filter(booking=id).last()
