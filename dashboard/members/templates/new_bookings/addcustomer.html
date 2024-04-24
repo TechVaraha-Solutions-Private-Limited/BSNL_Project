@@ -7,6 +7,11 @@
         color: black;
         text-decoration: none;
     }
+
+    .required-label:after {
+  content: "*";
+  color: red;
+}
 </style>
 <form class="space-y-5 " method="POST" action="" autocomplete="off">
     {% for message in messages %}
@@ -24,16 +29,16 @@
         <div class="panel p-1">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
-                    <label class="p-1">Member Name</label>
-                    <input type="text" name="first_name" class="form-input" placeholder="Member Name" >
+                    <label class="p-1 required-label">Member Name</label>
+                    <input type="text" name="first_name" class="form-input" placeholder="Member Name" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Father/Husband Name</label>
                     <input type="text" name="last_name" class="form-input" placeholder="Surname Name">
                 </div>
                 <div class="p-1">
-                    <label class="p-1">Date of Brith</label>
-                    <input type="date" name="dob" class="form-input" placeholder="DOB">
+                    <label class="p-1 required-label">Date of Brith</label>
+                    <input type="date" name="dob" class="form-input" placeholder="DOB" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Age</label>
@@ -42,16 +47,16 @@
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
-                    <label class="p-1">Moblie Number</label>
-                    <input type="number" name="mobile_no" placeholder="Moblie Number" class="form-input">
+                    <label class="p-1 required-label">Moblie Number</label>
+                    <input type="number" name="mobile_no" placeholder="Moblie Number" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Alternate Number</label>
                     <input type="number" name="alternate_no" placeholder="Alternate Number" class="form-input">
                 </div>
                 <div class="p-1">
-                    <label class="p-1">Email ID</label>
-                    <input type="email" name="email" placeholder="E-Mail Id" class="form-input">
+                    <label class="p-1 required-label">Email ID</label>
+                    <input type="email" name="email" placeholder="E-Mail Id" class="form-input" required>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Profile</label>
@@ -215,6 +220,29 @@
         i--;
         document.getElementById("check_input_no").value = current;
     }
+
+
+
+    function validateForm() {
+  var inputs = document.querySelectorAll('.form-input');
+  var isValid = true;
+
+  inputs.forEach(function(input) {
+    if (input.value.trim() === '') {
+      isValid = false;
+      var label = input.parentNode.querySelector('.required-label');
+      label.classList.add('show');
+    } else {
+      var label = input.parentNode.querySelector('.required-label');
+      label.classList.remove('show');
+    }
+  });
+
+  if (!isValid) {
+    // If any required field is empty, prevent form submission
+    return false;
+  }
+}
 
   </script>
 {% endblock %}

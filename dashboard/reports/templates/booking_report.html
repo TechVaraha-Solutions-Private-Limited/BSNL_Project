@@ -36,13 +36,13 @@
 
         </div>
         <div>
-            <a href="#" id="downloadCsvLink" style="float: right;" class="btn btn-primary">Download CSV</a>
+            <a href="#" onclick="exportToExcel()" style="float: right;" class="btn btn-primary">Download CSV</a>
             <button class="btn btn-primary mr-1" style="float: right;" id="reportType" type="submit" name="reportType" value="all">All</button>
         </div>
     </form>
     <br>
     <div>
-        <table class="table-responsive" class="emInfo responsive">
+        <table  id="bookingTable" class="table-responsive emInfo responsive">
             <thead>
                 <tr>
                     <th>#</th>
@@ -131,6 +131,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 <script>
     var reportTypeDropdown = document.getElementById('reportType');
@@ -225,50 +226,96 @@
     });
 
 </script>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var downloadCsvLink = document.getElementById('downloadCsvLink');
-        downloadCsvLink.addEventListener('click', function () {
-            // Prepare data for CSV
-            var csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Seniority,Customer Name,Date of Booking,Project,Dimension,AM Number,Mobile No,Email ID,Address,Tot Value,DP Value,Tot Paid,Executive,Proj Head,Pay Status,Payment Type\n";
+    function exportToExcel() {
+        const table = document.getElementById("bookingTable");
+        const rows = table.getElementsByTagName("tr");
+        const data = [];
+        
+        // Include table header (thead) if exists
+        const headerRow = table.getElementsByTagName("thead")[0];
+        const headerCells = headerRow.getElementsByTagName("th");
+        const headerData = Array.from(headerCells).map(cell => cell.innerText);
+        data.push(headerData.join(","));
 
-            // Loop through the bookings data and append to CSV
-            {% for val in bookings %}
-                csvContent += "{{ val.seniority_id }}," +
-                              "{{ val.user.first_name|upper }}," +
-                              "{{ val.created_on|date:'d-m-y' }}," +
-                              "{{ val.land_details.project.projectname }}," +
-                              "{{ val.land_details.plotsize.plotsize }}," +
-                              "{{ val.am_no }}," +
-                              "{{ val.user.mobile_no }}," +
-                              "{{ val.user.email }}," +
-                              "{{ val.address|upper }}," +
-                              "{{ val.land_details.total_amount }}," +
-                              "{{ val.land_details.down_payment }}," +
-                              "{{ val.total_amt }}," +
-                              "{{ val.exective_name|upper }}," +
-                              "{{ val.project_lead|upper }}," +  
-                              "{% if val.payments_status == '0' %}" +
-                      "Pending," +
-                  "{% elif val.payments_status == '1' %}" +
-                      "Completed," +
-                  "{% else %}" +
-                      "Unknown," +
-                  "{% endif %}" +  // Pay Status field is empty in your provided data
-                              "{{ val.paymentdetails_set.last.paymentname }}\n";
-            {% endfor %}
+        // Iterate through rows and cells to extract data
+        for (let i = 0; i < rows.length; i++) {
+            const row = rows[i];
+            const rowData = [];
+            const cells = row.getElementsByTagName("td");
 
-            // Create a data URI and trigger the download
-            var encodedUri = encodeURI(csvContent);
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "booking_report.csv");
-            document.body.appendChild(link); // Required for Firefox
-            link.click();
-        });
-    });
+            for (let j = 0; j < cells.length; j++) {
+                rowData.push(cells[j].innerText);
+            }
+
+            data.push(rowData.join(","));
+        }
+
+        // Create a Blob containing the data in CSV format
+        const csv = data.join("\n");
+        const blob = new Blob([csv], { type: "text/csv" });
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a link and click it to trigger download
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "bookings.csv";
+        document.body.appendChild(link);
+        link.click();
+
+        // Clean up
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+    }
 </script>
+<!-- <script>
+   document.addEventListener('DOMContentLoaded', function () {
+    var downloadCsvLink = document.getElementById('downloadCsvLink');
+    downloadCsvLink.addEventListener('click', function () {
+        // Prepare data for CSV
+        var csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Sr.No.,Seniority,Customer Name,Date of Booking,Project,Dimension,AM Number,Mobile No,Email ID,Address,Tot Value,DP Value,Tot Paid,Executive,Proj Head,Pay Status,Payment Type\n";
+
+        // Loop through the bookings data and append to CSV
+        {% for val in bookings %}
+            csvContent += "{{forloop.counter}},"+
+                          "{{val.user.first_name|upper}},"+
+                          "{{val.seniority_id}},"+
+                          "{{val.created_on|date:'d-m-y'}},"+
+                          "{{val.land_details.project.projectname}},"+
+                          "{{val.land_details.plotsize.plotsize}},"+
+                          "{{val.am_no}},"+
+                          "{{val.user.mobile_no}},"+
+                          "{{val.user.email}},"+
+                          "{{val.address}},"+
+                          "{{val.land_details.total_amount}},"+
+                          "{{val.land_details.down_payment}},"+
+                          "{{val.tl_paid}},"+
+                          "{{val.exective_name}},"+
+                          "{{val.project_lead}},"+
+                          "{% if val.payments_status == '0' %}" +
+                           "Pending," +
+                          "{% elif val.payments_status == '1' %}" +
+                          "Completed," +
+                          "{% else %}" +
+                          "Unknown," +
+                          "{% endif %}" +  
+                          "{{ val.paymentdetails_set.last.paymentname }}\n";
+                    
+
+        {% endfor %}
+
+        // Create a data URI and trigger the download
+        var encodedUri = encodeURI(csvContent);
+        var link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "booking_report.csv");
+        document.body.appendChild(link); // Required for Firefox
+        link.click();
+    });
+});
+</script> -->
 
 
 {% endblock %}

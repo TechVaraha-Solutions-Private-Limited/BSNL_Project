@@ -1,5 +1,12 @@
 {% extends 'index.html' %} {% block content %} {% load static %} {% include 'common/bootstrap.html' %}
 <style>
+
+.required-label:after {
+  content: "*";
+  color: red;
+}
+
+
   a {
     color: black;
     text-decoration: none;
@@ -30,8 +37,12 @@
     margin-left: 10px;
     color: #888;
 }
+.error {
+    color: red;
+    font-size: 12px;
+  }
 </style>
-<form class="space-y-5" method="POST" action="" autocomplete="off">
+<form class="space-y-5" id="myForm" method="POST" action="" autocomplete="off">
   {% for message in messages %}
   <div
     class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
@@ -64,7 +75,7 @@
     <div class="panel p-1">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
-          <label class="p-1">Member Name</label>
+          <label class="p-1 required-label">Member Name</label>
           <input
             type="text"
             name="first_name"
@@ -74,9 +85,10 @@
             placeholder="Member Name"
             required
           />
+          <span class="error" id="first_name_error"></span>
         </div>
         <div class="p-1">
-          <label class="p-1">Father/Husband Name</label>
+          <label class="p-1 ">Father/Husband Name</label>
           <input
             type="text"
             name="last_name"
@@ -84,10 +96,12 @@
             placeholder="Surname Name"
             required
           />
+          <span class="error" id="last_name_error"></span>
         </div>
         <div class="p-1">
-          <label class="p-1">Date of Brith</label>
+          <label class="p-1 required-label">Date of Brith</label>
           <input type="date" name="dob" class="form-input" placeholder="DOB" required/>
+          <span class="error" id="dob_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1">Age</label>
@@ -98,11 +112,12 @@
             placeholder="Age"
             required
           />
+          <span class="error" id="age_error"></span>
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
-          <label class="p-1">Moblie Number</label>
+          <label class="p-1 required-label">Moblie Number</label>
           <input
             type="number"
             name="mobile_no"
@@ -111,6 +126,7 @@
             class="form-input"
             required
           />
+          <span class="error" id="mobile_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1">Alternate Number</label>
@@ -120,10 +136,12 @@
             placeholder="Alternate Number"
             class="form-input"
             required
+            
           />
+          <span class="error" id="alternate_error"></span>
         </div>
         <div class="p-1">
-          <label class="p-1">Email ID</label>
+          <label class="p-1 required-label">Email ID</label>
           <input
             type="email"
             name="email"
@@ -132,6 +150,7 @@
             class="form-input"
             required
           />
+          <span class="error" id="email_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1">Profile</label>
@@ -140,7 +159,7 @@
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
-          <label class="p-1">Residential Address</label>
+          <label class="p-1 required-label">Residential Address</label>
           <textarea
             class="form-input"
             name="address"
@@ -149,9 +168,10 @@
             required
             rows="3"
           ></textarea>
+          <span class="error" id="address_error"></span>
         </div>
         <div class="p-1">
-          <label class="p-1">City</label>
+          <label class="p-1 required-label">City</label>
           <input
             type="text"
             name="city"
@@ -159,9 +179,10 @@
             class="form-input"
             required
           />
+          <span class="error" id="city_error"></span>
         </div>
         <div class="p-1">
-          <label class="p-1">State</label>
+          <label class="p-1 required-label">State</label>
           <input
             type="text"
             name="state"
@@ -169,9 +190,10 @@
             class="form-input"
             required
           />
+          <span class="error" id="state_error"></span>
         </div>
         <div class="p-1">
-          <label class="p-1">PIN Code</label>
+          <label class="p-1 required-label">PIN Code</label>
           <input
             type="number"
             name="pincode"
@@ -241,7 +263,7 @@
       </h1>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
-          <label class="p-1">Nominee Name</label>
+          <label class="p-1 required-label">Nominee Name</label>
           <input
             type="text"
             name="nominee_name"
@@ -249,6 +271,7 @@
             class="form-input"
             required
           />
+          <span class="error" id="nominee_name_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1">Nominee Age</label>
@@ -261,7 +284,7 @@
           />
         </div>
         <div class="p-1">
-          <label class="p-1">Nominee Relationship</label>
+          <label class="p-1 required-label">Nominee Relationship</label>
           <input
             type="text"
             name="nominee_relationship"
@@ -271,7 +294,7 @@
           />
         </div>
         <div class="p-1">
-          <label class="p-1">Nominee Address</label>
+          <label class="p-1 required-label">Nominee Address</label>
           <input
             type="text"
             name="address1"
@@ -279,6 +302,7 @@
             class="form-input"
             required
           />
+          <span class="error" id="address1_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1">City</label>
@@ -378,19 +402,19 @@
         <b>Site Details</b>
       </h1>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div class="p-1">
-          <label>Select Project</label><br />
+        <div class="p-1" >
+          <label class="required-label">Select Project</label><br />
           <select
             class="form-control"
             id="projectname"
             name="projectname"
-            required
-          >
+            required >
             <option value="">Select</option>
             {% for project in projects %}
             <option value="{{project.id}}">{{project.projectname}}</option>
             {% endfor %}
           </select>
+          <span class="error" id="projectname_error"></span>
         </div>
         <div class="p-1">
           <label>Dimension</label><br />
@@ -406,7 +430,7 @@
         </div>
         <input type="hidden" name="project_id" id="" value="" />
         <div class="p-1">
-          <label class="p-1">Total Site Value</label>
+          <label class="p-1 required-label">Total Site Value</label>
           <input
             type="text"
             name="total_site_value"
@@ -468,13 +492,14 @@
         <b>Payment Details</b>
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div class="p-1">
-          <div>
-            <label>Select Payment Option</label>
+        <div class="p-1" id="formContainer" >
+          <div >
+            <label class="required-label">Select Payment Option</label>
             <select
-              class="form-control"
+              class="form-control paymentOption"
               id="inputfield"
               name="payment_mode"
+            
               required
             >
               <option>--select option--</option>
@@ -484,8 +509,8 @@
             </select>
           </div>
         </div>
-        <div class="p-1" id="mytable" style="display: none">
-          <label class="p-1">Bank</label>
+        <div class="p-1 mytable" id="mytable" style="display: none">
+          <label class="p-1 required-label">Bank</label>
           <input
             type="text"
             name="bank"
@@ -494,7 +519,7 @@
             required
           />
         </div>
-        <div class="p-1" id="project" style="display: none">
+        <div class="p-1 project" id="project" style="display: none">
           <label class="p-1">Branch</label>
           <input
             type="text"
@@ -504,7 +529,7 @@
             required
           />
         </div>
-        <div class="p-1" id="table3" style="display: none">
+        <div class="p-1 table3" id="table3" style="display: none">
           <label class="p-1">Cheque No</label>
           <input
             type="text"
@@ -514,7 +539,7 @@
           
           />
         </div>
-        <div class="p-1" id="table4" style="display: none">
+        <div class="p-1 table4" id="table4" style="display: none">
           <label class="p-1">Pay Date</label>
           <input
             type="date"
@@ -524,8 +549,8 @@
             required
           />
         </div>
-        <div class="p-1" id="table5" style="display: none">
-          <label>Amount</label>
+        <div class="p-1  table5" id="table5" style="display: none">
+          <label class="required-label">Amount</label>
           <input
             type="text"
             name="amount"
@@ -534,8 +559,8 @@
             required
           />
         </div>
-        <div class="p-1" id="table6" style="display: none">
-          <label>Transaction Id</label>
+        <div class="p-1 required-label table6" id="table6" style="display: none">
+          <label class="required-label">Transaction Id</label>
           <input
             type="text"
             name="transaction_id"
@@ -544,8 +569,8 @@
            
           />
         </div>
-        <div class="p-1" id="table7" style="display: none">
-          <label>DD No</label>
+        <div class="p-1 required-label table7" id="table7" style="display: none">
+          <label class="required-label">DD No</label>
           <input
             type="text"
             name="dd_no"
@@ -554,19 +579,23 @@
            
           />
         </div>
+      
       </div>
+      <!-- <button onclick="addMore()">Add More</button> -->
     </div>
     <div class="text-center">
       <input
         type="submit"
-       
+        onclick="validateForm()"     
         value="Submit Application"
         class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light"
         style="background-color: #178ef0"
       />
     </div>
   </div>
+  
 </form>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
   
@@ -736,6 +765,140 @@
     i--;
     document.getElementById("check_input_no").value = current;
   }
+
+  function validateForm() {
+  var inputs = document.querySelectorAll('.form-input');
+  var isValid = true;
+
+  inputs.forEach(function(input) {
+    if (input.value.trim() === '') {
+      isValid = false;
+      var label = input.parentNode.querySelector('.required-label');
+      label.classList.add('show');
+    } else {
+      var label = input.parentNode.querySelector('.required-label');
+      label.classList.remove('show');
+    }
+  });
+
+  if (!isValid) {
+    // If any required field is empty, prevent form submission
+    return false;
+  }
+}
+
+</script>
+
+<!-- <script>
+  function addMore() {
+    var formContainer = document.getElementById("formContainer");
+    var clone = formContainer.cloneNode(true);
+
+    // Clear values of cloned fields
+    var inputs = clone.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.value = '';
+    });
+
+    formContainer.parentNode.appendChild(clone);
+  }
+
+  function showFields(selectElement) {
+    var selectedOption = selectElement.value;
+
+    var parentDiv = selectElement.parentElement.parentElement;
+
+    var mytable = parentDiv.querySelector('.mytable');
+    var project = parentDiv.querySelector('.project');
+    var table3 = parentDiv.querySelector('.table3');
+    var table4 = parentDiv.querySelector('.table4');
+    var table5 = parentDiv.querySelector('.table5');
+
+    mytable.style.display = "none";
+    project.style.display = "none";
+    table3.style.display = "none";
+    table4.style.display = "none";
+    table5.style.display = "none";
+
+    if (selectedOption === "Cheque") {
+      mytable.style.display = "block";
+      project.style.display = "block";
+      table3.style.display = "block";
+      table4.style.display = "block";
+      table5.style.display = "block";
+    } else if (selectedOption === "Net Banking") {
+      mytable.style.display = "block";
+      project.style.display = "block";
+      table4.style.display = "block";
+      table5.style.display = "block";
+    } else if (selectedOption === "DD") {
+      mytable.style.display = "block";
+      project.style.display = "block";
+      table4.style.display = "block";
+      table5.style.display = "block";
+    }
+  }
+
+  var selects = document.querySelectorAll('.paymentOption');
+  selects.forEach(select => {
+    select.addEventListener('change', function() {
+      showFields(this);
+    });
+  });
+</script> -->
+<script>
+  document.getElementById("myForm").addEventListener("submit", function(event) {
+    var form = event.target;
+    var isValid = true;
+
+    // Clear previous error messages
+    var errorElements = document.querySelectorAll('.error');
+    errorElements.forEach(function(errorElement) {
+      errorElement.textContent = '';
+    });
+
+    // Check each field
+    if (form.first_name.value === '') {
+      document.getElementById("first_name_error").textContent = 'Please fill in Member Name.';
+      isValid = false;
+    }
+    if (form.last_name.value === '') {
+      document.getElementById("last_name_error").textContent = 'Please fill in Father/Husband Name.';
+      isValid = false;
+    }
+    if (form.dob.value === '') {
+      document.getElementById("dob_error").textContent = 'Please fill in Date of Birth.';
+      isValid = false;
+    }
+    if (form.age.value === '') {
+      document.getElementById("age_error").textContent = 'Please fill in Age.';
+      isValid = false;
+    }
+    if (form.mobile_no.value === '') {
+      document.getElementById("mobile_no_error").textContent = 'Please fill in Mobile Number.';
+      isValid = false;
+    }
+    if (form.alternate_no.value === '') {
+      document.getElementById("alternate_no_error").textContent = 'Please fill in Alternate Number.';
+      isValid = false;
+    }
+    if (form.email.value === '') {
+      document.getElementById("email_error_error").textContent = 'Please fill in Email.';
+      isValid = false;
+    }
+    if (form.address.value === '') {
+      document.getElementById("address_error").textContent = 'Please fill in Address.';
+      isValid = false;
+    }
+    if (form.projectname.value === '') {
+      document.getElementById("projectname_error").textContent = 'Please fill in Projectname.';
+      isValid = false;
+    }
+
+    if (!isValid) {
+      event.preventDefault();
+    }
+  });
 </script>
 
 

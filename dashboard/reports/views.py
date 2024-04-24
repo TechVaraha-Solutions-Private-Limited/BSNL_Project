@@ -219,8 +219,7 @@ def booking_report(request):
                     booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                     booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                     booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no     
-                    booking.exective =executivename(user_id = booking.user.id).first_name
-                    booking.team_lead = team_lead(user_id = booking.user.id).frist_name
+                    
   
         elif select == 'project_head':
             
@@ -254,9 +253,7 @@ def booking_report(request):
                 booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
                 booking.address = UserDetail.objects.get(user_id = booking.user.id).address
                 booking.alter = UserDetail.objects.get(user_id = booking.user.id).alternate_no
-                booking.exective_name=User.objects.get(id=1).first_name
-                booking.project_lead = User.objects.get(id=2).first_name
-                
+
         context={
         'view_report': view_report,
         'project':project,
