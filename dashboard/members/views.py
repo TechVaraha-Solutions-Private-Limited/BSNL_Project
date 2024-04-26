@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect, HttpResponse
 from django.http import JsonResponse
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee,TeamLead,Executive,SeniorTeamLead
-from .models import Bookings,PaymentDetails,Ugdg,Images,Leadowner,Site_visit,Btmt,G_image,Request_call
+from .models import Bookings,PaymentDetails,Ugdg,Images,Leadowner,Site_visit,Btmt,G_image,Request_call,LandDetails
 from dashboard.projects.models import Project,PlotSize,LandDetails
 from django.forms.models import model_to_dict
 from django.contrib import messages
@@ -11,6 +11,8 @@ from dashboard.members.models import Update_blocked
 from datetime import date,datetime
 from .models import pdc_update
 
+from .models import LandDetails
+from django.db.models import Count
 #this mail
 # from django.core.mail import send_mail
 # from django.http import HttpResponse
@@ -33,9 +35,41 @@ def gallery_images(request):
         ).save()
     return render(request,'image/gallery.html')
 
-def home(request):
-    return render(request,'common/index.html')
 
+
+
+def home(request):
+    project_details = []
+
+   
+    unique_projects = LandDetails.objects.values('project__projectname', 'plotsize__plotsize').annotate(land_count=Count('bookings'))
+
+    
+    for project in unique_projects:
+        project_name = project['project__projectname']
+        plot_size = project['plotsize__plotsize']
+        land_count = project['land_count']
+        
+        split = plot_size.split("X")
+        length = int(split[0])
+        width   = int(split[1])
+
+        tot_sq  = length*width*land_count
+
+        print("this value",tot_sq)
+        project_details.append({
+            'name': project_name,
+            'size': plot_size,
+            'land_count': land_count,
+            'tot_sq': tot_sq
+        })
+        print("this is tot_sq",project_details)
+    context = {
+        'project_details': project_details
+    }
+    
+
+    return render(request, 'common/index.html', context)
 def addcustomer(request):
     if request.method == "POST":
         first_name=request.POST.get('first_name')
@@ -273,6 +307,11 @@ def add_new_bookings(request):
         email = request.POST.get('email')
         mobile_no = request.POST.get('mobile_no')
         seniority_id = request.POST.get('seniority_id')
+        
+        if not first_name :
+            messages.error(request,'Enter the Name')
+        
+
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists. Please use a different email.')
             return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
@@ -958,21 +997,13 @@ from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 
 def activemember(request):
-    # Fetch all active users
+   
     active_users = UserDetail.objects.filter(user__is_active=1).all()
-    
-    # Fetch all active user nominees
     active_nominees = UserNominee.objects.filter(user__is_active=1).all()
-
-    # Fetch all bookings for active users
     active_bookings = Bookings.objects.filter(user__is_active=1).order_by('-created_on').all()
-
-    different = 0  # Initialize 'different' outside the loop
-
-    # Iterate through each booking
+    different = 0  
     for booking in active_bookings:
         try:
-            # Fetch related user details
             userdetail = UserDetail.objects.get(user_id=booking.user.id)
             booking.cus_dob = userdetail.dob
             booking.id_status = userdetail.id_card
@@ -1061,6 +1092,8 @@ def update_personal(request,id):
     nomine =  UserNominee.objects.get(user_id=id)
     family_details =  UserFamilyDetails.objects.filter(user_id=id)
     card_details = UserDetail.objects.get(user_id=id)
+    print('Addcard',card_details.panno)
+    print('Addcard',card_details.aadhhaarno)
     if request.method =='POST':
         card_details.aadhhaarno = request.POST.get('aadhhaarno')
         card_details.panno = request.POST.get('panno')

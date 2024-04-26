@@ -42,7 +42,7 @@
     font-size: 12px;
   }
 </style>
-<form class="space-y-5" id="myForm" method="POST" action="" autocomplete="off">
+<form class="space-y-5" id="myForm" method="POST" action="" autocomplete="off" >
   {% for message in messages %}
   <div
     class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
@@ -82,25 +82,25 @@
             class="form-input"
             id="name"
             value="{{site.cust_name}}"
-            placeholder="Member Name"
-            required
+            placeholder="Member Name"required
           />
-          <span class="error" id="first_name_error"></span>
+          
         </div>
+
         <div class="p-1">
           <label class="p-1 ">Father/Husband Name</label>
           <input
             type="text"
             name="last_name"
             class="form-input"
-            placeholder="Surname Name"
-            required
+            placeholder="Surname Name"required
+            
           />
           <span class="error" id="last_name_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1 required-label">Date of Brith</label>
-          <input type="date" name="dob" class="form-input" placeholder="DOB" required/>
+          <input type="date" name="dob" class="form-input" placeholder="DOB"required/>
           <span class="error" id="dob_error"></span>
         </div>
         <div class="p-1">
@@ -206,7 +206,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
 
         <div>
-          <label class="p-1">Password</label>
+          <label class="p-1 required-label">Password</label>
           <input
             type="password"
             name="password"
@@ -216,7 +216,7 @@
           />
         </div>
         <div class="p-1">
-          <label class="p-1">Pan Number</label>
+          <label class="p-1 required-label">Pan Number</label>
           <input
             type="text"
             name="panno"
@@ -230,9 +230,9 @@
           <input type="file" name="pan_proof" />
         </div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5" required>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-5"required>
         <div class="p-1">
-          <label class="p-1">Aadhhar Number</label>
+          <label class="p-1 required-label">Aadhhar Number</label>
           <input
             type="number"
             name="aadhhaarno"
@@ -488,7 +488,7 @@
           padding-top: 1%;
           padding-bottom: 1%;
         "
-      >
+      
         <b>Payment Details</b>
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -498,9 +498,7 @@
             <select
               class="form-control paymentOption"
               id="inputfield"
-              name="payment_mode"
-            
-              required
+              name="payment_morequired"
             >
               <option>--select option--</option>
               <option value="Cheque">Cheque</option>
@@ -516,7 +514,6 @@
             name="bank"
             placeholder="Bank"
             class="form-input"
-            required
           />
         </div>
         <div class="p-1 project" id="project" style="display: none">
@@ -526,7 +523,7 @@
             name="branch"
             placeholder="Branch"
             class="form-input"
-            required
+            
           />
         </div>
         <div class="p-1 table3" id="table3" style="display: none">
@@ -546,7 +543,7 @@
             name="payment_data"
             placeholder="Pay Date"
             class="form-input"
-            required
+            
           />
         </div>
         <div class="p-1  table5" id="table5" style="display: none">
@@ -556,10 +553,10 @@
             name="amount"
             placeholder="Amount"
             class="form-input"
-            required
+            
           />
         </div>
-        <div class="p-1 required-label table6" id="table6" style="display: none">
+        <div class="p-1 table6" id="table6" style="display: none">
           <label class="required-label">Transaction Id</label>
           <input
             type="text"
@@ -586,7 +583,7 @@
     <div class="text-center">
       <input
         type="submit"
-        onclick="validateForm()"     
+           
         value="Submit Application"
         class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light"
         style="background-color: #178ef0"
@@ -598,7 +595,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-  
+
   
   <script>
     
@@ -766,26 +763,26 @@
     document.getElementById("check_input_no").value = current;
   }
 
-  function validateForm() {
-  var inputs = document.querySelectorAll('.form-input');
-  var isValid = true;
+//   function validateForm() {
+//   var inputs = document.querySelectorAll('.form-input');
+//   var isValid = true;
 
-  inputs.forEach(function(input) {
-    if (input.value.trim() === '') {
-      isValid = false;
-      var label = input.parentNode.querySelector('.required-label');
-      label.classList.add('show');
-    } else {
-      var label = input.parentNode.querySelector('.required-label');
-      label.classList.remove('show');
-    }
-  });
+//   inputs.forEach(function(input) {
+//     if (input.value.trim() === '') {
+//       isValid = false;
+//       var label = input.parentNode.querySelector('.required-label');
+//       label.classList.add('show');
+//     } else {
+//       var label = input.parentNode.querySelector('.required-label');
+//       label.classList.remove('show');
+//     }
+//   });
 
-  if (!isValid) {
-    // If any required field is empty, prevent form submission
-    return false;
-  }
-}
+//   if (!isValid) {
+//     // If any required field is empty, prevent form submission
+//     return false;
+//   }
+// }
 
 </script>
 
@@ -847,58 +844,36 @@
   });
 </script> -->
 <script>
-  document.getElementById("myForm").addEventListener("submit", function(event) {
-    var form = event.target;
-    var isValid = true;
+  function validateForm() {
+      // Get form inputs
+      var firstName = document.forms[0]["first_name"].value;
+      var dob = document.forms[0]["dob"].value;
+      var mobileNumber = document.forms[0]["mobile_no"].value;
+      var email = document.forms[0]["email"].value;
+      // You can add more validations as needed
 
-    // Clear previous error messages
-    var errorElements = document.querySelectorAll('.error');
-    errorElements.forEach(function(errorElement) {
-      errorElement.textContent = '';
-    });
+      // Validate inputs
+      if (firstName === "") {
+          alert("Please enter member name.");
+          return false;
+      }
+      if (dob === "") {
+          alert("Please enter date of birth.");
+          return false;
+      }
+      if (mobileNumber === "") {
+          alert("Please enter mobile number.");
+          return false;
+      }
+      if (email === "") {
+          alert("Please enter email.");
+          return false;
+      }
 
-    // Check each field
-    if (form.first_name.value === '') {
-      document.getElementById("first_name_error").textContent = 'Please fill in Member Name.';
-      isValid = false;
-    }
-    if (form.last_name.value === '') {
-      document.getElementById("last_name_error").textContent = 'Please fill in Father/Husband Name.';
-      isValid = false;
-    }
-    if (form.dob.value === '') {
-      document.getElementById("dob_error").textContent = 'Please fill in Date of Birth.';
-      isValid = false;
-    }
-    if (form.age.value === '') {
-      document.getElementById("age_error").textContent = 'Please fill in Age.';
-      isValid = false;
-    }
-    if (form.mobile_no.value === '') {
-      document.getElementById("mobile_no_error").textContent = 'Please fill in Mobile Number.';
-      isValid = false;
-    }
-    if (form.alternate_no.value === '') {
-      document.getElementById("alternate_no_error").textContent = 'Please fill in Alternate Number.';
-      isValid = false;
-    }
-    if (form.email.value === '') {
-      document.getElementById("email_error_error").textContent = 'Please fill in Email.';
-      isValid = false;
-    }
-    if (form.address.value === '') {
-      document.getElementById("address_error").textContent = 'Please fill in Address.';
-      isValid = false;
-    }
-    if (form.projectname.value === '') {
-      document.getElementById("projectname_error").textContent = 'Please fill in Projectname.';
-      isValid = false;
-    }
+      // Additional validations can be added here
 
-    if (!isValid) {
-      event.preventDefault();
-    }
-  });
+      return true; // Form submission allowed if all validations pass
+  }
 </script>
 
 

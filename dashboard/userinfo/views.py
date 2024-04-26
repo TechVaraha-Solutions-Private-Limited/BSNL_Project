@@ -34,8 +34,9 @@ def add_user(request):
         password = make_password(request.POST.get('password1', '').strip())
         employee_id = request.POST.get('employee_id', '').strip()
         date_joined = request.POST.get('date_joined', '').strip()
-
-         # Check if email or mobile number already exists
+        if not first_name:
+            messages.error(request, 'Email already exists.')
+            return render(request, 'users/add_user.html')
         if User.objects.filter(email=email).exists():
             messages.error(request, 'Email already exists.')
             return render(request, 'users/add_user.html', {'sr_team_lead': sr_team, 'team': team, 'executive': execut})

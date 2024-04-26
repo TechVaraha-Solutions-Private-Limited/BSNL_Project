@@ -21,19 +21,19 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
                 <div class="p-1">
                     <label class="p-1">Member Name</label>
-                    <input type="text" name="first_name" class="form-input" placeholder="Member Name" value="{{user.first_name}}">
+                    <input type="text" name="first_name" class="form-input" placeholder="Member Name" value="{{user.first_name}}" readonly>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Seniority</label>
-                    <input type="text" name="seniority_id" class="form-input" placeholder="Seniority" value="{{book.seniority_id}}">
+                    <input type="text" name="seniority_id" class="form-input" placeholder="Seniority" value="{{book.seniority_id}}" readonly>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Date of Booking</label>
-                    <input type="date" name="created_on" class="form-input" placeholder="DOB" value="{{book.date_of_booking|date:'d-m-Y'}}">
+                    <input type="text" name="created_on" class="form-input" placeholder="DOB" value="{{book.date_of_booking|date:'d-m-Y'}}" readonly>
                 </div>
                 <div class="p-1">
                     <label class="p-1">Am No</label>
-                    <input type="text" name="am_no" class="form-input" placeholder="Age" value="{{book.am_no}}">
+                    <input type="text" name="am_no" class="form-input" placeholder="Age" value="{{book.am_no}}" readonly>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-5">

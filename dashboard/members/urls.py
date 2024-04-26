@@ -60,5 +60,6 @@ urlpatterns = [
     #add new customer using site Visit
     path('site_visit/<id>',site_visit_custmer,name='site_visit_custmer'),
 
+
     
 ]

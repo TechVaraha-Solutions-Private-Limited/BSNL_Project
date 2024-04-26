@@ -7,13 +7,47 @@
         color :black
 
     }
+    @keyframes slideIn {
+            0% {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+    .project-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 4%;
+        }
+
+        .project-info {
+            background-color: #e9ecef;
+            color: #212529;
+            padding: 10px;
+            margin-bottom: 20px;
+            width: calc(25% - 20px); 
+            box-sizing: border-box; 
+            font-family: Arial, sans-serif;
+            text-align: center; 
+            border-radius: 9px; 
+            animation: slideIn 0.5s ease-in-out;
+        }
+        .project-info h6 {
+            margin-top: 0; 
+            font-weight: bold;
+        }
 </style>
 <!-- start main content section -->
-<div x-data="sales" class="p-2">
+<!-- <div x-data="sales" class="p-2">
     <div class="pt-5">
         <div class="mb-6 grid grid-cols-1 gap-6 text-white sm:grid-cols-2 xl:grid-cols-4">
             <!-- Users Visit -->
-            <div class="panel bg-gradient-to-r from-cyan-500 to-cyan-400">
+            <!-- <div class="panel bg-gradient-to-r from-cyan-500 to-cyan-400">
                 <div class="flex justify-between">
                     <div class="text-md font-semibold ltr:mr-1 rtl:ml-1">Highways Greens</div>
                     <div x-data="dropdown" @click.outside="open = false" class="dropdown">
@@ -63,7 +97,7 @@
             </div>
 
             <!-- Sessions -->
-            <div class="panel bg-gradient-to-r from-violet-500 to-violet-400">
+            <!-- <div class="panel bg-gradient-to-r from-violet-500 to-violet-400">
                 <div class="flex justify-between">
                     <div class="text-md font-semibold ltr:mr-1 rtl:ml-1">Sessions</div>
                     <div x-data="dropdown" @click.outside="open = false" class="dropdown">
@@ -110,10 +144,10 @@
                     </svg>
                     Last Week 84,709
                 </div>
-            </div>
+            </div> -->
 
             <!-- Time On-Site -->
-            <div class="panel bg-gradient-to-r from-blue-500 to-blue-400">
+            <!-- <div class="panel bg-gradient-to-r from-blue-500 to-blue-400">
                 <div class="flex justify-between">
                     <div class="text-md font-semibold ltr:mr-1 rtl:ml-1">Time On-Site</div>
                     <div x-data="dropdown" @click.outside="open = false" class="dropdown">
@@ -160,10 +194,10 @@
                     </svg>
                     Last Week 37,894
                 </div>
-            </div>
+            </div> -->
 
             <!-- Bounce Rate -->
-            <div class="panel bg-gradient-to-r from-fuchsia-500 to-fuchsia-400">
+            <!-- <div class="panel bg-gradient-to-r from-fuchsia-500 to-fuchsia-400">
                 <div class="flex justify-between">
                     <div class="text-md font-semibold ltr:mr-1 rtl:ml-1">Bounce Rate</div>
                     <div x-data="dropdown" @click.outside="open = false" class="dropdown">
@@ -213,6 +247,18 @@
             </div>
         </div>
     </div>
-</div>
+</div> --> 
 <!-- end main content section -->
+
+<div class="project-container">
+    {% for project in project_details %}
+    <div class="project-info">
+        <h6>{{ project.name }} ({{ project.size }})</h6><hr>
+        <p>Total Sq Feet: <b>{{ project.tot_sq }}</b> Sq Feet</p>
+        <p>Number of Bookings: <b>{{ project.land_count }}</b></p>
+
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}

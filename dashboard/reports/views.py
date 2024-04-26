@@ -53,7 +53,7 @@ def confirmletter_view(request,id):
     # print("Muthu")
     return render(request,'confirmletter_view.html',{'user':user,
                                                      'book':book,
-                                                     'amount':amount,
+                                                     'amount':amount if 'amount' in locals() else None,
                                                      'bank':bank  if 'bank' in locals() else None,
                                                      'branch':branch  if 'branch' in locals() else None,
                                                      'userdetail':userdetail,
@@ -150,7 +150,7 @@ def print_recepit(request, id):
             total_second_installment +
             total_third_installment
         )
-        
+        print("Amount",total_all)
         context = {
             'id': id,
             'user': user,   
@@ -402,13 +402,18 @@ def transfer_report(request):
                     
         elif select == 'all':
             transreport = Bookings.objects.all()
-            
+            for i in transreport:
+                transfer = i.type_of_transfer
+                print(transfer)
         elif select == 'project_wise':
             transreport = Bookings.objects.filter(land_details__project__projectname = value)
            
         elif select == 'project_head':
             transreport = Bookings.objects.filter(sitevist__proj_head = value)
-            
+
+
+        
+
         context={
         'transreport_filter':transreport,
         'transreport': transreport_all,
