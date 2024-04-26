@@ -10,6 +10,7 @@ from django.contrib.auth.hashers import make_password
 from dashboard.members.models import Update_blocked
 from datetime import date,datetime
 from .models import pdc_update
+from django.http import HttpResponseServerError
 
 from .models import LandDetails
 from django.db.models import Count
@@ -56,14 +57,14 @@ def home(request):
 
         tot_sq  = length*width*land_count
 
-        print("this value",tot_sq)
+       
         project_details.append({
             'name': project_name,
             'size': plot_size,
             'land_count': land_count,
             'tot_sq': tot_sq
         })
-        print("this is tot_sq",project_details)
+        
     context = {
         'project_details': project_details
     }
@@ -136,169 +137,174 @@ def addcustomer(request):
     return render(request,'new_bookings/addcustomer.html')
 
 def site_visit_custmer(request,id):
-    site_visit = Site_visit.objects.filter(id=id)
-    projects = Project.objects.all()
-    landdetail = LandDetails.objects.all()
-    if request.method=='POST':
-        first_name=request.POST.get('first_name')
-        email = request.POST.get('email')
-        mobile_no = request.POST.get('mobile_no')
-        seniority_id = request.POST.get('seniority_id')
+    try:
+        site_visit = Site_visit.objects.filter(id=id)
+        projects = Project.objects.all()
+        landdetail = LandDetails.objects.all()
         
-        user=User()
-        user.first_name=first_name
-        user.last_name=request.POST.get('last_name')
-        user.mobile_no = mobile_no
-        user.email = email
-        user.password = make_password(request.POST.get('password','').strip())
-        user.role = "Customer"
-        user.save()
-        details = UserDetail()
-        details.user = user
-        details.dob = request.POST.get('dob')
-        details.age = request.POST.get('age')
-        details.alternate_no = request.POST.get('alternate_no')
-        details.aadhhaarno = request.POST.get('aadhhaarno')
-        details.aadhar_proof = request.POST.get('aadhar_proof')
-        details.panno = request.POST.get('panno')
-        details.pan_proof = request.POST.get('pan_proof')
-        details.profile = request.POST.get('profile')
-        details.address = request.POST.get('address')
-        details.city = request.POST.get('city')
-        details.state = request.POST.get('state')
-        details.save()
-        nominee = UserNominee()
-        nominee.user = user
-        nominee.nominee_name = request.POST.get('nominee_name')
-        nominee.nominee_age = request.POST.get('nominee_age')
-        nominee.address = request.POST.get('address1')
-        nominee.city = request.POST.get('city1')
-        nominee.state = request.POST.get('state1')
-        nominee.nominee_relationship = request.POST.get('nominee_relationship')
-        nominee.save()
-        check_input_no = request.POST.get('check_input_no')
-        for val in range(int(check_input_no)): 
-            member_name_key = f'member_name{val+1}'        
-            member_age_key = f'member_age{val+1}'
-            member_relation_key = f'member_relation{val+1}'
-
-            family = UserFamilyDetails()
-            family.user = user
-            family.member_name = request.POST.get(member_name_key)
-            family.member_age = request.POST.get(member_age_key)
-            family.member_relation = request.POST.get(member_relation_key)
-            family.save()
-        
-        get_last_number = PaymentDetails.objects.all().order_by('-id')[:1]
-        if get_last_number: 
-            auto_genrate = "AM-" + str(get_last_number[0].id + 1).zfill(5)
-        else:
-            auto_genrate = "AM-00001" 
-        #end
-        project_id = request.POST.get('projectname')
-        dimension_id = request.POST.get('selectDimension')
-        land_detail = LandDetails.objects.get(project_id=project_id,plotsize_id=dimension_id)
-        book = Bookings()
-        book.user = user
-        book.membership_id = request.POST.get('seniority_id')
-        book.seniority_id = request.POST.get('seniority_id')
-        book.land_details = land_detail
-        book.total_site_value = request.POST.get('total_site_value')
-        book.downpayment = request.POST.get('downpayment')
-        book.site_refer = request.POST.get('site_refer')
-        book.sitevist_id = id
-        book.am_no = auto_genrate
-        book.save()
-        #vicky
-        split_amount = int(book.total_site_value) / 4
-        paid_amount =  request.POST.get('amount','').strip()
-        payment_amount = int(paid_amount) -2260
-
-        if paid_amount:
-
-            membership_fee = PaymentDetails()
-            membership_fee.booking=book
-
-            membership_fee.payment_mode = request.POST.get('payment_mode')
-            membership_fee.bank = request.POST.get('bank')
-            membership_fee.branch = request.POST.get('branch')
-            membership_fee.cheque_no = request.POST.get('cheque_no')
-            membership_fee.transaction = request.POST.get('transaction_id')
-            membership_fee.ddno=request.POST.get('dd_no')
-            membership_fee.user = user
-            membership_fee.payment_data = request.POST.get('payment_data')
+        if request.method == 'POST':
+            first_name = request.POST.get('first_name')
+            email = request.POST.get('email')
+            mobile_no = request.POST.get('mobile_no')
+            seniority_id = request.POST.get('seniority_id')
             
-            membership_fee.amount = 2260
-            membership_fee.paymentname = "Membership"
-            get_number = PaymentDetails.objects.all().order_by('-id')[:1]
-            if get_number:
-                get_number = "B-" + str(get_number[0].id + 1).zfill(5)
-            else:
-                get_number = "B-00001" 
-            membership_fee.receipt_no = get_number
-            membership_fee.save()
+            user = User()
+            user.first_name = first_name
+            user.last_name = request.POST.get('last_name')
+            user.mobile_no = mobile_no
+            user.email = email
+            user.password = make_password(request.POST.get('password','').strip())
+            user.role = "Customer"
+            user.save()
+            
+            details = UserDetail()
+            details.user = user
+            details.dob = request.POST.get('dob')
+            details.age = request.POST.get('age')
+            details.alternate_no = request.POST.get('alternate_no')
+            details.aadhhaarno = request.POST.get('aadhhaarno')
+            details.aadhar_proof = request.POST.get('aadhar_proof')
+            details.panno = request.POST.get('panno')
+            details.pan_proof = request.POST.get('pan_proof')
+            details.profile = request.POST.get('profile')
+            details.address = request.POST.get('address')
+            details.city = request.POST.get('city')
+            details.state = request.POST.get('state')
+            details.save()
+            nominee = UserNominee()
+            nominee.user = user
+            nominee.nominee_name = request.POST.get('nominee_name')
+            nominee.nominee_age = request.POST.get('nominee_age')
+            nominee.address = request.POST.get('address1')
+            nominee.city = request.POST.get('city1')
+            nominee.state = request.POST.get('state1')
+            nominee.nominee_relationship = request.POST.get('nominee_relationship')
+            nominee.save()
+            check_input_no = request.POST.get('check_input_no')
+            for val in range(int(check_input_no)): 
+                member_name_key = f'member_name{val+1}'        
+                member_age_key = f'member_age{val+1}'
+                member_relation_key = f'member_relation{val+1}'
 
-            for i in range(4):
-                if i == 0:
-                    paymentname = 'DownPayment'
-                    status =1 
-                elif i ==1:
-                    status =3
-                    paymentname = 'FirstInstallment'
-                elif i == 2:
-                    status =5
-                    paymentname = 'SecondInstallment'
-                else:
-                    status =7
-                    paymentname = 'ThridInstallment'
+                family = UserFamilyDetails()
+                family.user = user
+                family.member_name = request.POST.get(member_name_key)
+                family.member_age = request.POST.get(member_age_key)
+                family.member_relation = request.POST.get(member_relation_key)
+                family.save()
+            
+            get_last_number = PaymentDetails.objects.all().order_by('-id')[:1]
+            if get_last_number: 
+                auto_genrate = "AM-" + str(get_last_number[0].id + 1).zfill(5)
+            else:
+                auto_genrate = "AM-00001" 
+            #end
+            project_id = request.POST.get('projectname')
+            dimension_id = request.POST.get('selectDimension')
+            land_detail = LandDetails.objects.get(project_id=project_id,plotsize_id=dimension_id)
+            book = Bookings()
+            book.user = user
+            book.membership_id = request.POST.get('seniority_id')
+            book.seniority_id = request.POST.get('seniority_id')
+            book.land_details = land_detail
+            book.total_site_value = request.POST.get('total_site_value')
+            book.downpayment = request.POST.get('downpayment')
+            book.site_refer = request.POST.get('site_refer')
+            book.sitevist_id = id
+            book.am_no = auto_genrate
+            book.save()
+            #vicky
+            split_amount = int(book.total_site_value) / 4
+            paid_amount =  request.POST.get('amount','').strip()
+            payment_amount = int(paid_amount) -2260
+
+            if paid_amount:
+
+                membership_fee = PaymentDetails()
+                membership_fee.booking=book
+
+                membership_fee.payment_mode = request.POST.get('payment_mode')
+                membership_fee.bank = request.POST.get('bank')
+                membership_fee.branch = request.POST.get('branch')
+                membership_fee.cheque_no = request.POST.get('cheque_no')
+                membership_fee.transaction = request.POST.get('transaction_id')
+                membership_fee.ddno=request.POST.get('dd_no')
+                membership_fee.user = user
+                membership_fee.payment_data = request.POST.get('payment_data')
+                
+                membership_fee.amount = 2260
+                membership_fee.paymentname = "Membership"
                 get_number = PaymentDetails.objects.all().order_by('-id')[:1]
                 if get_number:
                     get_number = "B-" + str(get_number[0].id + 1).zfill(5)
                 else:
                     get_number = "B-00001" 
-                if split_amount  < payment_amount:
-                    payments = PaymentDetails()
-                    payments.booking=book
+                membership_fee.receipt_no = get_number
+                membership_fee.save()
 
-                    payments.payment_mode = request.POST.get('payment_mode')
-                    payments.bank = request.POST.get('bank')
-                    payments.branch = request.POST.get('branch')
-                    payments.cheque_no = request.POST.get('cheque_no')
-                    payments.transaction = request.POST.get('transaction_id')
-                    payments.ddno=request.POST.get('dd_no')
-                    payments.user = user
-                    payments.payment_data = request.POST.get('payment_data')
-                    payments.paymentname =paymentname
-                    payments.amount = split_amount
-                    payments.receipt_no = get_number
-                    payments.save()
-                    payment_amount = payment_amount - split_amount 
-                elif payment_amount > 0:
-                
-                    payments = PaymentDetails()
-                    payments.booking=book
+                for i in range(4):
+                    if i == 0:
+                        paymentname = 'DownPayment'
+                        status =1 
+                    elif i ==1:
+                        status =3
+                        paymentname = 'FirstInstallment'
+                    elif i == 2:
+                        status =5
+                        paymentname = 'SecondInstallment'
+                    else:
+                        status =7
+                        paymentname = 'ThridInstallment'
+                    get_number = PaymentDetails.objects.all().order_by('-id')[:1]
+                    if get_number:
+                        get_number = "B-" + str(get_number[0].id + 1).zfill(5)
+                    else:
+                        get_number = "B-00001" 
+                    if split_amount  < payment_amount:
+                        payments = PaymentDetails()
+                        payments.booking=book
 
-                    payments.payment_mode = request.POST.get('payment_mode')
-                    payments.bank = request.POST.get('bank')
-                    payments.branch = request.POST.get('branch')
-                    payments.cheque_no = request.POST.get('cheque_no')
-                    payments.transaction = request.POST.get('transaction_id')
-                    payments.ddno=request.POST.get('dd_no')
-                    payments.user = user
-                    payments.payment_data = request.POST.get('payment_data')
-                    payments.paymentname =paymentname
-                    payments.amount = payment_amount
-                    payments.receipt_no = get_number
-                    payments.save()
-                    book.payments_status = status
-                    book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount)
-                    book.save()
-                    break
+                        payments.payment_mode = request.POST.get('payment_mode')
+                        payments.bank = request.POST.get('bank')
+                        payments.branch = request.POST.get('branch')
+                        payments.cheque_no = request.POST.get('cheque_no')
+                        payments.transaction = request.POST.get('transaction_id')
+                        payments.ddno=request.POST.get('dd_no')
+                        payments.user = user
+                        payments.payment_data = request.POST.get('payment_data')
+                        payments.paymentname =paymentname
+                        payments.amount = split_amount
+                        payments.receipt_no = get_number
+                        payments.save()
+                        payment_amount = payment_amount - split_amount 
+                    elif payment_amount > 0:
+                    
+                        payments = PaymentDetails()
+                        payments.booking=book
+
+                        payments.payment_mode = request.POST.get('payment_mode')
+                        payments.bank = request.POST.get('bank')
+                        payments.branch = request.POST.get('branch')
+                        payments.cheque_no = request.POST.get('cheque_no')
+                        payments.transaction = request.POST.get('transaction_id')
+                        payments.ddno=request.POST.get('dd_no')
+                        payments.user = user
+                        payments.payment_data = request.POST.get('payment_data')
+                        payments.paymentname =paymentname
+                        payments.amount = payment_amount
+                        payments.receipt_no = get_number
+                        payments.save()
+                        book.payments_status = status
+                        book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount)
+                        book.save()
+                        break
         messages.success(request,'Successfully Saved')
         # Vicky    
     
-    return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':landdetail,'projects':projects,'site_visit':site_visit})
-
+        return render(request, 'new_bookings/add_new_bookings.html',{'landdetail':landdetail,'projects':projects,'site_visit':site_visit})
+    except Exception as e:
+        messages.error(request, f'Error occurred: {e}')
+        return HttpResponseServerError('Internal Server Error')
 def add_new_bookings(request):
     projects = Project.objects.all()
     landdetail = LandDetails.objects.all()
@@ -497,12 +503,18 @@ def get_project_value(request):
     return JsonResponse({})
 
 def get_project_id(request):
-    if request.method == "POST":
-        plot_id = request.POST.get('plot_id','').strip()
-        dimensions = LandDetails.objects.filter(landdetails__project=plot_id).values()
-        print(dimensions)
-        return JsonResponse({"values":list(dimensions)})
-    return JsonResponse({})
+    try:
+        if request.method == "POST":
+            plot_id = request.POST.get('plot_id','').strip()
+            dimensions = LandDetails.objects.filter(project=plot_id).values()
+            print(dimensions)
+            return JsonResponse({"values": list(dimensions)})
+        else:
+            return JsonResponse({})
+    except Exception as e:
+        # Log the error or handle it appropriately
+        print(f"Error occurred: {e}")
+        return JsonResponse({"error": "An error occurred while processing the request"})
 
 def booksum(request):
     return render(request,'home/booksum.html')
@@ -658,93 +670,101 @@ def generate(request):
     return render(request,'new_bookings/generate.html',{'customer': customers,'difference': differ})
 
 def ugdg(request):
-    exective = User.objects.filter(role = 'Executive')
+    exective = User.objects.filter(role='Executive')
     customers = {}
     pltsizes = PlotSize.objects.all()
+    
+    try:
+        if request.method == 'POST':
+            action = request.POST.get('action')
+            user_id = request.POST.get('user_id')
+            seniority_id = request.POST.get('search_membername')
+            
+            if action == 'search_customer':
+                if seniority_id == '':
+                    messages.error(request, 'Please Enter the Seniority No')
+                else:
+                    customers = Bookings.objects.get(seniority_id=seniority_id)
+                    if not customers:
+                        messages.error(request, 'No profile found for the given Seniority No')
+            elif action == 'create_order':
+                seniority = request.POST.get('seniority_id')
+                book = Bookings.objects.get(user_id=user_id, seniority_id=seniority)
+                project_id = request.POST.get('projectname')
+                str_form = request.POST.get('selectDimension')
+                str_to = request.POST.get('plotsize')
+                land_detail = LandDetails.objects.get(project_id=project_id, plotsize_id=str_to)
+                old_land_detail = LandDetails.objects.get(project_id=project_id, plotsize_id=str_form)
+                book.date_of_change = request.POST.get('date_of_change')
+                book.type_of_change = request.POST.get('type_of_change')
+                book.diff = request.POST.get('diff')
+                book.executive = request.POST.get('executive')
+                book.team_lead = request.POST.get('team_lead')
+                book.sr_team_lead = request.POST.get('sr_team_lead')
+                book.project_lead = request.POST.get('project_lead')
+                book.type_bkg = request.POST.get('type_bkg')
+                book.indvl_paid = request.POST.get('indvl_paid')
+                book.tl_paid = request.POST.get('tl_paid')
+                book.stl_paid = request.POST.get('stl_paid')
+                book.PMname = request.POST.get('PMname')
+                book.old_land_details = old_land_detail
+                book.land_details = land_detail
+                book.save()
+                messages.success(request, 'Successfully updated')
+    except Exception as e:
+        messages.error(request, f'An error occurred: {e}')
+    
+    return render(request, 'new_bookings/ugdg.html', {
+        'pltsizes': pltsizes,
+        'customer': customers,
+        'exective': exective,
+    })
+
+def transfer(request):
+    customers = {}
+    user = {}
     
     if request.method == 'POST':
         action = request.POST.get('action')
         user_id = request.POST.get('user_id')
         seniority_id = request.POST.get('search_membername')
-        if action == 'search_customer':
-            if seniority_id == '':
-                messages.error(request, 'Please Enter the Seniorty No')
-            try:
+        
+        try:
+            if action == 'search_customer':
                 customers = Bookings.objects.get(seniority_id=seniority_id)
-                if customers =='':
-                    messages.error(request, 'Profile details updated.')
-            except:
-                customers = {}  
+                user = User.objects.get(id=user_id)
+                if not customers:
+                    messages.error(request, 'No profile found for the given Seniority ID')
+            elif action == 'create_order':
+                seniority = request.POST.get('seniority')
+                user_id = request.POST.get('user_id')
+                old_book = Bookings.objects.get(user_id=user_id, seniority_id=seniority)
+                old_book.status = 0
+                land_details_id = old_book.land_details_id
                 
-        elif action == 'create_order':
-            seniority = request.POST.get('seniority_id')
-            book = Bookings.objects.get(user_id=user_id,seniority_id=seniority)
-            project_id = request.POST.get('projectname')
-            str_form = request.POST.get('selectDimension')
-            str_to = request.POST.get('plotsize')
-            land_detail = LandDetails.objects.get(project_id=project_id,plotsize_id=str_to)
-            old_land_detail = LandDetails.objects.get(project_id=project_id,plotsize_id=str_form)
-            book.date_of_change = request.POST.get('date_of_change')
-            book.type_of_change = request.POST.get('type_of_change')
-            book.diff = request.POST.get('diff')
-            book.executive = request.POST.get('executive')
-            book.team_lead = request.POST.get('team_lead')
-            book.sr_team_lead = request.POST.get('sr_team_lead')
-            book.project_lead  = request.POST.get('project_lead')
-            book.type_bkg = request.POST.get('type_bkg')
-            book.indvl_paid =request.POST.get('indvl_paid')
-            book.tl_paid =request.POST.get('tl_paid')
-            book.stl_paid = request.POST.get('stl_paid')
-            book.PMname = request.POST.get('PMname')
-            book.old_land_details = old_land_detail
-            book.land_details = land_detail
-            book.save()
-            messages.error(request, 'Successfull Update')
-    return render(request,'new_bookings/ugdg.html',{
-            'pltsizes':pltsizes,
-            'customer': customers,
-            'exective':exective,
-        })
-
-def transfer(request):
-    customers = {}
-    user ={}
-    if request.method == 'POST':
-        action = request.POST.get('action')
-        user_id = request.POST.get('user_id')
-        seniority_id = request.POST.get('search_membername')
-        if action == 'search_customer':
-            try:
-                customers = Bookings.objects.get(seniority_id=seniority_id)
-                user=User.objects.get(id=user_id)
-                if customers =='':
-                    messages.error(request, 'Profile details updated.')
-            except:
-                customers = {}
-                user={}
-        elif action == 'create_order':
-            seniority = request.POST.get('seniority')
-            user_id = request.POST.get('user_id')
-            print(seniority)
-            old_book = Bookings.objects.get(user_id=user_id,seniority_id=seniority)
-            old_book.status=0
-            land_details_id = old_book.land_details_id
-            book = Bookings()
-            book.old_seniority_id = seniority
-            book.user_id =user_id
-            book.membership_id = request.POST.get('new_seniorty')
-            book.seniority_id = request.POST.get('new_seniorty')
-            book.date_of_transfer = request.POST.get('date_of_transfer')
-            book.type_of_transfer = request.POST.get('type_of_transfer')
-            book.affidavit = request.POST.get('affidavit')
-            book.death_cert = request.POST.get('deathcerft')
-            book.total_site_value = old_book.total_site_value
-            book.downpayment = old_book.downpayment
-            book.land_details_id = land_details_id
-            book.save()
-            old_book.save()
-
-    return render(request,'new_bookings/transfer.html',{'customer':customers,'user':user})
+                book = Bookings()
+                book.old_seniority_id = seniority
+                book.user_id = user_id
+                book.membership_id = request.POST.get('new_seniority')
+                book.seniority_id = request.POST.get('new_seniority')
+                book.date_of_transfer = request.POST.get('date_of_transfer')
+                book.type_of_transfer = request.POST.get('type_of_transfer')
+                book.affidavit = request.POST.get('affidavit')
+                book.death_cert = request.POST.get('death_cert')
+                book.total_site_value = old_book.total_site_value
+                book.downpayment = old_book.downpayment
+                book.land_details_id = land_details_id
+                book.save()
+                old_book.save()
+                
+        except Bookings.DoesNotExist:
+            messages.error(request, 'No booking found for the given Seniority ID')
+        except User.DoesNotExist:
+            messages.error(request, 'No user found for the given User ID')
+        except Exception as e:
+            messages.error(request, f'An error occurred: {e}')
+    
+    return render(request, 'new_bookings/transfer.html', {'customer': customers, 'user': user})
 
 def get_team_owner(request):
     if request.method == "POST":
@@ -756,83 +776,121 @@ def get_team_owner(request):
     return JsonResponse({})
     
 def site_visit(request):
-    exective = User.objects.filter(role = 'Executive')
+    exective = User.objects.filter(role='Executive')
     detail = {}
+    
     if request.method == 'POST':
         action = request.POST.get('action')
         
-        if action == 'create_order':
+        try:
+            if action == 'create_order':
+                exective_id = request.POST.get('executive')
+                value = User.objects.get(id=exective_id)
+                get_execute = Executive.objects.get(user_id=value.id)
+                teamlead = get_execute.teamlead.user.id
+                senior_teamlead = get_execute.teamlead.sr_team.user.id
+                project_lead = get_execute.teamlead.sr_team.project_head.id
+
+                Site_visit(
+                    date_of_site_visit=request.POST.get('date_of_visit'),
+                    cust_name=request.POST.get('cust_name'),
+                    phone_no=request.POST.get('phone_no'),
+                    executive=value,
+                    team_lead_id=teamlead,
+                    proj_head_id=project_lead,
+                    so_done_by=request.POST.get('so_done_by'),
+                    sv_don_by=request.POST.get('sv_done_by'),
+                    sv_category=request.POST.get('sv_category'),
+                    source=request.POST.get('source'),
+                    booked_no=request.POST.get('booked_no'),
+                    booked_sry_no=request.POST.get('booked_sry_no'),
+                    sv_status=request.POST.get('sv_status'),
+                    PMname=request.POST.get('PMname'),
+
+                ).save()
+
+                messages.success(request, 'Successfully Saved')
+        except User.DoesNotExist:
+            messages.error(request, 'Executive not found for the given ID')
+        except Executive.DoesNotExist:
+            messages.error(request, 'Executive details not found for the given ID')
+        except Exception as e:
+            messages.error(request, f'An error occurred: {e}')
+
+    return render(request, 'new_bookings/site_visit.html', {'customer': detail, 'exective': exective})
+
+def view_site_visit(request):
+    view = Site_visit.objects.all()
+    
+    if request.method == 'POST':
+        try:
+            for visit in view:
+                visit.date_of_site_visit = request.POST.get('date_of_visit')
+                visit.cust_name = request.POST.get('cust_name')
+                visit.phone_no = request.POST.get('phone_no')
+                visit.executive = request.POST.get('executive')
+                visit.so_done_by = request.POST.get('so_done_by')
+                visit.sv_don_by = request.POST.get('sv_done_by')
+                visit.sv_category = request.POST.get('sv_category')
+                visit.source = request.POST.get('source')
+                visit.booked_no = request.POST.get('booked_no')
+                visit.booked_sry_no = request.POST.get('booked_sry_no')
+                visit.sv_status = request.POST.get('sv_status')
+                visit.PMname = request.POST.get('PMname')
+                visit.save()
+            
+            messages.success(request, 'Successfully updated')
+        except Exception as e:
+            messages.error(request, f'An error occurred: {e}')
+
+    return render(request, 'display/view_site_visit.html', {'view': view})
+
+def update_site_visit(request, id):
+    try:
+        update = Site_visit.objects.get(id=id)
+        
+        if request.method == 'POST':
             exective = request.POST.get('executive')
-            value = User.objects.get(id = exective)
+            value = User.objects.get(id=exective)
+            executive = User.objects.get(id=exective)
+            executive_details = Executive.objects.get(user=executive)
             get_execute = Executive.objects.get(user_id=value.id)
             teamlead = get_execute.teamlead.user.id
             senior_teamlead = get_execute.teamlead.sr_team.user.id
             project_lead = get_execute.teamlead.sr_team.project_head.id
-
-            Site_visit(
-                date_of_site_visit = request.POST.get('date_of_visit'),
-                cust_name = request.POST.get('cust_name'),
-                phone_no = request.POST.get('phone_no'),
-                executive = value,
-                team_lead_id = teamlead,
-                proj_head_id = project_lead,
-                so_done_by = request.POST.get('so_done_by'),
-                sv_don_by = request.POST.get('sv_done_by'),
-                sv_category = request.POST.get('sv_category'),
-                source = request.POST.get('source'),
-                booked_no = request.POST.get('booked_no'),
-                booked_sry_no = request.POST.get('booked_sry_no'),
-                sv_status = request.POST.get('sv_status'), 
-                PMname = request.POST.get('PMname')   ,
-
-            ).save()
-
-        messages.success(request,'Successfully Saved')
-    return render(request,'new_bookings/site_visit.html',{'customer':detail,'exective':exective})
-
-def view_site_visit(request):
-    view = Site_visit.objects.all()
-    if request.method =='POST':
-        view.date_of_site_visit = request.POST.get('date_of_visit')
-        view.cust_name = request.POST.get('cust_name')
-        view.phone_no = request.POST.get('phone_no')
-        view.executive = request.POST.get('executive')
-        view.so_done_by = request.POST.get('so_done_by')   
-        view.sv_don_by = request.POST.get('sv_done_by')
-        view.sv_category = request.POST.get('sv_category')
-        view.source = request.POST.get('source')
-        view.booked_no = request.POST.get('booked_no')
-        view.booked_sry_no = request.POST.get('booked_sry_no')
-        view.sv_status = request.POST.get('sv_status')
-        view.PMname = request.POST.get('PMname')
-        view.save()
-    return render (request,'display/view_site_visit.html',{'view':view})
-
-def update_site_visit(request,id):
-    update = Site_visit.objects.get(id=id)
-    if request.method =='POST':
-
-        exective = request.POST.get('executive')
-        value = User.objects.get(id = exective)
-        get_execute = Executive.objects.get(user_id=value.id)
-        teamlead = get_execute.teamlead.user.id
-        senior_teamlead = get_execute.teamlead.sr_team.user.id
-        project_lead = get_execute.teamlead.sr_team.project_head.id
-        update.date_of_site_visit = request.POST.get("date_of_visit")
-        update.cust_name = request.POST.get("cust_name")
-        update.phone_no = request.POST.get("phone_no")
-        update.executive = request.POST.get("executive")
-        update.so_done_by = request.POST.get("so_done_by")
-        update.sv_don_by = request.POST.get("sv_done_by")
-        update.sv_category = request.POST.get("sv_category")
-        update.source = request.POST.get("source")
-        update.booked_no = request.POST.get("booked_no")
-        update.booked_sry_no = request.POST.get("booked_sry_no")
-        update.sv_status = request.POST.get('sv_status')
-        update.save()
+            
+            update.date_of_site_visit = request.POST.get("date_of_visit")
+            update.cust_name = request.POST.get("cust_name")
+            update.phone_no = request.POST.get("phone_no")
+            update.executive = executive
+            update.so_done_by = request.POST.get("so_done_by")
+            update.sv_don_by = request.POST.get("sv_done_by")
+            update.sv_category = request.POST.get("sv_category")
+            update.source = request.POST.get("source")
+            update.booked_no = request.POST.get("booked_no")
+            update.booked_sry_no = request.POST.get("booked_sry_no")
+            update.sv_status = request.POST.get('sv_status')
+            update.save()
+            messages.success(request, 'Successfully updated')
+            return redirect('/members/view_site_visit')
+    
+    except Site_visit.DoesNotExist:
+        messages.error(request, 'Site visit not found for the given ID')
         return redirect('/members/view_site_visit')
     
-    return render (request,'display/update_display/update_site_view.html',{'update':update})
+    except User.DoesNotExist:
+        messages.error(request, 'User not found for the given ID')
+        return redirect('/members/view_site_visit')
+    
+    except Executive.DoesNotExist:
+        messages.error(request, 'Executive details not found for the given ID')
+        return redirect('/members/view_site_visit')
+    
+    except Exception as e:
+        messages.error(request, f'An error occurred: {e}')
+        return redirect('/members/view_site_visit')
+
+    return render(request, 'display/update_display/update_site_view.html', {'update': update})
 def delete_site_visit(request,id):
     deletesitevisit=Site_visit.objects.get(id=id)
     deletesitevisit.delete()
@@ -867,7 +925,7 @@ def lead_owner(request):
         elif action == 'create_order':
             user_id = request.POST.get('user_id')
             user_instance = User.objects.get(id=user_id)
-            print('sugu')
+         
             Leadowner(
                 seniorityno_id = request.POST.get('seniority'),
                 user_id = user_instance,
@@ -897,30 +955,40 @@ def cancel(request):
         action = request.POST.get('action')
         seniority_id = request.POST.get('search_membername')
         user_id = request.POST.get('user_id')
+
         if action == 'search_customer':
             try:
                 customers = Bookings.objects.get(seniority_id=seniority_id)
-                
-                if customers =='':
-                    messages.error(request, 'Profile details updated.')
-            except:
+                if not customers:
+                    messages.error(request, 'No profile found for the given seniority ID.')
+            except Bookings.DoesNotExist:
                 customers = {}
-                print('gopi')
+                messages.error(request, 'No profile found for the given seniority ID.')
+            except Exception as e:
+                messages.error(request, f'An error occurred: {e}')
+                
         elif action == 'create_order': 
-            user_id=user_id
-            seniority = request.POST.get('seniority')
-            book = Bookings.objects.get(user_id=user_id,seniority_id=seniority)
-            book.status=0
-            book.date_of_cancel =request.POST.get('date_of_cancel')
-            book.type_of_cancel = request.POST.get('type_of_cancel')
-            book.date_of_refund = request.POST.get('date_of_refund')
-            book.mode_of_refund = request.POST.get('mode_of_refund')
-            book.refund_cheque_no = request.POST.get('refund_cheque_no')
-            book.refund_amount = request.POST.get('refund_amount')
-            book.type_of_refund = request.POST.get('type_of_refund')
-            book.issued_by = request.POST.get('issued_by')
-            book.save()
-    return render(request,'new_bookings/cancel.html',{'customer':customers})
+            try:
+                user_id = user_id
+                seniority = request.POST.get('seniority')
+                book = Bookings.objects.get(user_id=user_id, seniority_id=seniority)
+                book.status = 0
+                book.date_of_cancel = request.POST.get('date_of_cancel')
+                book.type_of_cancel = request.POST.get('type_of_cancel')
+                book.date_of_refund = request.POST.get('date_of_refund')
+                book.mode_of_refund = request.POST.get('mode_of_refund')
+                book.refund_cheque_no = request.POST.get('refund_cheque_no')
+                book.refund_amount = request.POST.get('refund_amount')
+                book.type_of_refund = request.POST.get('type_of_refund')
+                book.issued_by = request.POST.get('issued_by')
+                book.save()
+                messages.success(request, 'Booking canceled successfully.')
+            except Bookings.DoesNotExist:
+                messages.error(request, 'No booking found for the given user and seniority ID.')
+            except Exception as e:
+                messages.error(request, f'Failed to cancel booking: {e}')
+
+    return render(request, 'new_bookings/cancel.html', {'customer': customers})
 
 def receipts(request):
     booking = PaymentDetails.objects.order_by('-created_on').all()
@@ -937,31 +1005,42 @@ def receipts(request):
 
     return render(request,'view/receipts.html',{'booking':booking}) 
 
-def update_receipts(request,id):
-    update_receipts=PaymentDetails.objects.filter(booking=id).last()
-    if request.method == "POST":
-        update_receipts.booking.user.first_name = request.POST['first_name']
-        update_receipts.dateofreceipt = request.POST['dateofreceipt']
-        update_receipts.branch = request.POST['branch']
-        update_receipts.paymentname = request.POST['paymentname']
-        update_receipts.payment_data = request.POST['payment_data']
-        update_receipts.receipt_no = request.POST['receipt_no']
-        update_receipts.booking.seniority_id = request.POST['seniority_id']
-        update_receipts.booking.land_details.project.projectname = request.POST['projectname']
-        update_receipts.amount = request.POST['amount']
-        update_receipts.bank = request.POST['bank']
-        update_receipts.payment_mode = request.POST['payment_mode']
-        update_receipts.payment_mode = request.POST['payment_mode']
-        update_receipts.status = request.POST['status']
-        if update_receipts.payment_mode == 'cheque':
-            update_receipts.cheque_no = request.POST['cheque_no']
-        elif update_receipts.payment_mode == 'dd':
-            update_receipts.ddno = request.POST['ddno']
-        elif update_receipts.payment_mode == 'transaction':
-            update_receipts.transaction = request.POST['transaction']
-        update_receipts.save()
-        return redirect("/members/receipt")
-    return render(request,'view/update_view/update_receipt.html',{'update_receipts':update_receipts})
+def update_receipts(request, id):
+    try:
+        update_receipts = PaymentDetails.objects.filter(booking=id).last()
+        if not update_receipts:
+            messages.error(request, 'No payment details found for the given booking ID.')
+            return redirect("/members/receipt")  # Redirect to a relevant page or handle this case appropriately
+        
+        if request.method == "POST":
+            update_receipts.booking.user.first_name = request.POST.get('first_name', '')
+            update_receipts.dateofreceipt = request.POST.get('dateofreceipt', '')
+            update_receipts.branch = request.POST.get('branch', '')
+            update_receipts.paymentname = request.POST.get('paymentname', '')
+            update_receipts.payment_data = request.POST.get('payment_data', '')
+            update_receipts.receipt_no = request.POST.get('receipt_no', '')
+            update_receipts.booking.seniority_id = request.POST.get('seniority_id', '')
+            update_receipts.booking.land_details.project.projectname = request.POST.get('projectname', '')
+            update_receipts.amount = request.POST.get('amount', '')
+            update_receipts.bank = request.POST.get('bank', '')
+            update_receipts.payment_mode = request.POST.get('payment_mode', '')
+            update_receipts.status = request.POST.get('status', '')
+
+            if update_receipts.payment_mode == 'cheque':
+                update_receipts.cheque_no = request.POST.get('cheque_no', '')
+            elif update_receipts.payment_mode == 'dd':
+                update_receipts.ddno = request.POST.get('ddno', '')
+            elif update_receipts.payment_mode == 'transaction':
+                update_receipts.transaction = request.POST.get('transaction', '')
+
+            update_receipts.save()
+            messages.success(request, 'Receipt details updated successfully.')
+            return redirect("/members/receipt")
+
+    except Exception as e:
+        messages.error(request, f'An error occurred: {str(e)}')
+
+    return render(request, 'view/update_view/update_receipt.html', {'update_receipts': update_receipts})
 
 def view_receipt(request,id):
     payment = PaymentDetails.objects.filter(booking=id).last()
@@ -1043,50 +1122,71 @@ def activemember(request):
     return render(request, 'view/activemem.html', context)
 
 
-def updateactivememberlist(request,id):
-    user =  User.objects.get(id=id)
-    book = Bookings.objects.get(user=user)
-    userdetail = UserDetail.objects.get(user=user)
-    formatted_date = book.date_of_booking.strftime("%d-%m-%Y")
-    print("pdc", formatted_date)
-    # print("pdc",book.date_of_booking|date:"d-m-Y")
-    if request.method =='POST':
-        user.first_name=request.POST.get("first_name")
-        user.mobile_no = request.POST.get('mobile_no')
-        user.save()
-        book.seniority_id = request.POST.get('seniority_id')
-        book.am_no = request.POST.get('am_no')
-        book.created_on = request.POST.get('created_on')
-        book.save()
-        userdetail.alternate_no = request.POST.get('alternate_no')
-        userdetail.address = request.POST.get('address')
-        userdetail.city = request.POST.get('city')
-        userdetail.pincode = request.POST.get('pincode')
-        userdetail.state = request.POST.get('state')
-        userdetail.id_card=request.POST.get('id_card')
-        userdetail.save()
+def updateactivememberlist(request, id):
+    try:
+        user = User.objects.get(id=id)
+        book = Bookings.objects.get(user=user)
+        userdetail = UserDetail.objects.get(user=user)
+        formatted_date = book.date_of_booking.strftime("%d-%m-%Y")
+
+        if request.method == 'POST':
+            user.first_name = request.POST.get("first_name", "")
+            user.mobile_no = request.POST.get('mobile_no', "")
+            user.save()
+
+            book.seniority_id = request.POST.get('seniority_id', "")
+            book.am_no = request.POST.get('am_no', "")
+            book.save()
+
+            userdetail.alternate_no = request.POST.get('alternate_no', "")
+            userdetail.address = request.POST.get('address', "")
+            userdetail.city = request.POST.get('city', "")
+            userdetail.pincode = request.POST.get('pincode', "")
+            userdetail.state = request.POST.get('state', "")
+            userdetail.id_card = request.POST.get('id_card', "")
+            userdetail.save()
         
+            return redirect('/members/activemember')
+
+        context = {
+            'user': user,
+            'book': book,
+            'formatted_date': formatted_date,
+            'userdetail': userdetail
+        }
+        return render(request, 'view/update_view/update_acmember.html', context)
+
+    except User.DoesNotExist:
+        # Handle case where user does not exist
+        return render(request, 'error.html', {'error_message': 'User does not exist.'})
+    except Bookings.DoesNotExist:
+        # Handle case where bookings do not exist
+        return render(request, 'error.html', {'error_message': 'Bookings do not exist.'})
+    except UserDetail.DoesNotExist:
+        # Handle case where user detail does not exist
+        return render(request, 'error.html', {'error_message': 'User detail does not exist.'})
+    except Exception as e:
+        # Handle any other unexpected exceptions
+        return render(request, 'error.html', {'error_message': f'An error occurred: {str(e)}'})
+
+def deleteactivememberlist(request, id):
+    try:
+        book = Bookings.objects.get(user_id=id)
+        if book.user.is_active:
+            book.user.is_active = False
+            book.user.save()
+
         return redirect('/members/activemember')
     
-    context={
-        'user':user,
-        'book':book,
-        'formatted_date':formatted_date,
-        'userdetail':userdetail
-    }
-    
-    return render(request,'view/update_view/update_acmember.html',context)
-
-def deleteactivememberlist(request,id):
-    book = Bookings.objects.get(user_id=id)
-    if book.user.is_active == True:
-        book.user.is_active=False
-        book.user.save()
-    context={
-        'user':book,
-    }
-    
-    return redirect('/members/activemember')
+    except Bookings.DoesNotExist:
+        # Handle case where bookings do not exist
+        return render(request, 'error.html', {'error_message': 'Bookings do not exist.'})
+    except ObjectDoesNotExist:
+        # Handle any other related object not found exceptions
+        return render(request, 'error.html', {'error_message': 'An object does not exist.'})
+    except Exception as e:
+        # Handle any other unexpected exceptions
+        return render(request, 'error.html', {'error_message': f'An error occurred: {str(e)}'})
 
 def update_personal(request,id):
     nomine =  UserNominee.objects.get(user_id=id)
@@ -1127,9 +1227,16 @@ def update_personal(request,id):
     }
     return render(request,'view/update_view/update_personal.html',context)
 def inactivemember(request):
-    book1 = Bookings.objects.filter(user__is_active=0).all()
-    user = User.objects.filter(is_active=True).all()
-    return render (request,'view/inactivemem.html',{'book1':book1,'user':user})
+    try:
+        book1 = Bookings.objects.filter(user__is_active=0).all()
+        user = User.objects.filter(is_active=True).all()
+    except Exception as e:
+       
+        print(f"An error occurred: {e}")
+       
+        return render(request, 'error.html', {'error_message': 'An error occurred while fetching data.'})
+
+    return render(request, 'view/inactivemem.html', {'book1': book1, 'user': user})
 
 def update_inactive(request,id):
     book = Bookings.objects.get(id=id)
@@ -1139,25 +1246,45 @@ def update_inactive(request,id):
     return redirect('/members/inactivemember')
 
 def confirmletter(request):
-    user=Bookings.objects.order_by('-created_on').all()
-    return render(request,'view/confirmleter.html',{'user':user})
+    try:
+        user = Bookings.objects.order_by('-created_on').all()
+    except Exception as e:
+       
+        print(f"An error occurred: {e}")
+      
+        return render(request, 'error.html', {'error_message': 'An error occurred while fetching data.'})
+
+    return render(request, 'view/confirmleter.html', {'user': user})
 
 def view_history(request):
     return render(request,'display/view_history.html')
 
-def user_access(request,id):
-    user_log=User.objects.get(id=id)
+def user_access(request, id):
+    try:
+        user_log = User.objects.get(id=id)
+    except ObjectDoesNotExist:
+        # Handle the case where the user does not exist
+        return render(request, 'error.html', {'error_message': 'User does not exist.'})
+    except Exception as e:
+        # Handle any other unexpected exceptions
+        return render(request, 'error.html', {'error_message': f'An error occurred: {str(e)}'})
+
     if request.method == "POST":
-        user_log.first_name = request.POST['first_name']
-        user_log.last_name = request.POST['last_name']
-        user_log.employee_id = request.POST['employee_id']
-        user_log.role = request.POST['user_role']
-        user_log.email = request.POST['email_id']
-        user_log.mobile_no = request.POST['mobile_no']
-        user_log.date_joined = request.POST['date_joined']
-        user_log.save()
-        return redirect('/members/view_user_access')
-    return render(request,'input/update_user/user_access.html',{'user_log':user_log})
+        try:
+            user_log.first_name = request.POST.get('first_name', '')
+            user_log.last_name = request.POST.get('last_name', '')
+            user_log.employee_id = request.POST.get('employee_id', '')
+            user_log.role = request.POST.get('user_role', '')
+            user_log.email = request.POST.get('email_id', '')
+            user_log.mobile_no = request.POST.get('mobile_no', '')
+            user_log.date_joined = request.POST.get('date_joined', '')
+            user_log.save()
+            return redirect('/members/view_user_access')
+        except Exception as e:
+            # Handle any errors that occur during saving user data
+            return render(request, 'error.html', {'error_message': f'Failed to update user: {str(e)}'})
+
+    return render(request, 'input/update_user/user_access.html', {'user_log': user_log})
 
 def view_user_access(request):
     view_user=User.objects.filter(is_active=1).order_by('-date_joined')

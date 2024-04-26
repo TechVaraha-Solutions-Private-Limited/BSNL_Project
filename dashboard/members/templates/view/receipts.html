@@ -16,6 +16,14 @@
     style="background-color: #178ef0; color: white; width: 100%;"
   >
     <center><b>RECEIPT LIST</b></center>
+    {% for message in messages %}
+    <div
+      class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+    >
+      <a class="close" href="#" data-dismiss="alert">×</a>
+      {{ message }}
+    </div>
+    {% endfor %}
   </h2>
   <div class="relative search mt-2">
     <input type="text" id="searchInput" placeholder="Search Details..." class="form-input search_size" style="width: 25%;

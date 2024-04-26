@@ -36,6 +36,14 @@
         <h2 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4"
             style="background-color: #178EF0;color:white; width:100%;">
             <center><b>ACTIVE MEMBERS</b></center>
+            {% for message in messages %}
+            <div
+              class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+            >
+              <a class="close" href="#" data-dismiss="alert">×</a>
+              {{ message }}
+            </div>
+            {% endfor %}
         </h2>
         <label class="p-2" for="browser">Choose your browser from the list:</label>
         <select class="plotsize p-1" id="inputfield">

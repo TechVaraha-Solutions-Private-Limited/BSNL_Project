@@ -11,7 +11,22 @@
         width:30%;
         float: right;
     }
-    
+    .messages {
+    margin: 15px;
+    padding: 7px;
+    border: 1px solid #721c24;
+    background-color: #f8d7da;
+    width: 43%;
+    margin-left: 30%;
+}
+
+/* Style for the close icon */
+.close-icon {
+    cursor: pointer;
+    float: right;
+    margin-left: 10px;
+    color: #888;
+}
     
     .search_size{
         border: 2px solid rgb(247, 243, 243);
@@ -29,6 +44,14 @@
         <h2 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4"
         style="background-color: #178EF0;color:white; width:100%;">
         <center><b>SITE BOOKING CONFIRMATION</b></center></h2>
+        {% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+  >
+    <a class="close" href="#" data-dismiss="alert">×</a>
+    {{ message }}
+  </div>
+  {% endfor %}
         <div class=" p-2">            
             <table  class="emInfo">
                 <div class="relative search mt-2">

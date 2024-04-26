@@ -22,6 +22,27 @@
     <script defer src="{% static 'site2/assets/js/tippy-bundle.umd.min.js' %}"></script>
     <script defer src="{% static 'site2/assets/js/sweetalert.min.js' %}"></script>
 </head>
+<style>
+    
+
+    .messages {
+    margin: 15px;
+    padding: 7px;
+    border: 1px solid #721c24;
+    background-color: #f8d7da;
+    width: 43%;
+    margin-left: 30%;
+}
+
+/* Style for the close icon */
+.close-icon {
+    cursor: pointer;
+    float: right;
+    margin-left: 10px;
+    color: #888;
+}
+</style>
+
 
     <body
         x-data="main"
@@ -36,6 +57,15 @@
                     <p class="mb-7">Enter your Moblie Number and password to login</p>
                     <form class="space-y-5" method="POST">
                         {% csrf_token %}
+                        {% if messages %}
+            <div class="messages">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }} <span class="close-icon">×</span></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
                             <div>
                                 <label for="email">Email</label>
                                 <input type="email" name="email" class="form-input" placeholder="Enter Email Id" />

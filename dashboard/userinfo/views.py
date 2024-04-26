@@ -12,10 +12,18 @@ def admin_login(request):
     if request.method == 'POST':
         email = request.POST.get('email', '')
         password = request.POST.get('password', '')
-        user = authenticate(request,email=email, password=password)
-        if user and user.is_active:
-            auth_login(request, user)
-            return redirect('/members/home')
+        user = authenticate(request, email=email, password=password)
+        if user is not None:
+            if user.is_active:
+                auth_login(request, user)
+                return redirect('/members/home')
+            else:
+               
+                messages.error(request, 'Your account is not active.')
+        else:
+           
+            messages.error(request, 'Invalid email or password.')
+    
     return render(request, 'login.html')
 
 # @admin_only
@@ -84,11 +92,24 @@ def signin(request):
     if request.method == 'POST':
         mobile_no = request.POST.get('mobile_no')
         password = request.POST.get('password')
-        user_email = User.objects.get(mobile_no=mobile_no)
-        user = authenticate(request, email=user_email.email, password=password)
-        if user and user_email.is_active and user_email.role == "Customer":
-            auth_login(request, user)
-            return redirect('/')
+        
+        try:
+            user_email = User.objects.get(mobile_no=mobile_no)
+        except User.DoesNotExist:
+            messages.error(request, "Invalid credentials")
+            return render(request, 'registration/login.html')
+        
+        user = authenticate(request, username=user_email.username, password=password)
+        
+        if user is not None:
+            if user_email.is_active and user_email.role == "Customer":
+                auth_login(request, user)
+                return redirect('/')
+            else:
+                messages.error(request, "Your account is not active or unauthorized.")
+        else:
+            messages.error(request, "Invalid credentials")
+    
     return render(request, 'registration/login.html')
 
 @login_required

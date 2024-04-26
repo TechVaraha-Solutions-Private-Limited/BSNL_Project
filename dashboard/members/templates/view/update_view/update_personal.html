@@ -11,6 +11,14 @@
 
 <form class="space-y-5 " method="POST" action="">
     {% csrf_token %}
+    {% for message in messages %}
+    <div
+      class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+    >
+      <a class="close" href="#" data-dismiss="alert">×</a>
+      {{ message }}
+    </div>
+    {% endfor %}
     <br>
     <div class="p-2" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
         <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4"

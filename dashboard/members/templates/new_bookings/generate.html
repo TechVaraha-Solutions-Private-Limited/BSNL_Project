@@ -7,14 +7,30 @@
         color: black;
         text-decoration: none;
     }
+    .messages {
+    margin: 15px;
+    padding: 7px;
+    border: 1px solid #721c24;
+    background-color: #f8d7da;
+    width: 43%;
+    margin-left: 30%;
+}
+
+/* Style for the close icon */
+.close-icon {
+    cursor: pointer;
+    float: right;
+    margin-left: 10px;
+    color: #888;
+}
 </style>
 {% for message in messages %}
-<div class="alert   {% if message.tags == 'error' %}
+<div class="messages   {% if message.tags == 'error' %}
                         alert-danger
                     {% elif message.tags == 'success' %}
                         alert-success
                     {% endif %}">
-    <a class="close" href="#" data-dismiss="alert">×</a>
+    <a class="close-icon" href="#" data-dismiss="alert">×</a>
     {{ message }}
 </div>
 {% endfor %}

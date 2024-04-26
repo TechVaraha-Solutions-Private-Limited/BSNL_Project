@@ -36,6 +36,14 @@
     <h2 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4" 
     style="background-color: #178EF0;color:white; width:100%;">
     <center><b>IN-ACTIVE MEMBERS DETAILS</b></center></h2>
+    {% for message in messages %}
+    <div
+      class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+    >
+      <a class="close" href="#" data-dismiss="alert">×</a>
+      {{ message }}
+    </div>
+    {% endfor %}
     <div class="relative search mt-2">
         <input type="text" id="searchInput" placeholder="Search Details..." class="form-input search_size" />
         <button type="button" class="btn absolute ltr:right-1 rtl:left-1 inset-y-0 m-auto rounded-full w-9 h-9 p-0 flex items-center justify-center"style="border: 1px solid;

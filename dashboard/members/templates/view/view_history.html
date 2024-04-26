@@ -31,6 +31,14 @@
 <h3 class="font-weight-bold mt-4 paymenthistory">VIEW PAYMENT HISTORY</h3>
 <form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
+{% for message in messages %}
+<div
+  class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+>
+  <a class="close" href="#" data-dismiss="alert">×</a>
+  {{ message }}
+</div>
+{% endfor %}
 <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
     <div>
         <label>Seniority ID</label>

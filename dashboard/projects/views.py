@@ -3,21 +3,27 @@ from dashboard.projects.models import Project,PlotSize,LandDetails
 from django.contrib import messages
 
 def addproject(request):
-	if request.method == 'POST':
-		Project(
-            projectname = request.POST['projectname'].upper(),
-	        shortcode = request.POST['shortcode'].upper(),
-	        state = request.POST['state'],
-			city = request.POST['city'],
-			pincode = request.POST['pincode'],
-	        images = request.FILES['imageupload'],
-	        address = request.POST['address'],
-			gmap = request.POST['gmaplink'],
-			# pdf_file = request.POST['pdf_file'],
-	        # updated_by = request.user
-            ).save()
-		messages.error(request,'Successfully Saved')
-	return render(request, 'add_project.html')
+    if request.method == 'POST':
+        try:
+            project = Project(
+                projectname=request.POST['projectname'].upper(),
+                shortcode=request.POST['shortcode'].upper(),
+                state=request.POST['state'],
+                city=request.POST['city'],
+                pincode=request.POST['pincode'],
+                images=request.FILES['imageupload'],
+                address=request.POST['address'],
+                gmap=request.POST['gmaplink'],
+            )
+            project.save()
+            messages.success(request, 'Project successfully saved.')
+            return redirect('add_project')  # Redirect to the same page after successful submission
+        except Exception as e:
+            messages.error(request, f'Failed to save project: {e}')
+            # Log the error for debugging purposes
+            # logger.error(f'Failed to save project: {e}')
+    
+    return render(request, 'add_project.html')
     
 
 def addplotsize(request):

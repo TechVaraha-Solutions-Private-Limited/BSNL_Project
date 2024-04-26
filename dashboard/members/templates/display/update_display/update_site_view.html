@@ -34,8 +34,8 @@
                     </div>
                     <div class="p-1">
                         <label class="p-1">Executive</label>
-                        <select class="form-control" name="executive" id="executive">
-                            <option value="{{update.executive.id}}">{{update.executive.first_name}}</option>
+                        <select class="form-control" name="executive" id="executive" readyonly>
+                            <option value="{{update.executive.id}}">{{update.executive.first_name}} </option>
                            
                         </select>
                     </div>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="p-1">
                         <label class="p-1">Booked On</label>
-                        <input type="date" name="booked_no" value="{{update.booked_no|date:'Y-m-d'}}" placeholder="Booked On" class="form-input">
+                        <input type="date"  value="{{update.booked_no|date:'Y-m-d'}}" placeholder="Booked On" class="form-input">
                     </div>
                     <div class="p-1">
                         <label class="p-1">Booked Sry NO</label>

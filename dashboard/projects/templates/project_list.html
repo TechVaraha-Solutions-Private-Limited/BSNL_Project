@@ -35,6 +35,14 @@
 
 <div class="divbox p-3 mt-2 table-responsive">
 <h3 class="font-weight-bold mt-4 addproject">PROJECT LIST</h3>
+{% for message in messages %}
+  <div
+    class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+  >
+    <a class="close" href="#" data-dismiss="alert">×</a>
+    {{ message }}
+  </div>
+  {% endfor %}
 <table class="table table-bordered bg-white text-center">
     {% if projectslists %}
     <thead>
