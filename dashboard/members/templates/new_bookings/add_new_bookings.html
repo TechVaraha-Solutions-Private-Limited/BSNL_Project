@@ -476,8 +476,8 @@
           />
         </div>
         <div class="p-1">
-          <label class="p-1">Executive</label>
-          <select class="form-control" name="executive" id="executive">
+          <label class="p-1 required-label">Executive</label>
+          <select class="form-control" name="executive" id="executive"required>
               <option>Select</option>
               {% for data in exectiv%}
               <option value="{{data.id}}">{{data.first_name}}</option>
