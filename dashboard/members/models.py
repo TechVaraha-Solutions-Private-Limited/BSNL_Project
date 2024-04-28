@@ -36,6 +36,9 @@ class Bookings(models.Model):
     am_no = models.CharField(max_length=20,null=False)
     payments_status = models.CharField(max_length=2,default=0)
     total_paid_amount = models.CharField(max_length=100,default=0)
+    executive = models.ForeignKey(User, related_name='executive_name',on_delete=models.CASCADE,null=True)
+    teamlead = models.ForeignKey(User,related_name='tl', on_delete=models.CASCADE,null=True)
+    projhead = models.ForeignKey(User, related_name='pl',on_delete=models.CASCADE,null=True)
     #UGDG
     date_of_change = models.CharField(max_length=120,null=True)
     type_of_change = models.CharField(max_length=120,null=True)

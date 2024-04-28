@@ -12,6 +12,8 @@ from datetime import date,datetime
 from .models import pdc_update
 from django.http import HttpResponseServerError
 
+from .models import Bookings 
+
 from .models import LandDetails
 from django.db.models import Count
 #this mail
@@ -308,6 +310,8 @@ def site_visit_custmer(request,id):
 def add_new_bookings(request):
     projects = Project.objects.all()
     landdetail = LandDetails.objects.all()
+    exectiv = User.objects.filter(role='Executive')
+    
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         email = request.POST.get('email')
@@ -386,6 +390,13 @@ def add_new_bookings(request):
         dimension_id = request.POST.get('selectDimension')
         land_details = LandDetails.objects.filter(project_id=project_id, plotsize_id=dimension_id).first()
 
+        exective_id = request.POST.get('executive')
+        value = User.objects.get(id=exective_id)
+        get_execute = Executive.objects.get(user_id=value.id)
+        
+        project_lead_id = get_execute.teamlead.sr_team.project_head.id
+        project_lead = User.objects.get(id=project_lead_id)
+       
         book = Bookings()
         book.user = user
         book.membership_id = request.POST.get('member_id')
@@ -395,6 +406,10 @@ def add_new_bookings(request):
         book.downpayment = request.POST.get('downpayment')
         book.site_refer = request.POST.get('site_refer')
         book.am_no = auto_generate
+        book.executive = value
+        
+        book.projhead = project_lead
+
         book.save()
 
         split_amount = int(book.total_site_value) / 4
@@ -484,7 +499,8 @@ def add_new_bookings(request):
                     break
         messages.success(request, 'Successfully Saved')
 
-    return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
+    
+    return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail,'exectiv':exectiv,'projects': projects})
 def get_dimension(request):
     if request.method == "POST":
         id = request.POST.get('id','').strip()

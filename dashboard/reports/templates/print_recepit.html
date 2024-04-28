@@ -177,15 +177,27 @@
 								<td></td>
 								
 								<td style="text-align:right;" > 
+									
 									{% for i in Value %}
-    {% if i.paymentname == "DownPayment" %}
-        200
-    {% elif i.paymentname == "Membership" %}
-        
-    {% else %}
-        0
-    {% endif %}
-{% endfor %}
+										{% if i.paymentname == "DownPayment" %}
+											{% if i != 0 %}
+												200
+											{% endif %}
+										{% elif i.paymentname == "Membership" %}
+										  
+										{% elif i.paymentname == "FirstInstallment" %}
+										   
+										{% elif i.paymentname == "SecondInstallment" %}
+											
+										{% elif i.paymentname == "ThirdInstallment" %}
+									
+										{% elif i.paymentname == "DownPayment Half" %}
+										0
+											
+										{% endif %}
+									{% empty %}
+										0
+									{% endfor %}
 								</td>
 								<td></td>
 								</tr>
@@ -198,14 +210,25 @@
 								<td></td>
 								<td style="text-align:right;" >
 									{% for i in Value %}
-									{% if i.paymentname == "DownPayment" %}
-										200
-									{% elif i.paymentname == "Membership" %}
-										
-									{% else %}
+										{% if i.paymentname == "DownPayment" %}
+											{% if i != 0 %}
+												200
+											{% endif %}
+										{% elif i.paymentname == "Membership" %}
+										  
+										{% elif i.paymentname == "FirstInstallment" %}
+										   
+										{% elif i.paymentname == "SecondInstallment" %}
+											
+										{% elif i.paymentname == "ThirdInstallment" %}
+									
+										{% elif i.paymentname == "DownPayment Half" %}
 										0
-									{% endif %}
-								{% endfor %}
+											
+										{% endif %}
+									{% empty %}
+										0
+									{% endfor %}
 								</td>
 								<td></td>
 							</tr>
@@ -218,14 +241,25 @@
 								<td></td>
 								<td style="text-align:right;">
 									{% for i in Value %}
-    {% if i.paymentname == "DownPayment" %}
-        200
-    {% elif i.paymentname == "Membership" %}
-        
-    {% else %}
-        0
-    {% endif %}
-{% endfor %}
+										{% if i.paymentname == "DownPayment" %}
+											{% if i != 0 %}
+												200
+											{% endif %}
+										{% elif i.paymentname == "Membership" %}
+										  
+										{% elif i.paymentname == "FirstInstallment" %}
+										   
+										{% elif i.paymentname == "SecondInstallment" %}
+											
+										{% elif i.paymentname == "ThirdInstallment" %}
+									
+										{% elif i.paymentname == "DownPayment Half" %}
+										0
+											
+										{% endif %}
+									{% empty %}
+										0
+									{% endfor %}
 								</td>
 								<td>
 													</td>
@@ -240,12 +274,23 @@
 									
 									{% for i in Value %}
 									{% if i.paymentname == "DownPayment" %}
-										2000
+										{% if i != 0 %}
+											2000
+										{% endif %}
 									{% elif i.paymentname == "Membership" %}
+									  
+									{% elif i.paymentname == "FirstInstallment" %}
+									   
+									{% elif i.paymentname == "SecondInstallment" %}
 										
-									{% else %}
-										0
+									{% elif i.paymentname == "ThirdInstallment" %}
+								
+									{% elif i.paymentname == "DownPayment Half" %}
+									0
+										
 									{% endif %}
+								{% empty %}
+									0
 								{% endfor %}
 								</td>
 								<td>
@@ -331,7 +376,7 @@
 									{%endfor%}
 									{% endif %}
 								{% endfor %} -->
-								{% for i in Value %}
+								<!-- {% for i in Value %}
 								{% if i.paymentname == "DownPayment" %}
 								{{i.amount|floatformat:0|add:2600}}
 								{% elif i.paymentname == "Membership" %}
@@ -339,8 +384,27 @@
 								{% else %}
 								{{i.amount}}
 								{% endif %}
-							{% endfor %}
+							{% endfor %} -->
+							{% for i in Value %}
+							{% if i.paymentname == "DownPayment" %}
+								{% if i != 0 %}
+								{{i.amount|floatformat:0|add:2600}}
+								{% endif %}
+							{% elif i.paymentname == "Membership" %}
+							  
+							{% elif i.paymentname == "FirstInstallment" %}
+							   
+							{% elif i.paymentname == "SecondInstallment" %}
 								
+							{% elif i.paymentname == "ThirdInstallment" %}
+						
+							{% elif i.paymentname == "DownPayment Half" %}
+							{{i.amount}}
+								
+							{% endif %}
+						{% empty %}
+							0
+						{% endfor %}
 								
 								</td>
 							<td>

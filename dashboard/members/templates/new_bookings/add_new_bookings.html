@@ -475,6 +475,15 @@
             required
           />
         </div>
+        <div class="p-1">
+          <label class="p-1">Executive</label>
+          <select class="form-control" name="executive" id="executive">
+              <option>Select</option>
+              {% for data in exectiv%}
+              <option value="{{data.id}}">{{data.first_name}}</option>
+              {% endfor %}
+          </select>
+      </div>
       </div>
     </div>
     <div class="panel p-1">
@@ -566,7 +575,7 @@
            
           />
         </div>
-        <div class="p-1 required-label table7" id="table7" style="display: none">
+        <div class="p-1  table7" id="table7" style="display: none">
           <label class="required-label">DD No</label>
           <input
             type="text"

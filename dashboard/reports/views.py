@@ -68,14 +68,12 @@ def print_recepit(request, id):
     try:
         paymentInfos = PaymentDetails.objects.filter(receipt_no=id).first()
         data = PaymentDetails.objects.filter()
-        
-       
       
         check_payments = PaymentDetails.objects.filter(dateofreceipt=paymentInfos.dateofreceipt , booking_id=paymentInfos.booking_id)
         details = PaymentDetails.objects.filter(receipt_no = paymentInfos.receipt_no, booking_id=paymentInfos.booking_id)
        
         for i in check_payments:
-            print(i)
+            
             if i.paymentname == "DownPayment":
                 Value = PaymentDetails.objects.filter(dateofreceipt=paymentInfos.dateofreceipt , booking_id=paymentInfos.booking_id)
             else:
@@ -92,9 +90,14 @@ def print_recepit(request, id):
         payment_count = payments.values('receipt_no').distinct().count()
         print(payment_count)
         id=id
+        total_payment = 0 
         for payment in payments:
- 
-            last_payment = payment.amount
+            name = payment.paymentname
+            last_payment = float(payment.amount)
+            total_payment += last_payment
+           
+            print('total_payment:',total_payment)
+            
         if last_payment:
             no = float(last_payment)
             receipt_no = num2words(no)
@@ -151,6 +154,21 @@ def print_recepit(request, id):
             total_third_installment
         )
         print("Amount",total_all)
+        for payname in payments:
+            if payname.paymentname == "membership":
+                value = 0
+            elif payname.paymentname == "Downpayment":
+                value = 200
+            elif payname.paymentname == "firstinstallment":
+                value = 200
+            elif payname.paymentname == "secondinstallment":
+                value = 200
+            elif payname.paymentname == "thirdinstallment":
+                value = 200
+            else:
+               
+                value = 0
+    
         context = {
             'id': id,
             'user': user,   
@@ -162,7 +180,7 @@ def print_recepit(request, id):
             'userdetail': userdetail,
             'payment': payments,
             'payment_count': payment_count,
-            'total_membership': total_membership,
+            'total_membership':total_membership,
             'total_downpayment': total_downpayment,
             'total_first_installment': total_first_installment,
             'total_second_installment': total_second_installment,
@@ -324,6 +342,9 @@ def pdc_report(request):
 
 def ugdg_report(request):
     ugdgreport_all = Bookings.objects.all()
+    for i in ugdgreport_all:
+        exec = i.executive
+        print('name:',exec)
     
     team_lead = User.objects.filter( role = "Project_Lead")
     executivename = User.objects.filter( role = "Executive")
