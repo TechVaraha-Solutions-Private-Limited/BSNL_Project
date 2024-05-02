@@ -87,6 +87,7 @@ def add_user(request):
         'team': team,
         'executive': execut
     }
+    messages.error(request,'Successfully Saved')
     return render(request, 'users/add_user.html', context)
 def signin(request):
     if request.method == 'POST':

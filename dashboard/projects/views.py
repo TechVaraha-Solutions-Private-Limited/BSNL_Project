@@ -4,7 +4,7 @@ from django.contrib import messages
 
 def addproject(request):
     if request.method == 'POST':
-        try:
+      
             project = Project(
                 projectname=request.POST['projectname'].upper(),
                 shortcode=request.POST['shortcode'].upper(),
@@ -17,11 +17,7 @@ def addproject(request):
             )
             project.save()
             messages.success(request, 'Project successfully saved.')
-            return redirect('add_project')  # Redirect to the same page after successful submission
-        except Exception as e:
-            messages.error(request, f'Failed to save project: {e}')
-            # Log the error for debugging purposes
-            # logger.error(f'Failed to save project: {e}')
+        
     
     return render(request, 'add_project.html')
     
@@ -66,11 +62,12 @@ def addlandinfo(request):
             installment_1=request.POST['firstinstallment'],
             installment_2=request.POST['secondinstallment'],
             installment_3=request.POST['thirdinstallment'],
+			
             # updated_by=request.user
         )
-			
         return redirect('addlandinfo')
-
+	
+    messages.success(request, 'successfully saved.')
     return render(request, 'add_land_info.html', {'projects': projects, 'pltsizes': pltsizes})
 
 def projectlist(request):
@@ -82,17 +79,26 @@ def updateprojectlist(request,id):
 
 	return render(request,'update_project_list.html',{'updateproject':updateproject})
 
-def updatingprojectlist(request,id):
-	updatingprojectlist=Project.objects.get(id=id)
-	updatingprojectlist.projectname = request.POST['projectname'].upper()
-	updatingprojectlist.shortcode = request.POST['shortcode'].upper()
-	updatingprojectlist.address = request.POST['address']
-	updatingprojectlist.state = request.POST['state']
-	updatingprojectlist.city = request.POST['city']
-	updatingprojectlist.pincode = request.POST['pincode']
-	updatingprojectlist.status = request.POST['status']
-	updatingprojectlist.save()
-	return redirect(projectlist)
+def updatingprojectlist(request, id):
+    if request.method == 'POST':
+        updatingprojectlist = Project.objects.get(id=id)
+        updatingprojectlist.projectname = request.POST['projectname'].upper()
+        updatingprojectlist.shortcode = request.POST['shortcode'].upper()
+        updatingprojectlist.address = request.POST['address']
+        updatingprojectlist.state = request.POST['state']
+        updatingprojectlist.city = request.POST['city']
+        updatingprojectlist.pincode = request.POST['pincode']
+        
+        # Check if 'status' exists in POST data before assigning
+        if 'status' in request.POST:
+            updatingprojectlist.status = request.POST['status']
+        
+        updatingprojectlist.save()
+        messages.success(request, 'Update successfully saved.')
+        return redirect('projectlist')  # Assuming 'projectlist' is the name of the view
+    else:
+        # Handle GET request if needed
+        pass
 
 def deleteprojectlist(request,id):
 	deletingprojectlist=Project.objects.get(id=id)

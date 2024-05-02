@@ -16,6 +16,7 @@ from .models import Bookings
 
 from .models import LandDetails
 from django.db.models import Count
+import random
 #this mail
 # from django.core.mail import send_mail
 # from django.http import HttpResponse
@@ -46,7 +47,12 @@ def home(request):
 
    
     unique_projects = LandDetails.objects.values('project__projectname', 'plotsize__plotsize').annotate(land_count=Count('bookings'))
-
+    if not unique_projects:
+    
+        context = {
+            'message': "No projects found."
+        }
+        return render(request, 'common/index.html', context)
     
     for project in unique_projects:
         project_name = project['project__projectname']
@@ -59,12 +65,15 @@ def home(request):
 
         tot_sq  = length*width*land_count
 
-       
+        background_color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
+        text_color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
         project_details.append({
             'name': project_name,
             'size': plot_size,
             'land_count': land_count,
-            'tot_sq': tot_sq
+            'tot_sq': tot_sq,
+            'background_color': background_color,
+            'text_color': text_color
         })
         
     context = {
@@ -311,6 +320,7 @@ def add_new_bookings(request):
     projects = Project.objects.all()
     landdetail = LandDetails.objects.all()
     exectiv = User.objects.filter(role='Executive')
+    errors = []
     
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
@@ -329,175 +339,184 @@ def add_new_bookings(request):
         if User.objects.filter(mobile_no=mobile_no).exists():
             messages.error(request, 'Mobile number already exists. Please use a different mobile number.')
             return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
+        if errors:
+            for error in errors:
+                messages.error(request, error)
+            return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
 
+        try:
 
-        user = User()
-        user.first_name = first_name
-        user.last_name = request.POST.get('last_name')
-        user.mobile_no = mobile_no
-        user.email = email
-        user.password = make_password(request.POST.get('password', '').strip())
-        user.role = "Customer"
-        seniority_id=seniority_id
-        user.save()
+            user = User()
+            user.first_name = first_name
+            user.last_name = request.POST.get('last_name')
+            user.mobile_no = mobile_no
+            user.email = email
+            user.password = make_password(request.POST.get('password', '').strip())
+            user.role = "Customer"
+            seniority_id=seniority_id
+            user.save()
 
-        details = UserDetail()
-        details.user = user
-        details.dob = request.POST.get('dob')
-        details.age = request.POST.get('age')
-        details.alternate_no = request.POST.get('alternate_no')
-        details.aadhhaarno = request.POST.get('aadharno')
-        details.aadhar_proof = request.POST.get('aadhar_proof')
-        details.panno = request.POST.get('panno')
-        details.pan_proof = request.POST.get('pan_proof')
-        details.profile = request.POST.get('profile')
-        details.address = request.POST.get('address')
-        details.city = request.POST.get('city')
-        details.state = request.POST.get('state')
-        details.pincode = request.POST.get('pincode')
-        details.save()
+            details = UserDetail()
+            details.user = user
+            details.dob = request.POST.get('dob')
+            details.age = request.POST.get('age')
+            details.alternate_no = request.POST.get('alternate_no')
+            details.aadhhaarno = request.POST.get('aadharno')
+            details.aadhar_proof = request.POST.get('aadhar_proof')
+            details.panno = request.POST.get('panno')
+            details.pan_proof = request.POST.get('pan_proof')
+            details.profile = request.POST.get('profile')
+            details.address = request.POST.get('address')
+            details.city = request.POST.get('city')
+            details.state = request.POST.get('state')
+            details.pincode = request.POST.get('pincode')
+            details.save()
 
-        nominee = UserNominee()
-        nominee.user = user
-        nominee.nominee_name = request.POST.get('nominee_name')
-        nominee.nominee_age = request.POST.get('nominee_age')
-        nominee.address = request.POST.get('address1')
-        nominee.city = request.POST.get('city1')
-        nominee.state = request.POST.get('state1')
-        nominee.nominee_relationship = request.POST.get('nominee_relationship')
-        nominee.save()
+            nominee = UserNominee()
+            nominee.user = user
+            nominee.nominee_name = request.POST.get('nominee_name')
+            nominee.nominee_age = request.POST.get('nominee_age')
+            nominee.address = request.POST.get('address1')
+            nominee.city = request.POST.get('city1')
+            nominee.state = request.POST.get('state1')
+            nominee.nominee_relationship = request.POST.get('nominee_relationship')
+            nominee.save()
 
-        check_input_no = request.POST.get('check_input_no')
-        for val in range(int(check_input_no)):
-            member_name_key = f'member_name{val + 1}'
-            member_age_key = f'member_age{val + 1}'
-            member_relation_key = f'member_relation{val + 1}'
+            check_input_no = request.POST.get('check_input_no')
+            for val in range(int(check_input_no)):
+                member_name_key = f'member_name{val + 1}'
+                member_age_key = f'member_age{val + 1}'
+                member_relation_key = f'member_relation{val + 1}'
 
-            family = UserFamilyDetails()
-            family.user = user
-            family.member_name = request.POST.get(member_name_key)
-            family.member_age = request.POST.get(member_age_key)
-            family.member_relation = request.POST.get(member_relation_key)
-            family.save()
+                family = UserFamilyDetails()
+                family.user = user
+                family.member_name = request.POST.get(member_name_key)
+                family.member_age = request.POST.get(member_age_key)
+                family.member_relation = request.POST.get(member_relation_key)
+                family.save()
 
-        get_last_number = PaymentDetails.objects.all().order_by('-id')[:1]
-        if get_last_number:
-            auto_generate = "AM-" + str(get_last_number[0].id + 1).zfill(5)
-        else:
-            auto_generate = "AM-00001"
-
-        project_id = request.POST.get('projectname')
-        dimension_id = request.POST.get('selectDimension')
-        land_details = LandDetails.objects.filter(project_id=project_id, plotsize_id=dimension_id).first()
-
-        exective_id = request.POST.get('executive')
-        value = User.objects.get(id=exective_id)
-        get_execute = Executive.objects.get(user_id=value.id)
-        
-        project_lead_id = get_execute.teamlead.sr_team.project_head.id
-        project_lead = User.objects.get(id=project_lead_id)
-       
-        book = Bookings()
-        book.user = user
-        book.membership_id = request.POST.get('member_id')
-        book.seniority_id = request.POST.get('seniority_id')
-        book.land_details = land_details
-        book.total_site_value = request.POST.get('total_site_value')
-        book.downpayment = request.POST.get('downpayment')
-        book.site_refer = request.POST.get('site_refer')
-        book.am_no = auto_generate
-        book.executive = value
-        
-        book.projhead = project_lead
-
-        book.save()
-
-        split_amount = int(book.total_site_value) / 4
-        paid_amount = request.POST.get('amount', '').strip()
-        payment_amount = int(paid_amount) - 2600
-
-        if paid_amount:
-
-            membership_fee = PaymentDetails()
-            membership_fee.booking = book
-
-            membership_fee.payment_mode = request.POST.get('payment_mode')
-            membership_fee.bank = request.POST.get('bank')
-            membership_fee.branch = request.POST.get('branch')
-            membership_fee.cheque_no = request.POST.get('cheque_no')
-            membership_fee.transaction = request.POST.get('transaction_id')
-            membership_fee.ddno = request.POST.get('dd_no')
-            membership_fee.user = user
-            membership_fee.payment_data = request.POST.get('payment_data')
-            membership_fee.dateofreceipt = date.today()
-            membership_fee.amount = 2600
-            membership_fee.paymentname = "Membership"
-            get_number = PaymentDetails.objects.all().order_by('-id')[:1]
-            if get_number:
-                get_number = "634" + str(get_number[0].id + 1)
+            get_last_number = PaymentDetails.objects.all().order_by('-id')[:1]
+            if get_last_number:
+                auto_generate = "AM-" + str(get_last_number[0].id + 1).zfill(5)
             else:
-                get_number = "63421"
-            membership_fee.receipt_no = get_number
-            membership_fee.save()
+                auto_generate = "AM-00001"
 
-            for i in range(4):
-                if i == 0:
-                    paymentname = 'DownPayment'
-                    status = 1
-                elif i == 1:
-                    status = 3
-                    paymentname = 'FirstInstallment'
-                elif i == 2:
-                    status = 5
-                    paymentname = 'SecondInstallment'
-                else:
-                    status = 7
-                    paymentname = 'ThirdInstallment'
+            project_id = request.POST.get('projectname')
+            dimension_id = request.POST.get('selectDimension')
+            land_details = LandDetails.objects.filter(project_id=project_id, plotsize_id=dimension_id).first()
+
+            exective_id = request.POST.get('executive')
+            value = User.objects.get(id=exective_id)
+            get_execute = Executive.objects.get(user_id=value.id)
+            team_lead_user = get_execute.teamlead.user
+            print('team:',team_lead_user)
+            # teamlead = User.objects.get(id=teamlead_id)
+            project_lead_id = get_execute.teamlead.sr_team.project_head.id
+            project_lead = User.objects.get(id=project_lead_id)
+        
+            book = Bookings()
+            book.user = user
+            book.membership_id = request.POST.get('member_id')
+            book.seniority_id = request.POST.get('seniority_id')
+            book.land_details = land_details
+            book.total_site_value = request.POST.get('total_site_value')
+            book.downpayment = request.POST.get('downpayment')
+            book.site_refer = request.POST.get('site_refer')
+            book.am_no = auto_generate
+            book.executive = value
+            book.teamlead = team_lead_user
+            book.projhead = project_lead
+
+            book.save()
+
+            split_amount = int(book.total_site_value) / 4
+            paid_amount = request.POST.get('amount', '').strip()
+            payment_amount = int(paid_amount) - 2600
+
+            if paid_amount:
+
+                membership_fee = PaymentDetails()
+                membership_fee.booking = book
+
+                membership_fee.payment_mode = request.POST.get('payment_mode')
+                membership_fee.bank = request.POST.get('bank')
+                membership_fee.branch = request.POST.get('branch')
+                membership_fee.cheque_no = request.POST.get('cheque_no')
+                membership_fee.transaction = request.POST.get('transaction_id')
+                membership_fee.ddno = request.POST.get('dd_no')
+                membership_fee.user = user
+                membership_fee.payment_data = request.POST.get('payment_data')
+                membership_fee.dateofreceipt = date.today()
+                membership_fee.amount = 2600
+                membership_fee.paymentname = "Membership"
                 get_number = PaymentDetails.objects.all().order_by('-id')[:1]
                 if get_number:
-                    get_number = "6342" + str(get_number[0].id + 1)
+                    get_number = "634" + str(get_number[0].id + 1)
                 else:
                     get_number = "63421"
-                if split_amount < payment_amount:
-                    payments = PaymentDetails()
-                    payments.booking = book
+                membership_fee.receipt_no = get_number
+                membership_fee.save()
 
-                    payments.payment_mode = request.POST.get('payment_mode')
-                    payments.bank = request.POST.get('bank')
-                    payments.branch = request.POST.get('branch')
-                    payments.cheque_no = request.POST.get('cheque_no')
-                    payments.transaction = request.POST.get('transaction_id')
-                    payments.ddno = request.POST.get('dd_no')
-                    payments.user = user
-                    payments.payment_data = request.POST.get('payment_data')
-                    payments.paymentname = paymentname
-                    payments.amount = split_amount
-                    payments.receipt_no = get_number
-                    payments.dateofreceipt = date.today()
-                    payments.save()
-                    payment_amount = payment_amount - split_amount
-                elif payment_amount > 0:
-                    payments = PaymentDetails()
-                    payments.booking = book
+                for i in range(4):
+                    if i == 0:
+                        paymentname = 'DownPayment'
+                        status = 1
+                    elif i == 1:
+                        status = 3
+                        paymentname = 'FirstInstallment'
+                    elif i == 2:
+                        status = 5
+                        paymentname = 'SecondInstallment'
+                    else:
+                        status = 7
+                        paymentname = 'ThirdInstallment'
+                    get_number = PaymentDetails.objects.all().order_by('-id')[:1]
+                    if get_number:
+                        get_number = "6342" + str(get_number[0].id + 1)
+                    else:
+                        get_number = "63421"
+                    if split_amount < payment_amount:
+                        payments = PaymentDetails()
+                        payments.booking = book
 
-                    payments.payment_mode = request.POST.get('payment_mode')
-                    payments.bank = request.POST.get('bank')
-                    payments.branch = request.POST.get('branch')
-                    payments.cheque_no = request.POST.get('cheque_no')
-                    payments.transaction = request.POST.get('transaction_id')
-                    payments.ddno = request.POST.get('dd_no')
-                    payments.user = user
-                    payments.payment_data = request.POST.get('payment_data')
-                    payments.paymentname = paymentname
-                    payments.amount = payment_amount
-                    payments.receipt_no = get_number
-                    payments.dateofreceipt = date.today()
-                    payments.save()
-                    book.payments_status = status
-                    book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount)
-                    book.save()
-                    break
-        messages.success(request, 'Successfully Saved')
+                        payments.payment_mode = request.POST.get('payment_mode')
+                        payments.bank = request.POST.get('bank')
+                        payments.branch = request.POST.get('branch')
+                        payments.cheque_no = request.POST.get('cheque_no')
+                        payments.transaction = request.POST.get('transaction_id')
+                        payments.ddno = request.POST.get('dd_no')
+                        payments.user = user
+                        payments.payment_data = request.POST.get('payment_data')
+                        payments.paymentname = paymentname
+                        payments.amount = split_amount
+                        payments.receipt_no = get_number
+                        payments.dateofreceipt = date.today()
+                        payments.save()
+                        payment_amount = payment_amount - split_amount
+                    elif payment_amount > 0:
+                        payments = PaymentDetails()
+                        payments.booking = book
+
+                        payments.payment_mode = request.POST.get('payment_mode')
+                        payments.bank = request.POST.get('bank')
+                        payments.branch = request.POST.get('branch')
+                        payments.cheque_no = request.POST.get('cheque_no')
+                        payments.transaction = request.POST.get('transaction_id')
+                        payments.ddno = request.POST.get('dd_no')
+                        payments.user = user
+                        payments.payment_data = request.POST.get('payment_data')
+                        payments.paymentname = paymentname
+                        payments.amount = payment_amount
+                        payments.receipt_no = get_number
+                        payments.dateofreceipt = date.today()
+                        payments.save()
+                        book.payments_status = status
+                        book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount)
+                        book.save()
+                        break
+            messages.success(request, 'Successfully Saved')
+        except Exception as e:
+            messages.error(request, f'An error occurred: {str(e)}')    
 
     
     return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail,'exectiv':exectiv,'projects': projects})
@@ -726,7 +745,7 @@ def ugdg(request):
                 book.old_land_details = old_land_detail
                 book.land_details = land_detail
                 book.save()
-                messages.success(request, 'Successfully updated')
+                messages.success(request, 'Successfully Saved')
     except Exception as e:
         messages.error(request, f'An error occurred: {e}')
     
@@ -772,7 +791,7 @@ def transfer(request):
                 book.land_details_id = land_details_id
                 book.save()
                 old_book.save()
-                
+                messages.success(request, 'Successfully updated')
         except Bookings.DoesNotExist:
             messages.error(request, 'No booking found for the given Seniority ID')
         except User.DoesNotExist:
@@ -963,6 +982,7 @@ def lead_owner(request):
                 excep_reason = request.POST.get('excep_reason'),
               
             ).save()
+            messages.success(request, 'Successfully Saved')
     return render(request,'new_bookings/lead_owner.html',{'customer':customers,'exective':exective})
 
 def cancel(request):
@@ -1174,35 +1194,29 @@ def updateactivememberlist(request, id):
 
     except User.DoesNotExist:
         # Handle case where user does not exist
-        return render(request, 'error.html', {'error_message': 'User does not exist.'})
+        return render(request, 'view/update_view/update_acmember.html', {'error_message': 'User does not exist.'})
     except Bookings.DoesNotExist:
         # Handle case where bookings do not exist
-        return render(request, 'error.html', {'error_message': 'Bookings do not exist.'})
+        return render(request, 'view/update_view/update_acmember.html', {'error_message': 'Bookings do not exist.'})
     except UserDetail.DoesNotExist:
         # Handle case where user detail does not exist
-        return render(request, 'error.html', {'error_message': 'User detail does not exist.'})
+        return render(request, 'view/update_view/update_acmember.html', {'error_message': 'User detail does not exist.'})
     except Exception as e:
         # Handle any other unexpected exceptions
-        return render(request, 'error.html', {'error_message': f'An error occurred: {str(e)}'})
+        return render(request, 'view/update_view/update_acmember.html', {'error_message': f'An error occurred: {str(e)}'})
 
-def deleteactivememberlist(request, id):
-    try:
-        book = Bookings.objects.get(user_id=id)
-        if book.user.is_active:
-            book.user.is_active = False
-            book.user.save()
-
-        return redirect('/members/activemember')
+  
+def deleteactivememberlist(request,id):
+    book = Bookings.objects.get(user_id=id)
+    if book.user.is_active == True:
+        book.user.is_active=False
+        book.user.save()
+    context={
+        'user':book,
+    }
     
-    except Bookings.DoesNotExist:
-        # Handle case where bookings do not exist
-        return render(request, 'error.html', {'error_message': 'Bookings do not exist.'})
-    except ObjectDoesNotExist:
-        # Handle any other related object not found exceptions
-        return render(request, 'error.html', {'error_message': 'An object does not exist.'})
-    except Exception as e:
-        # Handle any other unexpected exceptions
-        return render(request, 'error.html', {'error_message': f'An error occurred: {str(e)}'})
+    return redirect('/members/activemember',context)
+   
 
 def update_personal(request,id):
     nomine =  UserNominee.objects.get(user_id=id)
@@ -1278,8 +1292,9 @@ def view_history(request):
 def user_access(request, id):
     try:
         user_log = User.objects.get(id=id)
+        
     except ObjectDoesNotExist:
-        # Handle the case where the user does not exist
+        
         return render(request, 'error.html', {'error_message': 'User does not exist.'})
     except Exception as e:
         # Handle any other unexpected exceptions
@@ -1304,6 +1319,7 @@ def user_access(request, id):
 
 def view_user_access(request):
     view_user=User.objects.filter(is_active=1).order_by('-date_joined')
+    messages.success(request, 'Successfully updated')
     return render(request,'input/update_user/view_user_access.html',{'view_user':view_user})
 
 def delete_user_access(request, id):
@@ -1342,6 +1358,7 @@ def blocked_seniority(request):
             executive=request.POST['executive'],
             customer_name=request.POST['customer_name'],
         ).save()
+        messages.success(request, 'Successfully Saved')
     return render(request,'input/blocked_update/block_seniority.html')
 
 def view_blocked_seniority(request):
@@ -1358,6 +1375,7 @@ def update_block(request,id):
         block_update.executive = request.POST['executive']
         block_update.customer_name = request.POST['customer_name']
         block_update.save() 
+        messages.success(request, 'Successfully updated')
         print('2','Hello')
         return redirect('/members/view_blocked_seniority')
     return render(request,'input/blocked_update/update_block.html',{'block_update':block_update})

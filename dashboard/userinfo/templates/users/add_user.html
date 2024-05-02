@@ -29,20 +29,20 @@
 
 
 <form class="space-y-5" method="POST" action="" autocomplete="off">
-
+    {% if messages %}
+    <div class="messages">
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }} <span class="close-icon">×</span></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
     {% csrf_token %}
     <div class="p-2" id="divbox">
         <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
             style="background-color: #178EF0;color:white; width:100%; text-align: center;"><b>ADD USER</b></label>
-            {% if messages %}
-            <div class="messages">
-                <ul>
-                    {% for message in messages %}
-                    <li>{{ message }} <span class="close-icon">×</span></li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endif %}
+            
             <div class="panel">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div>
@@ -108,7 +108,7 @@
                 </div>
                 <div>
                     <label>password</label>
-                    <input type="text" name="password1" placeholder="Password" class="form-input"required>
+                    <input type="Password" name="password1" placeholder="Password" class="form-input"required>
                 </div>
                 
                 <div>

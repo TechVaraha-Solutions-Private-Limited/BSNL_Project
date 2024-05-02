@@ -18,6 +18,14 @@
             <h2 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
                 style="background-color: #178EF0;color:white; width:100%; text-align: center;"><b>UPDATE LOGIN
                     ACCESS</b></h2>
+                    {% for message in messages %}
+                    <div
+                      class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+                    >
+                      <a class="close" href="#" data-dismiss="alert">×</a>
+                      {{ message }}
+                    </div>
+                    {% endfor %} {% csrf_token %}
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <div class="p-1">
                     {% csrf_token %}
@@ -37,14 +45,15 @@
                 </div>
                 <div class="p-1">
                     <label class="p-1">User Role</label>
-                    <select class="form-control" name="user_role" value="{{user_log.role}}">
+                    <select class="form-control" name="user_role">
+                        <option value="{{user_log.role}}">{{user_log.role}}</option>
                         <option value="">Select Role</option>
                         <option value="Admin">Admin</option>
                         <option value="User">User</option>
                         <option value="Staff">Staff</option>
-                        <option value="Project_Lead">Project Lead</option>
-                        <option value="Sr_Team_lead">Sr Team Lead</option>
-                        <option value="Team_Lead">Team Lead</option>
+                        <option value="Project Lead">Project Lead</option>
+                        <option value="Sr Team lead">Sr Team Lead</option>
+                        <option value="Team Lead">Team Lead</option>
                         <option value="Executive">Executive</option>
                     </select>
                 </div>

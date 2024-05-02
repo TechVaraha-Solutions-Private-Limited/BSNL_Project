@@ -90,13 +90,12 @@ def print_recepit(request, id):
         payment_count = payments.values('receipt_no').distinct().count()
         print(payment_count)
         id=id
-        total_payment = 0 
+        total = 0
         for payment in payments:
             name = payment.paymentname
             last_payment = float(payment.amount)
-            total_payment += last_payment
-           
-            print('total_payment:',total_payment)
+            total = last_payment
+            print('total:',total)
             
         if last_payment:
             no = float(last_payment)
