@@ -9,35 +9,22 @@
         border-radius: 1%;
     }
 
-    .messages {
-    margin: 15px;
-    padding: 7px;
-    border: 1px solid #721c24;
-    background-color: #f8d7da;
-    width: 43%;
-    margin-left: 30%;
-}
+    
 
 /* Style for the close icon */
-.close-icon {
-    cursor: pointer;
-    float: right;
-    margin-left: 10px;
-    color: #888;
-}
+
 </style>
 
 
 <form class="space-y-5" method="POST" action="" autocomplete="off">
-    {% if messages %}
-    <div class="messages">
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }} <span class="close-icon">×</span></li>
-            {% endfor %}
-        </ul>
+    {% for message in messages %}
+    <div
+      class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+    >
+      <a class="close" href="#" data-dismiss="alert">×</a>
+      {{ message }}
     </div>
-    {% endif %}
+    {% endfor %}
     {% csrf_token %}
     <div class="p-2" id="divbox">
         <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"

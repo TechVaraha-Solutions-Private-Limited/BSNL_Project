@@ -92,11 +92,21 @@
           <td>{{val.ddno}}</td>
           <td>{{val.booking.land_details.project.projectname}}</td>
           <td>{{val.cheque_no}}</td>
-          <td>{{val.status}}</td>
+         
+          <td>
+            {% if val.status == "0" %}
+                Pending
+            {% elif val.status == "1" %}
+                Completed
+            {% else %}
+                
+                Unknown
+            {% endif %}
+        </td>
           <td>{{val.date_cleared}}</td>
           <td>{{val.bank}}</td>
           <td>
-            {{val.sitevist__proj_head}}
+            {{val.user.projecthead}}
           </td>
         </tr>
         {% endif %}
@@ -314,7 +324,13 @@
                             "{{val.ddno}},"+
                             "{{val.booking.land_details.project.projectname}},"+
                             "{{val.cheque_no}},"+
-                            "{{val.status}},"+
+                            "{% if val.status == '0' %}" +
+                           "Pending," +
+                          "{% elif val.status == '1' %}" +
+                          "Completed," +
+                          "{% else %}" +
+                          "Unknown," +
+                          "{% endif %}" +  
                             "{{val.date_cleared}},"+
                             "{{val.bank}},"+
                             "{{val.booking.sitevist.executive.executive_set.last.teamlead.sr_team.project_head.first_name}}\n";

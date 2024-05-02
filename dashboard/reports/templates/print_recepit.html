@@ -149,7 +149,7 @@
 										{% elif paysts.payment_mode == "Net Banking" %}
 											{{ paysts.transaction }}
 										{% else %}
-											No transaction info available
+											/cheque/DD/NetBanking
 										{% endif %}
 									</td>
 									<td>{{ paysts.amount }}</td>
@@ -184,11 +184,11 @@
 												200
 											{% endif %}
 										{% elif i.paymentname == "Membership" %}
-										  
+									
 										{% elif i.paymentname == "FirstInstallment" %}
-										   
+										
 										{% elif i.paymentname == "SecondInstallment" %}
-											
+										
 										{% elif i.paymentname == "ThirdInstallment" %}
 									
 										{% elif i.paymentname == "DownPayment Half" %}
@@ -215,13 +215,13 @@
 												200
 											{% endif %}
 										{% elif i.paymentname == "Membership" %}
-										  
-										{% elif i.paymentname == "FirstInstallment" %}
-										   
-										{% elif i.paymentname == "SecondInstallment" %}
-											
-										{% elif i.paymentname == "ThirdInstallment" %}
 									
+										{% elif i.paymentname == "FirstInstallment" %}
+										
+										{% elif i.paymentname == "SecondInstallment" %}
+									
+										{% elif i.paymentname == "ThirdInstallment" %}
+										
 										{% elif i.paymentname == "DownPayment Half" %}
 										0
 											
@@ -246,13 +246,13 @@
 												200
 											{% endif %}
 										{% elif i.paymentname == "Membership" %}
-										  
+										
 										{% elif i.paymentname == "FirstInstallment" %}
-										   
+										
 										{% elif i.paymentname == "SecondInstallment" %}
-											
-										{% elif i.paymentname == "ThirdInstallment" %}
 									
+										{% elif i.paymentname == "ThirdInstallment" %}
+										
 										{% elif i.paymentname == "DownPayment Half" %}
 										0
 											
@@ -278,13 +278,13 @@
 											2000
 										{% endif %}
 									{% elif i.paymentname == "Membership" %}
-									  
+									
 									{% elif i.paymentname == "FirstInstallment" %}
-									   
+									
 									{% elif i.paymentname == "SecondInstallment" %}
-										
+									
 									{% elif i.paymentname == "ThirdInstallment" %}
-								
+									
 									{% elif i.paymentname == "DownPayment Half" %}
 									0
 										
@@ -391,13 +391,13 @@
 								{{i.amount|floatformat:0|add:2600}}
 								{% endif %}
 							{% elif i.paymentname == "Membership" %}
-							  
+							
 							{% elif i.paymentname == "FirstInstallment" %}
-							   
+							
 							{% elif i.paymentname == "SecondInstallment" %}
-								
+							
 							{% elif i.paymentname == "ThirdInstallment" %}
-						
+							
 							{% elif i.paymentname == "DownPayment Half" %}
 							{{i.amount}}
 								

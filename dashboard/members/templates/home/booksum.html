@@ -20,6 +20,7 @@
     }
 </style>
 <br>
+
 <div id="divbox">
     <div class="panel">
         <label for="browser">Choose your browser from the list:</label>
@@ -37,39 +38,42 @@
                 <center> <b> PROJECT WISE </b> </center>
             </h3> <br>
             <table class="table-hover">
+                
                 <thead>
-                    <tr>
-                        <th><b>Project Wise</b></th>
-                    </tr>
+                    
+                   
                     <tr>
                         <th></th>
-                        <th>1200</th>
-                        <th>1500</th>
-                        <th>2400</th>
-                        <th>4000</th>
-                        <th>2200</th>
+                        {% for project in project_details %}
+                        <th>{{project.sq_feet}}</th>
+                        {% endfor %}
                         <th>Total</th>
                     </tr>
-                    <tr>
-                        <th><b>Highway Green</b></th>
-                    </tr>
+                   
                 </thead>
+                {% for project in project_details %}
                 <tbody>
                     <tr>
+                          
+                        <th colspan="7"><b>{{ project.name }}</b></th>
+                        
+                    </tr>
+                    <tr>
                         <td>No.of.Booking</td>
-                        <td>10</td>
-                        <td>15</td>
-                        <td>9</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>34</td>
+                        <td>{{ project.land_count }}</td>
+                  
+                        <td>{{ project.land_count }}</td>
                     </tr>
                     <tr>
                         <td>Sq.Ft</td>
+                        <td>{{ project.tot_sq }}</td>
+                       
+                        <td>{{ project.tot_sq }}</td>
                     </tr>
                 </tbody>
+                {% endfor %}
                 <!--Highway Green II-->
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Highway Green II</b></th>
                     </tr>
@@ -87,11 +91,11 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
 
                 <!--bg-->
 
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Bhishma Greens</b></th>
                     </tr>
@@ -109,11 +113,11 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
 
                 <!--bg2-->
 
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Bhishma Greens II</b></th>
                     </tr>
@@ -131,9 +135,9 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
                 <!--ks-->
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Kaveri Sagara</b></th>
                     </tr>
@@ -151,9 +155,9 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
                 <!--ku-->
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Kubera and Urban Greens</b></th>
                     </tr>
@@ -171,9 +175,9 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
                 <!--tot-->
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Total</b></th>
                     </tr>
@@ -191,7 +195,8 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
+                
             </table>
         </div>
         <!--year Wise-->
@@ -203,40 +208,48 @@
             </h3> <br>
             <table class="table-hover">
                 <thead>
-                    <tr>
-                        <th><b>Year Wise</b></th>
-                    </tr>
+                  
                     <tr>
                         <th></th>
-                        <th>2016</th>
-                        <th>2017</th>
-                        <th>2018</th>
                         <th>2019</th>
                         <th>2020</th>
                         <th>2021</th>
+                        <th>2022</th>
+                        <th>2023</th>
+                        <th>2024</th>
                         <th>Total</th>
                     </tr>
-                    <tr>
-                        <th><b>Highway Green</b></th>
-                    </tr>
+                   
                 </thead>
+                {% for project in project_details %}
                 <tbody>
+                    <tr >
+                        <th colspan="8"><b>{{project.name}}</b></th>
+                    </tr>
                     <tr>
                         <td>No.of.Booking</td>
-                        <td>10</td>
-                        <td>15</td>
-                        <td>9</td>
                         <td>-</td>
                         <td>-</td>
                         <td>-</td>
-                        <td>34</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td >{{ project.land_count }}</td>
+                        
                     </tr>
                     <tr>
                         <td>Sq.Ft</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        
+                        <td>{{ project.tot_sq }}</td>
                     </tr>
                 </tbody>
+                {% endfor %}
                 <!--hg11-->
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Highway Green II</b></th>
                     </tr>
@@ -255,9 +268,9 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
                 <!--bg-->
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Bhishma Greens</b></th>
                     </tr>
@@ -276,9 +289,9 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
                 <!--bgII-->
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Bhishma GreensII</b></th>
                     </tr>
@@ -297,9 +310,9 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
                 <!--kv-->
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Kaveri Sagara</b></th>
                     </tr>
@@ -318,9 +331,9 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
                 <!--ks-->
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Kubera and Urban Greens</b></th>
                     </tr>
@@ -339,9 +352,9 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
                 <!--tot-->
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th><b>Total</b></th>
                     </tr>
@@ -360,7 +373,7 @@
                     <tr>
                         <td>Sq.Ft</td>
                     </tr>
-                </tbody>
+                </tbody> -->
             </table>
         </div>
         <!--Team Wise-->
@@ -372,64 +385,33 @@
             </h3> <br>
             <table class="table-hover">
                 <thead>
-                    <tr>
-                        <th>Team Wise</th>
-                    </tr>
-                    <tr>
-                        <th>Highway Green</th>
-                    </tr>
+                 
+                   
                     <tr>
                         <th></th>
-                        <th>1200</th>
-                        <th>1500</th>
-                        <th>2400</th>
-                        <th>4000</th>
-                        <th>2200</th>
+                        {% for project in view %}
+                        <th>{{project.first_name}}</th>
+                        {% endfor %}
                         <th>Total</th>
                     </tr>
+                   
                 </thead>
+                 {% for project in project_details %}
                 <tbody>
                     <tr>
+                        <th colspan="8"><b>{{project.name}}</b></th>
+                    </tr>
+                    <tr>
                         <td>No.of.Booking</td>
-                        <td>10</td>
-                        <td>15</td>
-                        <td>9</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>34</td>
+                        <td >{{ project.land_count }}</td>
                     </tr>
                     <tr>
                         <td>Sq.Ft</td>
+                        <td>{{ project.tot_sq }}</td>
                     </tr>
                 </tbody>
-                <thead>
-                    <tr>
-                        <th>Highway Green II</th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <th>1200</th>
-                        <th>1500</th>
-                        <th>2400</th>
-                        <th>4000</th>
-                        <th>2200</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>No.of.Booking</td>
-                        <td>10</td>
-                        <td>15</td>
-                        <td>9</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>34</td>
-                    </tr>
-                    <tr>
-                        <td>Sq.Ft</td>
-                    </tr>
-                </tbody>
+                {% endfor %}
+              
             </table>
         </div>
     </div>

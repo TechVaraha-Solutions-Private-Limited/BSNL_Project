@@ -78,17 +78,18 @@ def print_recepit(request, id):
                 Value = PaymentDetails.objects.filter(dateofreceipt=paymentInfos.dateofreceipt , booking_id=paymentInfos.booking_id)
             else:
                 Value = PaymentDetails.objects.filter(receipt_no = paymentInfos.receipt_no, booking_id=paymentInfos.booking_id)
-
-
+      
+       
         user = Bookings.objects.filter(user_id=paymentInfos.booking.user_id).first()
         
         if not user:
             return HttpResponse("No booking found for receipt number: {}".format(id))
+       
 
         userdetail = UserDetail.objects.get(user=user.user)
         payments = PaymentDetails.objects.filter(booking_id=user.id)
         payment_count = payments.values('receipt_no').distinct().count()
-        print(payment_count)
+        
         id=id
         total = 0
         for payment in payments:
@@ -153,20 +154,7 @@ def print_recepit(request, id):
             total_third_installment
         )
         print("Amount",total_all)
-        for payname in payments:
-            if payname.paymentname == "membership":
-                value = 0
-            elif payname.paymentname == "Downpayment":
-                value = 200
-            elif payname.paymentname == "firstinstallment":
-                value = 200
-            elif payname.paymentname == "secondinstallment":
-                value = 200
-            elif payname.paymentname == "thirdinstallment":
-                value = 200
-            else:
-               
-                value = 0
+        
     
         context = {
             'id': id,
@@ -511,6 +499,9 @@ def receipt_details(request):
     
         
     team_lead = User.objects.filter( role = "Project_Lead")
+    for i in team_lead:
+        team = i.first_name
+        print(team)
     if request.method == 'POST':
         value = request.POST.get('receiptreportoption')
         select = request.POST.get('reportType')
@@ -542,15 +533,14 @@ def receipt_details(request):
             
         elif select == 'project_head':
             receiptreport = Bookings.objects.filter(sitevist__proj_head = value)
-            print("Receipt Report:", receiptreport)
+            
            
         elif select == 'mod_pay':
             receiptreport = PaymentDetails.objects.filter(payment_mode = value)
             
         elif select == 'pay_status':
             receiptreport = PaymentDetails.objects.filter(status = value)
-            for i in receiptreport:
-                print("Muthu",)
+           
         elif select == 'customername':
             receiptreport = Site_visit.objects.filter(cust_name = value)
         elif select == 'project_wise':
@@ -562,7 +552,7 @@ def receipt_details(request):
         context={
         'receiptreport_filter':receiptreport,
         'receiptreport': receipts_all,
-        'receipts_all': project,
+        'receipts_all': team_lead,
         'team_lead':team_lead,
         }
         return render(request, 'receipt_details.html', context)

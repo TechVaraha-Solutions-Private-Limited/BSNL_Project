@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect, HttpResponse
+from django.shortcuts import render,redirect, HttpResponse, get_object_or_404
 from django.http import JsonResponse
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee,TeamLead,Executive,SeniorTeamLead
 from .models import Bookings,PaymentDetails,Ugdg,Images,Leadowner,Site_visit,Btmt,G_image,Request_call,LandDetails
@@ -16,7 +16,7 @@ from .models import Bookings
 
 from .models import LandDetails
 from django.db.models import Count
-import random
+
 #this mail
 # from django.core.mail import send_mail
 # from django.http import HttpResponse
@@ -65,15 +65,12 @@ def home(request):
 
         tot_sq  = length*width*land_count
 
-        background_color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
-        text_color = "#{:06x}".format(random.randint(0, 0xFFFFFF))
         project_details.append({
             'name': project_name,
             'size': plot_size,
             'land_count': land_count,
-            'tot_sq': tot_sq,
-            'background_color': background_color,
-            'text_color': text_color
+            'tot_sq': tot_sq
+            
         })
         
     context = {
@@ -409,7 +406,7 @@ def add_new_bookings(request):
             value = User.objects.get(id=exective_id)
             get_execute = Executive.objects.get(user_id=value.id)
             team_lead_user = get_execute.teamlead.user
-            print('team:',team_lead_user)
+        
             # teamlead = User.objects.get(id=teamlead_id)
             project_lead_id = get_execute.teamlead.sr_team.project_head.id
             project_lead = User.objects.get(id=project_lead_id)
@@ -439,6 +436,7 @@ def add_new_bookings(request):
                 membership_fee.booking = book
 
                 membership_fee.payment_mode = request.POST.get('payment_mode')
+               
                 membership_fee.bank = request.POST.get('bank')
                 membership_fee.branch = request.POST.get('branch')
                 membership_fee.cheque_no = request.POST.get('cheque_no')
@@ -492,6 +490,7 @@ def add_new_bookings(request):
                         payments.receipt_no = get_number
                         payments.dateofreceipt = date.today()
                         payments.save()
+                       
                         payment_amount = payment_amount - split_amount
                     elif payment_amount > 0:
                         payments = PaymentDetails()
@@ -512,7 +511,9 @@ def add_new_bookings(request):
                         payments.save()
                         book.payments_status = status
                         book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount)
+                        
                         book.save()
+                       
                         break
             messages.success(request, 'Successfully Saved')
         except Exception as e:
@@ -552,9 +553,45 @@ def get_project_id(request):
         return JsonResponse({"error": "An error occurred while processing the request"})
 
 def booksum(request):
-    return render(request,'home/booksum.html')
+    view = User.objects.filter(role='Team_Lead')  
+    
+    project_details = []
+
+    unique_projects = LandDetails.objects.values('project__projectname', 'plotsize__plotsize').annotate(land_count=Count('bookings'))
+   
+    for project in unique_projects:
+        project_name = project['project__projectname']
+        plot_size = project['plotsize__plotsize']
+        land_count = project['land_count']
+        
+        split = plot_size.split("X")
+        length = int(split[0])
+        width   = int(split[1])
+
+        tot_sq  = length*width*land_count
+        sq_feet = length*width
+        project_details.append({
+            'name': project_name,
+            'size': plot_size,
+            'land_count': land_count,
+            'tot_sq': tot_sq,
+            'sq_feet':sq_feet
+        })
+        
+    context = {
+        'project_details': project_details,
+        'view':view
+        
+    }
+    
+
+
+
+    return render(request,'home/booksum.html',context)
 
 def bss(request):
+   
+    
     return render(request,'home/bss.html')
 
 def print_receipt(request):
@@ -571,40 +608,41 @@ def generate(request):
         seniority_id = request.POST.get('search_membername')
         if action == 'search_customer':
             try:
-                # Retrieve customer details based on seniority_id
+               
                 customers = Bookings.objects.get(seniority_id=seniority_id)
 
-                # Calculate the total payment amount for the customer
+               
                 payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))
-                payment_total = payment['amount__sum'] or 0  # Use 0 if payment is None
+                payment_total = payment['amount__sum'] or 0  
                 total_site_value = customers.total_site_value
 
                 if not customers:
                     messages.error(request, 'Profile details updated.')
-            except:
+            except Bookings.DoesNotExist:
+                messages.error(request, 'Invalid seniority ID. ')
                 customers = {}       
         elif action == 'create_order':
             print('User ID:',user_id)
             seniority = request.POST.get('seniority')
             customers = Bookings.objects.get(seniority_id=seniority)
             payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))                
-            payment_total = payment['amount__sum'] or 0  # Use 0 if payment is None
+            payment_total = payment['amount__sum'] or 0  
             total_site_value = customers.total_site_value
             book = Bookings.objects.get(user_id=user_id, seniority_id=seniority)
             payment = PaymentDetails.objects.filter(booking_id = book.id).aggregate(Sum('amount'))
             
             PaymentDetails()
             try:
-                # Create a new order instance
+                
                 get_number = PaymentDetails.objects.all().order_by('-id')[:1]
                 if get_number:
                     get_number = "634" + str(get_number[0].id + 1)
                 else:
                     get_number = "63421"
                 split_amount = int(book.total_site_value) / 4
-                #Customer paid amount
+              
                 paid_amount =  request.POST.get('amount','').strip()
-                # To find the remaining balance Amount
+                
                 difference = int(total_site_value) - int(payment_total)
 
 
@@ -719,21 +757,27 @@ def ugdg(request):
                 if seniority_id == '':
                     messages.error(request, 'Please Enter the Seniority No')
                 else:
-                    customers = Bookings.objects.get(seniority_id=seniority_id)
-                    if not customers:
-                        messages.error(request, 'No profile found for the given Seniority No')
+                    try:
+                        customers = Bookings.objects.get(seniority_id=seniority_id)
+                    except Bookings.DoesNotExist:
+                        messages.error(request, 'Invalid seniority ID.')
             elif action == 'create_order':
                 seniority = request.POST.get('seniority_id')
                 book = Bookings.objects.get(user_id=user_id, seniority_id=seniority)
                 project_id = request.POST.get('projectname')
                 str_form = request.POST.get('selectDimension')
                 str_to = request.POST.get('plotsize')
+                
                 land_detail = LandDetails.objects.get(project_id=project_id, plotsize_id=str_to)
                 old_land_detail = LandDetails.objects.get(project_id=project_id, plotsize_id=str_form)
+                
+                   
                 book.date_of_change = request.POST.get('date_of_change')
                 book.type_of_change = request.POST.get('type_of_change')
                 book.diff = request.POST.get('diff')
-                book.executive = request.POST.get('executive')
+                executive_id = request.POST.get('executive')
+                executive = User.objects.get(pk=executive_id)
+                book.executive = executive
                 book.team_lead = request.POST.get('team_lead')
                 book.sr_team_lead = request.POST.get('sr_team_lead')
                 book.project_lead = request.POST.get('project_lead')
@@ -769,7 +813,7 @@ def transfer(request):
                 customers = Bookings.objects.get(seniority_id=seniority_id)
                 user = User.objects.get(id=user_id)
                 if not customers:
-                    messages.error(request, 'No profile found for the given Seniority ID')
+                    messages.error(request, 'Invalid Customer ID.')
             elif action == 'create_order':
                 seniority = request.POST.get('seniority')
                 user_id = request.POST.get('user_id')
@@ -793,7 +837,7 @@ def transfer(request):
                 old_book.save()
                 messages.success(request, 'Successfully updated')
         except Bookings.DoesNotExist:
-            messages.error(request, 'No booking found for the given Seniority ID')
+            messages.error(request, 'Invalid seniority ID.')
         except User.DoesNotExist:
             messages.error(request, 'No user found for the given User ID')
         except Exception as e:
@@ -951,10 +995,8 @@ def lead_owner(request):
         if action == 'search_customer':
             try:
                 customers = Bookings.objects.get(seniority_id=seniority_id)
-                
-                if customers =='':
-                    messages.error(request, 'Profile details updated.')
-            except:
+            except Bookings.DoesNotExist:
+                messages.error(request, 'Invalid seniority ID. ')
                 customers = {}
                 print('Muthu')
         elif action == 'create_order':
@@ -996,10 +1038,10 @@ def cancel(request):
             try:
                 customers = Bookings.objects.get(seniority_id=seniority_id)
                 if not customers:
-                    messages.error(request, 'No profile found for the given seniority ID.')
+                    messages.error(request, 'Invalid seniority ID.')
             except Bookings.DoesNotExist:
                 customers = {}
-                messages.error(request, 'No profile found for the given seniority ID.')
+                messages.error(request, 'Invalid seniority ID.')
             except Exception as e:
                 messages.error(request, f'An error occurred: {e}')
                 
@@ -1318,7 +1360,7 @@ def user_access(request, id):
     return render(request, 'input/update_user/user_access.html', {'user_log': user_log})
 
 def view_user_access(request):
-    view_user=User.objects.filter(is_active=1).order_by('-date_joined')
+    view_user=User.objects.filter(is_active=1).exclude(role__iexact="customer").order_by('-date_joined')
     messages.success(request, 'Successfully updated')
     return render(request,'input/update_user/view_user_access.html',{'view_user':view_user})
 

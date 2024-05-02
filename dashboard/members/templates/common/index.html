@@ -26,7 +26,8 @@
         }
 
         .project-info {
-          
+            background-color: #0091D5;
+            color:#ffffff;
             padding: 10px;
             margin-bottom: 20px;
             width: calc(25% - 20px); 
@@ -255,7 +256,7 @@
 {% else %}
 <div class="project-container">
     {% for project in project_details %}
-    <div class="project-info" style="background-color: {{ project.background_color }}; color: {{ project.text_color }};">
+    <div class="project-info" >
         <h6>{{ project.name }} ({{ project.size }})</h6><hr>
         <p>Total Sq Feet: <b>{{ project.tot_sq }}</b> Sq Feet</p>
         <p>Number of Bookings: <b>{{ project.land_count }}</b></p>

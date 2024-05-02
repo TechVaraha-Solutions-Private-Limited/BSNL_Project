@@ -50,13 +50,14 @@
             <tbody>
 
                 {% for val in view_user %}
+            
                 <tr>
                     <td>{{forloop.counter}}</td>
                     <td>{{val.first_name}} {{val.last_name}}</td>
                     <td>{{val.employee_id}}</td>
                     <td>{{val.mobile_no}}</td>
                     <td>{{val.email}}</td>
-                    <td>{{val.role}}</td>
+                    <td>{{val.role }}</td>
                     <td>{{val.date_joined}} </td>
                     <td>
                         <div class="text-center">
@@ -102,6 +103,7 @@
                         </div>
                     </td>
                 </tr>
+               
                 {% endfor %}
 
             </tbody>
