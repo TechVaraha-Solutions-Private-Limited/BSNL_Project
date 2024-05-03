@@ -98,15 +98,7 @@
 							<span class="date-dot2">
 								
 								
-								  {% for i in Value %}
-								  {% if i.paymentname == "DownPayment" %}
-								  {{round_off|upper}}
-								  {% elif i.paymentname == "Membership" %}
-									  
-								  {% else %}
-								  {{downpayment|upper}}
-								  {% endif %}
-							  {% endfor %}
+								{{downpayment|upper}}
 
 								  
 								 
@@ -399,6 +391,7 @@
 							{% elif i.paymentname == "ThirdInstallment" %}
 							
 							{% elif i.paymentname == "DownPayment Half" %}
+							
 							{{i.amount}}
 								
 							{% endif %}

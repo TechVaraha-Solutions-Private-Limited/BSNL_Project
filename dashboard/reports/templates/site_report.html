@@ -58,7 +58,7 @@
                     <th>SV_Done_by</th>
                     <th>SV_Status</th>
                     <th>SV_Category</th>
-                    <th>Fup_Date</th>
+                    <!-- <th>Fup_Date</th> -->
                     <th>Executive</th>
                     <th>Team_Leader</th>
                     <th>Project_Manager</th>
@@ -76,8 +76,8 @@
                     <td>{{val.sv_don_by}}</td>
                     <td>{{val.sv_status}}</td>
                     <td>{{val.sv_category}}</td>
-                    <td>{{val.Fup_Date}}</td>
-                    <td>{{val.executive}}</td>
+                    <!-- <td>{{val.Fup_Date}}</td> -->
+                    <td>{{val.executive.first_name}}</td>
                     <td>{{val.team_lead.first_name}}</td>
                     <td>{{val.proj_head.first_name}}</td>
                     <td>{{val.source}}</td>
@@ -270,7 +270,7 @@
         sitereportlink.addEventListener('click', function () {
             // Prepare data for CSV
             var csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Date Of SV,Customer Name,Phone Number,SO Done by,SV Done by,SV Status,SV Category,Fup Date,Executive,Team Leader,Project Manager,Source\n";
+            csvContent += "Date Of SV,Customer Name,Phone Number,SO Done by,SV Done by,SV Status,SV Category,Executive,Team Leader,Project Manager,Source\n";
 
             // Loop through the bookings data and append to CSV
             {% for val in sitereport_filter %}
@@ -283,7 +283,7 @@
                               "{{val.sv_don_by}}," +
                               "{{val.sv_status}}," +
                               "{{val.sv_category}}," +
-                              "{{val.Fup_Date}}," +
+                            //   "{{val.Fup_Date}}," +
                               "{{val.executive.first_name}}," +
                               "{{val.team_lead.first_name}}," +
                               "{{val.proj_head.first_name}}," +

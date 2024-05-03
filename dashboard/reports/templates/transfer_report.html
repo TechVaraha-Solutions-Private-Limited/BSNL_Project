@@ -69,7 +69,7 @@
                     <td>{{val.land_details.project.projectname}}</td>
                     <td>{{val.user.mobile_no}}</td>
                     <td>{{val.user.email}}</td>
-                    <td>{{val.paymentdetails_set.last.total_paid_amount}}</td>
+                    <td>{{val.Amount_Transferred}}</td>
                 </tr>
                 {%endif%}
                 {%endfor%}
@@ -186,7 +186,7 @@
                               "{{ val.land_details.project.projectname }}," +
                               "{{ val.user.mobile_no }}," +
                               "{{ val.user.email }}," +
-                              "{{ val.paymentdetails_set.last.total_paid_amount }}\n";
+                              "{{ val.Amount_Transferred }}\n";
              {%endif%}                  
             {% endfor %}
 

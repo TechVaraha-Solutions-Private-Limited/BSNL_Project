@@ -123,7 +123,10 @@ def print_recepit(request, id):
                amont = float(value)
                downpayment = num2words(amont, lang='en_IN')
                downpayment = downpayment.replace(',','')
-
+        if round_off:
+            downpayment = round_off
+        else:
+            downpayment = downpayment
         print('round off:', round_off)
         print('downpayment:', downpayment)
         

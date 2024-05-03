@@ -58,6 +58,7 @@ class Bookings(models.Model):
     old_seniority_id =models.CharField(max_length=20,unique=True,null=True)
     affidavit = models.ImageField(upload_to= settings.PROJECT_UPLOAD_PATH, null=True)
     death_cert =models.ImageField(upload_to= settings.PROJECT_UPLOAD_PATH, null=True)
+    Amount_Transferred = models.CharField(max_length=20,null=True)
     #cancel
     date_of_cancel = models.CharField(max_length=20,null=True)
     type_of_cancel = models.CharField(max_length=20,null=True)
