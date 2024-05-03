@@ -776,8 +776,10 @@ def ugdg(request):
                 book.type_of_change = request.POST.get('type_of_change')
                 book.diff = request.POST.get('diff')
                 executive_id = request.POST.get('executive')
-                executive = User.objects.get(pk=executive_id)
-                book.executive = executive
+                print(executive_id)
+                value = User.objects.get(id=executive_id)
+                get_execute = Executive.objects.get(user_id=value.id)    
+                book.executive = value
                 book.team_lead = request.POST.get('team_lead')
                 book.sr_team_lead = request.POST.get('sr_team_lead')
                 book.project_lead = request.POST.get('project_lead')
