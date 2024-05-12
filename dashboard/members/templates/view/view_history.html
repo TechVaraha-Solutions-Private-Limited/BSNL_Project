@@ -42,16 +42,16 @@
 <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
     <div>
         <label>Seniority ID</label>
-        <input type="text" name="projectname" class="form-input" placeholder="Enter Seniority ID" value="{{payment.booking.seniority_id}}" readonly>
+        <input type="text" name="projectname" class="form-input" placeholder="Enter Seniority ID" value="{{payment.booking.seniority_id}}" >
     </div>
     <div>
         <label>Customer Name</label>
-        <input type="text" name="shortcode" class="form-input" placeholder="Enter Customer Name" value="{{payment.booking.user.first_name}}" readonly>
+        <input type="text" name="shortcode" class="form-input" placeholder="Enter Customer Name" value="{{payment.booking.user.first_name}}" >
     </div>
 
     <div>
         <label>Booking Date</label>
-        <input type="text" name="dpprice" class="form-input" placeholder="Enter Booking Date" value="{{payment.booking.created_on|date:'d-m-y'}}" readonly>
+        <input type="text" name="dpprice" class="form-input" placeholder="Enter Booking Date" value="{{payment.booking.created_on|date:'d-m-y'}}" >
     </div>
 </div>
 
@@ -59,17 +59,17 @@
 <div class="grid pt-4 grid-cols-1 md:grid-cols-3 gap-5">
     <div>
         <label>Project</label>
-        <input type="text" name="secondinstallment" class="form-input" placeholder="Enter Project" value="{{payment.booking.land_details.project.projectname}}" readonly>
+        <input type="text" name="secondinstallment" class="form-input" placeholder="Enter Project" value="{{payment.booking.land_details.project.projectname}}" >
     </div>
 
     <div>
         <label>AM No</label>
-        <input type="text" name="secondinstallment" class="form-input" placeholder="Enter AM No" value="{{payment.booking.am_no}}" readonly>
+        <input type="text" name="secondinstallment" class="form-input" placeholder="Enter AM No" value="{{payment.booking.am_no}}" >
     </div>
     
     <div>
         <label>Dimension</label>
-        <input type="text" name="secondinstallment" class="form-input" placeholder="Enter Dimension" value="{{payment.booking.land_details.plotsize.plotsize}}" readonly>
+        <input type="text" name="secondinstallment" class="form-input" placeholder="Enter Dimension" value="{{payment.booking.land_details.plotsize.plotsize}}" >
     </div>
 </div>
 

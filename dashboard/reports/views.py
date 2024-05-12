@@ -9,7 +9,7 @@ from datetime import datetime, date, timedelta
 from django import template
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
-
+from collections import defaultdict
 # Create your views here.
 def confirmletter_view(request,id):
     book=Bookings.objects.get(id=id)
@@ -17,36 +17,24 @@ def confirmletter_view(request,id):
     userdetail = UserDetail.objects.get(user=book.user)
     payment = PaymentDetails.objects.filter(booking=book)
     project = Project.objects.filter(landdetails=book.land_details)
-    
-      
+    first_payment = PaymentDetails.objects.filter(booking=book)[1]
+    if first_payment:
+        bank = first_payment.bank
+        branch = first_payment.branch
+        amount = first_payment.amount
+        cheque_no = first_payment.cheque_no
+        dd_no = first_payment.ddno
+        netbanking = first_payment.transaction
+        print("Bank:", bank)
+        print("Branch:", branch)
+        print("Amount:", amount)
+    else:
+        print("No payments found for this booking.")
 
-    for i in payment:
-        bank=i.bank
-        branch=i.branch
-        amount=i.amount
-        print(amount)
 
 
 
-
-    cheque_no=''
-    dd_no=''
-    netbanking=''
-    
-
-    for payment in payment:
-        if payment.payment_mode == 'Cheque':
-            cheque_no = payment.cheque_no
-        elif payment.payment_mode == 'DD':
-            dd_no = payment.ddno
-        elif payment.payment_mode == 'Net Banking':
-            netbanking = payment.transaction
-    
-    print(cheque_no)
-    print(dd_no)
-    print(netbanking)
-    
-
+   
     # for i in payment:
     #     bank = i.bank
     #     return render(request ,'confirmletter_view.html',{'book1':bank})
@@ -95,86 +83,67 @@ def print_recepit(request, id):
         for payment in payments:
             name = payment.paymentname
             last_payment = float(payment.amount)
-            total = last_payment
-            print('total:',total)
+            total = int(last_payment)
+            print('total:',name,total)
             
         if last_payment:
-            no = float(last_payment)
+            no = int(last_payment)
             receipt_no = num2words(no)
             print(receipt_no)
         get_last = PaymentDetails.objects.filter(booking_id=user.id).last()
         value = get_last.amount
-        no = float(value) 
-        amont = float(value)+2600  
+        no = int(float(value)) 
+        amont = int(float(value)+2600)  
         word1 = num2words(amont, lang='en_IN')
         word = word1.replace(',','')
         print(no)
         print(amont)
         id=id 
-        round_off = ''
-        downpayment = ''
-
-        for i in Value:
-            if i.paymentname == 'Membership':
-                word2 = float(value) + 2600
-                word2 = num2words(word2, lang='en_IN')
-                round_off = word2.replace(',','')
-            else:
-               amont = float(value)
-               downpayment = num2words(amont, lang='en_IN')
-               downpayment = downpayment.replace(',','')
-        if round_off:
-            downpayment = round_off
-        else:
-            downpayment = downpayment
-        print('round off:', round_off)
-        print('downpayment:', downpayment)
+        # round_off = ''
+        # downpayment = ''
+       
+        # for i in Value:
+        #     if i.paymentname == 'Membership':
+        #         word2 = float(value) + 2600
+        #         word2 = num2words(word2, lang='en_IN')
+        #         round_off = word2.replace(',','')
+        #     else:
+        #        amont = float(value)
+        #        downpayment = num2words(amont, lang='en_IN')
+        #        downpayment = downpayment.replace(',','')
+               
+       
+        # if round_off:
+        #     downpayment = round_off
+        # else:
+        #     downpayment = downpayment
+        # print('round off:', round_off)
+      
         
-        total_membership = 0
-        total_downpayment = 0
-        total_first_installment = 0
-        total_second_installment = 0
-        total_third_installment = 0  
 
-        for payment in payments:
-            amount = float(payment.amount)  # Convert amount to float
-            if payment.paymentname == "Membership":
-                total_membership += amount
-            elif payment.paymentname == "DownPayment":
-                total_downpayment += amount
-            elif payment.paymentname == "FirstInstallment":
-                total_first_installment += amount
-            elif payment.paymentname == "SecondInstallment":
-                total_second_installment += amount
-            elif payment.paymentname == "ThirdInstallment":
-                total_third_installment += amount
+        data = PaymentDetails.objects.all()
+        total_amount_per_receipt = defaultdict(int)
+        for detail in data:
+            total_amount_per_receipt[detail.receipt_no] += int(float(detail.amount))
 
-        total_all = (
-            total_membership +
-            total_downpayment +
-            total_first_installment +
-            total_second_installment +
-            total_third_installment
-        )
-        print("Amount",total_all)
-        
-    
+        downpayments = {}
+        for receipt_no, total_amount in total_amount_per_receipt.items():
+            total_amount_words = num2words(total_amount, lang='en_IN')
+            total_amount_words = total_amount_words.replace(',','')
+            downpayments[receipt_no] = total_amount_words
         context = {
             'id': id,
+            'downpayments':downpayments,
             'user': user,   
             'detail':details,
             'word':word,
-            'round_off':round_off,
-            'downpayment':downpayment,
+            # 'round_off':round_off,
+           
             'Value':Value,
             'userdetail': userdetail,
             'payment': payments,
             'payment_count': payment_count,
-            'total_membership':total_membership,
-            'total_downpayment': total_downpayment,
-            'total_first_installment': total_first_installment,
-            'total_second_installment': total_second_installment,
-            'total_third_installment': total_third_installment,
+            'total_amount_per_receipt': total_amount_per_receipt.items(),
             'total_all': check_payments.aggregate(Sum('amount'))['amount__sum'],
             'check_payment': check_payments
         }

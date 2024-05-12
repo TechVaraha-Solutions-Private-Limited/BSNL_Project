@@ -51,12 +51,12 @@
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-5" >
                                 <div class="p-1">
                                     <label class="p-1">Seniority No</label>
-                                    <input class="form-input" type="text" name="seniority_id" value="{{ customer.seniority_id }}" readonly>
+                                    <input class="form-input" type="text" name="seniority_id" value="{{ customer.seniority_id }}" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Customer Name</label>
-                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" readonly>
-                                    <input class="form-input" type="text" name="user"  value="{{ customer.user.first_name }}" readonly>
+                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" >
+                                    <input class="form-input" type="text" name="user"  value="{{ customer.user.first_name }}" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Date Of Change</label>
@@ -72,9 +72,9 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">SFT - From</label>
-                                    <input type="hidden" name="projectname" placeholder="sft_form" value="{{ customer.land_details.project.id}}"  class="form-input" readonly >
-                                    <input type="hidden" name="selectDimension" placeholder="sft_form" value="{{ customer.land_details.plotsize.id}}"  class="form-input" readonly >
-                                    <input type="text" name="selectDimensio" placeholder="sft_form" value="{{ customer.land_details.plotsize.plotsize}}"  class="form-input" readonly >
+                                    <input type="hidden" name="projectname" placeholder="sft_form" value="{{ customer.land_details.project.id}}"  class="form-input"  >
+                                    <input type="hidden" name="selectDimension" placeholder="sft_form" value="{{ customer.land_details.plotsize.id}}"  class="form-input"  >
+                                    <input type="text" name="selectDimensio" placeholder="sft_form" value="{{ customer.land_details.plotsize.plotsize}}"  class="form-input"  >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">SFT - To</label>

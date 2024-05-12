@@ -46,20 +46,20 @@
                            
                                 <div>
                                     <label for="customer">Customers:</label>
-                                    <input class="form-input" type="text" name="user"  value="{{ customer.user.first_name }}" readonly>
-                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" readonly>
+                                    <input class="form-input" type="text" name="user"  value="{{ customer.user.first_name }}" >
+                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" >
                                 </div>
                                 <div>
                                     <label for="seniorityno">Seniority No:</label>
-                                    <input class="form-input" type="text" name="seniority" value="{{ customer.seniority_id }}" readonly>
+                                    <input class="form-input" type="text" name="seniority" value="{{ customer.seniority_id }}" >
                                 </div>
                                 <div >
                                     <label for="amount">Total-Amount:</label>
-                                    <input class="form-input" type="text" name="amount" value="{{ customer.total_site_value }}" readonly>
+                                    <input class="form-input" type="text" name="amount" value="{{ customer.total_site_value }}" >
                                 </div>
                                 <div class="p-1">
                                     <label for="dimensions">Dimension</label>
-                                    <input class="form-input" type="text" name="dimension"  value="{{ customer.land_details.plotsize.plotsize }}" readonly>
+                                    <input class="form-input" type="text" name="dimension"  value="{{ customer.land_details.plotsize.plotsize }}" >
                                 </div>
                                 <div class="p-1">
                                     <label>Date-of-receipt</label>
@@ -67,14 +67,14 @@
                                 </div>
                                 <div class="p-1">
                                     <label>Pending Amount</label>
-                                    <input class="form-input" type="text" value="{{difference}}" readonly>
+                                    <input class="form-input" type="text" value="{{difference}}" >
                                 </div>
                             </div>
                             <div class="mt-3">
                                 <h2 class="text-lg font-semibold dark:text-white-light"
                                     style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Payment Details</b></h2>
                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                                    <div class="p-1">
+                                    <div class="p-1" style="margin-top: 3%;">
                                         <div>
                                             <label>Select to Payment Option</label>
                                             <select class="form-control" id="inputfield" name="payment_mode">
@@ -101,15 +101,15 @@
                                         <label class="p-1">Pay Date</label>
                                         <input type="date" name="payment_data" placeholder="Pay Date" class="form-input">
                                     </div>
-                                    <div class="p-1" id="table5" style="display :none;">
+                                    <div class="p-1" id="table5" style="display :none;margin-top: 2%;">
                                         <label>Amount</label>
                                         <input type="text" name="amount" placeholder="Amount" class="form-input">
                                     </div>
-                                    <div class="p-1" id="table6" style="display:none;">
+                                    <div class="p-1" id="table6" style="display:none;margin-top: 2%;">
                                         <label>Transaction Id</label>
                                         <input type="text" name="transaction_id" placeholder="Transaction Id" class="form-input">
                                     </div>
-                                    <div class="p-1" id="table7" style="display:none;">
+                                    <div class="p-1" id="table7" style="display:none;margin-top: 2%;">
                                         <label>DD No</label>
                                         <input type="text" name="dd_no" placeholder="DD No" class="form-input">
                                     </div>

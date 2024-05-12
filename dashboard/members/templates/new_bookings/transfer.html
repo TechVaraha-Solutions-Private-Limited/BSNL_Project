@@ -50,16 +50,16 @@
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-2" >
                                 <div class="p-1">
                                     <label class="p-1">Seniority No</label>
-                                    <input type="text" name="seniority" placeholder="Seniority No" class="form-input" value="{{ customer.seniority_id }}" readonly>
-                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" readonly>
+                                    <input type="text" name="seniority" placeholder="Seniority No" class="form-input" value="{{ customer.seniority_id }}" >
+                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Cust Name</label>
-                                    <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" value="{{ customer.user.first_name }}" readonly>
+                                    <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" value="{{ customer.user.first_name }}" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Exis Project</label>
-                                    <input type="text" name="date_of_change" placeholder="Exis Project" class="form-input" value="{{ customer.land_details.project.projectname}}"  class="form-input" readonly>
+                                    <input type="text" name="date_of_change" placeholder="Exis Project" class="form-input" value="{{ customer.land_details.project.projectname}}"  class="form-input" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Date of Transfer</label>

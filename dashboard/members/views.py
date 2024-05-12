@@ -16,6 +16,7 @@ from .models import Bookings
 
 from .models import LandDetails
 from django.db.models import Count
+from collections import defaultdict
 
 #this mail
 # from django.core.mail import send_mail
@@ -318,24 +319,24 @@ def add_new_bookings(request):
     landdetail = LandDetails.objects.all()
     exectiv = User.objects.filter(role='Executive')
     errors = []
-    
+    membership_receipt_number = "63421"  # Initial receipt number for membership
+    downpayment_receipt_number = "63421"  # Initial receipt number for down payment
+    first_installment_receipt_number = "63421"  # Initial receipt number for first installment
+    second_installment_receipt_number = "63421"  # Initial receipt number for second installment
+    third_installment_receipt_number = "63421" 
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         email = request.POST.get('email')
         mobile_no = request.POST.get('mobile_no')
         seniority_id = request.POST.get('seniority_id')
-        
-        if not first_name :
-            messages.error(request,'Enter the Name')
-        
+    
+        # if User.objects.filter(email=email).exists():
+        #     messages.error(request, 'Email already exists. Please use a different email.')
+        #     return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
 
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email already exists. Please use a different email.')
-            return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
-
-        if User.objects.filter(mobile_no=mobile_no).exists():
-            messages.error(request, 'Mobile number already exists. Please use a different mobile number.')
-            return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
+        # if User.objects.filter(mobile_no=mobile_no).exists():
+        #     messages.error(request, 'Mobile number already exists. Please use a different mobile number.')
+        #     return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
         if errors:
             for error in errors:
                 messages.error(request, error)
@@ -403,6 +404,10 @@ def add_new_bookings(request):
             land_details = LandDetails.objects.filter(project_id=project_id, plotsize_id=dimension_id).first()
 
             exective_id = request.POST.get('executive')
+            if not exective_id:
+
+                messages.error(request, 'Please select an executive.')
+                return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'exectiv': exectiv, 'projects': projects})
             value = User.objects.get(id=exective_id)
             get_execute = Executive.objects.get(user_id=value.id)
             team_lead_user = get_execute.teamlead.user
@@ -468,11 +473,11 @@ def add_new_bookings(request):
                     else:
                         status = 7
                         paymentname = 'ThirdInstallment'
-                    get_number = PaymentDetails.objects.all().order_by('-id')[:1]
-                    if get_number:
-                        get_number = "6342" + str(get_number[0].id + 1)
-                    else:
-                        get_number = "63421"
+                    # get_number = PaymentDetails.objects.all().order_by('-id')[:1]
+                    # if get_number:
+                    #     get_number = "634" + str(get_number[0].id + 1)
+                    # else:
+                    #     get_number = "63421"
                     if split_amount < payment_amount:
                         payments = PaymentDetails()
                         payments.booking = book
@@ -640,17 +645,21 @@ def generate(request):
                 else:
                     get_number = "63421"
                 split_amount = int(book.total_site_value) / 4
-              
+                print('sp:',split_amount)
                 paid_amount =  request.POST.get('amount','').strip()
+                print('pa:',paid_amount)
                 
                 difference = int(total_site_value) - int(payment_total)
-
-
+                print('differ:',difference)
+                
                 # Need to resolve
                 payment_amount = int(paid_amount)-int(difference)
+               
                 if paid_amount:
                     if int(payment_total) < 2600: 
-                        payment_amount = int(paid_amount) -2600
+                        payment_amount = int(paid_amount)-2600
+                      
+                      
                         membership_fee = PaymentDetails()
                         membership_fee.booking=book
                         membership_fee.payment_mode = request.POST.get('payment_mode')
@@ -686,12 +695,18 @@ def generate(request):
                     
                         if split_amount <= int(payment_total):
                             payment_total = payment_total - split_amount
+                            
                         else:
-                            paid_amt_bal = split_amount - payment_total
+                            paid_amt_bal = (split_amount - payment_total)+2600
+                            
                             if paid_amt_bal >= int(paid_amount):
-                                if paid_amt_bal > int(paid_amount):
+                                
+                                if paid_amt_bal > int(paid_amount)+2600:
                                     payment_name = 'Half'
-
+                                    print('paid_amount:',paid_amount)
+                                    print('payment_name:',payment_name)
+                                    print('paid_amt_bal:',paid_amt_bal)
+                                    print('Spilt:',paid_amt_bal)
                                 else:
                                     payment_name = 'Full'
                                     status +=1
@@ -706,11 +721,13 @@ def generate(request):
                                 payments.payment_data = request.POST.get('payment_data')
                                 payments.dateofreceipt = request.POST.get('dateofreceipt')
                                 payments.paymentname =paymentname+' '+payment_name
-                                payments.amount = paid_amount
+                                payments.amount = paid_amount 
                                 payments.receipt_no = get_number
                                 payments.save()
                                 book.payments_status = status
                                 book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount)
+                                print('total:', paid_amount)
+                                print('total:', book.total_paid_amount)
                                 book.save()
                                 break
                             else:
@@ -1071,19 +1088,27 @@ def cancel(request):
     return render(request, 'new_bookings/cancel.html', {'customer': customers})
 
 def receipts(request):
-    booking = PaymentDetails.objects.order_by('-created_on').all()
-    
+    distinct_receipts = PaymentDetails.objects.values('receipt_no').distinct()
+    booking= []
+    for receipt in distinct_receipts:
+        latest_payment = PaymentDetails.objects.filter(receipt_no=receipt['receipt_no']).order_by('-created_on').first()
+        booking.append(latest_payment)
 
-    # for mydata in booking:
-    #     total_amount = 0
-    #     print(mydata.id)
-    #     sum_val=0
-    #     for payment in mydata.paymentdetails_set.all():
-    #         payment.
 
-    # booking = PaymentDetails.objects.all()
+    data = PaymentDetails.objects.all()
+    total_amount_per_receipt = defaultdict(int)
 
-    return render(request,'view/receipts.html',{'booking':booking}) 
+      
+    for detail in data:
+        total_amount_per_receipt[detail.receipt_no] += int(float(detail.amount))
+    for receipt_no, total_amount in total_amount_per_receipt.items():
+        print("Receipt No:", receipt_no, "Total Amount:", total_amount)   
+    context = {
+        'booking': booking,
+        'total_amount_per_receipt': total_amount_per_receipt.items(),
+      
+    }
+    return render(request,'view/receipts.html',context) 
 
 def update_receipts(request, id):
     try:
@@ -1161,6 +1186,10 @@ def activemember(request):
     active_nominees = UserNominee.objects.filter(user__is_active=1).all()
     active_bookings = Bookings.objects.filter(user__is_active=1).order_by('-created_on').all()
     different = 0  
+
+    
+   
+    
     for booking in active_bookings:
         try:
             userdetail = UserDetail.objects.get(user_id=booking.user.id)
@@ -1186,12 +1215,21 @@ def activemember(request):
                 print(family.member_age)
                 print(family.member_relation)
 
-            # Calculate 'different'
-            different += int(booking.total_site_value) - int(booking.total_paid_amount)
+            
         except ObjectDoesNotExist:
-            # Handle case where related object does not exist
+           
             pass
 
+        
+        bookings = Bookings.objects.all()
+
+
+        for booking in bookings:
+            print("Booking ID:", booking.seniority_id)
+            print("Site Amount:", booking.total_site_value)
+            print("paid Value:", booking.total_paid_amount)
+            different = int(booking.total_site_value) - int(booking.total_paid_amount)
+           
     context = {
         'user': active_users,
         'book': active_bookings,

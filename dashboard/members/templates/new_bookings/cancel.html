@@ -48,12 +48,12 @@
                                 <div class="p-1">
                                     <label class="p-1">Seniority No</label>
 
-                                    <input type="text" name="seniority" placeholder="Seniority No" class="form-input" value="{{ customer.seniority_id }}" readonly>
+                                    <input type="text" name="seniority" placeholder="Seniority No" class="form-input" value="{{ customer.seniority_id }}" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Cust Name</label>
-                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" readonly>
-                                    <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" value="{{ customer.user.first_name }}" readonly>
+                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" >
+                                    <input type="text" name="cust_name" placeholder="Cust Name" class="form-input" value="{{ customer.user.first_name }}" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Date of Cancel</label>
@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Amount Paid By Member</label>
-                                    <input type="text" name="team_lead" placeholder="Amount Paid By Member" class="form-input" value="{{ customer.downpayment }}" readonly>
+                                    <input type="text" name="team_lead" placeholder="Amount Paid By Member" class="form-input" value="{{ customer.downpayment }}" >
                                 </div>
                                 <div class="p-1">
                                     <label class="p-1">Type of Refund</label>

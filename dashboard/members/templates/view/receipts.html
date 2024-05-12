@@ -16,7 +16,9 @@
     style="background-color: #178ef0; color: white; width: 100%;"
   >
     <center><b>RECEIPT LIST</b></center>
-    {% for message in messages %}
+    
+  </h2>
+  {% for message in messages %}
     <div
       class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
     >
@@ -24,7 +26,6 @@
       {{ message }}
     </div>
     {% endfor %}
-  </h2>
   <div class="relative search mt-2">
     <input type="text" id="searchInput" placeholder="Search Details..." class="form-input search_size" style="width: 25%;
     margin-left: 75%;" />
@@ -60,7 +61,14 @@
                 <td>{{mydata.booking.user.email}}</td>
                 <td>{{mydata.dateofreceipt}}</td>
                 <td>{{mydata.receipt_no }}</td>
-                <td>{{ mydata.amount }}</td>
+                
+                <td>
+                  {% for receipt_no, total_amount in total_amount_per_receipt %}
+                      {% if receipt_no == mydata.receipt_no %}
+                          {{ total_amount }}
+                      {% endif %}
+                  {% endfor %}
+              </td>
                 <td>{% if mydata.status == "0" %}
                       Pending
                     {% else %}

@@ -85,7 +85,7 @@
 					<div class="wrapper p3">
 						<p class="logo-cnt1">
 							<span class="date-dot11"><span style="float:left;margin-right:3px;font-weight:normal;background:#fff;"> Address</span>  :
-					# {{userdetail.address|upper}}, {{userdetail.city|upper}}, {{userdetail.state|upper}} - {{userdetail.pincode}}</span>
+					# {{userdetail.address|upper}}</span>
 					</p>
 					</div>
 				</div>
@@ -96,9 +96,13 @@
 					<div class="wrapper">
 									<p class="logo-cnt1 p3">Rupees  :
 							<span class="date-dot2">
+								{% for receipt_no, downpayment in downpayments.items %}
+    {% if receipt_no == id %}
+        {{ downpayment|upper }}
+    {% endif %}
+{% endfor %}
 								
-								
-								{{downpayment|upper}}
+							
 
 								  
 								 
@@ -128,7 +132,7 @@
 							<tbody>
 								{% for paysts in Value %}
 								<tr>
-									<td>{{ paysts.paymentname }}</td> 
+									<td>{{ paysts.paymentname }}</td>
 									<td>{{ user.land_details.plotsize.plotsize }}</td>
 									<td>{{ paysts.payment_mode }}</td>
 									<td>{{ paysts.bank }}</td>
@@ -144,7 +148,8 @@
 											/cheque/DD/NetBanking
 										{% endif %}
 									</td>
-									<td>{{ paysts.amount }}</td>
+									<td>{{paysts.amount}}</td>
+									
 								</tr>
 								{% endfor %}
 							</tbody>
@@ -177,15 +182,9 @@
 											{% endif %}
 										{% elif i.paymentname == "Membership" %}
 									
-										{% elif i.paymentname == "FirstInstallment" %}
 										
-										{% elif i.paymentname == "SecondInstallment" %}
 										
-										{% elif i.paymentname == "ThirdInstallment" %}
-									
-										{% elif i.paymentname == "DownPayment Half" %}
-										0
-											
+										
 										{% endif %}
 									{% empty %}
 										0
@@ -239,14 +238,7 @@
 											{% endif %}
 										{% elif i.paymentname == "Membership" %}
 										
-										{% elif i.paymentname == "FirstInstallment" %}
-										
-										{% elif i.paymentname == "SecondInstallment" %}
 									
-										{% elif i.paymentname == "ThirdInstallment" %}
-										
-										{% elif i.paymentname == "DownPayment Half" %}
-										0
 											
 										{% endif %}
 									{% empty %}
@@ -271,15 +263,7 @@
 										{% endif %}
 									{% elif i.paymentname == "Membership" %}
 									
-									{% elif i.paymentname == "FirstInstallment" %}
 									
-									{% elif i.paymentname == "SecondInstallment" %}
-									
-									{% elif i.paymentname == "ThirdInstallment" %}
-									
-									{% elif i.paymentname == "DownPayment Half" %}
-									0
-										
 									{% endif %}
 								{% empty %}
 									0
@@ -377,28 +361,23 @@
 								{{i.amount}}
 								{% endif %}
 							{% endfor %} -->
-							{% for i in Value %}
+							<!-- {% for i in Value %}
 							{% if i.paymentname == "DownPayment" %}
 								{% if i != 0 %}
 								{{i.amount|floatformat:0|add:2600}}
 								{% endif %}
 							{% elif i.paymentname == "Membership" %}
 							
-							{% elif i.paymentname == "FirstInstallment" %}
-							
-							{% elif i.paymentname == "SecondInstallment" %}
-							
-							{% elif i.paymentname == "ThirdInstallment" %}
-							
-							{% elif i.paymentname == "DownPayment Half" %}
-							
-							{{i.amount}}
-								
+						
 							{% endif %}
 						{% empty %}
-							0
-						{% endfor %}
-								
+						{{i.amount}}
+						{% endfor %} -->
+						{% for receipt_no, total_amount in total_amount_per_receipt %}
+						{% if receipt_no == id %}
+							{{ total_amount }}
+						{% endif %}
+					{% endfor %}
 								</td>
 							<td>
 							

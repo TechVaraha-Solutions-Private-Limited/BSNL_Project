@@ -43,15 +43,15 @@ def add_user(request):
         employee_id = request.POST.get('employee_id', '').strip()
         date_joined = request.POST.get('date_joined', '').strip()
         if not first_name:
-            messages.error(request, 'Email already exists.')
+            messages.error(request, 'Enter first Name')
             return render(request, 'users/add_user.html')
-        if User.objects.filter(email=email).exists():
-            messages.error(request, 'Email already exists.')
-            return render(request, 'users/add_user.html', {'sr_team_lead': sr_team, 'team': team, 'executive': execut})
+        # if User.objects.filter(email=email).exists():
+        #     messages.error(request, 'Email already exists.')
+        #     return render(request, 'users/add_user.html', {'sr_team_lead': sr_team, 'team': team, 'executive': execut})
         
-        if User.objects.filter(mobile_no=mobile_no).exists():
-            messages.error(request, 'Mobile number already exists.')
-            return render(request, 'users/add_user.html', {'sr_team_lead': sr_team, 'team': team, 'executive': execut})
+        # if User.objects.filter(mobile_no=mobile_no).exists():
+        #     messages.error(request, 'Mobile number already exists.')
+        #     return render(request, 'users/add_user.html', {'sr_team_lead': sr_team, 'team': team, 'executive': execut})
 
         user = User(
             first_name=first_name,
