@@ -11,6 +11,11 @@
     color: black;
     text-decoration: none;
   }
+  .remove-btn {
+        margin-top: 25px;
+        cursor: pointer;
+        color: red;
+    }
   .addproject {
     text-align: center;
     padding: 15px 15px;
@@ -500,95 +505,55 @@
       
         <b>Payment Details</b>
       </h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div class="p-1" id="formContainer" style="margin-top: 3%;">
-          <div >
-            <label class="required-label">Select Payment Option</label>
-            <select
-              class="form-control paymentOption"
-              id="inputfield"
-              name="payment_mode"
-            >
-              <option>--select option--</option>
-              <option value="Cheque">Cheque</option>
-              <option value="Net Banking">Net Banking</option>
-              <option value="DD">DD</option>
-            </select>
-          </div>
+      <div id="payment-details-container">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 payment-details-section">
+            <div class="p-1" style="margin-top: 3%;">
+                <div>
+                    <label>Select Payment Option</label>
+                    <select class="form-control payment-mode" name="payment_mode[]">
+                        <option value="">--select option--</option>
+                        <option value="Cheque">Cheque</option>
+                        <option value="Net Banking">Net Banking</option>
+                        <option value="DD">DD</option>
+                    </select>
+                </div>
+            </div>
+            <div class="p-1 payment-details" id="cheque-details" style="display: none;">
+                <label>Bank</label>
+                <input type="text" name="bank[]" placeholder="Bank" class="form-input">
+            </div>
+            <div class="p-1 payment-details" id="branch-details" style="display: none;">
+                <label>Branch</label>
+                <input type="text" name="branch[]" placeholder="Branch" class="form-input">
+            </div>
+            <div class="p-1 payment-details" id="cheque-no-details" style="display: none;">
+                <label>Cheque No</label>
+                <input type="text" name="cheque_no[]" placeholder="Cheque No" class="form-input">
+            </div>
+            <div class="p-1 payment-details" id="pay-date-details" style="display: none;">
+                <label>Pay Date</label>
+                <input type="date" name="payment_date[]" placeholder="Pay Date" class="form-input">
+            </div>
+            <div class="p-1 payment-details" id="amount-details" style="display: none;">
+                <label>Amount</label>
+                <input type="text" name="amount[]" placeholder="Amount" class="form-input">
+            </div>
+            <div class="p-1 payment-details" id="transaction-id-details" style="display: none;">
+                <label>Transaction Id</label>
+                <input type="text" name="transaction_id[]" placeholder="Transaction Id" class="form-input">
+            </div>
+            <div class="p-1 payment-details" id="dd-no-details" style="display: none;">
+                <label>DD No</label>
+                <input type="text" name="dd_no[]" placeholder="DD No" class="form-input">
+            </div>
+            <!-- Remove button will not be in the default form -->
         </div>
-        <div class="p-1 mytable" id="mytable" style="display: none">
-          <label class="p-1 required-label">Bank</label>
-          <input
-            type="text"
-            name="bank"
-            placeholder="Bank"
-            class="form-input"
-          />
-        </div>
-        <div class="p-1 project" id="project" style="display: none">
-          <label class="p-1">Branch</label>
-          <input
-            type="text"
-            name="branch"
-            placeholder="Branch"
-            class="form-input"
-            
-          />
-        </div>
-        <div class="p-1 table3" id="table3" style="display: none">
-          <label class="p-1">Cheque No</label>
-          <input
-            type="text"
-            name="cheque_no"
-            placeholder="Cheque No"
-            class="form-input"
-          
-          />
-        </div>
-        <div class="p-1 table4" id="table4" style="display: none">
-          <label class="p-1">Pay Date</label>
-          <input
-            type="date"
-            name="payment_data"
-            placeholder="Pay Date"
-            class="form-input"
-            
-          />
-        </div>
-        <div class="p-1  table5" id="table5" style="display: none;margin-top: 2%;">
-          <label class="required-label">Amount</label>
-          <input
-            type="text"
-            name="amount"
-            placeholder="Amount"
-            class="form-input"
-            
-          />
-        </div>
-        <div class="p-1 table6" id="table6" style="display: none;margin-top: 2%;">
-          <label class="required-label">Transaction Id</label>
-          <input
-            type="text"
-            name="transaction_id"
-            placeholder="Transaction Id"
-            class="form-input"
-           
-          />
-        </div>
-        <div class="p-1  table7" id="table7" style="display: none;margin-top: 2%;">
-          <label class="required-label">DD No</label>
-          <input
-            type="text"
-            name="dd_no"
-            placeholder="Amount"
-            class="form-input"
-           
-          />
-        </div>
-      
-      </div>
+    </div>
       <!-- <button onclick="addMore()">Add More</button> -->
     </div>
+    <div class="p-1 mt-4">
+      <button type="button" class="btn btn-secondary" id="add-payment-detail">Add Payment Detail</button>
+  </div>
     <div class="text-center">
       <input
         type="submit"
@@ -612,49 +577,7 @@
     var row = button.parentNode;
     row.parentNode.removeChild(row);
   }
-  const inputField = document.getElementById("inputfield");
-  const myTable = document.getElementById("mytable");
-  const Project = document.getElementById("project");
-  const Table3 = document.getElementById("table3");
-  const Table4 = document.getElementById("table4");
-  const Table5 = document.getElementById("table5");
-  const Table6 = document.getElementById("table6");
-  const Table7 = document.getElementById("table7");
-  inputField.addEventListener("input", function () {
-    if (inputField.value === "Cheque") {
-      myTable.style.display = "table"; // Show the table
-      Project.style.display = "table";
-      Table3.style.display = "table";
-      Table4.style.display = "table";
-      Table5.style.display = "table";
-      Table6.style.display = "none";
-      Table7.style.display = "none";
-    } else if (inputField.value === "Net Banking") {
-      Project.style.display = "table";
-      myTable.style.display = "table"; // Show the table
-      Table3.style.display = "none";
-      Table4.style.display = "table";
-      Table5.style.display = "table";
-      Table6.style.display = "table";
-      Table7.style.display = "none";
-    } else if (inputField.value === "DD") {
-      myTable.style.display = "table"; // Show the table
-      Project.style.display = "table";
-      Table3.style.display = "none";
-      Table4.style.display = "table";
-      Table5.style.display = "table";
-      Table6.style.display = "none";
-      Table7.style.display = "table";
-    } else {
-      myTable.style.display = "none";
-      Project.style.display = "none";
-      Table3.style.display = "none";
-      Table4.style.display = "none";
-      Table5.style.display = "none";
-      Table6.style.display = "none";
-      Table7.style.display = "none";
-    }
-  });
+  
    $("#selectDimension").on("change", function (event) {
     let project_id = $("#projectname option:selected").val();
     let plot_id = this.value;
@@ -793,6 +716,75 @@
 //   }
 // }
 
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const paymentDetailsContainer = document.getElementById('payment-details-container');
+      const addPaymentDetailBtn = document.getElementById('add-payment-detail');
+
+      function addPaymentDetail() {
+          const newPaymentDetail = document.querySelector('.payment-details-section').cloneNode(true);
+          newPaymentDetail.querySelectorAll('input').forEach(input => input.value = '');
+          newPaymentDetail.querySelectorAll('select').forEach(select => select.value = '');
+          newPaymentDetail.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
+
+          // Add remove button to the new payment detail section
+          const removeBtn = document.createElement('div');
+          removeBtn.className = 'remove-btn';
+          removeBtn.innerHTML = '<button type="button" class="btn btn-danger remove-payment-detail">Remove</button>';
+          newPaymentDetail.appendChild(removeBtn);
+
+          // // Add horizontal line to separate new payment detail section
+          // const hr = document.createElement('hr');
+          // newPaymentDetail.prepend(hr);
+          
+
+          paymentDetailsContainer.appendChild(newPaymentDetail);
+          setupPaymentModeChangeEvent(newPaymentDetail.querySelector('.payment-mode'));
+      }
+
+      function removePaymentDetail(event) {
+          const paymentDetailSection = event.target.closest('.payment-details-section');
+          paymentDetailsContainer.removeChild(paymentDetailSection);
+      }
+
+      function setupPaymentModeChangeEvent(paymentModeSelect) {
+          paymentModeSelect.addEventListener('change', function() {
+              const section = paymentModeSelect.closest('.payment-details-section');
+              section.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
+
+              if (paymentModeSelect.value === 'Cheque') {
+                  section.querySelector('#cheque-details').style.display = 'block';
+                  section.querySelector('#branch-details').style.display = 'block';
+                  section.querySelector('#cheque-no-details').style.display = 'block';
+                  section.querySelector('#pay-date-details').style.display = 'block';
+                  section.querySelector('#amount-details').style.display = 'block';
+              } else if (paymentModeSelect.value === 'Net Banking') {
+                  section.querySelector('#branch-details').style.display = 'block';
+                  section.querySelector('#cheque-details').style.display = 'block';
+                  section.querySelector('#pay-date-details').style.display = 'block';
+                  section.querySelector('#amount-details').style.display = 'block';
+                  section.querySelector('#transaction-id-details').style.display = 'block';
+              } else if (paymentModeSelect.value === 'DD') {
+                  section.querySelector('#cheque-details').style.display = 'block';
+                  section.querySelector('#branch-details').style.display = 'block';
+                  section.querySelector('#pay-date-details').style.display = 'block';
+                  section.querySelector('#amount-details').style.display = 'block';
+                  section.querySelector('#dd-no-details').style.display = 'block';
+              }
+          });
+      }
+
+      document.querySelectorAll('.payment-mode').forEach(setupPaymentModeChangeEvent);
+
+      addPaymentDetailBtn.addEventListener('click', addPaymentDetail);
+
+      paymentDetailsContainer.addEventListener('click', function(event) {
+          if (event.target.classList.contains('remove-payment-detail')) {
+              removePaymentDetail(event);
+          }
+      });
+  });
 </script>
 
 <!-- <script>

@@ -432,94 +432,111 @@ def add_new_bookings(request):
             book.save()
 
             split_amount = int(book.total_site_value) / 4
-            paid_amount = request.POST.get('amount', '').strip()
-            payment_amount = int(paid_amount) - 2600
 
-            if paid_amount:
+            paid_amount =  request.POST.getlist('amount[]')
+            payment_mode = request.POST.getlist('payment_mode[]')
+            bank = request.POST.getlist('bank[]')
+            branch = request.POST.getlist('branch[]')
+            cheque_no = request.POST.getlist('cheque_no[]')
+            transaction_id = request.POST.getlist('transaction_id[]')
+            ddno=request.POST.getlist('dd_no[]')
+            #dateofreceipt = request.POST.get('dateofreceipt')
 
-                membership_fee = PaymentDetails()
-                membership_fee.booking = book
 
-                membership_fee.payment_mode = request.POST.get('payment_mode')
-               
-                membership_fee.bank = request.POST.get('bank')
-                membership_fee.branch = request.POST.get('branch')
-                membership_fee.cheque_no = request.POST.get('cheque_no')
-                membership_fee.transaction = request.POST.get('transaction_id')
-                membership_fee.ddno = request.POST.get('dd_no')
-                membership_fee.user = user
-                membership_fee.payment_data = request.POST.get('payment_data')
-                membership_fee.dateofreceipt = date.today()
-                membership_fee.amount = 2600
-                membership_fee.paymentname = "Membership"
-                get_number = PaymentDetails.objects.all().order_by('-id')[:1]
-                if get_number:
-                    get_number = "634" + str(get_number[0].id + 1)
-                else:
-                    get_number = "63421"
-                membership_fee.receipt_no = get_number
-                membership_fee.save()
+            #paid_amount = request.POST.get('amount', '').strip()
+            for count in range(len(payment_mode)): 
+                    #payment_amount = int(paid_amount[count])-int(difference)
+                    
+                payment_amount = int(paid_amount[count]) - 2600
 
-                for i in range(4):
-                    if i == 0:
-                        paymentname = 'DownPayment'
-                        status = 1
-                    elif i == 1:
-                        status = 3
-                        paymentname = 'FirstInstallment'
-                    elif i == 2:
-                        status = 5
-                        paymentname = 'SecondInstallment'
+                if paid_amount[count]:
+
+                    get_number = PaymentDetails.objects.all().order_by('-id')[:1]
+                    if get_number:
+                        get_number = "634" + str(get_number[0].id + 1)
                     else:
-                        status = 7
-                        paymentname = 'ThirdInstallment'
-                    # get_number = PaymentDetails.objects.all().order_by('-id')[:1]
-                    # if get_number:
-                    #     get_number = "634" + str(get_number[0].id + 1)
-                    # else:
-                    #     get_number = "63421"
-                    if split_amount < payment_amount:
-                        payments = PaymentDetails()
-                        payments.booking = book
+                        get_number = "63421"
 
-                        payments.payment_mode = request.POST.get('payment_mode')
-                        payments.bank = request.POST.get('bank')
-                        payments.branch = request.POST.get('branch')
-                        payments.cheque_no = request.POST.get('cheque_no')
-                        payments.transaction = request.POST.get('transaction_id')
-                        payments.ddno = request.POST.get('dd_no')
-                        payments.user = user
-                        payments.payment_data = request.POST.get('payment_data')
-                        payments.paymentname = paymentname
-                        payments.amount = split_amount
-                        payments.receipt_no = get_number
-                        payments.dateofreceipt = date.today()
-                        payments.save()
-                       
-                        payment_amount = payment_amount - split_amount
-                    elif payment_amount > 0:
-                        payments = PaymentDetails()
-                        payments.booking = book
+                    if count == 0:
+                        membership_fee = PaymentDetails()
+                        membership_fee.booking = book
 
-                        payments.payment_mode = request.POST.get('payment_mode')
-                        payments.bank = request.POST.get('bank')
-                        payments.branch = request.POST.get('branch')
-                        payments.cheque_no = request.POST.get('cheque_no')
-                        payments.transaction = request.POST.get('transaction_id')
-                        payments.ddno = request.POST.get('dd_no')
-                        payments.user = user
-                        payments.payment_data = request.POST.get('payment_data')
-                        payments.paymentname = paymentname
-                        payments.amount = payment_amount
-                        payments.receipt_no = get_number
-                        payments.dateofreceipt = date.today()
-                        payments.save()
-                        book.payments_status = status
-                        book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount)
+                        membership_fee.payment_mode = payment_mode[count]
+                    
+                        membership_fee.bank = bank[count]
+                        membership_fee.branch = branch[count]
+                        membership_fee.cheque_no = cheque_no[count]
+                        membership_fee.transaction = transaction_id[count]
+                        membership_fee.ddno = ddno[count]
+                        membership_fee.user = user
+                        #membership_fee.payment_data = request.POST.get('payment_data')
+                        membership_fee.dateofreceipt = date.today()
+                        membership_fee.amount = 2600
+                        membership_fee.paymentname = "Membership"
                         
-                        book.save()
-                       
-                        break
+                        membership_fee.receipt_no = get_number
+                        membership_fee.save()
+
+                    for i in range(4):
+                        if i == 0:
+                            paymentname = 'DownPayment'
+                            status = 1
+                        elif i == 1:
+                            status = 3
+                            paymentname = 'FirstInstallment'
+                        elif i == 2:
+                            status = 5
+                            paymentname = 'SecondInstallment'
+                        else:
+                            status = 7
+                            paymentname = 'ThirdInstallment'
+                        # get_number = PaymentDetails.objects.all().order_by('-id')[:1]
+                        # if get_number:
+                        #     get_number = "634" + str(get_number[0].id + 1)
+                        # else:
+                        #     get_number = "63421"
+                        if split_amount < payment_amount:
+                            payments = PaymentDetails()
+                            payments.booking = book
+
+                            payments.payment_mode = payment_mode[count]
+                            payments.bank = bank[count]
+                            payments.branch = branch[count]
+                            payments.cheque_no = cheque_no[count]
+                            payments.transaction = transaction_id[count]
+                            payments.ddno = ddno[count]
+                            payments.user = user
+                            #payments.payment_data = request.POST.get('payment_data')
+                            payments.paymentname = paymentname
+                            payments.amount = split_amount
+                            payments.receipt_no = get_number
+                            payments.dateofreceipt = date.today()
+                            payments.save()
+                        
+                            payment_amount = payment_amount - split_amount
+                        elif payment_amount > 0:
+                            payments = PaymentDetails()
+                            payments.booking = book
+
+                            payments.payment_mode = payment_mode[count]
+                            payments.bank = bank[count]
+                            payments.branch = branch[count]
+                            payments.cheque_no = cheque_no[count]
+                            payments.transaction = transaction_id[count]
+                            payments.ddno = ddno[count]
+                            payments.user = user
+                            #payments.payment_data = request.POST.get('payment_data')
+                            payments.paymentname = paymentname
+                            payments.amount = payment_amount
+                            payments.receipt_no = get_number
+                            payments.dateofreceipt = date.today()
+                            payments.save()
+                            book.payments_status = status
+                            book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount[count])
+                            
+                            book.save()
+                        
+                            break
             messages.success(request, 'Successfully Saved')
         except Exception as e:
             messages.error(request, f'An error occurred: {str(e)}')    
@@ -606,6 +623,7 @@ def generate(request):
     customers = {}
     total_site_value = 0
     payment_total = 0
+    active_bookings = Bookings.objects.filter(user__is_active=1).order_by('-created_on').all()
 
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -646,110 +664,124 @@ def generate(request):
                     get_number = "63421"
                 split_amount = int(book.total_site_value) / 4
                 print('sp:',split_amount)
-                paid_amount =  request.POST.get('amount','').strip()
+                paid_amount =  request.POST.getlist('amount[]')
+                payment_mode = request.POST.getlist('payment_mode[]')
+                bank = request.POST.getlist('bank[]')
+                branch = request.POST.getlist('branch[]')
+                cheque_no = request.POST.getlist('cheque_no[]')
+                transaction_id = request.POST.getlist('transaction_id[]')
+                ddno=request.POST.getlist('dd_no[]')
+                dateofreceipt = request.POST.get('dateofreceipt')
+                # payment_data = request.POST.get('payment_data')
+                # paymenttype = request.POST.get('paymenttype')
+                
+                    
+                
+                #paid_amount =  request.POST.getlist('amount','').strip()
                 print('pa:',paid_amount)
                 
                 difference = int(total_site_value) - int(payment_total)
                 print('differ:',difference)
                 
                 # Need to resolve
-                payment_amount = int(paid_amount)-int(difference)
-               
-                if paid_amount:
-                    if int(payment_total) < 2600: 
-                        payment_amount = int(paid_amount)-2600
-                      
-                      
-                        membership_fee = PaymentDetails()
-                        membership_fee.booking=book
-                        membership_fee.payment_mode = request.POST.get('payment_mode')
-                        membership_fee.bank = request.POST.get('bank')
-                        membership_fee.branch = request.POST.get('branch')
-                        membership_fee.cheque_no = request.POST.get('cheque_no')
-                        membership_fee.transaction = request.POST.get('transaction_id')
-                        membership_fee.ddno=request.POST.get('dd_no')
-                        membership_fee.dateofreceipt = request.POST.get('dateofreceipt')
-                        membership_fee.payment_data = request.POST.get('payment_data')
-                        membership_fee.paymenttype = request.POST.get('paymenttype')
-                        membership_fee.amount = 2600
-                        membership_fee.paymentname = "Membership"
-                        membership_fee.receipt_no = get_number
-                        membership_fee.save()
-                    for i in range(4):
-                        if i == 0:
-                            payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))
-                            if split_amount == payment :
-                                continue
-                            paymentname = 'DownPayment'
-                            status =1 
-                        elif i ==1:
-                            status = 3
-                            paymentname = 'FirstInstallment'
-                        elif i == 2:
-                            status = 5
-                            paymentname = 'SecondInstallment'
-                        else:
-                            status = 7
-                            paymentname = 'ThridInstallment'
-
-                    
-                        if split_amount <= int(payment_total):
-                            payment_total = payment_total - split_amount
-                            
-                        else:
-                            paid_amt_bal = (split_amount - payment_total)+2600
-                            
-                            if paid_amt_bal >= int(paid_amount):
-                                
-                                if paid_amt_bal > int(paid_amount)+2600:
-                                    payment_name = 'Half'
-                                    print('paid_amount:',paid_amount)
-                                    print('payment_name:',payment_name)
-                                    print('paid_amt_bal:',paid_amt_bal)
-                                    print('Spilt:',paid_amt_bal)
-                                else:
-                                    payment_name = 'Full'
-                                    status +=1
-                                payments = PaymentDetails()
-                                payments.booking=book
-                                payments.payment_mode = request.POST.get('payment_mode')
-                                payments.bank = request.POST.get('bank')
-                                payments.branch = request.POST.get('branch')
-                                payments.cheque_no = request.POST.get('cheque_no')
-                                payments.transaction = request.POST.get('transaction_id')
-                                payments.ddno=request.POST.get('dd_no')
-                                payments.payment_data = request.POST.get('payment_data')
-                                payments.dateofreceipt = request.POST.get('dateofreceipt')
-                                payments.paymentname =paymentname+' '+payment_name
-                                payments.amount = paid_amount 
-                                payments.receipt_no = get_number
-                                payments.save()
-                                book.payments_status = status
-                                book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount)
-                                print('total:', paid_amount)
-                                print('total:', book.total_paid_amount)
-                                book.save()
-                                break
+                
+                for count in range(len(payment_mode)): 
+                    #payment_amount = int(paid_amount[count])-int(difference)
+                    if paid_amount[count]:
+                        if int(payment_total) < 2600: 
+                            #payment_amount = int(paid_amount[count])-2600
+                        
+                        
+                            membership_fee = PaymentDetails()
+                            membership_fee.booking=book
+                            membership_fee.payment_mode = payment_mode[count]
+                            membership_fee.bank = bank[count]
+                            membership_fee.branch = branch[count]
+                            membership_fee.cheque_no = cheque_no[count]
+                            membership_fee.transaction = transaction_id[count]
+                            membership_fee.ddno=ddno[count]
+                            membership_fee.dateofreceipt = dateofreceipt
+                            # membership_fee.payment_data = payment_data[count]
+                            # membership_fee.paymenttype = paymenttype[count]
+                            membership_fee.amount = 2600
+                            membership_fee.paymentname = "Membership"
+                            membership_fee.receipt_no = get_number
+                            membership_fee.save()
+                        for i in range(4):
+                            if i == 0:
+                                payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))
+                                if split_amount == payment :
+                                    continue
+                                paymentname = 'DownPayment'
+                                status =1 
+                            elif i ==1:
+                                status = 3
+                                paymentname = 'FirstInstallment'
+                            elif i == 2:
+                                status = 5
+                                paymentname = 'SecondInstallment'
                             else:
-                                payments = PaymentDetails()
-                                payments.booking=book
-                                payments.payment_mode = request.POST.get('payment_mode')
-                                payments.bank = request.POST.get('bank')
-                                payments.branch = request.POST.get('branch')
-                                payments.cheque_no = request.POST.get('cheque_no')
-                                payments.transaction = request.POST.get('transaction_id')
-                                payments.ddno=request.POST.get('dd_no')
-                                payments.payment_data = request.POST.get('payment_data')
-                                payments.dateofreceipt = request.POST.get('dateofreceipt')
-                                payments.paymentname =paymentname
-                                payments.amount = paid_amt_bal
-                                payments.receipt_no = get_number
-                                payments.save()
-                                book.payments_status = status
-                                book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount)
-                                book.save()
-                                paid_amount=int(paid_amount) -int(paid_amt_bal)
-                    messages.success(request,'Successfully Saved')
+                                status = 7
+                                paymentname = 'ThridInstallment'
+
+                        
+                            if split_amount <= int(payment_total):
+                                payment_total = payment_total - split_amount
+                                
+                            else:
+                                paid_amt_bal = (split_amount - payment_total)+2600
+                                
+                                if paid_amt_bal >= int(paid_amount[count]):
+                                    
+                                    if paid_amt_bal > int(paid_amount[count])+2600:
+                                        payment_name = 'Half'
+                                        # print('paid_amount:',paid_amount)
+                                        # print('payment_name:',payment_name)
+                                        # print('paid_amt_bal:',paid_amt_bal)
+                                        # print('Spilt:',paid_amt_bal)
+                                    else:
+                                        payment_name = 'Full'
+                                        status +=1
+                                    payments = PaymentDetails()
+                                    payments.booking=book
+                                    payments.payment_mode = payment_mode[count]
+                                    payments.bank = bank[count]
+                                    payments.branch = branch[count]
+                                    payments.cheque_no = cheque_no[count]
+                                    payments.transaction = transaction_id[count]
+                                    payments.ddno=ddno[count]
+                                    # payments.payment_data = payment_data[count]
+                                    payments.dateofreceipt = dateofreceipt
+                                    payments.paymentname =paymentname+' '+payment_name
+                                    payments.amount = paid_amount[count]
+                                    payments.receipt_no = get_number
+                                    payments.save()
+                                    book.payments_status = status
+                                    book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount[count])
+                                    # print('total:', paid_amount[count])
+                                    # print('total:', book.total_paid_amount)
+                                    book.save()
+                                    break
+                                else:
+                                    payments = PaymentDetails()
+                                    payments.booking=book
+                                    payments.payment_mode = payment_mode[count]
+                                    payments.bank = bank[count]
+                                    payments.branch = branch[count]
+                                    payments.cheque_no = cheque_no[count]
+                                    payments.transaction = transaction_id[count]
+                                    payments.ddno=ddno[count]
+                                    #payments.payment_data = payment_data[count]
+                                    payments.dateofreceipt = dateofreceipt
+                                    payments.paymentname =paymentname
+                                    payments.amount = paid_amt_bal
+                                    payments.receipt_no = get_number
+                                    payments.save()
+                                    book.payments_status = status
+                                    book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount[count])
+                                    book.save()
+                                    paid_amount=int(paid_amount[count]) -int(paid_amt_bal)
+                        messages.success(request,'Successfully Saved')
             except Bookings.DoesNotExist:
                 messages.error(request,'Saved failed')
     difference = int(total_site_value) - int(payment_total)
@@ -757,12 +789,13 @@ def generate(request):
         differ = 0
     else:
         differ = difference
-    return render(request,'new_bookings/generate.html',{'customer': customers,'difference': differ})
+    return render(request,'new_bookings/generate.html',{'customer': customers,'difference': differ,'active_bookings':active_bookings})
 
 def ugdg(request):
     exective = User.objects.filter(role='Executive')
     customers = {}
     pltsizes = PlotSize.objects.all()
+    active_bookings = Bookings.objects.filter(user__is_active=1).order_by('-created_on').all()
     
     try:
         if request.method == 'POST':
@@ -816,6 +849,7 @@ def ugdg(request):
         'pltsizes': pltsizes,
         'customer': customers,
         'exective': exective,
+        'active_bookings':active_bookings
     })
 
 def transfer(request):

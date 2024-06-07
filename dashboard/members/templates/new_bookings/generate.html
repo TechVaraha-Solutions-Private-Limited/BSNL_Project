@@ -3,32 +3,32 @@
 {% load static %}
 {% include 'common/bootstrap.html'%}
 <style>
-    a{
+    a {
         color: black;
         text-decoration: none;
     }
-   
 
-/* Style for the close icon */
-
+    .remove-btn {
+        margin-top: 25px;
+        cursor: pointer;
+        color: red;
+    }
 </style>
 {% for message in messages %}
-<div class="alert   {% if message.tags == 'error' %}
-                        alert-danger
-                    {% elif message.tags == 'success' %}
-                        alert-success
-                    {% endif %}">
+<div class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}">
     <a class="close" href="#" data-dismiss="alert">×</a>
     {{ message }}
 </div>
 {% endfor %}
-<div class=" mt-3" style=" box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
+<div class="mt-3" style="box-shadow:0px 0px 5px #007bff; border-radius: 10px;">
     <form method="POST" class="space-y-5" autocomplete="off">
         {% csrf_token %}
-        <div class="panel" >
+        <div class="panel">
             <label class="text-lg dark:text-white-light p-2 font-weight-bold"
-                style="background-color: #178EF0;color:white; width:100%;"><center><b>GENERATE RECEIPT</b></center></label>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-5 pt-4" >
+                style="background-color: #178EF0;color:white; width:100%;">
+                <center><b>GENERATE RECEIPT</b></center>
+            </label>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5 pt-4">
                 <label for="search_membername">Search your Customer:</label>
                 <input type="text" class="form-input" name="search_membername" id="search_membername" placeholder="Enter the Seniority No" required>
                 <button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" name="action" value="search_customer">Search Customer</button>
@@ -39,164 +39,227 @@
     <form method="POST" action="" class="space-y-5" autocomplete="off">
         {% csrf_token %}
         <ul>
-                <li>
-                    <div class="panel">
-                        <div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                           
-                                <div>
-                                    <label for="customer">Customers:</label>
-                                    <input class="form-input" type="text" name="user"  value="{{ customer.user.first_name }}" >
-                                    <input class="form-input" type="hidden" name="user_id"  value="{{ customer.user.id }}" >
-                                </div>
-                                <div>
-                                    <label for="seniorityno">Seniority No:</label>
-                                    <input class="form-input" type="text" name="seniority" value="{{ customer.seniority_id }}" >
-                                </div>
-                                <div >
-                                    <label for="amount">Total-Amount:</label>
-                                    <input class="form-input" type="text" name="amount" value="{{ customer.total_site_value }}" >
-                                </div>
-                                <div class="p-1">
-                                    <label for="dimensions">Dimension</label>
-                                    <input class="form-input" type="text" name="dimension"  value="{{ customer.land_details.plotsize.plotsize }}" >
-                                </div>
-                                <div class="p-1">
-                                    <label>Date-of-receipt</label>
-                                    <input class="form-input" type="date" name="dateofreceipt"required>
-                                </div>
-                                <div class="p-1">
-                                    <label>Pending Amount</label>
-                                    <input class="form-input" type="text" value="{{difference}}" >
-                                </div>
+            <li>
+                <div class="panel">
+                    <div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                            <div>
+                                <label for="customer">Customers:</label>
+                                <input class="form-input" type="text" name="user" value="{{ customer.user.first_name }}">
+                                <input class="form-input" type="hidden" name="user_id" value="{{ customer.user.id }}">
                             </div>
-                            <div class="mt-3">
-                                <h2 class="text-lg font-semibold dark:text-white-light"
-                                    style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;"><b>Payment Details</b></h2>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                            <div>
+                                <label for="seniorityno">Seniority No:</label>
+                                <input class="form-input" type="text" name="seniority" value="{{ customer.seniority_id }}">
+                            </div>
+                            <div>
+                                <label for="amount">Total-Amount:</label>
+                                <input class="form-input" type="text" name="amount" value="{{ customer.total_site_value }}">
+                            </div>
+                            <div class="p-1">
+                                <label for="dimensions">Dimension</label>
+                                <input class="form-input" type="text" name="dimension" value="{{ customer.land_details.plotsize.plotsize }}">
+                            </div>
+                            <div class="p-1">
+                                <label>Date-of-receipt</label>
+                                <input class="form-input" type="date" name="dateofreceipt" required>
+                            </div>
+                            <div class="p-1">
+                                <label>Pending Amount</label>
+                                <input class="form-input" type="text" value="{{difference}}">
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h2 class="text-lg font-semibold dark:text-white-light" style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;">
+                                <b>Payment Details</b>
+                            </h2>
+                            <div id="payment-details-container">
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 payment-details-section">
                                     <div class="p-1" style="margin-top: 3%;">
                                         <div>
-                                            <label>Select to Payment Option</label>
-                                            <select class="form-control" id="inputfield" name="payment_mode">
-                                                <option>--select option--</option>
+                                            <label>Select Payment Option</label>
+                                            <select class="form-control payment-mode" name="payment_mode[]">
+                                                <option value="">--select option--</option>
                                                 <option value="Cheque">Cheque</option>
                                                 <option value="Net Banking">Net Banking</option>
                                                 <option value="DD">DD</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="p-1" id="mytable" style="display :none;">
-                                        <label class="p-1">Bank</label>
-                                        <input type="text" name="bank" placeholder="Bank" class="form-input">
+                                    <div class="p-1 payment-details" id="cheque-details" style="display: none;">
+                                        <label>Bank</label>
+                                        <input type="text" name="bank[]" placeholder="Bank" class="form-input">
                                     </div>
-                                    <div class="p-1" id="project" style="display :none;">
-                                        <label class="p-1">Branch</label>
-                                        <input type="text" name="branch" placeholder="Branch" class="form-input">
+                                    <div class="p-1 payment-details" id="branch-details" style="display: none;">
+                                        <label>Branch</label>
+                                        <input type="text" name="branch[]" placeholder="Branch" class="form-input">
                                     </div>
-                                    <div class="p-1" id="table3" style="display :none;">
-                                        <label class="p-1">Cheque No</label>
-                                        <input type="text" name="cheque_no" placeholder="Cheque No" class="form-input">
+                                    <div class="p-1 payment-details" id="cheque-no-details" style="display: none;">
+                                        <label>Cheque No</label>
+                                        <input type="text" name="cheque_no[]" placeholder="Cheque No" class="form-input">
                                     </div>
-                                    <div class="p-1" id="table4" style="display :none;">
-                                        <label class="p-1">Pay Date</label>
-                                        <input type="date" name="payment_data" placeholder="Pay Date" class="form-input">
+                                    <div class="p-1 payment-details" id="pay-date-details" style="display: none;">
+                                        <label>Pay Date</label>
+                                        <input type="date" name="payment_date[]" placeholder="Pay Date" class="form-input">
                                     </div>
-                                    <div class="p-1" id="table5" style="display :none;margin-top: 2%;">
+                                    <div class="p-1 payment-details" id="amount-details" style="display: none;">
                                         <label>Amount</label>
-                                        <input type="text" name="amount" placeholder="Amount" class="form-input">
+                                        <input type="text" name="amount[]" placeholder="Amount" class="form-input">
                                     </div>
-                                    <div class="p-1" id="table6" style="display:none;margin-top: 2%;">
+                                    <div class="p-1 payment-details" id="transaction-id-details" style="display: none;">
                                         <label>Transaction Id</label>
-                                        <input type="text" name="transaction_id" placeholder="Transaction Id" class="form-input">
+                                        <input type="text" name="transaction_id[]" placeholder="Transaction Id" class="form-input">
                                     </div>
-                                    <div class="p-1" id="table7" style="display:none;margin-top: 2%;">
+                                    <div class="p-1 payment-details" id="dd-no-details" style="display: none;">
                                         <label>DD No</label>
-                                        <input type="text" name="dd_no" placeholder="DD No" class="form-input">
+                                        <input type="text" name="dd_no[]" placeholder="DD No" class="form-input">
                                     </div>
-                                    <!-- <div class="p-1">
-                                        <div>
-                                            <label>Select to Payment Type</label>
-                                            <select class="form-control"  name="paymenttype">
-                                                <option>--select option--</option>
-                                                <option value="Down Payment">Down Payment</option>
-
-                                                <option value="First Payment">First Payment</option>
-                                                <option value="Second Installment">Second Installment</option>
-                                                <option value="Third Installment">third Installment</option>
-
-                                            </select>
-                                        </div>
-                                    </div> -->
-                                
+                                    <!-- Remove button will not be in the default form -->
+                                </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                                 <div>
                                     <label></label>
                                 </div>
                                 <div class="p-1 mt-4">
+                                    <button type="button" class="btn btn-secondary" id="add-payment-detail">Add Payment Detail</button>
+                                </div>
+                                <div class="p-1 mt-4">
                                     <center><button type="submit" class="btn btn-primary text-lg font-semibold dark:text-white-light" style="background-color: #178EF0;" name="action" value="create_order">Create Receipt</button></center>
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
-                </li>
+                </div>
+            </li>
         </ul>
-    </form>   
-    {%endif%}
+    </form>
+    {% endif %}
+</div>
+<div class="table-responsive pt-3" id="mytable" style="display: show;">
+    <h2 class="text-lg font-semibold dark:text-white-light p-1"
+        style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;">
+        <b>Booking Details</b>
+    </h2>
+   
+    <div class="table-responsive p-2 mt-8">
+        <table class="table table-bordered bg-white text-center emInfo responsive">
+            <thead>
+                <tr>
+                    <th>S.NO</th>
+                    <th>Name</th>
+                    <th>Seniority Id</th>
+                    <th>Site Value</th>
+                    <th>Paid Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for booking in active_bookings %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    
+                    <td>{{booking.user.first_name}}</td>
+                    <td>{{booking.seniority_id}}</td>
+                   <td>{{booking.total_site_value}}</td>
+                   <td>{{booking.total_paid_amount}}</td>
+
+                    
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: right;">
+        <div class="inline-flex items-center space-x-1 rtl:space-x-reverse m-auto mb-4">
+            <button id="prevPage" type="button"
+                class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                    viewBox="0 0 256 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path
+                        d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 256c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-128-128z" />
+                </svg>
+            </button>
+            <span id="currentPage"
+                class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary">1</span>
+            <button id="nextPage" type="button"
+                class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                    viewBox="0 0 256 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path
+                        d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z" />
+                </svg>
+            </button>
+        </div>
+    </div>
 </div>
 <script>
-    const inputField = document.getElementById('inputfield');
-    const myTable = document.getElementById('mytable');
-    const Project = document.getElementById('project');
-    const Table3 = document.getElementById('table3');
-    const Table4 = document.getElementById('table4');
-    const Table5 = document.getElementById('table5');
-    const Table6 = document.getElementById('table6');
-    const Table7 = document.getElementById('table7');
-    inputField.addEventListener('input', function () {
-        if (inputField.value === 'Cheque') {
-            myTable.style.display = 'table';// Show the table
-            Project.style.display = 'table';
-            Table3.style.display = 'table';
-            Table4.style.display = 'table';
-            Table5.style.display = 'table';
-            Table6.style.display = 'none';
-            Table7.style.display = "none";
-        } else if (inputField.value === 'Net Banking') {
-            Project.style.display = 'table';
-            myTable.style.display = 'table';// Show the table
-            Table3.style.display = 'none';
-            Table4.style.display = 'table';
-            Table5.style.display = 'table';
-            Table6.style.display = 'table';
-            Table7.style.display = "none";
-        } else if (inputField.value === 'cash') {
-            myTable.style.display = 'none';// Show the table
-            Project.style.display = 'none';
-            Table3.style.display = 'none';
-            Table4.style.display = 'table';
-            Table5.style.display = 'table';
-            Table6.style.display = 'none';
-            Table7.style.display = "none";
-        } else if (inputField.value === 'DD') {
-            myTable.style.display = 'table';// Show the table
-            Project.style.display = 'table';
-            Table3.style.display = 'none';
-            Table4.style.display = 'table';
-            Table5.style.display = 'table';
-            Table6.style.display = 'none';
-            Table7.style.display = "table";
-        } else {
-            myTable.style.display = 'none';
-            Project.style.display = 'none';
-            Table3.style.display = 'none';
-            Table4.style.display = 'none';
-            Table5.style.display = 'none';
-            Table6.style.display = 'none';
-            Table7.style.display = 'none';
-        }
-    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentDetailsContainer = document.getElementById('payment-details-container');
+        const addPaymentDetailBtn = document.getElementById('add-payment-detail');
 
+        function addPaymentDetail() {
+            const newPaymentDetail = document.querySelector('.payment-details-section').cloneNode(true);
+            newPaymentDetail.querySelectorAll('input').forEach(input => input.value = '');
+            newPaymentDetail.querySelectorAll('select').forEach(select => select.value = '');
+            newPaymentDetail.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
+
+            // Add remove button to the new payment detail section
+            const removeBtn = document.createElement('div');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '<button type="button" class="btn btn-danger remove-payment-detail">Remove</button>';
+            newPaymentDetail.appendChild(removeBtn);
+
+            // // Add horizontal line to separate new payment detail section
+            // const hr = document.createElement('hr');
+            // newPaymentDetail.prepend(hr);
+            
+
+            paymentDetailsContainer.appendChild(newPaymentDetail);
+            setupPaymentModeChangeEvent(newPaymentDetail.querySelector('.payment-mode'));
+        }
+
+        function removePaymentDetail(event) {
+            const paymentDetailSection = event.target.closest('.payment-details-section');
+            paymentDetailsContainer.removeChild(paymentDetailSection);
+        }
+
+        function setupPaymentModeChangeEvent(paymentModeSelect) {
+            paymentModeSelect.addEventListener('change', function() {
+                const section = paymentModeSelect.closest('.payment-details-section');
+                section.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
+
+                if (paymentModeSelect.value === 'Cheque') {
+                    section.querySelector('#cheque-details').style.display = 'block';
+                    section.querySelector('#branch-details').style.display = 'block';
+                    section.querySelector('#cheque-no-details').style.display = 'block';
+                    section.querySelector('#pay-date-details').style.display = 'block';
+                    section.querySelector('#amount-details').style.display = 'block';
+                } else if (paymentModeSelect.value === 'Net Banking') {
+                    section.querySelector('#branch-details').style.display = 'block';
+                    section.querySelector('#cheque-details').style.display = 'block';
+                    section.querySelector('#pay-date-details').style.display = 'block';
+                    section.querySelector('#amount-details').style.display = 'block';
+                    section.querySelector('#transaction-id-details').style.display = 'block';
+                } else if (paymentModeSelect.value === 'DD') {
+                    section.querySelector('#cheque-details').style.display = 'block';
+                    section.querySelector('#branch-details').style.display = 'block';
+                    section.querySelector('#pay-date-details').style.display = 'block';
+                    section.querySelector('#amount-details').style.display = 'block';
+                    section.querySelector('#dd-no-details').style.display = 'block';
+                }
+            });
+        }
+
+        document.querySelectorAll('.payment-mode').forEach(setupPaymentModeChangeEvent);
+
+        addPaymentDetailBtn.addEventListener('click', addPaymentDetail);
+
+        paymentDetailsContainer.addEventListener('click', function(event) {
+            if (event.target.classList.contains('remove-payment-detail')) {
+                removePaymentDetail(event);
+            }
+        });
+    });
 </script>
 {% endblock %}
