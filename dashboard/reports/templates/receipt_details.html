@@ -69,8 +69,10 @@
           <th>Amount </th>
           <th>Mode of Payment</th>
           <th>DD No</th>
-          <th>Project Name</th>
           <th>Cheque No</th>
+          <th>Transaction No</th>
+          <th>Project Name</th>
+          
           <th>Payment Status</th>
           <th>Date Credited</th>
           <th>Credited to Bank</th>
@@ -90,8 +92,10 @@
           <td>{{val.amount}}</td>
           <td>{{val.payment_mode}}</td>
           <td>{{val.ddno}}</td>
-          <td>{{val.booking.land_details.project.projectname}}</td>
           <td>{{val.cheque_no}}</td>
+          <td>{{val.transaction}}</td>
+          <td>{{val.booking.land_details.project.projectname}}</td>
+         
          
           <td>
             {% if val.status == "0" %}
@@ -307,7 +311,7 @@
       receipt_detailsdownload.addEventListener('click', function () {
           // Prepare data for CSV
           var csvContent = "data:text/csv;charset=utf-8,";
-          csvContent += "No,Customer Name,Phone No,Receipt No,Gmail,Date of Receipt,Type of Payment,Amount Paid,Mode of Payment,DD No,Project Name,Cheque No,Payment Status,Date Credited,Bank Name,Project Head\n";
+          csvContent += "No,Customer Name,Phone No,Receipt No,Gmail,Date of Receipt,Type of Payment,Amount Paid,Mode of Payment,DD No,Cheque No,Transaction No,Project Name,Payment Status,Date Credited,Bank Name,Project Head\n";
 
           // Loop through the bookings data and append to CSV
           {% for val in receiptreport_filter %}
@@ -322,8 +326,10 @@
                             "{{val.amount}},"+
                             "{{val.payment_mode}},"+
                             "{{val.ddno}},"+
-                            "{{val.booking.land_details.project.projectname}},"+
                             "{{val.cheque_no}},"+
+                            "{{val.transaction}},"+
+                            "{{val.booking.land_details.project.projectname}},"+
+                            
                             "{% if val.status == '0' %}" +
                            "Pending," +
                           "{% elif val.status == '1' %}" +

@@ -172,10 +172,10 @@ def booking_report(request):
         executtype = request.POST.get('projectexecut')
         if select == 'project':
             if value == 'all':
-                bookings = Bookings.objects.all()
+                bookings = Bookings.objects.all().order_by('-created_on')
                 print("All", bookings)
             else:
-                bookings = Bookings.objects.filter(land_details__project__projectname = value)
+                bookings = Bookings.objects.filter(land_details__project__projectname = value).order_by('-created_on')
             for booking in bookings:
                 payments = booking.paymentdetails_set.all()
                 booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
@@ -190,7 +190,7 @@ def booking_report(request):
                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
                 toDate =  date_obj + timedelta(days=1)
                 bookings = Bookings.objects.filter(created_on__gte=date(fromDate.year, fromDate.month, fromDate.day),
-                                                   created_on__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                                                   created_on__lte=date(date_obj.year, date_obj.month, date_obj.day)).all().order_by('-created_on')
                 for booking in bookings:
                     payments = booking.paymentdetails_set.all()
                     booking.total_amt = payments.aggregate(Sum('amount'))['amount__sum']
@@ -202,10 +202,10 @@ def booking_report(request):
             
             #bookings = Bookings.objects.filter(sitevist__executive__executive_set__last__teamlead__sr_team__project_head__first_name= teamlead)
             sites = Site_visit.objects.filter(proj_head_id=teamlead)
-            bookings = Bookings.objects.filter(sitevist__id=1)
+            bookings = Bookings.objects.filter(sitevist__id=1).order_by('-created_on')
 
         elif select == 'executive':
-            bookings = Bookings.objects.filter(sitevist__executive = executtype)
+            bookings = Bookings.objects.filter(sitevist__executive = executtype).order_by('-created_on')
         elif select == 'payment_type':
             if data == 'DownPayment':
                 print('DownPayment',data)
@@ -220,7 +220,7 @@ def booking_report(request):
                 print('3rd',data)
                 bookings = Bookings.objects.filter(payments_status__in=[7,9])
         else:
-            booking = Bookings.objects.all()
+            booking = Bookings.objects.all().order_by('-created_on')
             executive_id = SeniorTeamLead.objects.all()
             print(booking)
             for i in executive_id:
@@ -249,7 +249,7 @@ def booking_report(request):
                     #site visit report
 
 def site_report(request):
-    sitereport_all = Site_visit.objects.all()
+    sitereport_all = Site_visit.objects.all().order_by('-id')
     team_lead = User.objects.filter( role = "Project_Lead")
     executivename = User.objects.filter( role = "Executive")
     print(team_lead)
@@ -258,7 +258,7 @@ def site_report(request):
         select = request.POST.get('reportType')
 
         if select == 'all':
-            sitereport = Site_visit.objects.all()
+            sitereport = Site_visit.objects.all().order_by('-id')
         elif select == 'date':
             fromDate = request.POST.get('fromDate', '')
             toDate = request.POST.get('toDate', '')
@@ -270,15 +270,15 @@ def site_report(request):
                     date_of_site_visit__lte=toDate
                 ).all()
         elif select == 'project_head':
-            sitereport = Site_visit.objects.filter(proj_head=value)
+            sitereport = Site_visit.objects.filter(proj_head=value).order_by('-id')
         elif select == 'executive':
-            sitereport = Site_visit.objects.filter(executive=value)
+            sitereport = Site_visit.objects.filter(executive=value).order_by('-id')
         elif select == 'svstatus':
-            sitereport = Site_visit.objects.filter(sv_status=value)
+            sitereport = Site_visit.objects.filter(sv_status=value).order_by('-id')
         elif select == 'sourcewise':
-            sitereport = Site_visit.objects.filter(source=value)
+            sitereport = Site_visit.objects.filter(source=value).order_by('-id')
         elif select == 'svcategorywise':
-            sitereport = Site_visit.objects.filter(sv_category = value)
+            sitereport = Site_visit.objects.filter(sv_category = value).order_by('-id')
         
         context={
         'sitereport_filter':sitereport,
@@ -300,7 +300,7 @@ def pdc_report(request):
     return render(request, 'pdc_report.html')
 
 def ugdg_report(request):
-    ugdgreport_all = Bookings.objects.all()
+    ugdgreport_all = Bookings.objects.all().order_by('-id')
     for i in ugdgreport_all:
         exec = i.executive
         print('name:',exec)
@@ -312,7 +312,7 @@ def ugdg_report(request):
         select = request.POST.get('reportType')
 
         if select == 'all':
-            ugdgreport = Bookings.objects.all()
+            ugdgreport = Bookings.objects.all().order_by('-id')
             ugdgreport = SeniorTeamLead.objects.filter()
 
         elif select == 'date':
@@ -324,22 +324,22 @@ def ugdg_report(request):
                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
                 toDate =  date_obj + timedelta(days=1)
                 ugdgreport = Bookings.objects.filter(date_of_change__gte=date(fromDate.year, fromDate.month, fromDate.day),
-                                                   date_of_change__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                                                   date_of_change__lte=date(date_obj.year, date_obj.month, date_obj.day)).all().order_by('-id')
                     
         elif select == 'project_wise':
-            ugdgreport = Bookings.objects.filter(land_details__project__projectname = value)
+            ugdgreport = Bookings.objects.filter(land_details__project__projectname = value).order_by('-id')
            
         elif select == 'project_head':
-            ugdgreport = Bookings.objects.filter(sitevist__proj_head =value)
+            ugdgreport = Bookings.objects.filter(sitevist__proj_head =value).order_by('-id')
             
         elif select == 'executive_wise':
-            ugdgreport = Bookings.objects.filter(sitevist__executive = value)
+            ugdgreport = Bookings.objects.filter(sitevist__executive = value).order_by('-id')
             print(ugdgreport)
         elif select == 'type_change':
-            ugdgreport = Bookings.objects.filter(type_of_change = value)
+            ugdgreport = Bookings.objects.filter(type_of_change = value).order_by('-id')
             
         elif select == 'ugpayment_wise':
-            ugdgreport = Bookings.objects.filter(sv_category = value)
+            ugdgreport = Bookings.objects.filter(sv_category = value).order_by('-id')
          
             
         
@@ -378,18 +378,18 @@ def transfer_report(request):
                 date_obj = datetime.strptime(toDate, '%Y-%m-%d')
                 toDate =  date_obj + timedelta(days=1)
                 transreport = Bookings.objects.filter(date_of_transfer__gte=date(fromDate.year, fromDate.month, fromDate.day),
-                                                   date_of_transfer__lte=date(date_obj.year, date_obj.month, date_obj.day)).all()
+                                                   date_of_transfer__lte=date(date_obj.year, date_obj.month, date_obj.day)).all().order_by('-date_of_transfer')
                     
         elif select == 'all':
-            transreport = Bookings.objects.all()
+            transreport = Bookings.objects.all().order_by('-date_of_transfer')
             for i in transreport:
                 transfer = i.type_of_transfer
                 print(transfer)
         elif select == 'project_wise':
-            transreport = Bookings.objects.filter(land_details__project__projectname = value)
+            transreport = Bookings.objects.filter(land_details__project__projectname = value).order_by('-date_of_transfer')
            
         elif select == 'project_head':
-            transreport = Bookings.objects.filter(sitevist__proj_head = value)
+            transreport = Bookings.objects.filter(sitevist__proj_head = value).order_by('-date_of_transfer')
 
 
         
