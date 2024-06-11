@@ -132,7 +132,7 @@
 <div class="table-responsive pt-3" id="mytable" style="display: show;">
     <h2 class="text-lg font-semibold dark:text-white-light p-1"
         style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;">
-        <b>Booking Details</b>
+        <b>UGDG Lists</b>
     </h2>
    
     <div class="table-responsive p-2 mt-8">
@@ -140,24 +140,44 @@
             <thead>
                 <tr>
                     <th>S.NO</th>
-                    <th>Name</th>
-                    <th>Seniority Id</th>
-                    <th>Site Value</th>
-                    <th>Paid Amount</th>
+                    <th>Seniority No</th>
+                    <th>Cust Name</th>
+                    <th>Date of Change</th>
+                    <th>Type of Dim Change</th>
+                    <th>SFT - FROM</th>
+                    <th>SFT - TO</th>
+                    <th>Diff</th>
+                    <th>Executive</th>
+                    <th>Team Lead</th>
+                    <!-- <th>SR Team Lead</th> -->
+                    <th>Proj Head</th>
+                    <th>Type of Booking</th>
+                    <!-- <th>INDVL Paid</th>
+                    <th>TL Paid</th>
+                    <th>STL Paid</th> -->
+
+
                 </tr>
             </thead>
             <tbody>
 
-                {% for booking in active_bookings %}
+                {% for val in active_bookings %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    
-                    <td>{{booking.user.first_name}}</td>
-                    <td>{{booking.seniority_id}}</td>
-                   <td>{{booking.total_site_value}}</td>
-                   <td>{{booking.total_paid_amount}}</td>
-
-                    
+                    <td>{{val.seniority_id}}</td>
+                    <td>{{val.user.first_name}} {{booking.user.last_name}}</td>
+                    <td>{{val.date_of_change}}</td>
+                    <td>{{val.type_of_change}}</td>
+                    <td>{{val.diff}}</td>
+                    <td>{{val.old_land_details.plotsize.plotsize}}</td>
+                    <td>{{val.land_details.plotsize.plotsize}}</td>
+                    <td>{{val.executive.first_name}}</td>
+                    <td>{{val.teamlead.first_name}}</td>
+                    <td>{{val.projhead.first_name}}</td>
+                    <td>{{val.type_of_change}}</td>
+                    <!-- <td>{{val.indvl_paid}}</td>
+                    <td>{{val.tl_paid}}</td>
+                    <td>{{val.stl_paid}}</td>    -->
                 </tr>
                 {%endfor%}
             </tbody>

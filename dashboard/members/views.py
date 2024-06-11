@@ -795,7 +795,7 @@ def ugdg(request):
     exective = User.objects.filter(role='Executive')
     customers = {}
     pltsizes = PlotSize.objects.all()
-    active_bookings = Bookings.objects.filter(user__is_active=1).order_by('-created_on').all()
+    active_bookings = Bookings.objects.filter(user__is_active=1).exclude(date_of_change__isnull=True).order_by('-created_on').all()
     
     try:
         if request.method == 'POST':
@@ -855,6 +855,7 @@ def ugdg(request):
 def transfer(request):
     customers = {}
     user = {}
+    active_bookings = Bookings.objects.filter(user__is_active=1).exclude(date_of_transfer__isnull=True).order_by('-created_on').all()
     
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -896,7 +897,7 @@ def transfer(request):
         except Exception as e:
             messages.error(request, f'An error occurred: {e}')
     
-    return render(request, 'new_bookings/transfer.html', {'customer': customers, 'user': user})
+    return render(request, 'new_bookings/transfer.html', {'customer': customers, 'user': user,'active_bookings':active_bookings})
 
 def get_team_owner(request):
     if request.method == "POST":
@@ -908,6 +909,7 @@ def get_team_owner(request):
     return JsonResponse({})
     
 def site_visit(request):
+    visits = Site_visit.objects.all().order_by('-id')
     exective = User.objects.filter(role='Executive')
     detail = {}
     
@@ -949,14 +951,14 @@ def site_visit(request):
         except Exception as e:
             messages.error(request, f'An error occurred: {e}')
 
-    return render(request, 'new_bookings/site_visit.html', {'customer': detail, 'exective': exective})
+    return render(request, 'new_bookings/site_visit.html', {'customer': detail, 'exective': exective,'visits':visits})
 
 def view_site_visit(request):
-    view = Site_visit.objects.all()
+    visits = Site_visit.objects.all().order_by('-id')
     
     if request.method == 'POST':
         try:
-            for visit in view:
+            for visit in visits:
                 visit.date_of_site_visit = request.POST.get('date_of_visit')
                 visit.cust_name = request.POST.get('cust_name')
                 visit.phone_no = request.POST.get('phone_no')
@@ -975,7 +977,7 @@ def view_site_visit(request):
         except Exception as e:
             messages.error(request, f'An error occurred: {e}')
 
-    return render(request, 'display/view_site_visit.html', {'view': view})
+    return render(request, 'display/view_site_visit.html', {'visits': visits})
 
 def update_site_visit(request, id):
     try:
@@ -1081,7 +1083,9 @@ def lead_owner(request):
     return render(request,'new_bookings/lead_owner.html',{'customer':customers,'exective':exective})
 
 def cancel(request):
-    customers = {}     
+    customers = {}   
+    active_bookings = Bookings.objects.filter(user__is_active=1).exclude(date_of_cancel__isnull=True).order_by('-date_of_cancel').all()
+      
     if request.method == 'POST':
         action = request.POST.get('action')
         seniority_id = request.POST.get('search_membername')
@@ -1119,7 +1123,7 @@ def cancel(request):
             except Exception as e:
                 messages.error(request, f'Failed to cancel booking: {e}')
 
-    return render(request, 'new_bookings/cancel.html', {'customer': customers})
+    return render(request, 'new_bookings/cancel.html', {'customer': customers,'active_bookings':active_bookings})
 
 def receipts(request):
     distinct_receipts = PaymentDetails.objects.values('receipt_no').distinct()

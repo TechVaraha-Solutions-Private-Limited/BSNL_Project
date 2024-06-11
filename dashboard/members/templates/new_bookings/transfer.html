@@ -115,4 +115,66 @@
     </form>   
     {%endif%}
 </div>
+<div class="table-responsive pt-3" id="mytable" style="display: show;">
+    <h2 class="text-lg font-semibold dark:text-white-light p-1"
+        style="background-color:#daeff2;color:#1ca7dd;width: 100%;padding-left: 40%;padding-top: 1%;padding-bottom: 1%;">
+        <b>Transfer Lists</b>
+    </h2>
+   
+    <div class="table-responsive p-2 mt-8">
+        <table class="table table-bordered bg-white text-center emInfo responsive">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Date of Transfer</th>
+                    <th>Type of Transfer</th>
+                    <th>Transferred to</th>
+                    <th>New Mem Seniority</th>
+                    <th>New Mem Project</th>
+                    <th>New Mem Mobile No</th>
+                    <th>New Mem Email</th>
+                    <th>Amount Transferred</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for booking in active_bookings %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{val.date_of_transfer}}</td>
+                    <td>{{val.type_of_transfer}}</td>
+                    <td>{{val.transfer_to}}</td>
+                    <td>{{val.seniority_id}}</td>
+                    <td>{{val.land_details.project.projectname}}</td>
+                    <td>{{val.user.mobile_no}}</td>
+                    <td>{{val.user.email}}</td>
+                    <td>{{val.Amount_Transferred}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: right;">
+        <div class="inline-flex items-center space-x-1 rtl:space-x-reverse m-auto mb-4">
+            <button id="prevPage" type="button"
+                class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                    viewBox="0 0 256 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path
+                        d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 256c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-128-128z" />
+                </svg>
+            </button>
+            <span id="currentPage"
+                class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary">1</span>
+            <button id="nextPage" type="button"
+                class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                    viewBox="0 0 256 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path
+                        d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>
 {% endblock %}
