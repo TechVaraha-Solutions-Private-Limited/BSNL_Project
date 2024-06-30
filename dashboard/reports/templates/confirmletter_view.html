@@ -79,7 +79,7 @@
 		<div class="wrapper p4">
 			<p class="logo-cnt1"><span style="float:left;margin-right:10px;font-weight:normal;line-height: 28px; text-align: justify;   font-size: 18px;">
 				This is to confirm that <b>{{user.first_name}}{{user.last_name}}</b> Residing in <b>{{userdetail.address}}</b>,
-				Have booked a site of measuring <b>{{book.land_details.plotsize.plotsize}}</b> in the <b>{{book.land_details.project.projectname}}</b> Located at {{book.land_details.project.address}}, {{book.land_details.project.city}} , {{book.land_details.project.state}} {{book.land_details.project.pincode}} from BSNL Employees and Citizens House Building Co-Operative Society Ltd. on <b>{{book.land_details.project.created_on.date|date:"d/m/Y"}}</b>.
+				Have booked a site of measuring <b>{{book.land_details.plotsize.plotsize}}</b> in the <b>{{book.land_details.project.projectname}}</b> Located at {{book.land_details.project.address}}, {{book.land_details.project.city}} , {{book.land_details.project.state}} {{book.land_details.project.pincode}} from BSNL Employees and Citizens House Building Co-Operative Society Ltd. on <b>{{book.created_on.date|date:"d/m/Y"}}</b>.
 				
 					You have booked your site by paying an initial amount of <b>Rs. {{amount}}/-</b> 
 					{% if cheque_no %}
