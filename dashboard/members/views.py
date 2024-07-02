@@ -319,11 +319,6 @@ def add_new_bookings(request):
     landdetail = LandDetails.objects.all()
     exectiv = User.objects.filter(role='Executive')
     errors = []
-    membership_receipt_number = "63421"  # Initial receipt number for membership
-    downpayment_receipt_number = "63421"  # Initial receipt number for down payment
-    first_installment_receipt_number = "63421"  # Initial receipt number for first installment
-    second_installment_receipt_number = "63421"  # Initial receipt number for second installment
-    third_installment_receipt_number = "63421" 
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
         email = request.POST.get('email')
@@ -443,48 +438,43 @@ def add_new_bookings(request):
             #dateofreceipt = request.POST.get('dateofreceipt')
 
 
+            get_number = PaymentDetails.objects.all().order_by('-id')[:1]
+            if get_number:
+                get_number = "634" + str(get_number[0].id + 1)
+            else:
+                get_number = "63421"        
             #paid_amount = request.POST.get('amount', '').strip()
-            for count in range(len(payment_mode)): 
-                    #payment_amount = int(paid_amount[count])-int(difference)
-                    
-                payment_amount = int(paid_amount[count]) - 2600
+            for count in range(len(payment_mode)):
+                if count == 0:
+                    payment_amount = int(paid_amount[count]) - 2600
+                else:
+                    payment_amount = int(paid_amount[count])  # No subtraction after the first time
 
                 if paid_amount[count]:
-
-                    get_number = PaymentDetails.objects.all().order_by('-id')[:1]
-                    if get_number:
-                        get_number = "634" + str(get_number[0].id + 1)
-                    else:
-                        get_number = "63421"
-
                     if count == 0:
                         membership_fee = PaymentDetails()
                         membership_fee.booking = book
-
                         membership_fee.payment_mode = payment_mode[count]
-                    
                         membership_fee.bank = bank[count]
                         membership_fee.branch = branch[count]
                         membership_fee.cheque_no = cheque_no[count]
                         membership_fee.transaction = transaction_id[count]
                         membership_fee.ddno = ddno[count]
                         membership_fee.user = user
-                        #membership_fee.payment_data = request.POST.get('payment_data')
                         membership_fee.dateofreceipt = date.today()
                         membership_fee.amount = 2600
                         membership_fee.paymentname = "Membership"
-                        
                         membership_fee.receipt_no = get_number
                         membership_fee.save()
-
                     for i in range(4):
-                        if i == 0:
+                        print ("I",i,count)
+                        if i == 0 and count == 0:
                             paymentname = 'DownPayment'
                             status = 1
-                        elif i == 1:
+                        elif i == 0 and count == 1:
                             status = 3
                             paymentname = 'FirstInstallment'
-                        elif i == 2:
+                        elif i == 0 and count == 2:
                             status = 5
                             paymentname = 'SecondInstallment'
                         else:
@@ -495,10 +485,10 @@ def add_new_bookings(request):
                         #     get_number = "634" + str(get_number[0].id + 1)
                         # else:
                         #     get_number = "63421"
-                        if split_amount < payment_amount:
+                        if split_amount <= payment_amount :
+                            print("payment",payment_amount)
                             payments = PaymentDetails()
                             payments.booking = book
-
                             payments.payment_mode = payment_mode[count]
                             payments.bank = bank[count]
                             payments.branch = branch[count]
@@ -508,16 +498,14 @@ def add_new_bookings(request):
                             payments.user = user
                             #payments.payment_data = request.POST.get('payment_data')
                             payments.paymentname = paymentname
-                            payments.amount = split_amount
+                            payments.amount = int(split_amount)
                             payments.receipt_no = get_number
                             payments.dateofreceipt = date.today()
                             payments.save()
-                        
                             payment_amount = payment_amount - split_amount
-                        elif payment_amount > 0:
+                        elif payment_amount > 0 :
                             payments = PaymentDetails()
                             payments.booking = book
-
                             payments.payment_mode = payment_mode[count]
                             payments.bank = bank[count]
                             payments.branch = branch[count]
@@ -527,16 +515,14 @@ def add_new_bookings(request):
                             payments.user = user
                             #payments.payment_data = request.POST.get('payment_data')
                             payments.paymentname = paymentname
-                            payments.amount = payment_amount
+                            payments.amount = int(payment_amount) 
                             payments.receipt_no = get_number
                             payments.dateofreceipt = date.today()
                             payments.save()
                             book.payments_status = status
                             book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount[count])
-                            
                             book.save()
-                        
-                            break
+                        break
             messages.success(request, 'Successfully Saved')
         except Exception as e:
             messages.error(request, f'An error occurred: {str(e)}')    
@@ -1129,14 +1115,12 @@ def receipts(request):
     distinct_receipts = PaymentDetails.objects.values('receipt_no').distinct()
     booking= []
     for receipt in distinct_receipts:
-        latest_payment = PaymentDetails.objects.filter(receipt_no=receipt['receipt_no']).order_by('-created_on').first()
+        latest_payment = PaymentDetails.objects.filter(receipt_no=receipt['receipt_no']).first()
         booking.append(latest_payment)
 
-
+    ds=booking.reverse()
     data = PaymentDetails.objects.all()
     total_amount_per_receipt = defaultdict(int)
-
-      
     for detail in data:
         total_amount_per_receipt[detail.receipt_no] += int(float(detail.amount))
     for receipt_no, total_amount in total_amount_per_receipt.items():
