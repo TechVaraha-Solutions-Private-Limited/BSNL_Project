@@ -38,7 +38,7 @@ class MyUserManager(BaseUserManager):
 class User(AbstractBaseUser):
     role = models.CharField(max_length=10, null=True)
     User = models.EmailField(verbose_name='email', max_length=100, unique=True, null=True) 
-    email = models.EmailField(verbose_name='email', max_length=100,  null=True) 
+    email = models.EmailField(verbose_name='email', max_length=100, unique=True, null=True) 
     first_name = models.CharField(max_length=50, null=True) 
     last_name = models.CharField(max_length=50, null=True) 
     mobile_no = models.CharField(max_length=50, null=True)
@@ -49,7 +49,7 @@ class User(AbstractBaseUser):
     date_create = models.DateTimeField(auto_now_add=True, null=True)
     date_joined=models.CharField(max_length=50,null=True)
     objects = MyUserManager()
-    USERNAME_FIELD = 'User'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['password']
     login_type = models.CharField(max_length=50,null=True)
     employee_id = models.CharField(max_length=50,null=True)
