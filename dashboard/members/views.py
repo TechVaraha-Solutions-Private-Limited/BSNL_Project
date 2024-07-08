@@ -83,9 +83,7 @@ def home(request):
 def addcustomer(request):
     if request.method == "POST":
         first_name=request.POST.get('first_name')
-        email = request.POST.get('email')
         mobile_no = request.POST.get('mobile_no')
-        email_is_exit = User.objects.filter(email=email).exists()|User.objects.filter(mobile_no=mobile_no).exists()
         # send_mail(
         #     'good morning', 
         #     'hi come to join', 
@@ -95,14 +93,11 @@ def addcustomer(request):
         # )
         if not first_name :
             messages.error(request,'Enter the Name')
-        elif email_is_exit:
-            messages.error(request,'E-mail Already Exists')
         else:
             user=User()
             user.first_name=first_name
             user.last_name=request.POST.get('last_name')
             user.mobile_no = mobile_no
-            user.email = email
             user.password = make_password(request.POST.get('password','').strip())
             user.role = "Customer"
             user.save()
@@ -110,6 +105,7 @@ def addcustomer(request):
             details.user = user
             details.dob = request.POST.get('dob')
             details.age = request.POST.get('age')
+            details.email = request.POST.get('email')
             details.alternate_no = request.POST.get('alternate_no')
             details.aadhhaarno = request.POST.get('aadhhaarno')
             details.aadhar_proof = request.POST.get('aadhar_proof')
@@ -153,7 +149,6 @@ def site_visit_custmer(request,id):
         
         if request.method == 'POST':
             first_name = request.POST.get('first_name')
-            email = request.POST.get('email')
             mobile_no = request.POST.get('mobile_no')
             seniority_id = request.POST.get('seniority_id')
             
@@ -161,7 +156,7 @@ def site_visit_custmer(request,id):
             user.first_name = first_name
             user.last_name = request.POST.get('last_name')
             user.mobile_no = mobile_no
-            user.email = email
+            
             user.password = make_password(request.POST.get('password','').strip())
             user.role = "Customer"
             user.save()
@@ -170,6 +165,7 @@ def site_visit_custmer(request,id):
             details.user = user
             details.dob = request.POST.get('dob')
             details.age = request.POST.get('age')
+            details.email = request.POST.get('email')
             details.alternate_no = request.POST.get('alternate_no')
             details.aadhhaarno = request.POST.get('aadhhaarno')
             details.aadhar_proof = request.POST.get('aadhar_proof')
@@ -284,6 +280,7 @@ def site_visit_custmer(request,id):
                         payments.paymentname =paymentname
                         payments.amount = split_amount
                         payments.receipt_no = get_number
+                        payments.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount)
                         payments.save()
                         payment_amount = payment_amount - split_amount 
                     elif payment_amount > 0:
@@ -338,12 +335,10 @@ def add_new_bookings(request):
             return render(request, 'new_bookings/add_new_bookings.html', {'landdetail': landdetail, 'projects': projects})
 
         try:
-
             user = User()
             user.first_name = first_name
             user.last_name = request.POST.get('last_name')
             user.mobile_no = mobile_no
-            user.email = email
             user.password = make_password(request.POST.get('password', '').strip())
             user.role = "Customer"
             seniority_id=seniority_id
@@ -353,6 +348,7 @@ def add_new_bookings(request):
             details.user = user
             details.dob = request.POST.get('dob')
             details.age = request.POST.get('age')
+            details.email = request.POST.get('email')
             details.alternate_no = request.POST.get('alternate_no')
             details.aadhhaarno = request.POST.get('aadharno')
             details.aadhar_proof = request.POST.get('aadhar_proof')
@@ -413,6 +409,7 @@ def add_new_bookings(request):
         
             book = Bookings()
             book.user = user
+            book.mobile_no = mobile_no
             book.membership_id = request.POST.get('member_id')
             book.seniority_id = request.POST.get('seniority_id')
             book.land_details = land_details
@@ -502,6 +499,7 @@ def add_new_bookings(request):
                             payments.receipt_no = get_number
                             payments.dateofreceipt = date.today()
                             payments.save()
+                           
                             payment_amount = payment_amount - split_amount
                         elif payment_amount > 0 :
                             payments = PaymentDetails()
@@ -519,9 +517,8 @@ def add_new_bookings(request):
                             payments.receipt_no = get_number
                             payments.dateofreceipt = date.today()
                             payments.save()
-                            book.payments_status = status
-                            book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount[count])
-                            book.save()
+                            
+                            
                         break
             messages.success(request, 'Successfully Saved')
         except Exception as e:
@@ -648,7 +645,8 @@ def generate(request):
                     get_number = "634" + str(get_number[0].id + 1)
                 else:
                     get_number = "63421"
-                split_amount = int(book.total_site_value) / 4
+                divide_amount = int(book.total_site_value) / 4
+                split_amount = int(divide_amount)
                 print('sp:',split_amount)
                 paid_amount =  request.POST.getlist('amount[]')
                 payment_mode = request.POST.getlist('payment_mode[]')
@@ -739,7 +737,7 @@ def generate(request):
                                     # payments.payment_data = payment_data[count]
                                     payments.dateofreceipt = dateofreceipt
                                     payments.paymentname =paymentname+' '+payment_name
-                                    payments.amount = paid_amount[count]
+                                    payments.amount = int(paid_amount[count])
                                     payments.receipt_no = get_number
                                     payments.save()
                                     book.payments_status = status
@@ -760,7 +758,7 @@ def generate(request):
                                     #payments.payment_data = payment_data[count]
                                     payments.dateofreceipt = dateofreceipt
                                     payments.paymentname =paymentname
-                                    payments.amount = paid_amt_bal
+                                    payments.amount = int(paid_amt_bal)
                                     payments.receipt_no = get_number
                                     payments.save()
                                     book.payments_status = status
@@ -1011,6 +1009,7 @@ def update_site_visit(request, id):
         return redirect('/members/view_site_visit')
 
     return render(request, 'display/update_display/update_site_view.html', {'update': update})
+
 def delete_site_visit(request,id):
     deletesitevisit=Site_visit.objects.get(id=id)
     deletesitevisit.delete()
@@ -1025,7 +1024,6 @@ def delete_site_visit(request,id):
     # }
     
     return redirect('/members/view_site_visit')
-
 
 def lead_owner(request):
     exective = User.objects.filter(role = 'Executive')
@@ -1208,48 +1206,29 @@ def activemember(request):
     active_nominees = UserNominee.objects.filter(user__is_active=1).all()
     active_bookings = Bookings.objects.filter(user__is_active=1).order_by('-created_on').all()
     different = 0  
-
-    
-   
-    
     for booking in active_bookings:
         try:
             userdetail = UserDetail.objects.get(user_id=booking.user.id)
             booking.cus_dob = userdetail.dob
             booking.id_status = userdetail.id_card
+            booking.email = userdetail.email
             booking.pan_no = userdetail.panno
             booking.pro_img = userdetail.profile
             booking.adhar_no = userdetail.aadhhaarno
             booking.last_n = booking.user.last_name
-
-            # Fetch related nominee details
             nominee = active_nominees.get(user_id=booking.user.id)
             booking.nomie_name = nominee.nominee_name
             booking.nomie_age = nominee.nominee_age
             booking.nomie_rel = nominee.nominee_relationship
             booking.nomie_adrs = nominee.address
-
-            # Fetch related family details
             booking.families = UserFamilyDetails.objects.filter(user_id=booking.user.id)
-            
-            # Iterate through each family member
             for family in booking.families:
                 print(family.member_age)
                 print(family.member_relation)
-
-            
         except ObjectDoesNotExist:
-           
             pass
-
-        
         bookings = Bookings.objects.all()
-
-
         for booking in bookings:
-            print("Booking ID:", booking.seniority_id)
-            print("Site Amount:", booking.total_site_value)
-            print("paid Value:", booking.total_paid_amount)
             different = int(booking.total_site_value) - int(booking.total_paid_amount)
            
     context = {
@@ -1279,6 +1258,7 @@ def updateactivememberlist(request, id):
             book.save()
 
             userdetail.alternate_no = request.POST.get('alternate_no', "")
+            userdetail.email = request.POST.get()("email","")
             userdetail.address = request.POST.get('address', "")
             userdetail.city = request.POST.get('city', "")
             userdetail.pincode = request.POST.get('pincode', "")

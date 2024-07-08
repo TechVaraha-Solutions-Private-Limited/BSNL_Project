@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,HttpResponse,redirect
 from dashboard.userinfo.models import User,UserDetail,UserFamilyDetails,UserNominee
-from dashboard.members.models import Bookings
+from dashboard.members.models import Bookings,PaymentDetails
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
 # from app.models import Newbooking
@@ -27,9 +27,14 @@ def profile(request):
 
 def booking(request):
     user = request.user
-    landdetails=Bookings.objects.get(user_id=user.id)
-    print(landdetails.land_details.project.projectname)
+    landdetails=Bookings.objects.filter(mobile_no=user.mobile_no)
+    for payment in landdetails:
+        paymentView= PaymentDetails.objects.filter(booking_id = payment.id)
+        for pay in paymentView:
+            payment.status = pay.paymentname
+            payment.totalamout = pay.amount
+        print(payment.totalamout)
     context = {
-        'landdetails':landdetails,
+        'landdetails':landdetails
     }
     return render(request,'page/customer_view/booking.html',context)

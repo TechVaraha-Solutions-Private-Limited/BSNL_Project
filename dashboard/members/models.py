@@ -25,6 +25,7 @@ class Site_visit(models.Model):
 
 class Bookings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    mobile_no = models.CharField(max_length=50, null=True)
     seniority_id = models.CharField(max_length=20,unique=True,null=True)
     membership_id = models.CharField(max_length=20,unique=True,null=True)
     status = models.SmallIntegerField(default=1, null=True)

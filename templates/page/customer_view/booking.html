@@ -1,119 +1,80 @@
 {% extends 'page/commons/base.html' %}
 {% load static %}
 {% block content %}
+<style>
+  h1 {
+      font: 20px
+  }
+
+  .plotsize {
+      widtd: 50%;
+      font-size: 15px;
+      padding: 7px 0px;
+      border: 1px solid lightgray;
+      border-radius: 0%;
+  }
+
+  .search {
+      width: 30%;
+      float: right;
+  }
+
+
+  .search_size {
+      border: 2px solid rgb(247, 243, 243);
+      border-radius: 15px;
+  }
+
+  #divbox {
+      box-shadow: 0px 0px 5px #007bff;
+      border-radius: 1%;
+  }
+</style>
 <section style="background-color: #eee;">
     <div class="container py-5"> 
       <div class="row">
-        <div class="col-lg-4">
-          <div class="card mb-4">
-            <div class="card-body text-center">
-                
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
-                class="rounded-circle img-fluid" style="width: 150px;">
-                
-              <h5 class="my-3">{{landdetails.land_details.project.projectname}}</h5>
-              <p class="text-muted mb-1">{{landdetails.land_details.plotsize.plotsize}}</p>
+        <div class="col-lg-12">
+          <div class="card mb-12">
+            <div class="card-body text-center">                
+              <div class="p-2" id="divbox">
+                <div class="table-responsive pt-3" id="mytable" style="display: show;">
+                    <h2 class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
+                    style="background-color: #178EF0;color:white; width:100%;">
+                       <center> <b>SITE VISIT DETAILS</b></center>
+                </h2>
+                    <div>
+                        <table id="data" class="emInfo">
+                            <thead>
+                                <tr>
+                                    <th>S.NO</th>
+                                    <th>Project Name</th>
+                                    <th>Plot Size</th>
+                                    <th>Date Of Booking</th>
+                                    <th>Total Amount</th>
+                                    <th>Last Paid Amount</th>
+                                    <th>Paid Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for view in landdetails %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{view.land_details.project.projectname}}</td>
+                                    <td>{{view.land_details.plotsize.plotsize}}</td>
+                                    <td>{{view.date_of_booking}}</td>
+                                    <td>{{view.land_details.total_amount}}</td>
+                                    <td>{{view.totalamout}}</td>
+                                    <td>{{view.status}}</td>
+                                    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+              
+                </div>
             </div>
           </div>
-          <div class="card mb-4">
-            <div class="card-body">
-                {% for noimee in noimee%}
-              <div class="row">
-                <div class="col-sm-5">
-                  <p class="mb-0">Nomiee Name</p>
-                </div>
-                <div class="col-sm-5">
-                  <p class="text-muted mb-0">{{noimee.nominee_name|title}}</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-5">
-                  <p class="mb-0">Relationship</p>
-                </div>
-                <div class="col-sm-5">
-                  <p class="text-muted mb-0">{{noimee.nominee_relationship}}</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-5">
-                  <p class="mb-0">Address</p>
-                </div>
-                <div class="col-sm-5">
-                {% for userdetail in userdetails %}
-                  <p class="text-muted mb-0">{{noimee.address}}</p>
-                {% endfor %}
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-8">
-          <div class="card mb-4">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Full Name</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">{{user.first_name|title}}</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Email</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">{{user.email}}</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Mobile</p>
-                </div>
-                <div class="col-sm-9">
-                  <p class="text-muted mb-0">{{user.mobile_no}}</p>
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="mb-0">Address</p>
-                </div>
-                <div class="col-sm-9">
-                {% for userdetail in userdetails %}
-                  <p class="text-muted mb-0">{{userdetail.address}}</p>
-                {% endfor %}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card mb-4">
-              <table>
-                
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Relationship</th>
-                  </tr>
-                </thead>
-                {%for family in family %}
-                <tbody>
-                  <tr>
-                    <td>{{family.member_name}}</td>
-                    <td>{{family.member_age}}</td>
-                    <td>{{family.member_relation}}</td>
-                  </tr>
-                </tbody>
-                {%endfor%}
-              </table>
-          </div>
-        </div>
       </div>
     </div>
 </section>
