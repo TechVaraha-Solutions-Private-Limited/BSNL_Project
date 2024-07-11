@@ -1,0 +1,241 @@
+{% extends 'index.html'%} {% block content %} {% load static %} {% load widget_tweaks %} {% include 'bootstrap.html' %}
+
+<style>
+  a {
+    color: black;
+  }
+
+  #divbox {
+    box-shadow: 0px 0px 5px #007bff;
+    border-radius: 1%;
+  }
+</style>
+<div class="panel mt-6" id="divbox">
+  <h2
+    class="text-lg dark:text-white-light p-2 font-weight-bold mt-4"
+    style="background-color: #178ef0; color: white; width: 100%;"
+  >
+    <center><b>MEMBERS LIST</b></center>
+    
+  </h2>
+  {% for message in messages %}
+    <div
+      class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
+    >
+      <a class="close" href="#" data-dismiss="alert">×</a>
+      {{ message }}
+    </div>
+    {% endfor %}
+  <div class="relative search mt-2">
+    <input type="text" id="searchInput" placeholder="Search Details..." class="form-input search_size" style="width: 25%;
+    margin-left: 75%;" />
+    <button type="button"
+        class="btn absolute ltr:right-1 rtl:left-1 inset-y-0 m-auto rounded-full w-9 h-9 p-0 flex items-center justify-center"
+        style="border: 1px solid;color: white;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+            <path
+                d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z" />
+        </svg>
+    </button>
+</div>
+<div>
+  <form method="GET" action="">
+    <div>
+        <select name="Filtered" onchange="this.form.submit()">
+            <option value="All" {% if selected_value == 'All'  %}selected{% endif %}>All</option>
+            <option value="1" {% if selected_value == '1' or selected_value is None %}selected{% endif %}>Active</option>
+            <option value="0" {% if selected_value == '0' %}selected{% endif %}>Inactive</option>
+        </select>
+    </div>
+</form>
+</div>
+<br>
+  <div class="table-responsive">
+    <table class="emInfo responsive">
+      <thead>
+        <tr>
+          <th>S.NO </th>
+          <th>Member Name</th>
+          <th>Seniority ID / Member-ID</th>
+          <th>Project Name / Size</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for mydata in Booking %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{mydata.user.first_name}}</td>
+                <td>{{mydata.seniority_id}} / {{mydata.am_no}}</td>
+                <td>{{mydata.land_details.project.projectname}} <b>/</b> {{mydata.land_details.plotsize.plotsize}}</td>
+                <td>{{mydata.land_details.total_amount}}</td>
+                <td>
+                    {% if mydata.user.is_active == True %}
+                        <span style="color:#008000;border-radius: 25px;padding: 3px;">Active</span> 
+                    {% else %}
+                        <span style="color:rgb(239, 14, 14);border-radius: 25px;padding: 3px;">InActive</span>
+                    {% endif %}
+                </td>         
+                <td style="align-items: center;">
+                  <div >
+                        <a href="view_receipt/{{mydata.id}}"type="button" style="border:solid;border-color: rgba(240, 248, 250, 0);" x-tooltip="View">
+                          <svg  xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
+                              <path d="M288 80c-65.2 0-118.8 29.6-159.9 67.7C89.6 183.5 63 226 49.4 256c13.6 30 40.2 72.5 78.6 108.3C169.2 402.4 222.8 432 288 432s118.8-29.6 159.9-67.7C486.4 328.5 513 286 526.6 256c-13.6-30-40.2-72.5-78.6-108.3C406.8 109.6 353.2 80 288 80zM95.4 112.6C142.5 68.8 207.2 32 288 32s145.5 36.8 192.6 80.6c46.8 43.5 78.1 95.4 93 131.1c3.3 7.9 3.3 16.7 0 24.6c-14.9 35.7-46.2 87.7-93 131.1C433.5 443.2 368.8 480 288 480s-145.5-36.8-192.6-80.6C48.6 356 17.3 304 2.5 268.3c-3.3-7.9-3.3-16.7 0-24.6C17.3 208 48.6 156 95.4 112.6zM288 336c44.2 0 80-35.8 80-80s-35.8-80-80-80c-.7 0-1.3 0-2 0c1.3 5.1 2 10.5 2 16c0 35.3-28.7 64-64 64c-5.5 0-10.9-.7-16-2c0 .7 0 1.3 0 2c0 44.2 35.8 80 80 80zm0-208a128 128 0 1 1 0 256 128 128 0 1 1 0-256z"/>
+                          </svg>
+                        </a>
+                        
+                        <a href="genrate/{{mydata.seniority_id}}"type="button" style="border:solid;border-color: rgba(240, 248, 250, 0);" x-tooltip="View">
+                          <svg  xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
+                              <path d="M14 2.2C22.5-1.7 32.5-.3 39.6 5.8L80 40.4 120.4 5.8c9-7.7 22.3-7.7 31.2 0L192 40.4 232.4 5.8c9-7.7 22.3-7.7 31.2 0L304 40.4 344.4 5.8c7.1-6.1 17.1-7.5 25.6-3.6s14 12.4 14 21.8V488c0 9.4-5.5 17.9-14 21.8s-18.5 2.5-25.6-3.6L304 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L192 471.6l-40.4 34.6c-9 7.7-22.3 7.7-31.2 0L80 471.6 39.6 506.2c-7.1 6.1-17.1 7.5-25.6 3.6S0 497.4 0 488V24C0 14.6 5.5 6.1 14 2.2zM96 144c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96zM80 352c0 8.8 7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96c-8.8 0-16 7.2-16 16zM96 240c-8.8 0-16 7.2-16 16s7.2 16 16 16H288c8.8 0 16-7.2 16-16s-7.2-16-16-16H96z"/>
+                            
+                          </svg>
+                        </a>
+                        <a  href="/reports/print_recepit/{{mydata.receipt_no}}" type="button" style="border:solid;border-color: rgba(250, 250, 250, 0);" x-tooltip="Print" >
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5">
+                                <path d="M6 17.9827C4.44655 17.9359 3.51998 17.7626 2.87868 17.1213C2 16.2426 2 14.8284 2 12C2 9.17157 2 7.75736 2.87868 6.87868C3.75736 6 5.17157 6 8 6H16C18.8284 6 20.2426 6 21.1213 6.87868C22 7.75736 22 9.17157 22 12C22 14.8284 22 16.2426 21.1213 17.1213C20.48 17.7626 19.5535 17.9359 18 17.9827"
+                                    stroke="currentColor" stroke-width="1.5"/>
+                                <path opacity="0.5" d="M9 10H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M19 14L5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M18 14V16C18 18.8284 18 20.2426 17.1213 21.1213C16.2426 22 14.8284 22 12 22C9.17157 22 7.75736 22 6.87868 21.1213C6 20.2426 6 18.8284 6 16V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                <path opacity="0.5" d="M17.9827 6C17.9359 4.44655 17.7626 3.51998 17.1213 2.87868C16.2427 2 14.8284 2 12 2C9.17158 2 7.75737 2 6.87869 2.87868C6.23739 3.51998 6.06414 4.44655 6.01733 6" stroke="currentColor" stroke-width="1.5"/>
+                                <path opacity="0.5" d="M15 16.5H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path opacity="0.5" d="M13 19H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            </svg>
+                        </a>
+                  </div>
+                </td>
+            </tr>
+            <div class="modal fade bd-example-modal-sm" id="exampleModal{{mydata.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                  <div class="model-header">
+                      
+                  </div>
+                  <div class="modal-footer">
+                      <h4>Are you <b>Delete</b> ?</h4>
+                      <a type="button" href="deletereceipts/{{mydata.id}}" >
+                          <svg xmlns="http://www.w3.org/2000/svg" height="2.5em" viewBox="0 0 448 512" class="svg_greeen">
+                              <style>.svg_greeen{fill:#eef3ef;border-style: solid;background-color: #0aeb4d;border-color: #0aeb4d;border-radius: 12px;}</style>
+                              <path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
+                          </svg>
+                      </a>
+                      <a type="button" data-dismiss="modal">
+                          <svg xmlns="http://www.w3.org/2000/svg" height="2.5em" viewBox="0 0 384 512" class="svg">
+                              <style>.svg{fill:#eef3ef;border-style: solid;background-color: #eb510a;border-color: #eb510a;border-radius: 12px;}</style>
+                              <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                          </svg>
+                      </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
+  <div style="text-align: right">
+    <div
+      class="inline-flex items-center space-x-1 rtl:space-x-reverse m-auto mb-4"
+    >
+      <button
+        id="prevPage"
+        type="button"
+        class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="1em"
+          viewBox="0 0 256 512"
+        >
+          <path
+            d="M9.4 278.6c-12.5-12.5-12.5-32.8 0-45.3l128-128c9.2-9.2 22.9-11.9 34.9-6.9s19.8 16.6 19.8 29.6l0 256c0 12.9-7.8 24.6-19.8 29.6s-25.7 2.2-34.9-6.9l-128-128z"
+          />
+        </svg>
+      </button>
+      <span
+        id="currentPage"
+        class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary"
+        >1</span
+      >
+      <button
+        id="nextPage"
+        type="button"
+        class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="1em"
+          viewBox="0 0 256 512"
+        >
+          <path
+            d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- script -->
+<script>
+  var currentPage = 1;
+  var rowsPerPage = 10; 
+  function updateTable() {
+    var tableRows = document.querySelectorAll(".emInfo tbody tr");
+    var start = (currentPage - 1) * rowsPerPage;
+    var end = start + rowsPerPage;
+
+    for (var i = 0; i < tableRows.length; i++) {
+      if (i >= start && i < end) {
+        tableRows[i].style.display = "table-row";
+      } else {
+        tableRows[i].style.display = "none";
+      }
+    }
+    document.getElementById("currentPage").textContent = currentPage;
+  }
+  document.getElementById("nextPage").addEventListener("click", function () {
+    var tableRows = document.querySelectorAll(".emInfo tbody tr");
+    var maxPage = Math.ceil(tableRows.length / rowsPerPage);
+    if (currentPage < maxPage) {
+      currentPage++;
+      updateTable();
+    }
+  });
+  document.getElementById("prevPage").addEventListener("click", function () {
+    if (currentPage > 1) {
+      currentPage--;
+      updateTable();
+    }
+  });
+  updateTable();
+</script>
+<script>
+  function searchTable() {
+      var input, filter, table, tr, td, i, j, txtValue;
+      input = document.getElementById("searchInput");
+      filter = input.value.toUpperCase();
+      table = document.querySelector(".emInfo");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td");
+          var showRow = false;
+          for (j = 0; j < td.length; j++) {
+              txtValue = td[j].textContent || td[j].innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                  showRow = true;
+                  break;
+              }
+          }
+          if (showRow) {
+              tr[i].style.display = "";
+          } else {
+              tr[i].style.display = "none";
+          }
+      }
+  }
+  document.getElementById("searchInput").addEventListener("keyup", searchTable);
+</script>
+{% endblock %}

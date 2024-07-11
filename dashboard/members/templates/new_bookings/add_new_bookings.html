@@ -1,21 +1,22 @@
 {% extends 'index.html' %} {% block content %} {% load static %} {% include 'common/bootstrap.html' %}
 <style>
-
-.required-label:after {
-  content: "*";
-  color: red;
-}
+  .required-label:after {
+    content: "*";
+    color: red;
+  }
 
 
   a {
     color: black;
     text-decoration: none;
   }
+
   .remove-btn {
-        margin-top: 25px;
-        cursor: pointer;
-        color: red;
-    }
+    margin-top: 25px;
+    cursor: pointer;
+    color: red;
+  }
+
   .addproject {
     text-align: center;
     padding: 15px 15px;
@@ -33,128 +34,96 @@
     background-color: #f8d7da;
     width: 43%;
     margin-left: 30%;
-}
+  }
 
-/* Style for the close icon */
-.close-icon {
+  /* Style for the close icon */
+  .close-icon {
     cursor: pointer;
     float: right;
     margin-left: 10px;
     color: #888;
-}
-.error {
+  }
+
+  .error {
     color: red;
     font-size: 12px;
   }
 </style>
-<form class="space-y-5" id="myForm" method="POST" action="" autocomplete="off" >
-  {% for message in messages %}
-  <div
-    class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}"
-  >
-    <a class="close" href="#" data-dismiss="alert">×</a>
-    {{ message }}
-  </div>
-  {% endfor %} {% csrf_token %}
+{% for message in messages %}
+<div
+  class="alert {% if message.tags == 'error' %} alert-danger {% elif message.tags == 'success' %} alert-success {% endif %}">
+  <a class="close" href="#" data-dismiss="alert">×</a>
+  {{ message }}
+</div>
+{% endfor %}
 
-  <div class="p-2" style="box-shadow: 0px 0px 5px #007bff; border-radius: 10px">
-    <label
-      class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
-      style="background-color: #178ef0; color: white; width: 100%"
-      ><b>ADD CREDENTIALS - New Booking</b></label
-    >
-   
-    <h2
-      class="text-lg font-semibold dark:text-white-light"
-      style="
+<div class="p-2" style="box-shadow: 0px 0px 5px #007bff; border-radius: 10px">
+  <label class="text-lg dark:text-white-light p-2 font-weight-bold mt-4 addproject"
+    style="background-color: #178ef0; color: white; width: 100%"><b>ADD CREDENTIALS - New Booking</b></label>
+
+  <h2 class="text-lg font-semibold dark:text-white-light" style="
         background-color: #daeff2;
         color: #1ca7dd;
         width: 100%;
         padding-left: 40%;
         padding-top: 1%;
         padding-bottom: 1%;
-      "
-    >
-      <b>Member Particulars</b>
-    </h2>
-    <div class="panel p-1">
+      ">
+    <b>Member Particulars</b>
+  </h2>
+
+  <div class="panel p-1">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+      <div class="p-1">
+        <form id="form1" method="POST" action="">
+          {% csrf_token %}
+          <label class="p-1 required-label" for="mobile_no">Search Mobile Number</label>
+          <input type="number" min="0" id="mobile_no" name="mobile_no" placeholder="Mobile Number"
+            value="{{book.mobile_no}}" class="form-input" required />
+          <button hidden type="submit" name="action" value="Filter">Submit Form 1</button>
+        </form>
+      </div>
+    </div>
+
+    <form class="space-y-5" id="myForm" method="POST" action="" autocomplete="off">
+      {% csrf_token %}
+
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
           <label class="p-1 required-label">Member Name</label>
-          <input
-            type="text"
-            name="first_name"
-            class="form-input"
-            id="name"
-            value="{{site.cust_name}}"
-            placeholder="Member Name"required
-          />
-          
+          <input type="text" name="first_name" class="form-input" id="name" value="{{book.first_name}}"
+            placeholder="Member Name" required />
         </div>
-
         <div class="p-1">
           <label class="p-1 ">Father/Husband Name</label>
-          <input
-            type="text"
-            name="last_name"
-            class="form-input"
-            placeholder="Surname Name"
-            
-          />
+          <input type="text" name="last_name" class="form-input" placeholder="Surname Name" value="{{book.last_name}}" />
           <span class="error" id="last_name_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1 required-label">Date of Brith</label>
-          <input type="date" name="dob" class="form-input" placeholder="DOB"required/>
+          <input type="date" name="dob" class="form-input" value="{{Add_details.dob}}" placeholder="DOB" required />
           <span class="error" id="dob_error"></span>
         </div>
         <div class="p-1">
-          <label class="p-1">Age</label>
-          <input
-            type="number"
-            name="age"
-            class="form-input"
-            placeholder="Age"
-            
-          />
-          <span class="error" id="age_error"></span>
+          <label class="p-1 required-label" for="mobile_no">Mobile Number</label>
+          <input type="number" min="0" id="mobile_no" name="mobile_no" placeholder="Mobile Number"
+            value="{{book.mobile_no}}" class="form-input" required />
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
-          <label class="p-1 required-label">Moblie Number</label>
-          <input
-            type="number"
-            name="mobile_no"
-            placeholder="Moblie Number"
-            value="{{site.phone_no}}"
-            class="form-input"
-            required
-          />
-          <span class="error" id="mobile_error"></span>
+          <label class="p-1">Age</label>
+          <input type="number" name="age" class="form-input" placeholder="Age" value="{{Add_details.age}}" />
+          <span class="error" id="age_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1">Alternate Number</label>
-          <input
-            type="number"
-            name="alternate_no"
-            placeholder="Alternate Number"
-            class="form-input"
-            
-            
-          />
+          <input type="number" name="alternate_no" placeholder="Alternate Number" class="form-input" />
           <span class="error" id="alternate_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1 required-label">Email ID</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="E-Mail Id"
-            class="form-input"
-            required
-          />
+          <input type="email" name="email" id="email" placeholder="E-Mail Id" value="{{Add_details.email}}" class="form-input" required />
           <span class="error" id="email_error"></span>
         </div>
         <div class="p-1">
@@ -165,70 +134,34 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
           <label class="p-1 required-label">Residential Address</label>
-          <textarea
-            class="form-input"
-            name="address"
-            id="message"
-            placeholder="Residential Address"
-            required
-            rows="3"
-          ></textarea>
+          <textarea class="form-input" name="address" id="message"  placeholder="Residential Address" required
+            rows="3">{{Add_details.address}}</textarea>
           <span class="error" id="address_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1 required-label">City</label>
-          <input
-            type="text"
-            name="city"
-            placeholder="City"
-            class="form-input"
-            required
-          />
+          <input type="text" name="city" placeholder="City" value="{{Add_details.city}}" class="form-input" required />
           <span class="error" id="city_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1 required-label">State</label>
-          <input
-            type="text"
-            name="state"
-            placeholder="State"
-            class="form-input"
-            required
-          />
+          <input type="text" name="state" placeholder="State" value="{{Add_details.state}}" class="form-input" required />
           <span class="error" id="state_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1 required-label">PIN Code</label>
-          <input
-            type="number"
-            name="pincode"
-            placeholder="PIN Code"
-            class="form-input"
-            required
-          />
+          <input type="number" name="pincode" placeholder="PIN Code" value="{{Add_details.pincode}}" class="form-input" required />
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
 
         <div>
           <label class="p-1 required-label">Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            class="form-input"
-            required
-          />
+          <input type="password" name="password" placeholder="password"  class="form-input" required />
         </div>
         <div class="p-1">
           <label class="p-1">Pan Number</label>
-          <input
-            type="text"
-            name="panno"
-            placeholder="Pan Number"
-            class="form-input"
-            
-          />
+          <input type="text" name="panno" placeholder="Pan Number" class="form-input" />
         </div>
         <div class="custom-file-container p-7">
           <label></label>
@@ -238,347 +171,226 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
           <label class="p-1">Aadhhar Number</label>
-          <input
-            type="number"
-            name="aadhhaarno"
-            placeholder="Aadhhar Number"
-            class="form-input"
-            
-          />
+          <input type="number" name="aadhhaarno" placeholder="Aadhhar Number" class="form-input" />
         </div>
         <div class="p-7">
           <label></label>
           <input type="file" name="aadhar_proof" />
         </div>
       </div>
-    </div>
-    <div class="panel p-1">
-      <h1
-        class="text-lg font-semibold dark:text-white-light"
-        style="
-          background-color: #daeff2;
-          color: #1ca7dd;
-          width: 100%;
-          padding-left: 40%;
-          padding-top: 1%;
-          padding-bottom: 1%;
-        "
-      >
-        <b>Nominee Particulars</b>
-      </h1>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div class="p-1">
-          <label class="p-1">Nominee Name</label>
-          <input
-            type="text"
-            name="nominee_name"
-            placeholder="Nominee Name"
-            class="form-input"
-           
-          />
-          <span class="error" id="nominee_name_error"></span>
-        </div>
-        <div class="p-1">
-          <label class="p-1">Nominee Age</label>
-          <input
-            type="number"
-            name="nominee_age"
-            placeholder="Nominee Age"
-            class="form-input"
-            
-          />
-        </div>
-        <div class="p-1">
-          <label class="p-1">Nominee Relationship</label>
-          <input
-            type="text"
-            name="nominee_relationship"
-            placeholder="Nominee Relationship"
-            class="form-input"
-            
-          />
-        </div>
-        <div class="p-1">
-          <label class="p-1">Nominee Address</label>
-          <input
-            type="text"
-            name="address1"
-            placeholder="Nominee Address"
-            class="form-input"
-            
-          />
-          <span class="error" id="address1_error"></span>
-        </div>
-        <div class="p-1">
-          <label class="p-1">City</label>
-          <input
-            type="text"
-            name="city1"
-            placeholder="City"
-            class="form-input"
-            
-          />
-        </div>
-        <div class="p-1">
-          <label class="p-1">State</label>
-          <input
-            type="text"
-            name="state1"
-            placeholder="State"
-            class="form-input"
-            
-          />
-        </div>
-      </div>
-    </div>
-    <input type="hidden" name="check_input_no" id="check_input_no" value="1" />
-    <div class="panel p-1" id="container">
-      <h1
-        class="text-lg font-semibold dark:text-white-light"
-        style="
-          background-color: #daeff2;
-          color: #1ca7dd;
-          width: 100%;
-          padding-left: 40%;
-          padding-top: 1%;
-          padding-bottom: 1%;
-        "
-      >
-        <b>Family Details</b>
-      </h1>
-      <div></div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5" id="family-form">
-        <div class="p-1">
-          <label class="p-1">Family-Member Name</label>
-          <input
-            type="text"
-            name="member_name1"
-            placeholder="Family-Member Name"
-            class="form-input"
-            
-          />
-        </div>
-        <div class="p-1">
-          <label class="p-1">Family-Member Age</label>
-          <input
-            type="number"
-            name="member_age1"
-            placeholder="Family-Member Age"
-            class="form-input"
-            
-          />
-        </div>
-        <div class="p-1">
-          <label class="p-1">Family-Member Relationship</label>
-          <input
-            type="text"
-            name="member_relation1"
-            placeholder="Family-Member Relationship"
-            class="form-input"
-            
-          />
-        </div>
-        <div class="p-1">
-          <label class="p-1"></label>
-          <button
-            id="hello1"
-            class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light"
-            style="background-color: #178ef0"
-            type="button"
-            onclick="add_more_field()"
-          >
-            Add More
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="panel p-1">
-      <h1
-        class="text-lg font-semibold dark:text-white-ligh"
-        style="
-          background-color: #daeff2;
-          color: #1ca7dd;
-          width: 100%;
-          padding-left: 40%;
-          padding-top: 1%;
-          padding-bottom: 1%;
-        "
-      >
-        <b>Site Details</b>
-      </h1>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div class="p-1" >
-          <label class="required-label">Select Project</label><br />
-          <select
-            class="form-control"
-            id="projectname"
-            name="projectname"
-            required >
-            <option value="">Select</option>
-            {% for project in projects %}
-            <option value="{{project.id}}">{{project.projectname}}</option>
-            {% endfor %}
-          </select>
-          <span class="error" id="projectname_error"></span>
-        </div>
-        <div class="p-1">
-          <label>Dimension</label><br />
-          <select
-            class="form-control"
-            id="selectDimension"
-            name="selectDimension"
-            disabled
-            required
-          >
-            <option>Select</option>
-          </select>
-        </div>
-        <input type="hidden" name="project_id" id="" value="" />
-        <div class="p-1">
-          <label class="p-1 required-label">Total Site Value</label>
-          <input
-            type="text"
-            name="total_site_value"
-            id="total_site_value"
-            placeholder="Total Site Value"
-            value=""
-            class="form-input"
-            readonly
-          />
-        </div>
-        <div class="p-1">
-          <label class="p-1">Down Payment value</label>
-          <input
-            type="text"
-            name="downpayment"
-            id="downpayment"
-            placeholder="Down Payment value"
-            class="form-input"
-            readonly
-          />
-        </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div class="p-1">
-          <label class="p-1 required-label">Site Reference</label>
-          <input
-            type="text"
-            name="site_refer"
-            placeholder="Site Reference"
-            class="form-input"
-            required
-          />
-        </div>
-        <div class="p-1">
-          <label class="p-1 required-label">Seniority No</label>
-          <input
-            type="text"
-            id="seniority"
-            name="seniority_id"
-            placeholder="Seniority No"
-            class="form-input"
-            required
-          />
-        </div>
-        <div class="p-1">
-          <label class="p-1 required-label">Executive</label>
-          <select class="form-control" name="executive" id="executive"required>
-              <option>Select</option>
-              {% for data in exectiv%}
-              <option value="{{data.id}}">{{data.first_name}}</option>
-              {% endfor %}
-          </select>
-      </div>
-      </div>
-    </div>
-    <div class="panel p-1">
-      <h2
-        class="text-lg font-semibold dark:text-white-light"
-        style="
-          background-color: #daeff2;
-          color: #1ca7dd;
-          width: 100%;
-          padding-left: 40%;
-          padding-top: 1%;
-          padding-bottom: 1%;
-        "
-      
-        <b>Payment Details</b>
-      </h2>
-      <div id="payment-details-container">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 payment-details-section">
-            <div class="p-1" style="margin-top: 3%;">
-                <div>
-                    <label>Select Payment Option</label>
-                    <select class="form-control payment-mode" name="payment_mode[]">
-                        <option value="">--select option--</option>
-                        <option value="Cheque">Cheque</option>
-                        <option value="Net Banking">Net Banking</option>
-                        <option value="DD">DD</option>
-                    </select>
-                </div>
-            </div>
-            <div class="p-1 payment-details" id="cheque-details" style="display: none;">
-                <label>Bank</label>
-                <input type="text" name="bank[]" placeholder="Bank" class="form-input">
-            </div>
-            <div class="p-1 payment-details" id="branch-details" style="display: none;">
-                <label>Branch</label>
-                <input type="text" name="branch[]" placeholder="Branch" class="form-input">
-            </div>
-            <div class="p-1 payment-details" id="cheque-no-details" style="display: none;">
-                <label>Cheque No</label>
-                <input type="text" name="cheque_no[]" placeholder="Cheque No" class="form-input">
-            </div>
-            <div class="p-1 payment-details" id="pay-date-details" style="display: none;">
-                <label>Pay Date</label>
-                <input type="date" name="payment_date[]" placeholder="Pay Date" class="form-input">
-            </div>
-            <div class="p-1 payment-details" id="amount-details" style="display: none;">
-                <label>Amount</label>
-                <input type="text" name="amount[]" placeholder="Amount" class="form-input">
-            </div>
-            <div class="p-1 payment-details" id="transaction-id-details" style="display: none;">
-                <label>Transaction Id</label>
-                <input type="text" name="transaction_id[]" placeholder="Transaction Id" class="form-input">
-            </div>
-            <div class="p-1 payment-details" id="dd-no-details" style="display: none;">
-                <label>DD No</label>
-                <input type="text" name="dd_no[]" placeholder="DD No" class="form-input">
-            </div>
-            <!-- Remove button will not be in the default form -->
-        </div>
-    </div>
-      <!-- <button onclick="addMore()">Add More</button> -->
-    </div>
-    <div class="p-1 mt-4">
-      <button type="button" class="btn btn-secondary" id="add-payment-detail">Add Payment Detail</button>
   </div>
-    <div class="text-center">
-      <input
-        type="submit"
-           
-        value="Submit Application"
-        class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light"
-        style="background-color: #178ef0"
-      />
+  <div class="panel p-1">
+    <h1 class="text-lg font-semibold dark:text-white-light" style="
+          background-color: #daeff2;
+          color: #1ca7dd;
+          width: 100%;
+          padding-left: 40%;
+          padding-top: 1%;
+          padding-bottom: 1%;
+        ">
+      <b>Nominee Particulars</b>
+    </h1>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+      <div class="p-1">
+        <label class="p-1">Nominee Name</label>
+        <input type="text" name="nominee_name" placeholder="Nominee Name" class="form-input" value="{{usernomieedetail.nominee_name}}" />
+        <span class="error" id="nominee_name_error"></span>
+      </div>
+      <div class="p-1">
+        <label class="p-1">Nominee Age</label>
+        <input type="number" name="nominee_age" placeholder="Nominee Age" class="form-input" value="{{usernomieedetail.nominee_age}}" />
+      </div>
+      <div class="p-1">
+        <label class="p-1">Nominee Relationship</label>
+        <input type="text" name="nominee_relationship" placeholder="Nominee Relationship" value="{{usernomieedetail.nominee_relationship}}" class="form-input" />
+      </div>
+      <div class="p-1">
+        <label class="p-1">Nominee Address</label>
+        <input type="text" name="address1" placeholder="Nominee Address" value="{{usernomieedetail.address}}" class="form-input" />
+        <span class="error" id="address1_error"></span>
+      </div>
+      <div class="p-1">
+        <label class="p-1">City</label>
+        <input type="text" name="city1" placeholder="City" value="{{usernomieedetail.city}}" class="form-input" />
+      </div>
+      <div class="p-1">
+        <label class="p-1">State</label>
+        <input type="text" name="state1" placeholder="State" value="{{usernomieedetail.state}}" class="form-input" />
+      </div>
     </div>
   </div>
-  
-</form>
+  <input type="hidden" name="check_input_no" id="check_input_no" value="1" />
+  <div class="panel p-1" id="container">
+    <h1 class="text-lg font-semibold dark:text-white-light" style="
+          background-color: #daeff2;
+          color: #1ca7dd;
+          width: 100%;
+          padding-left: 40%;
+          padding-top: 1%;
+          padding-bottom: 1%;
+        ">
+      <b>Family Details</b>
+    </h1>
+    <div></div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5" id="family-form">
+      <div class="p-1">
+        <label class="p-1">Family-Member Name</label>
+        <input type="text" name="member_name1" placeholder="Family-Member Name" class="form-input" />
+      </div>
+      <div class="p-1">
+        <label class="p-1">Family-Member Age</label>
+        <input type="number" name="member_age1" placeholder="Family-Member Age" class="form-input" />
+      </div>
+      <div class="p-1">
+        <label class="p-1">Family-Member Relationship</label>
+        <input type="text" name="member_relation1" placeholder="Family-Member Relationship" class="form-input" />
+      </div>
+      <div class="p-1">
+        <label class="p-1"></label>
+        <button id="hello1" class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light"
+          style="background-color: #178ef0" type="button" onclick="add_more_field()">
+          Add More
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="panel p-1">
+    <h1 class="text-lg font-semibold dark:text-white-ligh" style="
+          background-color: #daeff2;
+          color: #1ca7dd;
+          width: 100%;
+          padding-left: 40%;
+          padding-top: 1%;
+          padding-bottom: 1%;
+        ">
+      <b>Site Details</b>
+    </h1>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+      <div class="p-1">
+        <label class="required-label">Select Project</label><br />
+        <select class="form-control" id="projectname" name="projectname" required>
+          <option value="">Select</option>
+          {% for project in projects %}
+          <option value="{{project.id}}">{{project.projectname}}</option>
+          {% endfor %}
+        </select>
+        <span class="error" id="projectname_error"></span>
+      </div>
+      <div class="p-1">
+        <label>Dimension</label><br />
+        <select class="form-control" id="selectDimension" name="selectDimension" disabled required>
+          <option>Select</option>
+        </select>
+      </div>
+      <input type="hidden" name="project_id" id="" value="" />
+      <div class="p-1">
+        <label class="p-1 required-label">Total Site Value</label>
+        <input type="text" name="total_site_value" id="total_site_value" placeholder="Total Site Value" value=""
+          class="form-input" readonly />
+      </div>
+      <div class="p-1">
+        <label class="p-1">Down Payment value</label>
+        <input type="text" name="downpayment" id="downpayment" placeholder="Down Payment value" class="form-input"
+          readonly />
+      </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+      <div class="p-1">
+        <label class="p-1 required-label">Site Reference</label>
+        <input type="text" name="site_refer" placeholder="Site Reference" class="form-input" required />
+      </div>
+      <div class="p-1">
+        <label class="p-1 required-label">Seniority No</label>
+        <input type="text" id="seniority" name="seniority_id" placeholder="Seniority No" class="form-input" required />
+      </div>
+      <div class="p-1">
+        <label class="p-1 required-label">Executive</label>
+        <select class="form-control" name="executive" id="executive" required>
+          <option>Select</option>
+          {% for data in exectiv%}
+          <option value="{{data.id}}">{{data.first_name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="panel p-1">
+    <h2 class="text-lg font-semibold dark:text-white-light" style="
+          background-color: #daeff2;
+          color: #1ca7dd;
+          width: 100%;
+          padding-left: 40%;
+          padding-top: 1%;
+          padding-bottom: 1%;
+        " <b>Payment Details</b>
+    </h2>
+    <div id="payment-details-container">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 payment-details-section">
+        <div class="p-1" style="margin-top: 3%;">
+          <div>
+            <label>Select Payment Option</label>
+            <select class="form-control payment-mode" name="payment_mode[]">
+              <option value="">--select option--</option>
+              <option value="Cheque">Cheque</option>
+              <option value="Net Banking">Net Banking</option>
+              <option value="DD">DD</option>
+            </select>
+          </div>
+        </div>
+        <div class="p-1 payment-details" id="cheque-details" style="display: none;">
+          <label>Bank</label>
+          <input type="text" name="bank[]" placeholder="Bank" class="form-input">
+        </div>
+        <div class="p-1 payment-details" id="branch-details" style="display: none;">
+          <label>Branch</label>
+          <input type="text" name="branch[]" placeholder="Branch" class="form-input">
+        </div>
+        <div class="p-1 payment-details" id="cheque-no-details" style="display: none;">
+          <label>Cheque No</label>
+          <input type="text" name="cheque_no[]" placeholder="Cheque No" class="form-input">
+        </div>
+        <div class="p-1 payment-details" id="pay-date-details" style="display: none;">
+          <label>Pay Date</label>
+          <input type="date" name="payment_date[]" placeholder="Pay Date" class="form-input">
+        </div>
+        <div class="p-1 payment-details" id="amount-details" style="display: none;">
+          <label>Amount</label>
+          <input type="text" name="amount[]" placeholder="Amount" class="form-input">
+        </div>
+        <div class="p-1 payment-details" id="transaction-id-details" style="display: none;">
+          <label>Transaction Id</label>
+          <input type="text" name="transaction_id[]" placeholder="Transaction Id" class="form-input">
+        </div>
+        <div class="p-1 payment-details" id="dd-no-details" style="display: none;">
+          <label>DD No</label>
+          <input type="text" name="dd_no[]" placeholder="DD No" class="form-input">
+        </div>
+        <!-- Remove button will not be in the default form -->
+      </div>
+    </div>
+    <!-- <button onclick="addMore()">Add More</button> -->
+  </div>
+  <div class="p-1 mt-4">
+    <button type="button" class="btn btn-secondary" id="add-payment-detail">Add Payment Detail</button>
+  </div>
+  <div class="text-center">
+    <input type="submit" value="Submit Application"
+      class="btn btn-primary mt-3 text-lg font-semibold dark:text-white-light" style="background-color: #178ef0" />
+  </div>
+  </form>
+</div>
+
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-
-  
-  <script>
-    
+<script>
   function remove_field(button) {
     var row = button.parentNode;
     row.parentNode.removeChild(row);
   }
-  
-   $("#selectDimension").on("change", function (event) {
+
+  $("#selectDimension").on("change", function (event) {
     let project_id = $("#projectname option:selected").val();
     let plot_id = this.value;
     mydata = {
@@ -695,95 +507,95 @@
     document.getElementById("check_input_no").value = current;
   }
 
-//   function validateForm() {
-//   var inputs = document.querySelectorAll('.form-input');
-//   var isValid = true;
+  //   function validateForm() {
+  //   var inputs = document.querySelectorAll('.form-input');
+  //   var isValid = true;
 
-//   inputs.forEach(function(input) {
-//     if (input.value.trim() === '') {
-//       isValid = false;
-//       var label = input.parentNode.querySelector('.required-label');
-//       label.classList.add('show');
-//     } else {
-//       var label = input.parentNode.querySelector('.required-label');
-//       label.classList.remove('show');
-//     }
-//   });
+  //   inputs.forEach(function(input) {
+  //     if (input.value.trim() === '') {
+  //       isValid = false;
+  //       var label = input.parentNode.querySelector('.required-label');
+  //       label.classList.add('show');
+  //     } else {
+  //       var label = input.parentNode.querySelector('.required-label');
+  //       label.classList.remove('show');
+  //     }
+  //   });
 
-//   if (!isValid) {
-//     // If any required field is empty, prevent form submission
-//     return false;
-//   }
-// }
+  //   if (!isValid) {
+  //     // If any required field is empty, prevent form submission
+  //     return false;
+  //   }
+  // }
 
 </script>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-      const paymentDetailsContainer = document.getElementById('payment-details-container');
-      const addPaymentDetailBtn = document.getElementById('add-payment-detail');
+  document.addEventListener('DOMContentLoaded', function () {
+    const paymentDetailsContainer = document.getElementById('payment-details-container');
+    const addPaymentDetailBtn = document.getElementById('add-payment-detail');
 
-      function addPaymentDetail() {
-          const newPaymentDetail = document.querySelector('.payment-details-section').cloneNode(true);
-          newPaymentDetail.querySelectorAll('input').forEach(input => input.value = '');
-          newPaymentDetail.querySelectorAll('select').forEach(select => select.value = '');
-          newPaymentDetail.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
+    function addPaymentDetail() {
+      const newPaymentDetail = document.querySelector('.payment-details-section').cloneNode(true);
+      newPaymentDetail.querySelectorAll('input').forEach(input => input.value = '');
+      newPaymentDetail.querySelectorAll('select').forEach(select => select.value = '');
+      newPaymentDetail.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
 
-          // Add remove button to the new payment detail section
-          const removeBtn = document.createElement('div');
-          removeBtn.className = 'remove-btn';
-          removeBtn.innerHTML = '<button type="button" class="btn btn-danger remove-payment-detail">Remove</button>';
-          newPaymentDetail.appendChild(removeBtn);
+      // Add remove button to the new payment detail section
+      const removeBtn = document.createElement('div');
+      removeBtn.className = 'remove-btn';
+      removeBtn.innerHTML = '<button type="button" class="btn btn-danger remove-payment-detail">Remove</button>';
+      newPaymentDetail.appendChild(removeBtn);
 
-          // // Add horizontal line to separate new payment detail section
-          // const hr = document.createElement('hr');
-          // newPaymentDetail.prepend(hr);
-          
+      // // Add horizontal line to separate new payment detail section
+      // const hr = document.createElement('hr');
+      // newPaymentDetail.prepend(hr);
 
-          paymentDetailsContainer.appendChild(newPaymentDetail);
-          setupPaymentModeChangeEvent(newPaymentDetail.querySelector('.payment-mode'));
-      }
 
-      function removePaymentDetail(event) {
-          const paymentDetailSection = event.target.closest('.payment-details-section');
-          paymentDetailsContainer.removeChild(paymentDetailSection);
-      }
+      paymentDetailsContainer.appendChild(newPaymentDetail);
+      setupPaymentModeChangeEvent(newPaymentDetail.querySelector('.payment-mode'));
+    }
 
-      function setupPaymentModeChangeEvent(paymentModeSelect) {
-          paymentModeSelect.addEventListener('change', function() {
-              const section = paymentModeSelect.closest('.payment-details-section');
-              section.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
+    function removePaymentDetail(event) {
+      const paymentDetailSection = event.target.closest('.payment-details-section');
+      paymentDetailsContainer.removeChild(paymentDetailSection);
+    }
 
-              if (paymentModeSelect.value === 'Cheque') {
-                  section.querySelector('#cheque-details').style.display = 'block';
-                  section.querySelector('#branch-details').style.display = 'block';
-                  section.querySelector('#cheque-no-details').style.display = 'block';
-                  section.querySelector('#pay-date-details').style.display = 'block';
-                  section.querySelector('#amount-details').style.display = 'block';
-              } else if (paymentModeSelect.value === 'Net Banking') {
-                  section.querySelector('#branch-details').style.display = 'block';
-                  section.querySelector('#cheque-details').style.display = 'block';
-                  section.querySelector('#pay-date-details').style.display = 'block';
-                  section.querySelector('#amount-details').style.display = 'block';
-                  section.querySelector('#transaction-id-details').style.display = 'block';
-              } else if (paymentModeSelect.value === 'DD') {
-                  section.querySelector('#cheque-details').style.display = 'block';
-                  section.querySelector('#branch-details').style.display = 'block';
-                  section.querySelector('#pay-date-details').style.display = 'block';
-                  section.querySelector('#amount-details').style.display = 'block';
-                  section.querySelector('#dd-no-details').style.display = 'block';
-              }
-          });
-      }
+    function setupPaymentModeChangeEvent(paymentModeSelect) {
+      paymentModeSelect.addEventListener('change', function () {
+        const section = paymentModeSelect.closest('.payment-details-section');
+        section.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
 
-      document.querySelectorAll('.payment-mode').forEach(setupPaymentModeChangeEvent);
-
-      addPaymentDetailBtn.addEventListener('click', addPaymentDetail);
-
-      paymentDetailsContainer.addEventListener('click', function(event) {
-          if (event.target.classList.contains('remove-payment-detail')) {
-              removePaymentDetail(event);
-          }
+        if (paymentModeSelect.value === 'Cheque') {
+          section.querySelector('#cheque-details').style.display = 'block';
+          section.querySelector('#branch-details').style.display = 'block';
+          section.querySelector('#cheque-no-details').style.display = 'block';
+          section.querySelector('#pay-date-details').style.display = 'block';
+          section.querySelector('#amount-details').style.display = 'block';
+        } else if (paymentModeSelect.value === 'Net Banking') {
+          section.querySelector('#branch-details').style.display = 'block';
+          section.querySelector('#cheque-details').style.display = 'block';
+          section.querySelector('#pay-date-details').style.display = 'block';
+          section.querySelector('#amount-details').style.display = 'block';
+          section.querySelector('#transaction-id-details').style.display = 'block';
+        } else if (paymentModeSelect.value === 'DD') {
+          section.querySelector('#cheque-details').style.display = 'block';
+          section.querySelector('#branch-details').style.display = 'block';
+          section.querySelector('#pay-date-details').style.display = 'block';
+          section.querySelector('#amount-details').style.display = 'block';
+          section.querySelector('#dd-no-details').style.display = 'block';
+        }
       });
+    }
+
+    document.querySelectorAll('.payment-mode').forEach(setupPaymentModeChangeEvent);
+
+    addPaymentDetailBtn.addEventListener('click', addPaymentDetail);
+
+    paymentDetailsContainer.addEventListener('click', function (event) {
+      if (event.target.classList.contains('remove-payment-detail')) {
+        removePaymentDetail(event);
+      }
+    });
   });
 </script>
 
@@ -846,34 +658,34 @@
 </script> -->
 <script>
   function validateForm() {
-      // Get form inputs
-      var firstName = document.forms[0]["first_name"].value;
-      var dob = document.forms[0]["dob"].value;
-      var mobileNumber = document.forms[0]["mobile_no"].value;
-      var email = document.forms[0]["email"].value;
-      // You can add more validations as needed
+    // Get form inputs
+    var firstName = document.forms[0]["first_name"].value;
+    var dob = document.forms[0]["dob"].value;
+    var mobileNumber = document.forms[0]["mobile_no"].value;
+    var email = document.forms[0]["email"].value;
+    // You can add more validations as needed
 
-      // Validate inputs
-      if (firstName === "") {
-          alert("Please enter member name.");
-          return false;
-      }
-      if (dob === "") {
-          alert("Please enter date of birth.");
-          return false;
-      }
-      if (mobileNumber === "") {
-          alert("Please enter mobile number.");
-          return false;
-      }
-      if (email === "") {
-          alert("Please enter email.");
-          return false;
-      }
+    // Validate inputs
+    if (firstName === "") {
+      alert("Please enter member name.");
+      return false;
+    }
+    if (dob === "") {
+      alert("Please enter date of birth.");
+      return false;
+    }
+    if (mobileNumber === "") {
+      alert("Please enter mobile number.");
+      return false;
+    }
+    if (email === "") {
+      alert("Please enter email.");
+      return false;
+    }
 
-      // Additional validations can be added here
+    // Additional validations can be added here
 
-      return true; // Form submission allowed if all validations pass
+    return true; // Form submission allowed if all validations pass
   }
 </script>
 

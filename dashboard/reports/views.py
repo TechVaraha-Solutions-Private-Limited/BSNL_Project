@@ -99,28 +99,7 @@ def print_recepit(request, id):
         print(no)
         print(amont)
         id=id 
-        # round_off = ''
-        # downpayment = ''
        
-        # for i in Value:
-        #     if i.paymentname == 'Membership':
-        #         word2 = float(value) + 2600
-        #         word2 = num2words(word2, lang='en_IN')
-        #         round_off = word2.replace(',','')
-        #     else:
-        #        amont = float(value)
-        #        downpayment = num2words(amont, lang='en_IN')
-        #        downpayment = downpayment.replace(',','')
-               
-       
-        # if round_off:
-        #     downpayment = round_off
-        # else:
-        #     downpayment = downpayment
-        # print('round off:', round_off)
-      
-        
-
         data = PaymentDetails.objects.all()
         total_amount_per_receipt = defaultdict(int)
         for detail in data:
@@ -137,8 +116,6 @@ def print_recepit(request, id):
             'user': user,   
             'detail':details,
             'word':word,
-            # 'round_off':round_off,
-           
             'Value':Value,
             'userdetail': userdetail,
             'payment': payments,

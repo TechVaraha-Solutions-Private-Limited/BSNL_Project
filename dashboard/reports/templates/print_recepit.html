@@ -180,14 +180,23 @@
 											{% if i != 0 %}
 												200
 											{% endif %}
-										{% elif i.paymentname == "Membership" %}
-									
-										
-										
-										
-										{% endif %}
+											{% elif i.paymentname == "Membership" %}
+
+											{% elif i.paymentname == "FirstInstallment" %}
+												0
+											{% elif i.paymentname == "SecondInstallment" %}
+												0
+											{% elif i.paymentname == "SecondInstallment Half" %}
+												0
+											{% elif i.paymentname == "ThirdInstallment" %}
+												0
+											{% elif i.paymentname == "ThirdInstallment Half" %}
+												0
+											{% elif i.paymentname == "DownPayment Half" %}
+												0
+											{% endif %}
 									{% empty %}
-										0
+										
 									{% endfor %}
 								</td>
 								<td></td>
@@ -206,16 +215,19 @@
 												200
 											{% endif %}
 										{% elif i.paymentname == "Membership" %}
-									
+
 										{% elif i.paymentname == "FirstInstallment" %}
-										
+											0
 										{% elif i.paymentname == "SecondInstallment" %}
-									
+											0
+										{% elif i.paymentname == "SecondInstallment Half" %}
+											0
 										{% elif i.paymentname == "ThirdInstallment" %}
-										
+											0
+										{% elif i.paymentname == "ThirdInstallment Half" %}
+											0
 										{% elif i.paymentname == "DownPayment Half" %}
-										0
-											
+											0
 										{% endif %}
 									{% empty %}
 										0
@@ -236,11 +248,21 @@
 											{% if i != 0 %}
 												200
 											{% endif %}
-										{% elif i.paymentname == "Membership" %}
-										
-									
-											
-										{% endif %}
+											{% elif i.paymentname == "Membership" %}
+
+											{% elif i.paymentname == "FirstInstallment" %}
+												0
+											{% elif i.paymentname == "SecondInstallment" %}
+												0
+											{% elif i.paymentname == "SecondInstallment Half" %}
+												0
+											{% elif i.paymentname == "ThirdInstallment" %}
+												0
+											{% elif i.paymentname == "ThirdInstallment Half" %}
+												0
+											{% elif i.paymentname == "DownPayment Half" %}
+												0
+											{% endif %}
 									{% empty %}
 										0
 									{% endfor %}
@@ -261,10 +283,21 @@
 										{% if i != 0 %}
 											2000
 										{% endif %}
-									{% elif i.paymentname == "Membership" %}
-									
-									
-									{% endif %}
+										{% elif i.paymentname == "Membership" %}
+
+										{% elif i.paymentname == "FirstInstallment" %}
+											0
+										{% elif i.paymentname == "SecondInstallment" %}
+											0
+										{% elif i.paymentname == "SecondInstallment Half" %}
+											0
+										{% elif i.paymentname == "ThirdInstallment" %}
+											0
+										{% elif i.paymentname == "ThirdInstallment Half" %}
+											0
+										{% elif i.paymentname == "DownPayment Half" %}
+											0
+										{% endif %}
 								{% empty %}
 									0
 								{% endfor %}

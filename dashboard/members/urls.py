@@ -59,7 +59,8 @@ urlpatterns = [
     path('get-team-owner',get_team_owner,name="get_team_owner"),
     #add new customer using site Visit
     path('site_visit/<id>',site_visit_custmer,name='site_visit_custmer'),
-
-
+    #View Member
+    path('view_member',view_member,name='view_member'),
+    path('genrate/<id>',genrate,name='genrate'),
     
 ]
