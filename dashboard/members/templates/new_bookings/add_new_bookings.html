@@ -79,13 +79,12 @@
         
           {% csrf_token %}
           <label class="p-1 required-label" for="mobile_no">Search Mobile Number</label>
-          <input type="number" min="0" max="10" id="mobile_no" name="mobile_no" placeholder="Mobile Number"
+          <input type="number" min="0" id="mobile_no" name="mobile_no" placeholder="Mobile Number"
             value="{{book.mobile_no}}" class="form-input" required />
         </div>
-        <!-- <div class="p-1">
-          <button type="submit" name="action" value="Filter">Submit</button>
-        </div> -->
-
+        <div class="p-1">
+          <button hidden type="submit" name="action" value="Filter">Submit</button>
+        </div>
       </form>
       
     </div>
