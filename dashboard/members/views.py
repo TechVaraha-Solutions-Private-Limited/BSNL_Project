@@ -332,7 +332,7 @@ def add_new_bookings(request):
         else:
             mobile_no = request.POST.get('mobile_no')
             print(mobile_no)
-            if User.objects.get(mobile_no = mobile_no):
+            if User.objects.filter(mobile_no = mobile_no):
                 print(mobile_no)
                 user_id = User.objects.get(mobile_no= mobile_no)
                 id = user_id.id
