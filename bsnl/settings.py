@@ -171,8 +171,9 @@ LOGIN_URL = 'signin'
 # settings.py
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
+# EMAIL_HOST = 'mail.techvaraha.com'
+# EMAIL_PORT = 465
 # EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'your_email@gmail.com'  # your gmail address
-# EMAIL_HOST_PASSWORD = 'your_password'  # your gmail password or app-specific password
+# EMAIL_TIMEOUT = 20
+# EMAIL_HOST_USER = 'muthusamy.c@techvaraha.com'  # your gmail address
+# EMAIL_HOST_PASSWORD = 'muthu@23_secure'  # your gmail password or app-specific password

@@ -526,8 +526,6 @@
         filter = input.value.toUpperCase();
         table = document.getElementsByClassName("emInfo1")[0]; // Assuming only one table with class 'emInfo1'
         tr = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those that don't match the search query
         for (i = 0; i < tr.length; i++) {
             tdId = tr[i].getElementsByTagName("td")[1]; // Assuming ID is in the second column
             tdSeniority = tr[i].getElementsByTagName("td")[1]; // Assuming Seniority is in the same column as ID
@@ -542,8 +540,6 @@
             }
         }
     }
-
-    // Add event listener to the search input
     document.getElementById("searchinput").addEventListener("keyup", filterTable);
 </script>
 

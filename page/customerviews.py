@@ -11,7 +11,7 @@ import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
-
+@login_required
 def profile(request):
     user = request.user
     userdetails=UserDetail.objects.filter(user_id=user.id)
@@ -24,7 +24,7 @@ def profile(request):
         'family':family
     }
     return render(request,'page/customer_view/profile.html',context)
-
+@login_required
 def booking(request):
     user = request.user
     landdetails=Bookings.objects.filter(mobile_no=user.mobile_no)

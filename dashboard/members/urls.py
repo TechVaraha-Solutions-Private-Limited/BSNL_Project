@@ -3,6 +3,9 @@ from .views import *
 
 
 urlpatterns = [
+    #email
+    path('send-email/', send_email_view, name='send_email'),
+
     path('home',home,name='home'),
     path('newbooking', add_new_bookings, name='newbooking'),
     path('get_dimension',get_dimension,name="get_dimension"),

@@ -15,8 +15,18 @@ from .models import Bookings
 from .models import LandDetails
 from django.db.models import Count
 from collections import defaultdict
-
+from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib.auth.decorators import login_required
+from commons.permission import role_required
+import threading
+from commons.email_notification import signup_mail_otp
 # Create your views here.
+def send_email_view(request):
+    mailto = "muthuclm757@gmail.com"
+    tread = threading.Thread(target=signup_mail_otp, args=[ mailto])
+    tread.start()
+    return HttpResponse('Email sent successfully!')
+@login_required
 def banner_images(request):
     if request.method =='POST':
         Images(
@@ -24,7 +34,7 @@ def banner_images(request):
             place = "Banner"
         ).save()        
     return render(request,'image/banner.html')
-
+@login_required
 def gallery_images(request):
     if request.method == 'POST':
         G_image(
@@ -32,11 +42,9 @@ def gallery_images(request):
             g_place= "gallery"
         ).save()
     return render(request,'image/gallery.html')
-
+@login_required
 def home(request):
     project_details = []
-
-   
     unique_projects = LandDetails.objects.values('project__projectname', 'plotsize__plotsize').annotate(land_count=Count('bookings'))
     if not unique_projects:
     
@@ -67,10 +75,8 @@ def home(request):
     context = {
         'project_details': project_details
     }
-    
-
     return render(request, 'common/index.html', context)
-
+@login_required
 def addcustomer(request):
     if request.method == "POST":
         first_name=request.POST.get('first_name')
@@ -131,7 +137,7 @@ def addcustomer(request):
                 family.member_relation = request.POST.get(member_relation_key)
                 family.save()
     return render(request,'new_bookings/addcustomer.html')
-
+@login_required
 def site_visit_custmer(request,id):
     try:
         site_visit = Site_visit.objects.filter(id=id)
@@ -302,7 +308,7 @@ def site_visit_custmer(request,id):
     except Exception as e:
         messages.error(request, f'Error occurred: {e}')
         return HttpResponseServerError('Internal Server Error')
-
+@login_required
 def add_new_bookings(request):
     projects = Project.objects.all()
     landdetail = LandDetails.objects.all()
@@ -542,7 +548,7 @@ def add_new_bookings(request):
         'usernomieedetail':usernomieedetail,
         }
     return render(request, 'new_bookings/add_new_bookings.html', context)
-
+@login_required
 def get_dimension(request):
     if request.method == "POST":
         id = request.POST.get('id','').strip()
@@ -550,7 +556,7 @@ def get_dimension(request):
         project_details = Project.objects.get(id=id)
         return JsonResponse({"values":list(dimensions),'shortcut':project_details.shortcode})
     return JsonResponse({})
-
+@login_required
 def get_project_value(request):
     if request.method == "POST":
         project_id = request.POST.get('project_id','').strip()
@@ -559,7 +565,7 @@ def get_project_value(request):
         dimensions = LandDetails.objects.filter(project_id=project_id,plotsize_id=plot_id).values()
         return JsonResponse({"values":list(dimensions)})
     return JsonResponse({})
-
+@login_required
 def get_project_id(request):
     try:
         if request.method == "POST":
@@ -573,7 +579,7 @@ def get_project_id(request):
         # Log the error or handle it appropriately
         print(f"Error occurred: {e}")
         return JsonResponse({"error": "An error occurred while processing the request"})
-
+@login_required
 def booksum(request):
     view = User.objects.filter(role='Team_Lead')  
     
@@ -610,15 +616,15 @@ def booksum(request):
 
 
     return render(request,'home/booksum.html',context)
-
+@login_required
 def bss(request):
    
     
     return render(request,'home/bss.html')
-
+@login_required
 def print_receipt(request):
     return render('reports/print_recepit.html')
-
+@login_required
 def generate(request):
     customers = {}
     total_site_value = 0
@@ -787,7 +793,7 @@ def generate(request):
         differ = difference
     
     return render(request,'new_bookings/generate.html',{'customer': customers,'difference': differ,'active_bookings':active_bookings})
-
+@login_required
 def ugdg(request):
     exective = User.objects.filter(role='Executive')
     customers = {}
@@ -848,7 +854,7 @@ def ugdg(request):
         'exective': exective,
         'active_bookings':active_bookings
     })
-
+@login_required
 def transfer(request):
     customers = {}
     user = {}
@@ -895,7 +901,7 @@ def transfer(request):
             messages.error(request, f'An error occurred: {e}')
     
     return render(request, 'new_bookings/transfer.html', {'customer': customers, 'user': user,'active_bookings':active_bookings})
-
+@login_required
 def get_team_owner(request):
     if request.method == "POST":
         print ("Hi")
@@ -904,7 +910,7 @@ def get_team_owner(request):
         details = TeamLead.objects.get(id=id)
         return JsonResponse({"values":list(teamlead),'shortcut':details.shortcode})
     return JsonResponse({})
-    
+@login_required   
 def site_visit(request):
     visits = Site_visit.objects.all().order_by('-id')
     exective = User.objects.filter(role='Executive')
@@ -949,7 +955,7 @@ def site_visit(request):
             messages.error(request, f'An error occurred: {e}')
 
     return render(request, 'new_bookings/site_visit.html', {'customer': detail, 'exective': exective,'visits':visits})
-
+@login_required
 def view_site_visit(request):
     visits = Site_visit.objects.all().order_by('-id')
     
@@ -975,7 +981,7 @@ def view_site_visit(request):
             messages.error(request, f'An error occurred: {e}')
 
     return render(request, 'display/view_site_visit.html', {'visits': visits})
-
+@login_required
 def update_site_visit(request, id):
     try:
         update = Site_visit.objects.get(id=id)
@@ -1022,7 +1028,7 @@ def update_site_visit(request, id):
         return redirect('/members/view_site_visit')
 
     return render(request, 'display/update_display/update_site_view.html', {'update': update})
-
+@login_required
 def delete_site_visit(request,id):
     deletesitevisit=Site_visit.objects.get(id=id)
     deletesitevisit.delete()
@@ -1037,7 +1043,7 @@ def delete_site_visit(request,id):
     # }
     
     return redirect('/members/view_site_visit')
-
+@login_required
 def lead_owner(request):
     exective = User.objects.filter(role = 'Executive')
     customers = {}
@@ -1078,7 +1084,7 @@ def lead_owner(request):
             ).save()
             messages.success(request, 'Successfully Saved')
     return render(request,'new_bookings/lead_owner.html',{'customer':customers,'exective':exective})
-
+@login_required
 def cancel(request):
     customers = {}   
     active_bookings = Bookings.objects.filter(user__is_active=1).exclude(date_of_cancel__isnull=True).order_by('-date_of_cancel').all()
@@ -1121,7 +1127,7 @@ def cancel(request):
                 messages.error(request, f'Failed to cancel booking: {e}')
 
     return render(request, 'new_bookings/cancel.html', {'customer': customers,'active_bookings':active_bookings})
-
+@login_required
 def receipts(request):
     distinct_receipts = PaymentDetails.objects.values('receipt_no').distinct()
     booking= []
@@ -1142,7 +1148,7 @@ def receipts(request):
       
     }
     return render(request,'view/receipts.html',context) 
-
+@login_required
 def update_receipts(request, id):
     try:
         update_receipts = PaymentDetails.objects.filter(booking=id).last()
@@ -1179,12 +1185,12 @@ def update_receipts(request, id):
         messages.error(request, f'An error occurred: {str(e)}')
 
     return render(request, 'view/update_view/update_receipt.html', {'update_receipts': update_receipts})
-
+@login_required
 def view_receipt(request,id):
     payment = PaymentDetails.objects.filter(booking=id).last()
     payments = PaymentDetails.objects.filter(booking=id)
     return render(request,'view/view_history.html',{'payment':payment,'payments':payments})
-
+@login_required
 def btmt(request):
     project = Project.objects.all()
     context={
@@ -1211,7 +1217,7 @@ def btmt(request):
 
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
-
+@login_required
 def activemember(request):
    
     active_users = UserDetail.objects.filter(user__is_active=1).all()
@@ -1251,7 +1257,7 @@ def activemember(request):
     }
     
     return render(request, 'view/activemem.html', context)
-
+@login_required
 def updateactivememberlist(request, id):
     try:
         user = User.objects.get(id=id)
@@ -1299,7 +1305,7 @@ def updateactivememberlist(request, id):
     except Exception as e:
         # Handle any other unexpected exceptions
         return render(request, 'view/update_view/update_acmember.html', {'error_message': f'An error occurred: {str(e)}'})
-
+@login_required
 def deleteactivememberlist(request,id):
     book = Bookings.objects.get(user_id=id)
     if book.user.is_active == True:
@@ -1310,7 +1316,7 @@ def deleteactivememberlist(request,id):
     }
     
     return redirect('/members/activemember',context)
-   
+@login_required
 def update_personal(request,id):
     nomine =  UserNominee.objects.get(user_id=id)
     family_details =  UserFamilyDetails.objects.filter(user_id=id)
@@ -1349,7 +1355,7 @@ def update_personal(request,id):
         'family_details':family_details
     }
     return render(request,'view/update_view/update_personal.html',context)
-
+@login_required
 def inactivemember(request):
     try:
         book1 = Bookings.objects.filter(user__is_active=0).all()
@@ -1361,14 +1367,14 @@ def inactivemember(request):
         return render(request, 'error.html', {'error_message': 'An error occurred while fetching data.'})
 
     return render(request, 'view/inactivemem.html', {'book1': book1, 'user': user})
-
+@login_required
 def update_inactive(request,id):
     book = Bookings.objects.get(id=id)
     if book.user.is_active == False:
         book.user.is_active=True
         book.user.save()
     return redirect('/members/inactivemember')
-
+@login_required
 def confirmletter(request):
     try:
         user = Bookings.objects.order_by('-created_on').all()
@@ -1379,10 +1385,10 @@ def confirmletter(request):
         return render(request, 'error.html', {'error_message': 'An error occurred while fetching data.'})
 
     return render(request, 'view/confirmleter.html', {'user': user})
-
+@login_required
 def view_history(request):
     return render(request,'display/view_history.html')
-
+@login_required
 def user_access(request, id):
     try:
         user_log = User.objects.get(id=id)
@@ -1410,13 +1416,13 @@ def user_access(request, id):
             return render(request, 'error.html', {'error_message': f'Failed to update user: {str(e)}'})
 
     return render(request, 'input/update_user/user_access.html', {'user_log': user_log})
-
+@login_required
 def view_user_access(request):
     view_user=User.objects.filter(is_active=1).exclude(role__iexact="customer").order_by('-date_joined')
     
     messages.success(request, 'Successfully updated')
     return render(request,'input/update_user/view_user_access.html',{'view_user':view_user})
-
+@login_required
 def delete_user_access(request, id):
     print(id)
     book = User.objects.get(id=id)
@@ -1430,20 +1436,20 @@ def delete_user_access(request, id):
     }
 
     return redirect(view_user_access)
-
+@login_required
 def rate_update(request):
     return render(request,'input/update_rate/rate_update.html')
-
+@login_required
 def view_rate_update(request):
     projects = Bookings.objects.all()
     return render(request,'input/update_rate/view_rate_update.html',{'projects':projects})
-
+@login_required
 def update_sales_staff(request):
     return render(request,'input/update_sales_staff/update_staff.html')
-
+@login_required
 def view_update_sales_staff(request):
     return render(request,'input/update_sales_staff/view_update_staff.html')
-
+@login_required
 def blocked_seniority(request):
     if request.method == 'POST':
         Update_blocked(
@@ -1455,11 +1461,11 @@ def blocked_seniority(request):
         ).save()
         messages.success(request, 'Successfully Saved')
     return render(request,'input/blocked_update/block_seniority.html')
-
+@login_required
 def view_blocked_seniority(request):
     view_block=Update_blocked.objects.filter(is_active=1)
     return render(request,'input/blocked_update/view_block_seniority.html',{'view_block':view_block})
-
+@login_required
 def update_block(request,id):
     block_update=Update_blocked.objects.get(id=id)
     print('1','Hello')
@@ -1474,29 +1480,29 @@ def update_block(request,id):
         print('2','Hello')
         return redirect('/members/view_blocked_seniority')
     return render(request,'input/blocked_update/update_block.html',{'block_update':block_update})
-
+@login_required
 def delete_block(request, id):
     book = Update_blocked(id=id)
     if book.is_active:
         book.is_active = False
         book.save()
     return redirect('view_blocked_seniority')
-
+@login_required
 def update_pdc(request):
     
     return render(request,'input/pdc/update_pdc.html')
-
+@login_required
 def view_call_request(request):
     view_call_request = Request_call.objects.all()
     return render(request,'image/callrequest.html',{"view_call_request":view_call_request})
-
+@login_required
 def view_update_pdc(request):
     view_update_pdc = pdc_update.objects.all()
     return render(request,'input/pdc/view_update_pdc.html',{"view_update_pdc":view_update_pdc})
-
+@login_required
 def cr_code(request):
      return render(request,'input/cr_code/update_cr_code.html')
-
+@login_required
 def view_member(request):
     filter_value = request.GET.get('Filtered')
 
@@ -1512,7 +1518,7 @@ def view_member(request):
         'selected_value': filter_value,
     }
     return render(request, 'new_bookings/view_members.html', context)
-
+@login_required
 def genrate(request,id):
     customers = {}
     customers = Bookings.objects.get(seniority_id=id)

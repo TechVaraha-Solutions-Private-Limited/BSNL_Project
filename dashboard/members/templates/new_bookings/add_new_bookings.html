@@ -74,15 +74,20 @@
 
   <div class="panel p-1">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-      <div class="p-1">
-        <form id="form1" method="POST" action="">
+      <form id="form1" method="POST" action="">
+        <div class="p-1">
+        
           {% csrf_token %}
           <label class="p-1 required-label" for="mobile_no">Search Mobile Number</label>
-          <input type="number" min="0" id="mobile_no" name="mobile_no" placeholder="Mobile Number"
+          <input type="number" min="0" max="10" id="mobile_no" name="mobile_no" placeholder="Mobile Number"
             value="{{book.mobile_no}}" class="form-input" required />
-          <button hidden type="submit" name="action" value="Filter">Submit Form 1</button>
-        </form>
-      </div>
+        </div>
+        <!-- <div class="p-1">
+          <button type="submit" name="action" value="Filter">Submit</button>
+        </div> -->
+
+      </form>
+      
     </div>
 
     <form class="space-y-5" id="myForm" method="POST" action="" autocomplete="off">
@@ -113,12 +118,12 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
           <label class="p-1">Age</label>
-          <input type="number" name="age" class="form-input" placeholder="Age" value="{{Add_details.age}}" />
+          <input type="number" min="0" name="age" class="form-input" placeholder="Age" value="{{Add_details.age}}" />
           <span class="error" id="age_error"></span>
         </div>
         <div class="p-1">
           <label class="p-1">Alternate Number</label>
-          <input type="number" name="alternate_no" placeholder="Alternate Number" class="form-input" />
+          <input type="number" min="0" name="alternate_no" placeholder="Alternate Number" class="form-input" />
           <span class="error" id="alternate_error"></span>
         </div>
         <div class="p-1">
@@ -150,14 +155,14 @@
         </div>
         <div class="p-1">
           <label class="p-1 required-label">PIN Code</label>
-          <input type="number" name="pincode" placeholder="PIN Code" value="{{Add_details.pincode}}" class="form-input" required />
+          <input type="number" min="0" name="pincode" placeholder="PIN Code" value="{{Add_details.pincode}}" class="form-input" required />
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
 
         <div>
           <label class="p-1 required-label">Password</label>
-          <input type="password" name="password" placeholder="password"  class="form-input" required />
+          <input type="password" min="0" name="password" placeholder="password"  class="form-input" required />
         </div>
         <div class="p-1">
           <label class="p-1">Pan Number</label>
@@ -171,7 +176,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
         <div class="p-1">
           <label class="p-1">Aadhhar Number</label>
-          <input type="number" name="aadhhaarno" placeholder="Aadhhar Number" class="form-input" />
+          <input type="number" min="0" name="aadhhaarno" placeholder="Aadhhar Number" class="form-input" />
         </div>
         <div class="p-7">
           <label></label>
@@ -198,7 +203,7 @@
       </div>
       <div class="p-1">
         <label class="p-1">Nominee Age</label>
-        <input type="number" name="nominee_age" placeholder="Nominee Age" class="form-input" value="{{usernomieedetail.nominee_age}}" />
+        <input type="number" min="0" name="nominee_age" placeholder="Nominee Age" class="form-input" value="{{usernomieedetail.nominee_age}}" />
       </div>
       <div class="p-1">
         <label class="p-1">Nominee Relationship</label>
@@ -239,7 +244,7 @@
       </div>
       <div class="p-1">
         <label class="p-1">Family-Member Age</label>
-        <input type="number" name="member_age1" placeholder="Family-Member Age" class="form-input" />
+        <input type="number" min="0" name="member_age1" placeholder="Family-Member Age" class="form-input" />
       </div>
       <div class="p-1">
         <label class="p-1">Family-Member Relationship</label>

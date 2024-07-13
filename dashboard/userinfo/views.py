@@ -90,6 +90,7 @@ def add_user(request):
     }
     messages.error(request,'Successfully Saved')
     return render(request, 'users/add_user.html', context)
+
 def signin(request):
     if request.method == 'POST':
         mobile_no = request.POST.get('mobile_no')
@@ -116,7 +117,6 @@ def signin(request):
         messages.error(request, "Invalid credentials")
     
     return render(request, 'registration/login.html')
-
 
 @login_required
 def logout_admin_user(request):
