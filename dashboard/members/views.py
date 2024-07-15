@@ -447,6 +447,7 @@ def add_new_bookings(request):
             cheque_no = request.POST.getlist('cheque_no[]')
             transaction_id = request.POST.getlist('transaction_id[]')
             ddno=request.POST.getlist('dd_no[]')
+            check = request.POST.get('check')
             #dateofreceipt = request.POST.get('dateofreceipt')
 
 
@@ -454,88 +455,99 @@ def add_new_bookings(request):
             if get_number:
                 get_number = "634" + str(get_number[0].id + 1)
             else:
-                get_number = "63421"        
-            #paid_amount = request.POST.get('amount', '').strip()
-            for count in range(len(payment_mode)):
-                if count == 0:
+                get_number = "63421"    
+            print("len",len(payment_mode))
+            if check == 'true':
+                membership_fee = PaymentDetails()
+                membership_fee.booking = book
+                membership_fee.payment_mode = payment_mode[0]
+                membership_fee.bank = bank[0]
+                membership_fee.branch = branch[0]
+                membership_fee.cheque_no = cheque_no[0]
+                membership_fee.transaction = transaction_id[0]
+                membership_fee.ddno = ddno[0]
+                membership_fee.user = user
+                membership_fee.dateofreceipt = date.today()
+                membership_fee.amount = 2600
+                membership_fee.paymentname = "Membership"
+                membership_fee.receipt_no = get_number
+                membership_fee.save()
+                start_index = 1
+            else:
+                start_index = 0
+                for count in range(start_index, len(payment_mode)):
                     payment_amount = int(paid_amount[count]) - 2600
-                else:
-                    payment_amount = int(paid_amount[count])  # No subtraction after the first time
-
-                if paid_amount[count]:
-                    if count == 0:
-                        membership_fee = PaymentDetails()
-                        membership_fee.booking = book
-                        membership_fee.payment_mode = payment_mode[count]
-                        membership_fee.bank = bank[count]
-                        membership_fee.branch = branch[count]
-                        membership_fee.cheque_no = cheque_no[count]
-                        membership_fee.transaction = transaction_id[count]
-                        membership_fee.ddno = ddno[count]
-                        membership_fee.user = user
-                        membership_fee.dateofreceipt = date.today()
-                        membership_fee.amount = 2600
-                        membership_fee.paymentname = "Membership"
-                        membership_fee.receipt_no = get_number
-                        membership_fee.save()
-                    for i in range(4):
-                        print ("I",i,count)
-                        if i == 0 and count == 0:
-                            paymentname = 'DownPayment'
-                            status = 1
-                        elif i == 0 and count == 1:
-                            status = 3
-                            paymentname = 'FirstInstallment'
-                        elif i == 0 and count == 2:
-                            status = 5
-                            paymentname = 'SecondInstallment'
-                        else:
-                            status = 7
-                            paymentname = 'ThirdInstallment'
-                        # get_number = PaymentDetails.objects.all().order_by('-id')[:1]
-                        # if get_number:
-                        #     get_number = "634" + str(get_number[0].id + 1)
-                        # else:
-                        #     get_number = "63421"
-                        if split_amount <= payment_amount :
-                            print("payment",payment_amount)
-                            payments = PaymentDetails()
-                            payments.booking = book
-                            payments.payment_mode = payment_mode[count]
-                            payments.bank = bank[count]
-                            payments.branch = branch[count]
-                            payments.cheque_no = cheque_no[count]
-                            payments.transaction = transaction_id[count]
-                            payments.ddno = ddno[count]
-                            payments.user = user
-                            #payments.payment_data = request.POST.get('payment_data')
-                            payments.paymentname = paymentname
-                            payments.amount = int(split_amount)
-                            payments.receipt_no = get_number
-                            payments.dateofreceipt = date.today()
-                            payments.save()
-                        
-                            payment_amount = payment_amount - split_amount
-                        elif payment_amount > 0 :
-                            payments = PaymentDetails()
-                            payments.booking = book
-                            payments.payment_mode = payment_mode[count]
-                            payments.bank = bank[count]
-                            payments.branch = branch[count]
-                            payments.cheque_no = cheque_no[count]
-                            payments.transaction = transaction_id[count]
-                            payments.ddno = ddno[count]
-                            payments.user = user
-                            #payments.payment_data = request.POST.get('payment_data')
-                            payments.paymentname = paymentname
-                            payments.amount = int(payment_amount) 
-                            payments.receipt_no = get_number
-                            payments.dateofreceipt = date.today()
-                            payments.save()
-                            
-                            
+                    membership_fee = PaymentDetails()
+                    membership_fee.booking = book
+                    membership_fee.payment_mode = payment_mode[count]
+                    membership_fee.bank = bank[count]
+                    membership_fee.branch = branch[count]
+                    membership_fee.cheque_no = cheque_no[count]
+                    membership_fee.transaction = transaction_id[count]
+                    membership_fee.ddno = ddno[count]
+                    membership_fee.user = user
+                    membership_fee.dateofreceipt = date.today()
+                    membership_fee.amount = 2600
+                    membership_fee.paymentname = "Membership"
+                    membership_fee.receipt_no = get_number
+                    membership_fee.save()
+                
+            for count in range(start_index, len(payment_mode)):
+                payment_amount = int(paid_amount[count])
+                for i in range(4):
+                    print ("I",i,count)
+                    if i == 3:
+                        status = 7
+                        paymentname = 'ThirdInstallment'
+                    elif i == 2:
+                        status = 5
+                        paymentname = 'SecondInstallment'
+                    elif i == 1:
+                        status = 3
+                        paymentname = 'FirstInstallment'
+                    else :
+                        paymentname = 'DownPayment'
+                        status = 1
+                    if split_amount <= payment_amount :
+                        payments = PaymentDetails()
+                        payments.booking = book
+                        payments.payment_mode = payment_mode[count]
+                        payments.bank = bank[count]
+                        payments.branch = branch[count]
+                        payments.cheque_no = cheque_no[count]
+                        payments.transaction = transaction_id[count]
+                        payments.ddno = ddno[count]
+                        payments.user = user
+                        #payments.payment_data = request.POST.get('payment_data')
+                        payments.paymentname = paymentname
+                        payments.amount = int(split_amount)
+                        payments.receipt_no = get_number
+                        payments.dateofreceipt = date.today()
+                        payments.save()
+                    
+                        payment_amount = payment_amount - split_amount
+                    elif payment_amount > 0 :
+                        payments = PaymentDetails()
+                        payments.booking = book
+                        payments.payment_mode = payment_mode[count]
+                        payments.bank = bank[count]
+                        payments.branch = branch[count]
+                        payments.cheque_no = cheque_no[count]
+                        payments.transaction = transaction_id[count]
+                        payments.ddno = ddno[count]
+                        payments.user = user
+                        #payments.payment_data = request.POST.get('payment_data')
+                        payments.paymentname = paymentname
+                        payments.amount = int(payment_amount) 
+                        payments.receipt_no = get_number
+                        payments.dateofreceipt = date.today()
+                        payments.save()
+                        book.payments_status = status
+                        book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount[count])
+                        book.save()
                         break
-            messages.success(request, 'Successfully Saved')
+                        
+                messages.success(request, 'Successfully Saved')
         except Exception as e:
             messages.error(request, f'An error occurred: {str(e)}')
     context ={
@@ -673,14 +685,7 @@ def generate(request):
                 transaction_id = request.POST.getlist('transaction_id[]')
                 ddno=request.POST.getlist('dd_no[]')
                 dateofreceipt = request.POST.get('dateofreceipt')
-                # payment_data = request.POST.get('payment_data')
-                # paymenttype = request.POST.get('paymenttype')
-                
-                    
-                
-                #paid_amount =  request.POST.getlist('amount','').strip()
                 print('pa:',paid_amount)
-                
                 difference = int(total_site_value) - int(payment_total)
                 print('differ:',difference)
                 
@@ -724,16 +729,11 @@ def generate(request):
                             else:
                                 status = 7
                                 paymentname = 'ThridInstallment'
-
-                        
                             if split_amount <= int(payment_total):
-                                payment_total = payment_total - split_amount
-                                
+                                payment_total = payment_total - split_amount 
                             else:
                                 paid_amt_bal = (split_amount - payment_total)+2600
-                                
                                 if paid_amt_bal >= int(paid_amount[count]):
-                                    
                                     if paid_amt_bal > int(paid_amount[count])+2600:
                                         payment_name = 'Half'
                                         # print('paid_amount:',paid_amount)
@@ -782,7 +782,7 @@ def generate(request):
                                     book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount[count])
                                     book.save()
                                     paid_amount=int(paid_amount[count]) -int(paid_amt_bal)
-                        messages.success(request,'Successfully Saved')
+                    messages.success(request,'Successfully Saved')
             except Bookings.DoesNotExist:
                 messages.error(request,'Saved failed')
     difference = int(total_site_value) - int(payment_total)

@@ -76,7 +76,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
       <form id="form1" method="POST" action="">
         <div class="p-1">
-        
+
           {% csrf_token %}
           <label class="p-1 required-label" for="mobile_no">Search Mobile Number</label>
           <input type="number" min="0" id="mobile_no" name="mobile_no" placeholder="Mobile Number"
@@ -86,102 +86,106 @@
           <button hidden type="submit" name="action" value="Filter">Submit</button>
         </div>
       </form>
-      
+
     </div>
-
-    <form class="space-y-5" id="myForm" method="POST" action="" autocomplete="off">
-      {% csrf_token %}
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div class="p-1">
-          <label class="p-1 required-label">Member Name</label>
-          <input type="text" name="first_name" class="form-input" id="name" value="{{book.first_name}}"
-            placeholder="Member Name" required />
-        </div>
-        <div class="p-1">
-          <label class="p-1 ">Father/Husband Name</label>
-          <input type="text" name="last_name" class="form-input" placeholder="Surname Name" value="{{book.last_name}}" />
-          <span class="error" id="last_name_error"></span>
-        </div>
-        <div class="p-1">
-          <label class="p-1 required-label">Date of Brith</label>
-          <input type="date" name="dob" class="form-input" value="{{Add_details.dob}}" placeholder="DOB" required />
-          <span class="error" id="dob_error"></span>
-        </div>
-        <div class="p-1">
-          <label class="p-1 required-label" for="mobile_no">Mobile Number</label>
-          <input type="number" min="0" id="mobile_no" name="mobile_no" placeholder="Mobile Number"
-            value="{{book.mobile_no}}" class="form-input" required />
-        </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div class="p-1">
-          <label class="p-1">Age</label>
-          <input type="number" min="0" name="age" class="form-input" placeholder="Age" value="{{Add_details.age}}" />
-          <span class="error" id="age_error"></span>
-        </div>
-        <div class="p-1">
-          <label class="p-1">Alternate Number</label>
-          <input type="number" min="0" name="alternate_no" placeholder="Alternate Number" class="form-input" />
-          <span class="error" id="alternate_error"></span>
-        </div>
-        <div class="p-1">
-          <label class="p-1 required-label">Email ID</label>
-          <input type="email" name="email" id="email" placeholder="E-Mail Id" value="{{Add_details.email}}" class="form-input" required />
-          <span class="error" id="email_error"></span>
-        </div>
-        <div class="p-1">
-          <label class="p-1">Profile</label>
-          <input type="file" name="profile" />
-        </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div class="p-1">
-          <label class="p-1 required-label">Residential Address</label>
-          <textarea class="form-input" name="address" id="message"  placeholder="Residential Address" required
-            rows="3">{{Add_details.address}}</textarea>
-          <span class="error" id="address_error"></span>
-        </div>
-        <div class="p-1">
-          <label class="p-1 required-label">City</label>
-          <input type="text" name="city" placeholder="City" value="{{Add_details.city}}" class="form-input" required />
-          <span class="error" id="city_error"></span>
-        </div>
-        <div class="p-1">
-          <label class="p-1 required-label">State</label>
-          <input type="text" name="state" placeholder="State" value="{{Add_details.state}}" class="form-input" required />
-          <span class="error" id="state_error"></span>
-        </div>
-        <div class="p-1">
-          <label class="p-1 required-label">PIN Code</label>
-          <input type="number" min="0" name="pincode" placeholder="PIN Code" value="{{Add_details.pincode}}" class="form-input" required />
-        </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-
-        <div>
-          <label class="p-1 required-label">Password</label>
-          <input type="password" min="0" name="password" placeholder="password"  class="form-input" required />
-        </div>
-        <div class="p-1">
-          <label class="p-1">Pan Number</label>
-          <input type="text" name="panno" placeholder="Pan Number" class="form-input" />
-        </div>
-        <div class="custom-file-container p-7">
-          <label></label>
-          <input type="file" name="pan_proof" />
-        </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
-        <div class="p-1">
-          <label class="p-1">Aadhhar Number</label>
-          <input type="number" min="0" name="aadhhaarno" placeholder="Aadhhar Number" class="form-input" />
-        </div>
-        <div class="p-7">
-          <label></label>
-          <input type="file" name="aadhar_proof" />
-        </div>
-      </div>
+  </div>
+  <form class="space-y-5" id="myForm" method="POST" action="" autocomplete="off">
+    {% csrf_token %}
+  <div class="panel p-1">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+              <label class="p-1 required-label">Member Name</label>
+              <input type="text" name="first_name" class="form-input" id="name" value="{{book.first_name}}"
+                placeholder="Member Name" required />
+            </div>
+            <div class="p-1">
+              <label class="p-1 ">Father/Husband Name</label>
+              <input type="text" name="last_name" class="form-input" placeholder="Surname Name"
+                value="{{book.last_name}}" />
+              <span class="error" id="last_name_error"></span>
+            </div>
+            <div class="p-1">
+              <label class="p-1 required-label">Date of Brith</label>
+              <input type="date" name="dob" class="form-input" value="{{Add_details.dob}}" placeholder="DOB" required />
+              <span class="error" id="dob_error"></span>
+            </div>
+            <div class="p-1">
+              <label class="p-1 required-label" for="mobile_no">Mobile Number</label>
+              <input type="number" min="0" id="mobile_no" name="mobile_no" placeholder="Mobile Number"
+                value="{{book.mobile_no}}" class="form-input" required />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+              <label class="p-1">Age</label>
+              <input type="number" min="0" name="age" class="form-input" placeholder="Age" value="{{Add_details.age}}" />
+              <span class="error" id="age_error"></span>
+            </div>
+            <div class="p-1">
+              <label class="p-1">Alternate Number</label>
+              <input type="number" min="0" name="alternate_no" placeholder="Alternate Number" class="form-input" />
+              <span class="error" id="alternate_error"></span>
+            </div>
+            <div class="p-1">
+              <label class="p-1 required-label">Email ID</label>
+              <input type="email" name="email" id="email" placeholder="E-Mail Id" value="{{Add_details.email}}"
+                class="form-input" required />
+              <span class="error" id="email_error"></span>
+            </div>
+            <div class="p-1">
+              <label class="p-1">Profile</label>
+              <input type="file" name="profile" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+              <label class="p-1 required-label">Residential Address</label>
+              <textarea class="form-input" name="address" id="message" placeholder="Residential Address" required
+                rows="3">{{Add_details.address}}</textarea>
+              <span class="error" id="address_error"></span>
+            </div>
+            <div class="p-1">
+              <label class="p-1 required-label">City</label>
+              <input type="text" name="city" placeholder="City" value="{{Add_details.city}}" class="form-input" required />
+              <span class="error" id="city_error"></span>
+            </div>
+            <div class="p-1">
+              <label class="p-1 required-label">State</label>
+              <input type="text" name="state" placeholder="State" value="{{Add_details.state}}" class="form-input"
+                required />
+              <span class="error" id="state_error"></span>
+            </div>
+            <div class="p-1">
+              <label class="p-1 required-label">PIN Code</label>
+              <input type="number" min="0" name="pincode" placeholder="PIN Code" value="{{Add_details.pincode}}"
+                class="form-input" required />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+    
+            <div>
+              <label class="p-1 required-label">Password</label>
+              <input type="password" min="0" name="password" placeholder="password" class="form-input" required />
+            </div>
+            <div class="p-1">
+              <label class="p-1">Pan Number</label>
+              <input type="text" name="panno" placeholder="Pan Number" class="form-input" />
+            </div>
+            <div class="custom-file-container p-7">
+              <label></label>
+              <input type="file" name="pan_proof" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <div class="p-1">
+              <label class="p-1">Aadhhar Number</label>
+              <input type="number" min="0" name="aadhhaarno" placeholder="Aadhhar Number" class="form-input" />
+            </div>
+            <div class="p-7">
+              <label></label>
+              <input type="file" name="aadhar_proof" />
+            </div>
+          </div>
   </div>
   <div class="panel p-1">
     <h1 class="text-lg font-semibold dark:text-white-light" style="
@@ -197,20 +201,24 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
       <div class="p-1">
         <label class="p-1">Nominee Name</label>
-        <input type="text" name="nominee_name" placeholder="Nominee Name" class="form-input" value="{{usernomieedetail.nominee_name}}" />
+        <input type="text" name="nominee_name" placeholder="Nominee Name" class="form-input"
+          value="{{usernomieedetail.nominee_name}}" />
         <span class="error" id="nominee_name_error"></span>
       </div>
       <div class="p-1">
         <label class="p-1">Nominee Age</label>
-        <input type="number" min="0" name="nominee_age" placeholder="Nominee Age" class="form-input" value="{{usernomieedetail.nominee_age}}" />
+        <input type="number" min="0" name="nominee_age" placeholder="Nominee Age" class="form-input"
+          value="{{usernomieedetail.nominee_age}}" />
       </div>
       <div class="p-1">
         <label class="p-1">Nominee Relationship</label>
-        <input type="text" name="nominee_relationship" placeholder="Nominee Relationship" value="{{usernomieedetail.nominee_relationship}}" class="form-input" />
+        <input type="text" name="nominee_relationship" placeholder="Nominee Relationship"
+          value="{{usernomieedetail.nominee_relationship}}" class="form-input" />
       </div>
       <div class="p-1">
         <label class="p-1">Nominee Address</label>
-        <input type="text" name="address1" placeholder="Nominee Address" value="{{usernomieedetail.address}}" class="form-input" />
+        <input type="text" name="address1" placeholder="Nominee Address" value="{{usernomieedetail.address}}"
+          class="form-input" />
         <span class="error" id="address1_error"></span>
       </div>
       <div class="p-1">
@@ -319,61 +327,60 @@
     </div>
   </div>
   <div class="panel p-1">
-    <h2 class="text-lg font-semibold dark:text-white-light" style="
-          background-color: #daeff2;
-          color: #1ca7dd;
-          width: 100%;
-          padding-left: 40%;
-          padding-top: 1%;
-          padding-bottom: 1%;
-        " <b>Payment Details</b>
+    <h2 class="text-lg font-semibold dark:text-white-light" 
+    style="background-color: #daeff2; color: #1ca7dd;width: 100%; padding-left: 40%; padding-top: 1%;padding-bottom: 1%;">
+      <b>Payment Details</b>
     </h2>
     <div id="payment-details-container">
+      <div>
+        <input type="checkbox" style="color:#007bff;" name="check" value="true">
+        <label>Add Membership Fee Additionally</label>
+      </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 payment-details-section">
-        <div class="p-1" style="margin-top: 3%;">
-          <div>
-            <label>Select Payment Option</label>
-            <select class="form-control payment-mode" name="payment_mode[]">
-              <option value="">--select option--</option>
-              <option value="Cheque">Cheque</option>
-              <option value="Net Banking">Net Banking</option>
-              <option value="DD">DD</option>
-            </select>
+          <div class="p-1" style="margin-top: 3%;">
+              <div>
+                  <label>Select Payment Option</label>
+                  <select class="form-control payment-mode" name="payment_mode[]">
+                      <option value="">--select option--</option>
+                      <option value="Cheque">Cheque</option>
+                      <option value="Net Banking">Net Banking</option>
+                      <option value="DD">DD</option>
+                  </select>
+              </div>
           </div>
-        </div>
-        <div class="p-1 payment-details" id="cheque-details" style="display: none;">
-          <label>Bank</label>
-          <input type="text" name="bank[]" placeholder="Bank" class="form-input">
-        </div>
-        <div class="p-1 payment-details" id="branch-details" style="display: none;">
-          <label>Branch</label>
-          <input type="text" name="branch[]" placeholder="Branch" class="form-input">
-        </div>
-        <div class="p-1 payment-details" id="cheque-no-details" style="display: none;">
-          <label>Cheque No</label>
-          <input type="text" name="cheque_no[]" placeholder="Cheque No" class="form-input">
-        </div>
-        <div class="p-1 payment-details" id="pay-date-details" style="display: none;">
-          <label>Pay Date</label>
-          <input type="date" name="payment_date[]" placeholder="Pay Date" class="form-input">
-        </div>
-        <div class="p-1 payment-details" id="amount-details" style="display: none;">
-          <label>Amount</label>
-          <input type="text" name="amount[]" placeholder="Amount" class="form-input">
-        </div>
-        <div class="p-1 payment-details" id="transaction-id-details" style="display: none;">
-          <label>Transaction Id</label>
-          <input type="text" name="transaction_id[]" placeholder="Transaction Id" class="form-input">
-        </div>
-        <div class="p-1 payment-details" id="dd-no-details" style="display: none;">
-          <label>DD No</label>
-          <input type="text" name="dd_no[]" placeholder="DD No" class="form-input">
-        </div>
-        <!-- Remove button will not be in the default form -->
+          <div class="p-1 payment-details" id="cheque-details" style="display: none;">
+              <label>Bank</label>
+              <input type="text" name="bank[]" placeholder="Bank" class="form-input">
+          </div>
+          <div class="p-1 payment-details" id="branch-details" style="display: none;">
+              <label>Branch</label>
+              <input type="text" name="branch[]" placeholder="Branch" class="form-input">
+          </div>
+          <div class="p-1 payment-details" id="cheque-no-details" style="display: none;">
+              <label>Cheque No</label>
+              <input type="text" name="cheque_no[]" placeholder="Cheque No" class="form-input">
+          </div>
+          <div class="p-1 payment-details" id="pay-date-details" style="display: none;">
+              <label>Pay Date</label>
+              <input type="date" name="payment_date[]" placeholder="Pay Date" class="form-input">
+          </div>
+          <div class="p-1 payment-details" id="amount-details" style="display: none;">
+              <label>Amount</label>
+              <input type="text" name="amount[]" placeholder="Amount" class="form-input">
+          </div>
+          <div class="p-1 payment-details" id="transaction-id-details" style="display: none;">
+              <label>Transaction Id</label>
+              <input type="text" name="transaction_id[]" placeholder="Transaction Id" class="form-input">
+          </div>
+          <div class="p-1 payment-details" id="dd-no-details" style="display: none;">
+              <label>DD No</label>
+              <input type="text" name="dd_no[]" placeholder="DD No" class="form-input">
+          </div>
+          <!-- Remove button will not be in the default form -->
       </div>
     </div>
-    <!-- <button onclick="addMore()">Add More</button> -->
   </div>
+    <!-- <button onclick="addMore()">Add More</button> -->
   <div class="p-1 mt-4">
     <button type="button" class="btn btn-secondary" id="add-payment-detail">Add Payment Detail</button>
   </div>
@@ -383,9 +390,75 @@
   </div>
   </form>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const paymentDetailsContainer = document.getElementById('payment-details-container');
+      const addPaymentDetailBtn = document.getElementById('add-payment-detail');
 
+      function addPaymentDetail() {
+          const newPaymentDetail = document.querySelector('.payment-details-section').cloneNode(true);
+          newPaymentDetail.querySelectorAll('input').forEach(input => input.value = '');
+          newPaymentDetail.querySelectorAll('select').forEach(select => select.value = '');
+          newPaymentDetail.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
 
+          // Add remove button to the new payment detail section
+          const removeBtn = document.createElement('div');
+          removeBtn.className = 'remove-btn';
+          removeBtn.innerHTML = '<button type="button" class="btn btn-danger remove-payment-detail">Remove</button>';
+          newPaymentDetail.appendChild(removeBtn);
 
+          // // Add horizontal line to separate new payment detail section
+          // const hr = document.createElement('hr');
+          // newPaymentDetail.prepend(hr);
+          
+
+          paymentDetailsContainer.appendChild(newPaymentDetail);
+          setupPaymentModeChangeEvent(newPaymentDetail.querySelector('.payment-mode'));
+      }
+
+      function removePaymentDetail(event) {
+          const paymentDetailSection = event.target.closest('.payment-details-section');
+          paymentDetailsContainer.removeChild(paymentDetailSection);
+      }
+
+      function setupPaymentModeChangeEvent(paymentModeSelect) {
+          paymentModeSelect.addEventListener('change', function() {
+              const section = paymentModeSelect.closest('.payment-details-section');
+              section.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
+            
+              if (paymentModeSelect.value === 'Cheque') {
+                  section.querySelector('#cheque-details').style.display = 'block';
+                  section.querySelector('#branch-details').style.display = 'block';
+                  section.querySelector('#cheque-no-details').style.display = 'block';
+                  section.querySelector('#pay-date-details').style.display = 'block';
+                  section.querySelector('#amount-details').style.display = 'block';
+              } else if (paymentModeSelect.value === 'Net Banking') {
+                  section.querySelector('#branch-details').style.display = 'block';
+                  section.querySelector('#cheque-details').style.display = 'block';
+                  section.querySelector('#pay-date-details').style.display = 'block';
+                  section.querySelector('#amount-details').style.display = 'block';
+                  section.querySelector('#transaction-id-details').style.display = 'block';
+              } else if (paymentModeSelect.value === 'DD') {
+                  section.querySelector('#cheque-details').style.display = 'block';
+                  section.querySelector('#branch-details').style.display = 'block';
+                  section.querySelector('#pay-date-details').style.display = 'block';
+                  section.querySelector('#amount-details').style.display = 'block';
+                  section.querySelector('#dd-no-details').style.display = 'block';
+              }
+          });
+      }
+      
+      document.querySelectorAll('.payment-mode').forEach(setupPaymentModeChangeEvent);
+
+      addPaymentDetailBtn.addEventListener('click', addPaymentDetail);
+
+      paymentDetailsContainer.addEventListener('click', function(event) {
+          if (event.target.classList.contains('remove-payment-detail')) {
+              removePaymentDetail(event);
+          }
+      });
+  });
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script>
@@ -533,75 +606,7 @@
   // }
 
 </script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const paymentDetailsContainer = document.getElementById('payment-details-container');
-    const addPaymentDetailBtn = document.getElementById('add-payment-detail');
 
-    function addPaymentDetail() {
-      const newPaymentDetail = document.querySelector('.payment-details-section').cloneNode(true);
-      newPaymentDetail.querySelectorAll('input').forEach(input => input.value = '');
-      newPaymentDetail.querySelectorAll('select').forEach(select => select.value = '');
-      newPaymentDetail.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
-
-      // Add remove button to the new payment detail section
-      const removeBtn = document.createElement('div');
-      removeBtn.className = 'remove-btn';
-      removeBtn.innerHTML = '<button type="button" class="btn btn-danger remove-payment-detail">Remove</button>';
-      newPaymentDetail.appendChild(removeBtn);
-
-      // // Add horizontal line to separate new payment detail section
-      // const hr = document.createElement('hr');
-      // newPaymentDetail.prepend(hr);
-
-
-      paymentDetailsContainer.appendChild(newPaymentDetail);
-      setupPaymentModeChangeEvent(newPaymentDetail.querySelector('.payment-mode'));
-    }
-
-    function removePaymentDetail(event) {
-      const paymentDetailSection = event.target.closest('.payment-details-section');
-      paymentDetailsContainer.removeChild(paymentDetailSection);
-    }
-
-    function setupPaymentModeChangeEvent(paymentModeSelect) {
-      paymentModeSelect.addEventListener('change', function () {
-        const section = paymentModeSelect.closest('.payment-details-section');
-        section.querySelectorAll('.payment-details').forEach(detail => detail.style.display = 'none');
-
-        if (paymentModeSelect.value === 'Cheque') {
-          section.querySelector('#cheque-details').style.display = 'block';
-          section.querySelector('#branch-details').style.display = 'block';
-          section.querySelector('#cheque-no-details').style.display = 'block';
-          section.querySelector('#pay-date-details').style.display = 'block';
-          section.querySelector('#amount-details').style.display = 'block';
-        } else if (paymentModeSelect.value === 'Net Banking') {
-          section.querySelector('#branch-details').style.display = 'block';
-          section.querySelector('#cheque-details').style.display = 'block';
-          section.querySelector('#pay-date-details').style.display = 'block';
-          section.querySelector('#amount-details').style.display = 'block';
-          section.querySelector('#transaction-id-details').style.display = 'block';
-        } else if (paymentModeSelect.value === 'DD') {
-          section.querySelector('#cheque-details').style.display = 'block';
-          section.querySelector('#branch-details').style.display = 'block';
-          section.querySelector('#pay-date-details').style.display = 'block';
-          section.querySelector('#amount-details').style.display = 'block';
-          section.querySelector('#dd-no-details').style.display = 'block';
-        }
-      });
-    }
-
-    document.querySelectorAll('.payment-mode').forEach(setupPaymentModeChangeEvent);
-
-    addPaymentDetailBtn.addEventListener('click', addPaymentDetail);
-
-    paymentDetailsContainer.addEventListener('click', function (event) {
-      if (event.target.classList.contains('remove-payment-detail')) {
-        removePaymentDetail(event);
-      }
-    });
-  });
-</script>
 
 <!-- <script>
   function addMore() {
@@ -692,9 +697,4 @@
     return true; // Form submission allowed if all validations pass
   }
 </script>
-
-
-
-
-
 {% endblock %}

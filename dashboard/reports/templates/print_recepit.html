@@ -177,11 +177,11 @@
 									
 									{% for i in Value %}
 										{% if i.paymentname == "DownPayment" %}
-											{% if i != 0 %}
-												200
-											{% endif %}
+											
 											{% elif i.paymentname == "Membership" %}
-
+												{% if i != 0 %}
+													200
+												{% endif %}
 											{% elif i.paymentname == "FirstInstallment" %}
 												0
 											{% elif i.paymentname == "SecondInstallment" %}
@@ -211,11 +211,11 @@
 								<td style="text-align:right;" >
 									{% for i in Value %}
 										{% if i.paymentname == "DownPayment" %}
+											
+										{% elif i.paymentname == "Membership" %}
 											{% if i != 0 %}
 												200
 											{% endif %}
-										{% elif i.paymentname == "Membership" %}
-
 										{% elif i.paymentname == "FirstInstallment" %}
 											0
 										{% elif i.paymentname == "SecondInstallment" %}
@@ -245,11 +245,11 @@
 								<td style="text-align:right;">
 									{% for i in Value %}
 										{% if i.paymentname == "DownPayment" %}
-											{% if i != 0 %}
-												200
-											{% endif %}
+											
 											{% elif i.paymentname == "Membership" %}
-
+												{% if i != 0 %}
+													200
+												{% endif %}
 											{% elif i.paymentname == "FirstInstallment" %}
 												0
 											{% elif i.paymentname == "SecondInstallment" %}
@@ -280,11 +280,11 @@
 									
 									{% for i in Value %}
 									{% if i.paymentname == "DownPayment" %}
-										{% if i != 0 %}
-											2000
-										{% endif %}
+										
 										{% elif i.paymentname == "Membership" %}
-
+											{% if i != 0 %}
+												2000
+											{% endif %}
 										{% elif i.paymentname == "FirstInstallment" %}
 											0
 										{% elif i.paymentname == "SecondInstallment" %}
