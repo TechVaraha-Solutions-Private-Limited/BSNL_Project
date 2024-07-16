@@ -493,7 +493,10 @@ def add_new_bookings(request):
                     membership_fee.save()
                 
             for count in range(start_index, len(payment_mode)):
-                payment_amount = int(paid_amount[count])
+                if check == 'true':
+                    payment_amount = int(paid_amount[count])
+                else :
+                    payment_amount = int(paid_amount[count])-2600
                 for i in range(4):
                     print ("I",i,count)
                     if i == 3:
