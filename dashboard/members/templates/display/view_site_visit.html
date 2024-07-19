@@ -68,7 +68,7 @@
                         <th>S.NO</th>
                         <th>Customer Name</th>
                         <th>Phone No</th>
-                        <th>Date of SV</th>
+                        <th>Date_of_Sitevisit</th>
                         <th>Executive</th>
                         <th>Team Lead</th>
                         <th>SR Team Lead</th>
@@ -82,12 +82,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for view in view %}
+                    {% for view in visits %}
                     <tr>
                         <td>{{forloop.counter}}</td>
                         <td>{{view.cust_name}}</td>
                         <td>{{view.phone_no}}</td>
-                        <td>{{view.date_of_site_visit}}</td>
+                        <td>{{view.date_of_site_visit|date:'d-m-Y'}}</td>
                         <td>{{view.executive.first_name}}</td>
                         <td>{{view.executive.executive_set.last.teamlead.user.first_name}}</td>
                         <td>{{view.executive.executive_set.last.teamlead.sr_team.user.first_name}}</td>

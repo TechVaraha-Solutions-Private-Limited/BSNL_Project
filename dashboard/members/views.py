@@ -945,9 +945,7 @@ def site_visit(request):
                     booked_sry_no=request.POST.get('booked_sry_no'),
                     sv_status=request.POST.get('sv_status'),
                     PMname=request.POST.get('PMname'),
-
                 ).save()
-
                 messages.success(request, 'Successfully Saved')
         except User.DoesNotExist:
             messages.error(request, 'Executive not found for the given ID')
@@ -955,33 +953,11 @@ def site_visit(request):
             messages.error(request, 'Executive details not found for the given ID')
         except Exception as e:
             messages.error(request, f'An error occurred: {e}')
-
     return render(request, 'new_bookings/site_visit.html', {'customer': detail, 'exective': exective,'visits':visits})
 @login_required
-def view_site_visit(request):
-    visits = Site_visit.objects.all().order_by('-id')
-    
-    if request.method == 'POST':
-        try:
-            for visit in visits:
-                visit.date_of_site_visit = request.POST.get('date_of_visit')
-                visit.cust_name = request.POST.get('cust_name')
-                visit.phone_no = request.POST.get('phone_no')
-                visit.executive = request.POST.get('executive')
-                visit.so_done_by = request.POST.get('so_done_by')
-                visit.sv_don_by = request.POST.get('sv_done_by')
-                visit.sv_category = request.POST.get('sv_category')
-                visit.source = request.POST.get('source')
-                visit.booked_no = request.POST.get('booked_no')
-                visit.booked_sry_no = request.POST.get('booked_sry_no')
-                visit.sv_status = request.POST.get('sv_status')
-                visit.PMname = request.POST.get('PMname')
-                visit.save()
-            
-            messages.success(request, 'Successfully updated')
-        except Exception as e:
-            messages.error(request, f'An error occurred: {e}')
 
+def view_site_visit(request):
+    visits = Site_visit.objects.all().order_by("-created_on")
     return render(request, 'display/view_site_visit.html', {'visits': visits})
 @login_required
 def update_site_visit(request, id):
