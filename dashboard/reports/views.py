@@ -55,6 +55,7 @@ def confirmletter_view(request,id):
 def print_recepit(request, id):
     try:
         paymentInfos = PaymentDetails.objects.filter(receipt_no=id).first()
+        print("Payment",paymentInfos)
         data = PaymentDetails.objects.filter()
       
         check_payments = PaymentDetails.objects.filter(dateofreceipt=paymentInfos.dateofreceipt , booking_id=paymentInfos.booking_id)
@@ -69,7 +70,7 @@ def print_recepit(request, id):
       
        
         user = Bookings.objects.filter(user_id=paymentInfos.booking.user_id).first()
-        
+        senpayment = Bookings.objects.get(id = paymentInfos.booking_id)
         if not user:
             return HttpResponse("No booking found for receipt number: {}".format(id))
        
@@ -89,15 +90,12 @@ def print_recepit(request, id):
         if last_payment:
             no = int(last_payment)
             receipt_no = num2words(no)
-            print(receipt_no)
         get_last = PaymentDetails.objects.filter(booking_id=user.id).last()
         value = get_last.amount
         no = int(float(value)) 
         amont = int(float(value)+2600)  
         word1 = num2words(amont, lang='en_IN')
         word = word1.replace(',','')
-        print(no)
-        print(amont)
         id=id 
        
         data = PaymentDetails.objects.all()
@@ -115,6 +113,7 @@ def print_recepit(request, id):
             'downpayments':downpayments,
             'user': user,   
             'detail':details,
+            'senpayment':senpayment,
             'word':word,
             'Value':Value,
             'userdetail': userdetail,

@@ -329,10 +329,9 @@ def add_new_bookings(request):
             except User.DoesNotExist:
                 messages.error(request, 'Invalid Moblie No')
                 filter_value = {} 
-        else:
+        if action == "Submit Application":
             mobile_no = request.POST.get('mobile_no')
             if User.objects.filter(mobile_no = mobile_no):
-                print(mobile_no)
                 user_id = User.objects.get(mobile_no= mobile_no)
                 id = user_id.id
                 user = User.objects.get(id=id)
@@ -552,7 +551,7 @@ def add_new_bookings(request):
                         
                 messages.success(request, 'Successfully Saved')
         except Exception as e:
-            messages.error(request, f'An error occurred: {str(e)}')
+            messages.error(request,'')
     context ={
         'landdetail': landdetail,
         'exectiv':exectiv,
