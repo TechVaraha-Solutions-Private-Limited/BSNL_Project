@@ -1,0 +1,117 @@
+{% extends 'page/commons/base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .text-align {
+        text-align: justify;
+    }
+</style>
+<style>
+    /* Style for the container of each section */
+    .section-container {
+        border-style: solid;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    .section-container h3 {
+        color: #178EF0;
+        margin-bottom: 10px;
+    }
+
+    .section-container p {
+        color: #050505;
+        text-align: justify;
+        margin-bottom: 0;
+
+    }
+
+    .section-cont p {
+        color: #666;
+        text-align: justify;
+        margin-bottom: 0;
+
+    }
+
+    .left-section {
+        float: left;
+        width: 30%;
+        margin-right: 5%;
+        text-align: justify;
+        padding-bottom: 16%;
+    }
+
+    .center-section {
+        display: inline-block;
+        width: 30%;
+        text-align: justify;
+        padding-bottom: 10%;
+    }
+
+    .right-section {
+
+        float: right;
+        /* display: inline-block; */
+        width: 30%;
+        margin-left: 5%;
+        text-align: justify;
+        padding-bottom: 5%;
+        margin-bottom: 10;
+    }
+</style>
+
+<!-- <div class="container-xxl py-3">
+    <div class="container">
+        <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <h1 class="mb-3">About Us</h1>
+        </div>
+    </div>
+</div> -->
+<div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white1"
+    style="background-image: url('{% static 'page/img/aboutus.jpg' %}'); height: 300px">
+    <h1 class="p-5 wow fadeInUp">About Us</h1>
+</div>
+<div>
+    <div class="container  wow fadeInUp" >
+        <div class="section-container left-section">
+            <h3 class="wow fadeInUp">Our Vision</h3>
+            <p>&nbsp;&nbsp;The BSNL Housing Society is a registered and reputed cooperative institution that was
+                promoted in 1973
+                with a vision "Commited to provide clear and well-laid out plot at an affordable cost through
+                professional practice".</p>
+        </div>
+
+        <div class="section-container center-section">
+            <h3 class="wow fadeInUp">Our Promise</h3>
+            <p>&nbsp;&nbsp;BSNL Housing Society’s Layout is formed strictly under adhering to the rules and regulations
+                of
+                Registered
+                Co-Operative Society (RCS) and Bangalore International Airport Area Planning Authority (BIAAPA)
+                norms
+                and specifications, hence every detail of the society will be monitored by the Authorized Departments.
+            </p>
+        </div>
+
+        <div class="section-container right-section">
+            <h3 class="wow fadeInUp">Assured Return on Investment</h3>
+            <p>&nbsp;&nbsp;&nbsp;The Completed and On-going projects of society are at north Bengaluru and near to the
+                International
+                Airport,
+                Comparing to the other parts of the Bengaluru from the past decade, we can address that north Bengaluru
+                as a rapid development, and hence the investment value for money with good returns and there is a
+                GUARANTEED and FASTER development within a decade.
+            </p>
+        </div>
+    </div>
+
+</div>
+<br>
+<div class="wow fadeInUp">
+    <center><h4>Need help? Contact us</h4></center>
+<center><h6> 080-23550419 or info@bsnlhousingsociety.in</h6></center>
+</div>
+
+<!-- Contact End -->
+{% endblock %}
