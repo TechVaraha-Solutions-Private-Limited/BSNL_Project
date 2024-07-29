@@ -21,11 +21,13 @@ from commons.permission import role_required
 import threading
 from commons.email_notification import signup_mail_otp
 # Create your views here.
+@login_required
 def send_email_view(request):
     mailto = "muthuclm757@gmail.com"
     tread = threading.Thread(target=signup_mail_otp, args=[ mailto])
     tread.start()
     return HttpResponse('Email sent successfully!')
+
 @login_required
 def banner_images(request):
     if request.method =='POST':
@@ -34,14 +36,26 @@ def banner_images(request):
             place = "Banner"
         ).save()        
     return render(request,'image/banner.html')
+
 @login_required
 def gallery_images(request):
+    image = G_image.objects.all()
     if request.method == 'POST':
         G_image(
             gallery_image=request.FILES.get('profile', ''),
             g_place= "gallery"
         ).save()
-    return render(request,'image/gallery.html')
+    print(image)
+    context ={
+        'image':image,
+    }
+    return render(request,'image/gallery.html',context)
+
+def deletingimage(request,id):
+	deletingimage=G_image.objects.get(id=id)
+	deletingimage.delete()
+	return redirect(gallery_images)
+
 @login_required
 def home(request):
     project_details = []
@@ -76,6 +90,7 @@ def home(request):
         'project_details': project_details
     }
     return render(request, 'common/index.html', context)
+
 @login_required
 def addcustomer(request):
     if request.method == "POST":
@@ -137,6 +152,7 @@ def addcustomer(request):
                 family.member_relation = request.POST.get(member_relation_key)
                 family.save()
     return render(request,'new_bookings/addcustomer.html')
+
 @login_required
 def site_visit_custmer(request,id):
     try:
@@ -308,6 +324,7 @@ def site_visit_custmer(request,id):
     except Exception as e:
         messages.error(request, f'Error occurred: {e}')
         return HttpResponseServerError('Internal Server Error')
+
 @login_required
 def add_new_bookings(request):
     projects = Project.objects.all()
@@ -561,6 +578,7 @@ def add_new_bookings(request):
         'usernomieedetail':usernomieedetail,
         }
     return render(request, 'new_bookings/add_new_bookings.html', context)
+
 @login_required
 def get_dimension(request):
     if request.method == "POST":
@@ -569,6 +587,7 @@ def get_dimension(request):
         project_details = Project.objects.get(id=id)
         return JsonResponse({"values":list(dimensions),'shortcut':project_details.shortcode})
     return JsonResponse({})
+
 @login_required
 def get_project_value(request):
     if request.method == "POST":
@@ -578,6 +597,7 @@ def get_project_value(request):
         dimensions = LandDetails.objects.filter(project_id=project_id,plotsize_id=plot_id).values()
         return JsonResponse({"values":list(dimensions)})
     return JsonResponse({})
+
 @login_required
 def get_project_id(request):
     try:
@@ -592,6 +612,7 @@ def get_project_id(request):
         # Log the error or handle it appropriately
         print(f"Error occurred: {e}")
         return JsonResponse({"error": "An error occurred while processing the request"})
+
 @login_required
 def booksum(request):
     view = User.objects.filter(role='Team_Lead')  
@@ -629,14 +650,17 @@ def booksum(request):
 
 
     return render(request,'home/booksum.html',context)
+
 @login_required
 def bss(request):
    
     
     return render(request,'home/bss.html')
+
 @login_required
 def print_receipt(request):
     return render('reports/print_recepit.html')
+
 @login_required
 def generate(request):
     customers = {}
@@ -694,35 +718,15 @@ def generate(request):
                 # Need to resolve
                 
                 for count in range(len(payment_mode)): 
-                    #payment_amount = int(paid_amount[count])-int(difference)
-                    if paid_amount[count]:
-                        if int(payment_total) < 2600: 
-                            #payment_amount = int(paid_amount[count])-2600
-                        
-                        
-                            membership_fee = PaymentDetails()
-                            membership_fee.booking=book
-                            membership_fee.payment_mode = payment_mode[count]
-                            membership_fee.bank = bank[count]
-                            membership_fee.branch = branch[count]
-                            membership_fee.cheque_no = cheque_no[count]
-                            membership_fee.transaction = transaction_id[count]
-                            membership_fee.ddno=ddno[count]
-                            membership_fee.dateofreceipt = dateofreceipt
-                            # membership_fee.payment_data = payment_data[count]
-                            # membership_fee.paymenttype = paymenttype[count]
-                            membership_fee.amount = 2600
-                            membership_fee.paymentname = "Membership"
-                            membership_fee.receipt_no = get_number
-                            membership_fee.save()
+                    if paid_amount[count]:  # Check if the current amount string is not empty
                         for i in range(4):
                             if i == 0:
-                                payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))
-                                if split_amount == payment :
+                                payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))['amount__sum']
+                                if split_amount == payment:
                                     continue
                                 paymentname = 'DownPayment'
-                                status =1 
-                            elif i ==1:
+                                status = 1
+                            elif i == 1:
                                 status = 3
                                 paymentname = 'FirstInstallment'
                             elif i == 2:
@@ -730,70 +734,65 @@ def generate(request):
                                 paymentname = 'SecondInstallment'
                             else:
                                 status = 7
-                                paymentname = 'ThridInstallment'
+                                paymentname = 'ThirdInstallment'
+
                             if split_amount <= int(payment_total):
                                 payment_total = payment_total - split_amount 
                             else:
-                                paid_amt_bal = (split_amount - payment_total)+2600
+                                paid_amt_bal = (split_amount - payment_total)
+                                print(paid_amount)
                                 if paid_amt_bal >= int(paid_amount[count]):
-                                    if paid_amt_bal > int(paid_amount[count])+2600:
-                                        payment_name = 'Half'
-                                        # print('paid_amount:',paid_amount)
-                                        # print('payment_name:',payment_name)
-                                        # print('paid_amt_bal:',paid_amt_bal)
-                                        # print('Spilt:',paid_amt_bal)
+                                    if paid_amt_bal > int(paid_amount[count]):
+                                        payment_name = ''
                                     else:
-                                        payment_name = 'Full'
-                                        status +=1
+                                        payment_name = ''
+                                        status += 1
                                     payments = PaymentDetails()
-                                    payments.booking=book
+                                    payments.booking = book
                                     payments.payment_mode = payment_mode[count]
                                     payments.bank = bank[count]
                                     payments.branch = branch[count]
                                     payments.cheque_no = cheque_no[count]
                                     payments.transaction = transaction_id[count]
-                                    payments.ddno=ddno[count]
-                                    # payments.payment_data = payment_data[count]
+                                    payments.ddno = ddno[count]
                                     payments.dateofreceipt = dateofreceipt
-                                    payments.paymentname =paymentname+' '+payment_name
+                                    payments.paymentname = paymentname
                                     payments.amount = int(paid_amount[count])
                                     payments.receipt_no = get_number
                                     payments.save()
                                     book.payments_status = status
-                                    book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount[count])
-                                    # print('total:', paid_amount[count])
-                                    # print('total:', book.total_paid_amount)
+                                    book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount[count])
                                     book.save()
                                     break
                                 else:
                                     payments = PaymentDetails()
-                                    payments.booking=book
+                                    payments.booking = book
                                     payments.payment_mode = payment_mode[count]
                                     payments.bank = bank[count]
                                     payments.branch = branch[count]
                                     payments.cheque_no = cheque_no[count]
                                     payments.transaction = transaction_id[count]
-                                    payments.ddno=ddno[count]
-                                    #payments.payment_data = payment_data[count]
+                                    payments.ddno = ddno[count]
                                     payments.dateofreceipt = dateofreceipt
-                                    payments.paymentname =paymentname
+                                    payments.paymentname = paymentname
                                     payments.amount = int(paid_amt_bal)
                                     payments.receipt_no = get_number
                                     payments.save()
                                     book.payments_status = status
-                                    book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount[count])
+                                    book.total_paid_amount = int(book.total_paid_amount) + int(paid_amt_bal)
                                     book.save()
-                                    paid_amount=int(paid_amount[count]) -int(paid_amt_bal)
-                    messages.success(request,'Successfully Saved')
+                                    paid_amount[count] = str(int(paid_amount[count]) - int(paid_amt_bal))
+                                    messages.success(request, 'Successfully Saved')
             except Bookings.DoesNotExist:
                 messages.error(request,'Saved failed')
     difference = int(total_site_value) - int(payment_total)
     if difference <= 0:
-        differ = 0
+            differ = 0
     else:
         differ = difference
-    
+                        
     return render(request,'new_bookings/generate.html',{'customer': customers,'difference': differ,'active_bookings':active_bookings})
+
 @login_required
 def ugdg(request):
     exective = User.objects.filter(role='Executive')
@@ -855,6 +854,7 @@ def ugdg(request):
         'exective': exective,
         'active_bookings':active_bookings
     })
+
 @login_required
 def transfer(request):
     customers = {}
@@ -902,6 +902,7 @@ def transfer(request):
             messages.error(request, f'An error occurred: {e}')
     
     return render(request, 'new_bookings/transfer.html', {'customer': customers, 'user': user,'active_bookings':active_bookings})
+
 @login_required
 def get_team_owner(request):
     if request.method == "POST":
@@ -911,6 +912,7 @@ def get_team_owner(request):
         details = TeamLead.objects.get(id=id)
         return JsonResponse({"values":list(teamlead),'shortcut':details.shortcode})
     return JsonResponse({})
+
 @login_required   
 def site_visit(request):
     visits = Site_visit.objects.all().order_by('-id')
@@ -953,11 +955,12 @@ def site_visit(request):
         except Exception as e:
             messages.error(request, f'An error occurred: {e}')
     return render(request, 'new_bookings/site_visit.html', {'customer': detail, 'exective': exective,'visits':visits})
-@login_required
 
+@login_required
 def view_site_visit(request):
     visits = Site_visit.objects.all().order_by("-created_on")
     return render(request, 'display/view_site_visit.html', {'visits': visits})
+
 @login_required
 def update_site_visit(request, id):
     try:
@@ -1005,6 +1008,7 @@ def update_site_visit(request, id):
         return redirect('/members/view_site_visit')
 
     return render(request, 'display/update_display/update_site_view.html', {'update': update})
+
 @login_required
 def delete_site_visit(request,id):
     deletesitevisit=Site_visit.objects.get(id=id)
@@ -1020,6 +1024,7 @@ def delete_site_visit(request,id):
     # }
     
     return redirect('/members/view_site_visit')
+
 @login_required
 def lead_owner(request):
     exective = User.objects.filter(role = 'Executive')
@@ -1061,6 +1066,7 @@ def lead_owner(request):
             ).save()
             messages.success(request, 'Successfully Saved')
     return render(request,'new_bookings/lead_owner.html',{'customer':customers,'exective':exective})
+
 @login_required
 def cancel(request):
     customers = {}   
@@ -1104,6 +1110,7 @@ def cancel(request):
                 messages.error(request, f'Failed to cancel booking: {e}')
 
     return render(request, 'new_bookings/cancel.html', {'customer': customers,'active_bookings':active_bookings})
+
 @login_required
 def receipts(request):
     distinct_receipts = PaymentDetails.objects.values('receipt_no').distinct()
@@ -1125,6 +1132,7 @@ def receipts(request):
       
     }
     return render(request,'view/receipts.html',context) 
+
 @login_required
 def update_receipts(request, id):
     try:
@@ -1162,11 +1170,13 @@ def update_receipts(request, id):
         messages.error(request, f'An error occurred: {str(e)}')
 
     return render(request, 'view/update_view/update_receipt.html', {'update_receipts': update_receipts})
+
 @login_required
 def view_receipt(request,id):
     payment = PaymentDetails.objects.filter(booking=id).last()
     payments = PaymentDetails.objects.filter(booking=id)
     return render(request,'view/view_history.html',{'payment':payment,'payments':payments})
+
 @login_required
 def btmt(request):
     project = Project.objects.all()
@@ -1234,6 +1244,7 @@ def activemember(request):
     }
     
     return render(request, 'view/activemem.html', context)
+
 @login_required
 def updateactivememberlist(request, id):
     try:
@@ -1282,6 +1293,7 @@ def updateactivememberlist(request, id):
     except Exception as e:
         # Handle any other unexpected exceptions
         return render(request, 'view/update_view/update_acmember.html', {'error_message': f'An error occurred: {str(e)}'})
+
 @login_required
 def deleteactivememberlist(request,id):
     book = Bookings.objects.get(user_id=id)
@@ -1293,6 +1305,7 @@ def deleteactivememberlist(request,id):
     }
     
     return redirect('/members/activemember',context)
+
 @login_required
 def update_personal(request,id):
     nomine =  UserNominee.objects.get(user_id=id)
@@ -1332,6 +1345,7 @@ def update_personal(request,id):
         'family_details':family_details
     }
     return render(request,'view/update_view/update_personal.html',context)
+
 @login_required
 def inactivemember(request):
     try:
@@ -1344,6 +1358,7 @@ def inactivemember(request):
         return render(request, 'error.html', {'error_message': 'An error occurred while fetching data.'})
 
     return render(request, 'view/inactivemem.html', {'book1': book1, 'user': user})
+
 @login_required
 def update_inactive(request,id):
     book = Bookings.objects.get(id=id)
@@ -1351,6 +1366,7 @@ def update_inactive(request,id):
         book.user.is_active=True
         book.user.save()
     return redirect('/members/inactivemember')
+
 @login_required
 def confirmletter(request):
     try:
@@ -1362,9 +1378,11 @@ def confirmletter(request):
         return render(request, 'error.html', {'error_message': 'An error occurred while fetching data.'})
 
     return render(request, 'view/confirmleter.html', {'user': user})
+
 @login_required
 def view_history(request):
     return render(request,'display/view_history.html')
+
 @login_required
 def user_access(request, id):
     try:
@@ -1393,12 +1411,14 @@ def user_access(request, id):
             return render(request, 'error.html', {'error_message': f'Failed to update user: {str(e)}'})
 
     return render(request, 'input/update_user/user_access.html', {'user_log': user_log})
+
 @login_required
 def view_user_access(request):
     view_user=User.objects.filter(is_active=1).exclude(role__iexact="customer").order_by('-date_joined')
     
     messages.success(request, 'Successfully updated')
     return render(request,'input/update_user/view_user_access.html',{'view_user':view_user})
+
 @login_required
 def delete_user_access(request, id):
     print(id)
@@ -1413,19 +1433,24 @@ def delete_user_access(request, id):
     }
 
     return redirect(view_user_access)
+
 @login_required
 def rate_update(request):
     return render(request,'input/update_rate/rate_update.html')
+
 @login_required
 def view_rate_update(request):
     projects = Bookings.objects.all()
     return render(request,'input/update_rate/view_rate_update.html',{'projects':projects})
+
 @login_required
 def update_sales_staff(request):
     return render(request,'input/update_sales_staff/update_staff.html')
+
 @login_required
 def view_update_sales_staff(request):
     return render(request,'input/update_sales_staff/view_update_staff.html')
+
 @login_required
 def blocked_seniority(request):
     if request.method == 'POST':
@@ -1438,10 +1463,12 @@ def blocked_seniority(request):
         ).save()
         messages.success(request, 'Successfully Saved')
     return render(request,'input/blocked_update/block_seniority.html')
+
 @login_required
 def view_blocked_seniority(request):
     view_block=Update_blocked.objects.filter(is_active=1)
     return render(request,'input/blocked_update/view_block_seniority.html',{'view_block':view_block})
+
 @login_required
 def update_block(request,id):
     block_update=Update_blocked.objects.get(id=id)
@@ -1457,6 +1484,7 @@ def update_block(request,id):
         print('2','Hello')
         return redirect('/members/view_blocked_seniority')
     return render(request,'input/blocked_update/update_block.html',{'block_update':block_update})
+
 @login_required
 def delete_block(request, id):
     book = Update_blocked(id=id)
@@ -1464,21 +1492,26 @@ def delete_block(request, id):
         book.is_active = False
         book.save()
     return redirect('view_blocked_seniority')
+
 @login_required
 def update_pdc(request):
     
     return render(request,'input/pdc/update_pdc.html')
+
 @login_required
 def view_call_request(request):
     view_call_request = Request_call.objects.all()
     return render(request,'image/callrequest.html',{"view_call_request":view_call_request})
+
 @login_required
 def view_update_pdc(request):
     view_update_pdc = pdc_update.objects.all()
     return render(request,'input/pdc/view_update_pdc.html',{"view_update_pdc":view_update_pdc})
+
 @login_required
 def cr_code(request):
      return render(request,'input/cr_code/update_cr_code.html')
+
 @login_required
 def view_member(request):
     filter_value = request.GET.get('Filtered')
@@ -1495,123 +1528,3 @@ def view_member(request):
         'selected_value': filter_value,
     }
     return render(request, 'new_bookings/view_members.html', context)
-@login_required
-def genrate(request,id):
-    customers = {}
-    customers = Bookings.objects.get(seniority_id=id)
-    payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))
-    if request.method == 'POST':
-        user_id = request.POST.get('user_id')
-        seniority = request.POST.get('seniority')
-        customers = Bookings.objects.get(seniority_id=seniority)
-        payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))                
-        payment_total = payment['amount__sum'] or 0  
-        total_site_value = customers.total_site_value
-        book = Bookings.objects.get(user_id=user_id, seniority_id=seniority)
-        payment = PaymentDetails.objects.filter(booking_id = book.id).aggregate(Sum('amount'))
-        PaymentDetails()
-        try:
-            get_number = PaymentDetails.objects.all().order_by('-id')[:1]
-            if get_number:
-                get_number = "634" + str(get_number[0].id + 1)
-            else:
-                get_number = "63421"
-            divide_amount = int(book.total_site_value) / 4
-            split_amount = int(divide_amount)
-            paid_amount =  request.POST.getlist('amount[]')
-            payment_mode = request.POST.getlist('payment_mode[]')
-            bank = request.POST.getlist('bank[]')
-            branch = request.POST.getlist('branch[]')
-            cheque_no = request.POST.getlist('cheque_no[]')
-            transaction_id = request.POST.getlist('transaction_id[]')
-            ddno=request.POST.getlist('dd_no[]')
-            dateofreceipt = request.POST.get('dateofreceipt')          
-            difference = int(total_site_value) - int(payment_total)
-            for count in range(len(payment_mode)): 
-                if paid_amount[count]:
-                    if int(payment_total) < 2600: 
-                        membership_fee = PaymentDetails()
-                        membership_fee.booking=book
-                        membership_fee.payment_mode = payment_mode[count]
-                        membership_fee.bank = bank[count]
-                        membership_fee.branch = branch[count]
-                        membership_fee.cheque_no = cheque_no[count]
-                        membership_fee.transaction = transaction_id[count]
-                        membership_fee.ddno=ddno[count]
-                        membership_fee.dateofreceipt = dateofreceipt
-                        membership_fee.amount = 2600
-                        membership_fee.paymentname = "Membership"
-                        membership_fee.receipt_no = get_number
-                        membership_fee.save()
-                    for i in range(4):
-                        if i == 0:
-                            payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))
-                            if split_amount == payment :
-                                continue
-                            paymentname = 'DownPayment'
-                            status =1 
-                        elif i ==1:
-                            status = 3
-                            paymentname = 'FirstInstallment'
-                        elif i == 2:
-                            status = 5
-                            paymentname = 'SecondInstallment'
-                        else:
-                            status = 7
-                            paymentname = 'ThridInstallment'
-                        if split_amount <= int(payment_total):
-                            payment_total = payment_total - split_amount 
-                        else:
-                            paid_amt_bal = (split_amount - payment_total)+2600
-                            
-                            if paid_amt_bal >= int(paid_amount[count]):
-                                
-                                if paid_amt_bal > int(paid_amount[count])+2600:
-                                    payment_name = 'Half'
-                                else:
-                                    payment_name = 'Full'
-                                    status +=1
-                                payments = PaymentDetails()
-                                payments.booking=book
-                                payments.payment_mode = payment_mode[count]
-                                payments.bank = bank[count]
-                                payments.branch = branch[count]
-                                payments.cheque_no = cheque_no[count]
-                                payments.transaction = transaction_id[count]
-                                payments.ddno=ddno[count]
-                                payments.dateofreceipt = dateofreceipt
-                                payments.paymentname =paymentname+' '+payment_name
-                                payments.amount = int(paid_amount[count])
-                                payments.receipt_no = get_number
-                                payments.save()
-                                book.payments_status = status
-                                book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount[count])
-                                book.save()
-                                break
-                            else:
-                                payments = PaymentDetails()
-                                payments.booking=book
-                                payments.payment_mode = payment_mode[count]
-                                payments.bank = bank[count]
-                                payments.branch = branch[count]
-                                payments.cheque_no = cheque_no[count]
-                                payments.transaction = transaction_id[count]
-                                payments.ddno=ddno[count]
-                                payments.dateofreceipt = dateofreceipt
-                                payments.paymentname =paymentname
-                                payments.amount = int(paid_amt_bal)
-                                payments.receipt_no = get_number
-                                payments.save()
-                                book.payments_status = status
-                                book.total_paid_amount =int(book.total_paid_amount )+ int(paid_amount[count])
-                                book.save()
-                                paid_amount=int(paid_amount[count]) -int(paid_amt_bal)
-                    messages.success(request,'Successfully Saved')
-        except Bookings.DoesNotExist:
-            messages.error(request,'Saved failed')
-    context={
-        'customer': customers
-    }
-        # return render(request,'new_bookings/generate.html',{'customer': customers,'difference': differ,'active_bookings':active_bookings})
-    return render(request,'view/update_view/gernarateReciept.html',context)
-

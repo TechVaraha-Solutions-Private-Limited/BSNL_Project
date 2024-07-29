@@ -91,7 +91,7 @@ def privacy(request):
     return render(request, 'page/privacy.html')
 
 def about(request):
-    return render(request,'page/about_copy.html  ')
+    return render(request,'page/about_copy.html')
 
 def test(request):
     return render(request,'page/customer/home.html')

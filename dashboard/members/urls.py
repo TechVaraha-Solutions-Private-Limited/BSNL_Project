@@ -56,6 +56,7 @@ urlpatterns = [
     # images
     path('banner_images',banner_images,name='banner_images'),
     path('gallery_images',gallery_images,name='gallery_images'),
+    path('deletingimage/<id>',deletingimage,name='deletingimage'),
     #add Customer
     path('addcustomer',addcustomer,name='addcustomer'),
     path('user_access/<id>',user_access,name='user_access'),
@@ -64,6 +65,4 @@ urlpatterns = [
     path('site_visit/<id>',site_visit_custmer,name='site_visit_custmer'),
     #View Member
     path('view_member',view_member,name='view_member'),
-    path('genrate/<id>',genrate,name='genrate'),
-    
 ]

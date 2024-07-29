@@ -341,6 +341,7 @@
                                                         <tr>
                                                             <th scope="col">Plotsize</th>
                                                             <th scope="col">Total Amount</th>
+                                                            <th scope="col">DownPaymet</th>
                                                             <th scope="col">First Installment</th>
                                                             <th scope="col">Second Installment</th>
                                                             <th scope="col">Thrid Installment</th>
@@ -351,6 +352,12 @@
                                                         <tr>
                                                             <th scope="row">{{i.plotsize.plotsize}}</th>
                                                             <td>₹{{i.total_amount}}</td>
+                                                            <td>{% if i.down_payment != '' %}
+                                                                ₹{{i.down_payment}}
+                                                                {% else %}
+                                                                -----
+                                                                {% endif %}
+                                                            </td>
                                                             <td>{% if i.installment_1 != '' %}
                                                                 ₹{{ i.installment_1}}
                                                                 {% else %}
@@ -403,136 +410,6 @@
 
                 <div class="row g-4">
                     {% for mydata in complete %}
-                    <!-- <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="property-item rounded overflow-hidden">
-                            <div class="position-relative overflow-hidden">
-                                <a href=""><img class="img-fluid" src="{{mydata.images.url}}" alt=""></a>
-                                <div
-                                    class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">
-                                    {%if mydata.status == 0 %}
-                                    Completed
-                                    {% else %}
-
-                                    {% endif %}
-                                </div>
-                                <div
-                                    class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3">
-                                    Plots</div>
-                            </div>
-                            <div class="p-4 pb-0">
-                                <a class="d-block h5 mb-2" href="">{{mydata.projectname}}</a>
-                                <p><i class="fa fa-map-marker-alt text-primary me-2"></i>{{mydata.address}}</p>
-                            </div>
-                            <div class="d-flex border-top">
-                                <small class="flex-fill text-center border-end py-2"><a href="static/page/1.pdf"><i
-                                            class="fa fa-eye text-primary me-2" aria-hidden="true"></i>Layouts
-                                        Plan</a></small>
-                                <small class="flex-fill text-center border-end py-2 "><a data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop"><i
-                                            class="fa fa-ruler-combined"></i>Location</a>
-
-                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered model-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <div class="modal-header">
-
-                                                </div>
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="staticBackdropLabel">Location</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="col-md-12 ">
-                                                    <iframe width="600" height="450" frameborder="0" style="border:0"
-                                                        src="{{mydata.gmap}}" allowfullscreen></iframe>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <small class="flex-fill text-center py-2 "><a data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop1{{mydata.id}}"><i
-                                            class="fa fa-tags  text-primary me-2"></i>Price</a></small>
-
-                                <div class="modal fade" id="staticBackdrop1{{mydata.id}}" data-bs-backdrop="static"
-                                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel1"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-xl ">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdropLabel1">Price Tags</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Plotsize</th>
-                                                            <th scope="col">Total Amount</th>
-                                                            <th scope="col">First Installment</th>
-                                                            <th scope="col">Second Installment</th>
-                                                            <th scope="col">Thrid Installment</th>
-                                                            {% for i in mydata.landdetails_set.all %}
-                                                            <th scope="col">{% if i.installment_4 != null%}
-                                                                Fourth Installment
-                                                                {% else %}
-
-                                                                {% endif %}</th>
-                                                            <th scope="col">{% if i.installment_5 != null%}
-                                                                Fifth Installment
-                                                                {% else %}
-
-                                                                {% endif %}</th>
-                                                            {%endfor%}
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {% for i in mydata.landdetails_set.all %}
-                                                        <tr>
-                                                            <th scope="row">{{i.plotsize.plotsize}}</th>
-                                                            <td>₹{{i.total_amount}}</td>
-                                                            <td>₹{% if i.installment_1 != null%}
-                                                                {{ i.installment_2}}
-                                                                {% else %}
-                                                                -----
-                                                                {% endif %}</td>
-                                                            <td>₹{% if i.installment_2 != null%}
-                                                                {{ i.installment_2}}
-                                                                {% else %}
-                                                                -----
-                                                                {% endif %}</td>
-                                                            <td>₹{% if i.installment_3 != null%}
-                                                                {{ i.installment_2}}
-                                                                {% else %}
-                                                                -----
-                                                                {% endif %}</td>
-                                                            <td>{% if i.installment_4 != null%}
-                                                                {{i.installment_4}}
-                                                                {% else %}
-
-                                                                {% endif %}</td>
-                                                            <td>{% if i.installment_5 != null%}
-                                                                {{i.installment_5}}
-                                                                {% else %}
-
-                                                                {% endif %}</td>
-                                                        </tr>
-                                                        {% endfor %}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="property-item rounded overflow-hidden">
                             <div class="position-relative overflow-hidden">
@@ -556,7 +433,7 @@
                             <div class="d-flex border-top">
                                 <small class="flex-fill text-center border-end py-2">
 
-                                    <a href=""><i class="fa fa-eye text-primary me-2" aria-hidden="true"></i>Layouts
+                                    <a href="/media/{{mydata.pdf_file}}"><i class="fa fa-eye text-primary me-2" aria-hidden="true"></i>Layouts
                                         Plan</a></small>
                                 <small class="flex-fill text-center border-end py-2 "><a data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop{{mydata.id}}"><i
@@ -632,6 +509,7 @@
                                                         <tr>
                                                             <th scope="col">Plotsize</th>
                                                             <th scope="col">Total Amount</th>
+                                                            <th scope="col">DownPaymet</th>
                                                             <th scope="col">First Installment</th>
                                                             <th scope="col">Second Installment</th>
                                                             <th scope="col">Thrid Installment</th>
@@ -642,6 +520,12 @@
                                                         <tr>
                                                             <th scope="row">{{i.plotsize.plotsize}}</th>
                                                             <td>₹{{i.total_amount}}</td>
+                                                            <td>{% if i.down_payment != '' %}
+                                                                ₹{{i.down_payment}}
+                                                                {% else %}
+                                                                -----
+                                                                {% endif %}
+                                                            </td>
                                                             <td>{% if i.installment_1 != '' %}
                                                                 ₹{{ i.installment_1}}
                                                                 {% else %}
@@ -677,8 +561,8 @@
     </div>
 </div>
 <br>
-<iframe id="ytplayer" width="100%" height="315" src="https://www.youtube.com/embed/op1PGRTPtM0?autoplay=1"
-    frameborder="0" allowfullscreen></iframe>
+<!-- <iframe id="ytplayer" width="100%" height="315" src="https://www.youtube.com/embed/op1PGRTPtM0?autoplay=1"
+    frameborder="0" allowfullscreen></iframe> -->
 <div class="container-xxl py-5">
     <div class="container">
         <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
@@ -709,7 +593,6 @@
         <h3 style="color: #da332e;">Why Choose Us?</h3>
         <center>
             <h2 style="color: #0c0c0c;">Six Reasons For People Choosing Us</h2>
-            <h5>ಜನರು ನಮ್ಮನ್ನು ಆಯ್ಕೆ ಮಾಡಲು ಆರು ಕಾರಣಗಳು</h5>
         </center>
     </div>
 
@@ -719,21 +602,19 @@
             <div class="elementor-element elementor-element-b2c8bb1 elementor-view-default elementor-mobile-position-top elementor-vertical-align-top elementor-widget elementor-widget-icon-box"
                 data-id="b2c8bb1" data-element_type="widget" data-widget_type="icon-box.default">
                 <div class="elementor-widget-container">
-                    <div class="elementor-icon-box-wrapper" style="height: 230px;">
+                    <div class="elementor-icon-box-wrapper">
                         <div class="elementor-icon-box-icon">
                             <span class="elementor-icon elementor-animation-">
                                 <i aria-hidden="true" class="fas fa-award"></i> </span>
                         </div>
                         <div class="elementor-icon-box-content" >
                             <h6 class="elementor-icon-box-title">
-                                <span>Committed </span>
-                                <p>ಬದ್ಧವಾಗಿದೆ</p>
+                                <span>
+                                    Committed </span>
                             </h6>
                             <p class="elementor-icon-box-description">
                                 The biggest commitment we keep is our commitment to ourself to deliver the projects
-                                on-time 
-                            <br>
-                            ನಾವು ಇರಿಸಿಕೊಳ್ಳುವ ದೊಡ್ಡ ಬದ್ಧತೆಯೆಂದರೆ ಯೋಜನೆಗಳನ್ನು ಸಮಯಕ್ಕೆ ತಲುಪಿಸಲು ನಮ್ಮ ಬದ್ಧತೆಯಾಗಿದೆ
+                                on-time
                             </p>
                                 
                         </div>

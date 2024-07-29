@@ -14,6 +14,7 @@ def addproject(request):
                 images=request.FILES['imageupload'],
                 address=request.POST['address'],
                 gmap=request.POST['gmaplink'],
+				pdf_file = request.FILES['pdf_file'],
             )
             project.save()
             messages.success(request, 'Project successfully saved.')
