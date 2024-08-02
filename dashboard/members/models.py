@@ -105,6 +105,7 @@ class Images(models.Model):
     status =  models.SmallIntegerField(default=1, null=True)
 
 class G_image(models.Model):
+    id = models.AutoField(primary_key = True)
     gallery_image= models.ImageField(upload_to= settings.PROFILE_UPLOAD_PATH,null=True)
     g_place= models.CharField(max_length=150)
     g_status= models.SmallIntegerField(default=1, null=True)

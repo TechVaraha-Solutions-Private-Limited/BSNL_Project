@@ -453,7 +453,6 @@ def add_new_bookings(request):
             book.executive = value
             book.teamlead = team_lead_user
             book.projhead = project_lead
-
             book.save()
 
             split_amount = int(book.total_site_value) / 4
