@@ -100,6 +100,7 @@ class Ugdg(models.Model):
      seniority_id = models.ForeignKey(Bookings, on_delete=models.CASCADE)
     
 class Images(models.Model):
+    id = models.AutoField(primary_key = True)
     images = models.ImageField(upload_to= settings.PROJECT_UPLOAD_PATH, null=True) 
     place =models.CharField(max_length=120)
     status =  models.SmallIntegerField(default=1, null=True)

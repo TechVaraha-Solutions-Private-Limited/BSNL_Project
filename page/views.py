@@ -28,12 +28,14 @@ def index(request):
     # user = UserDetail.objects.filter(user__is_active=1).all()
     count = Bookings.objects.count
     value = Contact.objects.all()
+    images = Images.objects.all()
     context={
         "data":data,
         "projects":projects,
         'complete':complete,
         "count":count,
-        "value":value
+        "value":value,
+        "image":images
     }
     return render(request,'page/home.html', context)
 

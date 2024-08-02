@@ -55,6 +55,7 @@ urlpatterns = [
     path('delete_user_access/<id>',delete_user_access,name='delete_user_access'),
     # images
     path('banner_images',banner_images,name='banner_images'),
+    path('delete_banner_image/<id>',delete_banner_image,name='delete_banner_image'),
     path('gallery_images',gallery_images,name='gallery_images'),
     path('deletingimage/<id>',deletingimage,name='deletingimage'),
     #add Customer

@@ -31,12 +31,23 @@ def send_email_view(request):
 
 @login_required
 def banner_images(request):
+    image = Images.objects.all()
     if request.method =='POST':
         Images(
             images=request.FILES.get('profile', ''),
             place = "Banner"
-        ).save()        
-    return render(request,'image/banner.html')
+        ).save()  
+    context ={
+        'image':image,
+    }      
+    return render(request,'image/banner.html',context)
+
+@login_required
+def delete_banner_image(request,id):
+	deletingimage=Images.objects.get(id=id)
+	deletingimage.delete()
+	return redirect(banner_images)
+
 
 @login_required
 def gallery_images(request):
@@ -52,6 +63,7 @@ def gallery_images(request):
     }
     return render(request,'image/gallery.html',context)
 
+@login_required
 def deletingimage(request,id):
 	deletingimage=G_image.objects.get(id=id)
 	deletingimage.delete()
@@ -1527,19 +1539,30 @@ def view_member(request):
 @login_required
 def genrate(request,id):
     customers = {}
-    customers = Bookings.objects.get(seniority_id=id)
+    payment_amount = 0
+    paid_amt_bal = 0
+    payment_total = 0
+    user_id = request.POST.get('user_id')
+    customers = Bookings.objects.get(am_no=id)
+    payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))                
+    payment = payment['amount__sum'] or 0
+    paytotal = payment-2600
+    payment_total = paytotal
     payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))
     if request.method == 'POST':
-        user_id = request.POST.get('user_id')
         seniority = request.POST.get('seniority')
         customers = Bookings.objects.get(seniority_id=seniority)
         payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))                
-        payment_total = payment['amount__sum'] or 0  
+        payment = payment['amount__sum'] or 0
+        paytotal = payment-2600
+        payment_total = paytotal
         total_site_value = customers.total_site_value
         book = Bookings.objects.get(user_id=user_id, seniority_id=seniority)
         payment = PaymentDetails.objects.filter(booking_id = book.id).aggregate(Sum('amount'))
+        
         PaymentDetails()
         try:
+            
             get_number = PaymentDetails.objects.all().order_by('-id')[:1]
             if get_number:
                 get_number = "634" + str(get_number[0].id + 1)
@@ -1554,8 +1577,11 @@ def genrate(request,id):
             cheque_no = request.POST.getlist('cheque_no[]')
             transaction_id = request.POST.getlist('transaction_id[]')
             ddno=request.POST.getlist('dd_no[]')
-            dateofreceipt = request.POST.get('dateofreceipt')          
-            difference = int(total_site_value) - int(payment_total)
+            dateofreceipt = request.POST.get('dateofreceipt')
+            difference = int(total_site_value) - int(payment_total)                
+            # Need to resolve
+            paymentname =''
+            status=''
             for count in range(len(payment_mode)):
                 for i in range(4):
                     payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))['amount__sum']
@@ -1624,10 +1650,17 @@ def genrate(request,id):
                     else:
                         continue
                 messages.success(request, 'Successfully Saved')
+                    
         except Bookings.DoesNotExist:
             messages.error(request,'Saved failed')
+    difference = int(payment_total)
+    if difference <= 0:
+            differ = 0
+    else:
+        differ = difference
     context={
-        'customer': customers
+        'customer': customers,
+        'difference': differ
     }
         # return render(request,'new_bookings/generate.html',{'customer': customers,'difference': differ,'active_bookings':active_bookings})
     return render(request,'view/update_view/gernarateReciept.html',context)

@@ -157,9 +157,16 @@
 <div id="slider-container">
 
     <div id="image-slider">
-        <div class="slide"><img src="static/page/img/p4.jpg" alt="Image 1" width="1400" height="540"></div>
-        <div class="slide"><img src="static/page/img/carousel-11.jpg" width="1400" height="540"></div>
-        <div class="slide"><img src="static/page/img/carousel-22.jpg" alt="Image 3" width="1400" height="540"></div>
+        {% if image %}
+            {% for img in image %}
+                <div class="slide"><img src="{{img.images.url}}" width="1400" height="540"></div>
+            <!-- <div class="slide"><img src="static/page/img/p4.jpg" alt="Image 1" width="1400" height="540"></div>
+            <div class="slide"><img src="static/page/img/carousel-11.jpg" width="1400" height="540"></div>
+            <div class="slide"><img src="static/page/img/carousel-22.jpg" alt="Image 3" width="1400" height="540"></div> -->
+            {% endfor %}
+        {% else %}
+            <div class="slide"><img src="static/page/img/carousel-22.jpg" alt="Image 3" width="1400" height="540"></div>
+        {% endif %}
     </div>
 
     <div class="content">
