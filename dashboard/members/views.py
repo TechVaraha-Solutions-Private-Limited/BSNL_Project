@@ -1524,3 +1524,111 @@ def view_member(request):
         'selected_value': filter_value,
     }
     return render(request, 'new_bookings/view_members.html', context)
+
+@login_required
+def genrate(request,id):
+    customers = {}
+    customers = Bookings.objects.get(seniority_id=id)
+    payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        seniority = request.POST.get('seniority')
+        customers = Bookings.objects.get(seniority_id=seniority)
+        payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))                
+        payment_total = payment['amount__sum'] or 0  
+        total_site_value = customers.total_site_value
+        book = Bookings.objects.get(user_id=user_id, seniority_id=seniority)
+        payment = PaymentDetails.objects.filter(booking_id = book.id).aggregate(Sum('amount'))
+        PaymentDetails()
+        try:
+            get_number = PaymentDetails.objects.all().order_by('-id')[:1]
+            if get_number:
+                get_number = "634" + str(get_number[0].id + 1)
+            else:
+                get_number = "63421"
+            divide_amount = int(book.total_site_value) / 4
+            split_amount = int(divide_amount)
+            paid_amount =  request.POST.getlist('amount[]')
+            payment_mode = request.POST.getlist('payment_mode[]')
+            bank = request.POST.getlist('bank[]')
+            branch = request.POST.getlist('branch[]')
+            cheque_no = request.POST.getlist('cheque_no[]')
+            transaction_id = request.POST.getlist('transaction_id[]')
+            ddno=request.POST.getlist('dd_no[]')
+            dateofreceipt = request.POST.get('dateofreceipt')          
+            difference = int(total_site_value) - int(payment_total)
+            for count in range(len(payment_mode)):
+                for i in range(4):
+                    payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))['amount__sum']
+                    pay = payment-2600
+                    paymentname = ''
+                    if i == 0 and pay < split_amount:
+                            paymentname = 'DownPayment'
+                            status = 1
+                    elif i == 1:
+                        projectval = int(book.total_site_value) / 2
+                        splitamount = int(projectval)
+                        if pay <  splitamount:
+                            status = 3
+                            paymentname = 'FirstInstallment'
+                    elif i == 2:
+                        pays = splitamount+split_amount
+                        if pay < pays:
+                            status = 5
+                            paymentname = 'SecondInstallment'
+                    elif i == 3:
+                        if  pay < int(book.total_site_value):
+                                status = 7
+                                paymentname = 'ThirdInstallment'
+                                continue
+                        else:
+                            messages.error(request,"All Payment is Already Completed.Please Conside with Admin")
+                            continue
+                    if split_amount <= int(payment_total):
+                        payment_total = payment_total - split_amount 
+                        paid_amt_bal = split_amount
+                    else:
+                        paid_amt_bal = (split_amount - payment_total)
+                        payment_total = 0
+                    if paymentname:
+                        if paid_amt_bal >= int(paid_amount[count]):
+                            if paid_amt_bal > int(paid_amount[count]):
+                                payment_name = 'Half'
+                            else:
+                                payment_name = 'Full'
+                                status += 1
+                            payment_amount = int(paid_amount[count])
+                        else:
+                            payment_amount = paid_amt_bal
+                            payment_name = ''
+                        payments = PaymentDetails()
+                        payments.booking = book
+                        payments.payment_mode = payment_mode[count]
+                        payments.bank = bank[count]
+                        payments.branch = branch[count]
+                        payments.cheque_no = cheque_no[count]
+                        payments.transaction = transaction_id[count]
+                        payments.ddno = ddno[count]
+                        payments.dateofreceipt = dateofreceipt
+                        payments.paymentname = paymentname+' '+payment_name
+                        payments.amount = payment_amount
+                        payments.receipt_no = get_number
+                        payments.save()
+                        
+                        book.payments_status = status
+                        book.total_paid_amount = int(book.total_paid_amount) + payment_amount
+                        book.save()
+                        if paid_amt_bal >= int(paid_amount[count]):
+                            break
+                        else:
+                            paid_amount[count] = str(int(paid_amount[count]) - payment_amount)
+                    else:
+                        continue
+                messages.success(request, 'Successfully Saved')
+        except Bookings.DoesNotExist:
+            messages.error(request,'Saved failed')
+    context={
+        'customer': customers
+    }
+        # return render(request,'new_bookings/generate.html',{'customer': customers,'difference': differ,'active_bookings':active_bookings})
+    return render(request,'view/update_view/gernarateReciept.html',context)

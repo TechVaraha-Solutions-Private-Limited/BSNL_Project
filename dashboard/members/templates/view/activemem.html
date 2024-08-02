@@ -190,47 +190,47 @@
 
         <script>
             // Initialize variables
-            var currentPage = 1;
-            var rowsPerPage = 5; // Number of rows per page
-
+            var currentPage1 = 1;
+            var rowsPerPage1 = 5; // Number of rows per page
+        
             // Function to show/hide rows based on the current page
-            function updateTable() {
-                var tableRows = document.querySelectorAll(".emInfo tbody tr");
-                var start = (currentPage - 1) * rowsPerPage;
-                var end = start + rowsPerPage;
-
-                for (var i = 0; i < tableRows.length; i++) {
+            function updateTable1() {
+                var tableRows1 = document.querySelectorAll(".emInfo1 tbody tr");
+                var start = (currentPage1 - 1) * rowsPerPage1;
+                var end = start + rowsPerPage1;
+        
+                for (var i = 0; i < tableRows1.length; i++) {
                     if (i >= start && i < end) {
-                        tableRows[i].style.display = "table-row";
+                        tableRows1[i].style.display = "table-row";
                     } else {
-                        tableRows[i].style.display = "none";
+                        tableRows1[i].style.display = "none";
                     }
                 }
-
+        
                 // Update the "Page X" indicator
-                document.getElementById("currentPage").textContent = currentPage;
+                document.getElementById("currentPage1").textContent = currentPage1;
             }
-
+        
             // Handle the "Next" button click
-            document.getElementById("nextPage").addEventListener("click", function () {
-                var tableRows = document.querySelectorAll(".emInfo tbody tr");
-                var maxPage = Math.ceil(tableRows.length / rowsPerPage);
-                if (currentPage < maxPage) {
-                    currentPage++;
-                    updateTable();
+            document.getElementById("nextPage1").addEventListener("click", function () {
+                var tableRows1 = document.querySelectorAll(".emInfo tbody tr");
+                var maxPage1 = Math.ceil(tableRows1.length / rowsPerPage1);
+                if (currentPage1 < maxPage1) {
+                    currentPage1++;
+                    updateTable1();
                 }
             });
-
+        
             // Handle the "Previous" button click
-            document.getElementById("prevPage").addEventListener("click", function () {
-                if (currentPage > 1) {
-                    currentPage--;
-                    updateTable();
+            document.getElementById("prevPage1").addEventListener("click", function () {
+                if (currentPage1 > 1) {
+                    currentPage1--;
+                    updateTable1();
                 }
             });
-
+        
             // Initial table update
-            updateTable();
+            updateTable1();
         </script>
         <script>
             // Function to filter the table rows

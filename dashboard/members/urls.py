@@ -65,4 +65,5 @@ urlpatterns = [
     path('site_visit/<id>',site_visit_custmer,name='site_visit_custmer'),
     #View Member
     path('view_member',view_member,name='view_member'),
+    path('generate/<id>',genrate,name='genrate'),
 ]
