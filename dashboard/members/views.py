@@ -18,6 +18,7 @@ from collections import defaultdict
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
 from commons.permission import role_required
+from commons.user_roles import admin_only
 import threading
 from commons.email_notification import signup_mail_otp
 # Create your views here.
@@ -330,6 +331,7 @@ def add_new_bookings(request):
     projects = Project.objects.all()
     landdetail = LandDetails.objects.all()
     exectiv = User.objects.filter(role='Executive')
+    # bookingamount=Bookings.objects.filter(booking_id = )
     errors = []
     filter_value ={}
     userdetail={}
@@ -543,7 +545,9 @@ def add_new_bookings(request):
                         payments.receipt_no = get_number
                         payments.dateofreceipt = date.today()
                         payments.save()
-                    
+                        book.payments_status = status
+                        book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount[count])
+                        book.save()
                         payment_amount = payment_amount - split_amount
                     elif payment_amount > 0 :
                         payments = PaymentDetails()
@@ -616,20 +620,15 @@ def get_project_id(request):
 @login_required
 def booksum(request):
     view = User.objects.filter(role='Team_Lead')  
-    
     project_details = []
-
     unique_projects = LandDetails.objects.values('project__projectname', 'plotsize__plotsize').annotate(land_count=Count('bookings'))
-   
     for project in unique_projects:
         project_name = project['project__projectname']
         plot_size = project['plotsize__plotsize']
         land_count = project['land_count']
-        
         split = plot_size.split("X")
         length = int(split[0])
         width   = int(split[1])
-
         tot_sq  = length*width*land_count
         sq_feet = length*width
         project_details.append({
@@ -643,18 +642,11 @@ def booksum(request):
     context = {
         'project_details': project_details,
         'view':view
-        
     }
-    
-
-
-
     return render(request,'home/booksum.html',context)
 
 @login_required
 def bss(request):
-   
-    
     return render(request,'home/bss.html')
 
 @login_required
@@ -663,8 +655,10 @@ def print_receipt(request):
 
 @login_required
 def generate(request):
-    customers = {}
+    customers = {} 
     total_site_value = 0
+    payment_amount = 0
+    paid_amt_bal = 0
     payment_total = 0
     active_bookings = Bookings.objects.filter(user__is_active=1).order_by('-created_on').all()
     if request.method == 'POST':
@@ -675,7 +669,9 @@ def generate(request):
             try:
                 customers = Bookings.objects.get(seniority_id=seniority_id)
                 payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))
-                payment_total = payment['amount__sum'] or 0  
+                payment = payment['amount__sum'] or 0
+                paytotal = payment-2600
+                payment_total = paytotal
                 total_site_value = customers.total_site_value
 
                 if not customers:
@@ -684,11 +680,12 @@ def generate(request):
                 messages.error(request, 'Invalid seniority ID. ')
                 customers = {}       
         elif action == 'create_order':
-            print('User ID:',user_id)
             seniority = request.POST.get('seniority')
             customers = Bookings.objects.get(seniority_id=seniority)
             payment = PaymentDetails.objects.filter(booking_id = customers.id).aggregate(Sum('amount'))                
-            payment_total = payment['amount__sum'] or 0  
+            payment = payment['amount__sum'] or 0
+            paytotal = payment-2600
+            payment_total = paytotal
             total_site_value = customers.total_site_value
             book = Bookings.objects.get(user_id=user_id, seniority_id=seniority)
             payment = PaymentDetails.objects.filter(booking_id = book.id).aggregate(Sum('amount'))
@@ -711,86 +708,86 @@ def generate(request):
                 transaction_id = request.POST.getlist('transaction_id[]')
                 ddno=request.POST.getlist('dd_no[]')
                 dateofreceipt = request.POST.get('dateofreceipt')
-                print('pa:',paid_amount)
-                difference = int(total_site_value) - int(payment_total)
-                print('differ:',difference)
-                
+                difference = int(total_site_value) - int(payment_total)                
                 # Need to resolve
-                
-                for count in range(len(payment_mode)): 
-                    if paid_amount[count]:  # Check if the current amount string is not empty
-                        for i in range(4):
-                            if i == 0:
-                                payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))['amount__sum']
-                                if split_amount == payment:
-                                    continue
+                paymentname =''
+                status=''
+                for count in range(len(payment_mode)):
+                    for i in range(4):
+                        payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))['amount__sum']
+                        pay = payment-2600
+                        paymentname = ''
+                        if i == 0 and pay < split_amount:
                                 paymentname = 'DownPayment'
                                 status = 1
-                            elif i == 1:
+                        elif i == 1:
+                            projectval = int(book.total_site_value) / 2
+                            splitamount = int(projectval)
+                            if pay <  splitamount:
                                 status = 3
                                 paymentname = 'FirstInstallment'
-                            elif i == 2:
+                        elif i == 2:
+                            pays = splitamount+split_amount
+                            if pay < pays:
                                 status = 5
                                 paymentname = 'SecondInstallment'
+                        elif i == 3:
+                            if  pay < int(book.total_site_value):
+                                    status = 7
+                                    paymentname = 'ThirdInstallment'
+                                    continue
                             else:
-                                status = 7
-                                paymentname = 'ThirdInstallment'
-
-                            if split_amount <= int(payment_total):
-                                payment_total = payment_total - split_amount 
-                            else:
-                                paid_amt_bal = (split_amount - payment_total)
-                                print(paid_amount)
-                                if paid_amt_bal >= int(paid_amount[count]):
-                                    if paid_amt_bal > int(paid_amount[count]):
-                                        payment_name = ''
-                                    else:
-                                        payment_name = ''
-                                        status += 1
-                                    payments = PaymentDetails()
-                                    payments.booking = book
-                                    payments.payment_mode = payment_mode[count]
-                                    payments.bank = bank[count]
-                                    payments.branch = branch[count]
-                                    payments.cheque_no = cheque_no[count]
-                                    payments.transaction = transaction_id[count]
-                                    payments.ddno = ddno[count]
-                                    payments.dateofreceipt = dateofreceipt
-                                    payments.paymentname = paymentname
-                                    payments.amount = int(paid_amount[count])
-                                    payments.receipt_no = get_number
-                                    payments.save()
-                                    book.payments_status = status
-                                    book.total_paid_amount = int(book.total_paid_amount) + int(paid_amount[count])
-                                    book.save()
-                                    break
+                                messages.error(request,"All Payment is Already Completed.Please Conside with Admin")
+                                continue
+                        if split_amount <= int(payment_total):
+                            payment_total = payment_total - split_amount 
+                            paid_amt_bal = split_amount
+                        else:
+                            paid_amt_bal = (split_amount - payment_total)
+                            payment_total = 0
+                        if paymentname:
+                            if paid_amt_bal >= int(paid_amount[count]):
+                                if paid_amt_bal > int(paid_amount[count]):
+                                    payment_name = 'Half'
                                 else:
-                                    payments = PaymentDetails()
-                                    payments.booking = book
-                                    payments.payment_mode = payment_mode[count]
-                                    payments.bank = bank[count]
-                                    payments.branch = branch[count]
-                                    payments.cheque_no = cheque_no[count]
-                                    payments.transaction = transaction_id[count]
-                                    payments.ddno = ddno[count]
-                                    payments.dateofreceipt = dateofreceipt
-                                    payments.paymentname = paymentname
-                                    payments.amount = int(paid_amt_bal)
-                                    payments.receipt_no = get_number
-                                    payments.save()
-                                    book.payments_status = status
-                                    book.total_paid_amount = int(book.total_paid_amount) + int(paid_amt_bal)
-                                    book.save()
-                                    paid_amount[count] = str(int(paid_amount[count]) - int(paid_amt_bal))
-                                    messages.success(request, 'Successfully Saved')
+                                    payment_name = 'Full'
+                                    status += 1
+                                payment_amount = int(paid_amount[count])
+                            else:
+                                payment_amount = paid_amt_bal
+                                payment_name = ''
+                            payments = PaymentDetails()
+                            payments.booking = book
+                            payments.payment_mode = payment_mode[count]
+                            payments.bank = bank[count]
+                            payments.branch = branch[count]
+                            payments.cheque_no = cheque_no[count]
+                            payments.transaction = transaction_id[count]
+                            payments.ddno = ddno[count]
+                            payments.dateofreceipt = dateofreceipt
+                            payments.paymentname = paymentname+' '+payment_name
+                            payments.amount = payment_amount
+                            payments.receipt_no = get_number
+                            payments.save()
+                            
+                            book.payments_status = status
+                            book.total_paid_amount = int(book.total_paid_amount) + payment_amount
+                            book.save()
+                            if paid_amt_bal >= int(paid_amount[count]):
+                                break
+                            else:
+                                paid_amount[count] = str(int(paid_amount[count]) - payment_amount)
+                        else:
+                            continue
+                    messages.success(request, 'Successfully Saved')
+                        
             except Bookings.DoesNotExist:
                 messages.error(request,'Saved failed')
-    difference = int(total_site_value) - int(payment_total)
+    difference = int(payment_total)
     if difference <= 0:
             differ = 0
     else:
         differ = difference
-                        
     return render(request,'new_bookings/generate.html',{'customer': customers,'difference': differ,'active_bookings':active_bookings})
 
 @login_required
@@ -1124,8 +1121,7 @@ def receipts(request):
     total_amount_per_receipt = defaultdict(int)
     for detail in data:
         total_amount_per_receipt[detail.receipt_no] += int(float(detail.amount))
-    for receipt_no, total_amount in total_amount_per_receipt.items():
-        print("Receipt No:", receipt_no, "Total Amount:", total_amount)   
+
     context = {
         'booking': booking,
         'total_amount_per_receipt': total_amount_per_receipt.items(),

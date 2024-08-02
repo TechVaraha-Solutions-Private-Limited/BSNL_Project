@@ -11,6 +11,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 from collections import defaultdict
 # Create your views here.
+
 def confirmletter_view(request,id):
     book=Bookings.objects.get(id=id)
     user = User.objects.get(id=book.user_id)
@@ -55,7 +56,6 @@ def confirmletter_view(request,id):
 def print_recepit(request, id):
     try:
         paymentInfos = PaymentDetails.objects.filter(receipt_no=id).first()
-        print("Payment",paymentInfos)
         data = PaymentDetails.objects.filter()
       
         check_payments = PaymentDetails.objects.filter(dateofreceipt=paymentInfos.dateofreceipt , booking_id=paymentInfos.booking_id)
@@ -85,7 +85,7 @@ def print_recepit(request, id):
             name = payment.paymentname
             last_payment = float(payment.amount)
             total = int(last_payment)
-            print('total:',name,total)
+           
             
         if last_payment:
             no = int(last_payment)
@@ -132,6 +132,7 @@ register = template.Library()
 @register.filter
 def add_amount(value):
     return int(value) + 2600
+
 def booking_report(request):
 
     view_report = PaymentDetails.objects.all()
@@ -449,7 +450,7 @@ def receipt_details(request):
     team_lead = User.objects.filter( role = "Project_Lead")
     for i in team_lead:
         team = i.first_name
-        print(team)
+       
     if request.method == 'POST':
         value = request.POST.get('receiptreportoption')
         select = request.POST.get('reportType')

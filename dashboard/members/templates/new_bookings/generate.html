@@ -65,7 +65,7 @@
                                 <input class="form-input" type="date" name="dateofreceipt" required>
                             </div>
                             <div class="p-1">
-                                <label>Pending Amount</label>
+                                <label>Paid Amount</label>
                                 <input class="form-input" type="text" value="{{difference}}">
                             </div>
                         </div>
@@ -170,7 +170,7 @@
             </tbody>
         </table>
     </div>
-    <div style="text-align: right;">
+    <div style="text-align: right;margin-bottom: 4%;  ">
         <div class="inline-flex items-center space-x-1 rtl:space-x-reverse m-auto mb-4">
             <button id="prevPage" type="button"
                 class="flex justify-center font-semibold px-3.5 py-2 rounded transition bg-white-light text-dark hover:text-white hover:bg-primary dark:text-white-light dark:bg-[#191e3a] dark:hover:bg-primary">
@@ -193,6 +193,39 @@
         </div>
     </div>
 </div>
+<script>
+    var currentPage = 1;
+    var rowsPerPage = 10; 
+    function updateTable() {
+      var tableRows = document.querySelectorAll(".emInfo tbody tr");
+      var start = (currentPage - 1) * rowsPerPage;
+      var end = start + rowsPerPage;
+  
+      for (var i = 0; i < tableRows.length; i++) {
+        if (i >= start && i < end) {
+          tableRows[i].style.display = "table-row";
+        } else {
+          tableRows[i].style.display = "none";
+        }
+      }
+      document.getElementById("currentPage").textContent = currentPage;
+    }
+    document.getElementById("nextPage").addEventListener("click", function () {
+      var tableRows = document.querySelectorAll(".emInfo tbody tr");
+      var maxPage = Math.ceil(tableRows.length / rowsPerPage);
+      if (currentPage < maxPage) {
+        currentPage++;
+        updateTable();
+      }
+    });
+    document.getElementById("prevPage").addEventListener("click", function () {
+      if (currentPage > 1) {
+        currentPage--;
+        updateTable();
+      }
+    });
+    updateTable();
+  </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const paymentDetailsContainer = document.getElementById('payment-details-container');

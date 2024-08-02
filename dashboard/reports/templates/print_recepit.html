@@ -152,7 +152,7 @@
 										<tbody>
 											{% for paysts in Value %}
 											<tr>
-												<td>{{ paysts.paymentname }}</td>
+												<td>{{ paysts.paymentname|remove_secodname }}</td>
 												<td>{{ user.land_details.plotsize.plotsize }}</td>
 												<td>{{ paysts.payment_mode }}</td>
 												<td>{{ paysts.bank }}</td>
@@ -360,7 +360,7 @@
 										<span style="float:left; width:50px;margin-bottom:0px;">7.
 										</span>{% for i in detail %}
 										{% if forloop.last %}
-										{{i.paymentname}}
+										{{i.paymentname|remove_secodname}}
 									</td>
 									{% endif %}
 									{%endfor%}

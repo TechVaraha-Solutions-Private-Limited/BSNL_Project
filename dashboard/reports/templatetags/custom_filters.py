@@ -10,3 +10,7 @@ def application_fee(items):
         if i.paymentname == "DownPayment" :
             i=200
     return i
+
+@register.filter(name='remove_secodname')
+def remove_secodname(value):
+    return value.replace(' Half', '').replace(' Full', '')
