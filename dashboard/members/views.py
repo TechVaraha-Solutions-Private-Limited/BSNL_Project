@@ -728,6 +728,7 @@ def generate(request):
                         payment = PaymentDetails.objects.filter(booking_id=customers.id).aggregate(Sum('amount'))['amount__sum']
                         pay = payment-2600
                         paymentname = ''
+                        print("i",i)
                         if i == 0 and pay < split_amount:
                                 paymentname = 'DownPayment'
                                 status = 1
@@ -742,11 +743,13 @@ def generate(request):
                             if pay < pays:
                                 status = 5
                                 paymentname = 'SecondInstallment'
+                        
                         elif i == 3:
+                            print("this one ")
                             if  pay < int(book.total_site_value):
+                                    print("pay ment")
                                     status = 7
                                     paymentname = 'ThirdInstallment'
-                                    continue
                             else:
                                 messages.error(request,"All Payment is Already Completed.Please Conside with Admin")
                                 continue

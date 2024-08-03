@@ -1,6 +1,7 @@
 {% extends 'index.html'%}
 {% block content %}
 {% load static %}
+{% load custom_filters %}
 {% include 'bootstrap.html' %}
 
 <style>
@@ -88,7 +89,7 @@
     <tbody>
        {% for payment in payments %}
         <tr>
-            <td>{{payment.paymentname}}</td>
+            <td>{{payment.paymentname|remove_secodname }}</td>
             <td>{{payment.payment_mode}}</td>
             <td>{{payment.bank}}</td>
             <td>{% if payment.payment_mode == 'Cheque' %}
@@ -101,7 +102,7 @@
             </td>
             <td>{{payment.amount}}</td>
             <td>{{payment.receipt_no}}</td>
-            <td>{{payment.payment_data}}</td>
+            <td>{{payment.dateofreceipt}}</td>
         </tr>
         {%endfor%}
     </tbody>

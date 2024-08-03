@@ -89,7 +89,7 @@ def updatingprojectlist(request, id):
         updatingprojectlist.state = request.POST['state']
         updatingprojectlist.city = request.POST['city']
         updatingprojectlist.pincode = request.POST['pincode']
-        
+        # updatingprojectlist.pdf_file = request.FILES['pdf_file']
         # Check if 'status' exists in POST data before assigning
         if 'status' in request.POST:
             updatingprojectlist.status = request.POST['status']
